@@ -1,8 +1,135 @@
 <html>
     <head>
-        
+        <title>Menu</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="menu.css">
+        <script src="jquery-3.4.1.min.js"></script>
+        <meta charset="UTF-8">  
     </head>
-    <body>
+    <body style="background-color: rgb(219, 219, 219);">
+        <div class="pos-f-t">
+            <div class="collapse" id="navbarToggleExternalContent">
+              <div class="bg-dark p-4">
+                <h4 class="text-white">Collapsed content</h4>
+                <span class="text-muted">Toggleable via the navbar brand.</span>
+              </div>
+            </div>
+            <nav class="navbar navbar-dark bg-dark">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </nav>
+          </div>
+          <nav class = tiposBox>
+            <a class = "tipos" href = "#imagenCoca">
+              <img src="../Images/helado.png" alt="not found" width = "25" height = "25">
+              <h3 class = "tipos_font">Postres</h3>
+            </a>
+            <a class = "tipos" href = "#imagenMilanesa">
+              <img src="../Images/empanada.png" alt="not found" width = "25" height = "25">
+              <h3 class = "tipos_font">Tragos</h3>
+            </a>
+            <a class = "tipos" href = "#imagenMilanesa">
+              <img src="../Images/helado.png" alt="not found" width = "25" height = "25">
+              <h3 class = "tipos_font">Bebidas</h3>
+            </a>
+            <a class = "tipos" href = "#imagenCoca">
+              <img src="../Images/helado.png" alt="not found" width = "25" height = "25">
+              <h3 class = "tipos_font">Minutas</h3>
+            </a>
+            <a class = "tipos" href = "#imagenCoca">
+              <img src="../Images/empanada.png" alt="not found" width = "25" height = "25">
+              <h3 class = "tipos_font">Entradas</h3>
+            </a>
+        </nav>
+        <div class="container">
+            <div class="card">
+                <div class="face face1">
+                    <div class="content">
+                        <div class="icon">
+                            <img id = "imagenCoca" src="../Images/rey.jfif" style= "height: 200px; width: 300;">
+                        </div>
+                    </div>
+                </div>
+                <div class="face face2">
+                    <!--<div class="content">
+                        <h3>
+                            <a>Coca cola</a>
+                        </h3>
+                        <p>$ 100</p>
+                        <div class = "cardContent" style="display: inline-flex;">
+                            <h1 style="margin-right: 3%; font-size: 15px;">5.0</h3>!--el min queda aajo, no se porque--
+                            <h1 style="font-size: 15px;">Demora: 20 min</h3>
+                        </div>
+                        <button style="display: block; left: auto;">Agregar</button>
+                    </div>-->
+                    <div style="background-color: white; width:100%; ">
+                        <div style = "margin-left: auto; margin-right: auto;">
+                            <h3 style="text-align: center;">
+                                <a>Coca cola</a>
+                            </h3>
+                            <p style="text-align: center;">$ 100</p>
+                            <div style="text-align: center;">
+                                <!--<img src="../Images/ESTRELLA.png" alt="">-->
+                                <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h3><!--el min queda aajo, no se porque-->
+                                <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h3>
+                            </div>
+                            <button style="position: absolute; right: 5%;">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         
+           <div class="card">
+                <div class="face face1">
+                    <div class="content">
+                        <div class="icon">
+                            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="face face2">
+                    <div class="content">
+                        <h3>
+                            <a href="https://twitter.com/AdamDipinto" target="_blank">@AdamDipinto</a>
+                        </h3>
+                        <p>This is where I read news and network with different social groups.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="face face1">
+                    <div class="content">
+                        <div class="icon">
+                            <img id = "imagenMilanesa" src="../Images/reyes.jpg" style="height: 100%; width: 100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="face face2">
+                    <div class="content">
+                        <h3>
+                            <a>Milanesa</a>
+                        </h3>
+                        <p>$ 250</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="background-color: white; width:100%; ">
+            <div style = "display: table; margin-left: auto; margin-right: auto;">
+                <h3>
+                    <a>Coca cola</a>
+                </h3>
+                <p>$ 100</p>
+                <div class = "cardContent" style="display: inline-flex;">
+                    <h1 style="margin-right: 3%; font-size: 15px;">5.0</h3><!--el min queda aajo, no se porque-->
+                    <h1 style="font-size: 15px;">Demora: 20 min</h3>
+                </div>
+                <button style="display: block; left: auto;">Agregar</button>
+            </div>
+        </div>
     </body>
 </html>
