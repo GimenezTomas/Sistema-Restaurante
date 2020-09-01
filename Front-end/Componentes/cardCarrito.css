@@ -97,4 +97,10 @@
     transform: translate(-50%, -50%);
     margin-top:40px;
 }
+.precioAgregado{
+    color: red; 
+    display: block; 
+    font-size: 10px; 
+    margin-top: -5px;
+}
 /*ponerle scrollbar al body de la carta*/
