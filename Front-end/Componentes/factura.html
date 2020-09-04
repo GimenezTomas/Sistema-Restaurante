@@ -1,0 +1,201 @@
+<html>
+    <head>
+        <title>Menu</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="factura.css">
+        <script src="jquery-3.4.1.min.js"></script>
+        <meta charset="UTF-8">
+    </head>
+    <body style="background-color: black;">
+        <div id="factura" class="containerFactura" style="background-color: white;">
+            <div class="headerNombrePagina">
+                <svg onmousedown="activarDisplayFactura('factura', false)" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/>
+                </svg>
+                <img src="../Images/appleLogo.png" alt="">
+            </div>
+            <div class="headerUsuario">
+                <img src="../Images/usuarioLogo.png" alt="">
+                <h1>Tomás Giménez</h1>
+                <!--<h2>PUNTOS: 0</h1> SI O NO?-->
+            </div>
+            <div class="headerRestaurante">
+                <img src="../Images/logoRestaurante.jpg" alt="">
+                <h1>Cantina Los Lopez</h1>
+            </div>
+            <div id = "pedidos" class="pedidos">
+                <ul id="platos">
+                    <li id = "plato1" class="pedido" onmouseover="botonEliminar('botonDelete1', true)" onmouseout="botonEliminar('botonDelete1', false)">
+                        <img src="../Images/reyes.jpg" alt="">
+                        <h3>Milanesa con papas fritas</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">490</h4>
+                            <svg id="botonDelete1" onmousedown="eliminarPlato('plato1')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                    <li id = "plato2" class="pedido" onmouseover="botonEliminar('botonDelete2', true)" onmouseout="botonEliminar('botonDelete2', false)">
+                        <img src="../Images/ñoquis.jpg" alt="">
+                        <h3>Ñoquis con salsa</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">590</h4>
+                            <svg id="botonDelete2" onmousedown="eliminarPlato('plato2')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                    <li id = "plato3" class="pedido" onmouseover="botonEliminar('botonDelete3', true)" onmouseout="botonEliminar('botonDelete3', false)">
+                        <img src="../Images/reyes.jpg" alt="">
+                        <h3>Milanesa con papas fritas</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">490</h4>
+                            <svg id="botonDelete3" onmousedown="eliminarPlato('plato3')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                    <li id = "plato4" class="pedido" onmouseover="botonEliminar('botonDelete4', true)" onmouseout="botonEliminar('botonDelete4', false)">
+                        <img src="../Images/ñoquis.jpg" alt="">
+                        <h3>Ñoquis con salsa</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">590</h4>
+                            <svg id="botonDelete4" onmousedown="eliminarPlato('plato4')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                    <li id = "plato5" class="pedido" onmouseover="botonEliminar('botonDelete5', true)" onmouseout="botonEliminar('botonDelete5', false)">
+                        <img src="../Images/reyes.jpg" alt="">
+                        <h3>Milanesa con papas fritas</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">490</h4>
+                            <svg id="botonDelete5" onmousedown="eliminarPlato('plato5')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                    <li id = "plato6" class="pedido" onmouseover="botonEliminar('botonDelete6', true)" onmouseout="botonEliminar('botonDelete6', false)">
+                        <img src="../Images/ñoquis.jpg" alt="">
+                        <h3>Ñoquis con salsa</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">590</h4>
+                            <svg id="botonDelete6" onmousedown="eliminarPlato('plato6')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                    
+                    <li id = "plato7" class="pedido" onmouseover="botonEliminar('botonDelete7', true)" onmouseout="botonEliminar('botonDelete7', false)">
+                        <img src="../Images/ñoquis.jpg" alt="">
+                        <h3>Ñoquis con salsa</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">590</h4>
+                            <svg id="botonDelete7" onmousedown="eliminarPlato('plato7')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                    <li id = "plato8" class="pedido" onmouseover="botonEliminar('botonDelete8', true)" onmouseout="botonEliminar('botonDelete8', false)">
+                        <img src="../Images/ñoquis.jpg" alt="">
+                        <h3>Ñoquis con salsa</h3>
+                        <div class="p">
+                            <h2>$</h2>
+                            <h4 class="precio">590</h4>
+                            <svg id="botonDelete8" onmousedown="eliminarPlato('plato8')" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                            </svg>
+                        </div>
+                    </li>
+                </ul>
+                <div class="pedir">
+                    <button id="botonPedir" onmouseover="actualizarPrecioTotal('platos', 'precio', 'botonPedir')">Pedir  ($1500)</button>
+                    <div>
+                        <svg onmousedown="vaciarCanasta('platos')" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            actualizarPrecioTotal('platos', 'precio', 'botonPedir')
+
+            function activarDisplayFactura(id, display){
+                if(display){
+                    document.getElementById(id).style.display="block"
+                }
+                else{
+                    document.getElementById(id).style.display="none"
+                }
+            }
+            function botonEliminar(id,display){
+                if(display){
+                    document.getElementById(id).style.display="block"
+                }
+                else{
+                    document.getElementById(id).style.display="none"
+                }
+            }
+
+            function eliminarPlato(idEliminar){
+                let plato = document.getElementById(idEliminar)
+                plato.parentNode.removeChild(plato)
+                actualizarPrecioTotal('platos', 'precio', 'botonPedir')
+            }
+
+            function vaciarCanasta(id){
+                let platos = document.getElementById(id)
+                for(let plato = 0;  plato<platos.childNodes.length; plato++){
+                    platos.removeChild(platos.childNodes[plato])
+                    plato--
+                }
+                actualizarPrecioTotal('platos', 'precio', 'botonPedir')
+            }
+
+            function actualizarPrecioTotal(idPlatos, classNamePrecio, clasePedir){
+                let platos = document.getElementById(idPlatos)
+                let precio = 0 
+                for(let plato = 0;  plato<platos.childNodes.length; plato++){
+                    if(platos.childNodes[plato].childNodes.length>0){
+                        for(let x = 0; x < platos.childNodes[plato].childNodes.length; x++){
+                            if(platos.childNodes[plato].childNodes[x].tagName=="DIV"){
+                                for(let w=0; w<platos.childNodes[plato].childNodes[x].childNodes.length; w++){
+                                    if(platos.childNodes[plato].childNodes[x].childNodes[w].className == classNamePrecio){
+                                        precio = precio + Number(platos.childNodes[plato].childNodes[x].childNodes[w].innerHTML)
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                document.getElementById(clasePedir).innerHTML = "Pedir ($"+precio+")"
+                if(precio==0){
+                    canastaVacia()
+                }
+            }
+
+            function canastaVacia(){
+                document.getElementById("pedidos").style.display="none"
+            }
+        </script>
+    </body>
+</html>
+
+<!--
+    8)Agregar fade in en los botones y boludeces cambios?
+    10)¿Por qué esta todo duplicado?
+    11)agregar que la canasta esta vacia en canasta vacia
+-->
