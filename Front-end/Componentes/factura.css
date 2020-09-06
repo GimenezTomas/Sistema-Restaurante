@@ -109,12 +109,15 @@
 
 .pedidos{
     margin-top: 5%;
+    margin-left: 8%;
     margin-right: 8%;
     margin-bottom:5%;
 }
 .pedidos ul{
     overflow-y: scroll;
-    height: 290px;/*lo puse a mano cambiarlo para que pueda ser responsive*/
+    height: 290px;
+    padding-inline-start: 0%;
+
 }
 .pedido{
     list-style-type: none;
@@ -137,12 +140,16 @@
     border-radius: 10%;
 }
 
-.pedidos .pedido h3{
+.pedidos .pedido h3{    
     margin-left: 8px;
     font-size: 15px;
     font-weight: 400;
     text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
     margin-bottom: 0px;
+    max-width: 220px;
+    white-space: nowrap;
 }
 
 .pedidos .pedido .p h2, h4{
@@ -162,16 +169,21 @@
     justify-content: flex-start;
     flex-direction: row;
 }
+
 .pedidos .pedido .p svg{
     display: none;
     width: 20;
     height: 20;
-    fill: #f7732d;
+    /*fill: #f7732d;*//*naranja o negro*/
     margin-left: 10px;
 }
 
+.pedidos .pedido .p svg:hover{
+    width: 30px;
+    height: 30px;
+}
 .pedir{
-    margin-left: 8%;
+    /*margin-left: 8%;*/
     margin-top: 10px;
     display: inline-flex;
     width: 100%;
@@ -204,3 +216,81 @@
 ::-webkit-scrollbar{
     display: none;
 }
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 323px;
+    left: 0;
+    top: 0;
+    padding-left: 870px;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 300px;
+    height: 200px;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin-left: 6%;
+    }
+
+    #canastaVaciaFalse:hover{
+        fill: white;
+        background: black;
+        border-radius: 100%;
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+    }
+    #canastaVaciaTrue:hover{
+        fill: white;
+        background: black;
+        border-radius: 100%;
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+    }
+
+    .close:hover,
+    .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    }
+
+    #carritoVacio{
+        display: none;
+        margin-left: 8%;
+        margin-right: 8%;
+        margin-top: 20%;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+
+    #carritoVacio svg{
+        width: 115px;
+        height: 115px;
+        fill: #7d7d7d;
+    }
+
+    #carritoVacio h1{
+        margin-top: 10px;
+        font-size: 20px;
+        color: #7d7d7d;
+    }

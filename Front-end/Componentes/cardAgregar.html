@@ -11,96 +11,148 @@
     </head>
     <body>
         <div class="card cardAgregados">
-            <img class="card-img-top" src="../Images/reyes.jpg" alt="Card image cap">
+            <img class="card-img-top" src="../Images/ñoquis.jpg" alt="Card image cap">
             <div class="card-body">
                 <div class="nombre">
                     <h3>Ñoquis con salsa</h3>
-                    <p>Masa a base de papa y harina. Aguante duki y la concha de su madre perri, padreeeeeeeeeeeeee</p>
+                    <p>Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
                 </div>
-                <div class="opciones">
+                <div id="opciones">
                     <div class = "salsas">
                         <h1 class="header">SALSAS</h1>
                         <ul class="body">
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Fileto</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Fileto</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Crema</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Crema</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Boloñesa</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Boloñesa</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Salsa Rosa</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Salsa Rosa</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Salsa Blanca</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Salsa Blanca</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Fileto</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Fileto</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                           
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Fileto</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Fileto</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Fileto</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Fileto</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
                             <li class="botonMasAgregado">
                                 <input type="radio"></input>
                                 <div>
-                                    <h3 style="font-size: 15px;">Fileto</h3>
-                                    <h2 class = "precioAgregado">(+45$)</h2>
+                                    <h3>Fileto</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>
                             </li>
                         </ul>
                     </div>
+                    <div class="precioTotal">
+                        <h1>Total: $</h1>
+                        <span>
+                            <h2 id="precioActualizado">500</h2>
+                            <h3 id="precioBase">$400</h3>
+                        </span>
+                    </div>
                 </div>
                 <section class="padre">
-                    <textarea placeholder = "hola"name="" id="" class="aclaraciones"></textarea>
-                    <button class="botonAgregar">Agregar</button>    
+                    <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
+                    <button onmousedown="calcularPrecio()" class="botonAgregar">Agregar</button>    
                 </section>            
             </div>
         </div>
         <div style="height: 500px;"></div>
-        <!--<div class="card">
-            <h5 class="card-header">Featured</h5>
-            <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>-->
+        <script>
+            calcularPrecio()
+            function checkButton(){
+                /*implementar para que se pueda poner el check button en false*/
+            }
+            function calcularPrecio(){
+                let precio = Number((document.getElementById("precioBase").innerHTML).substr(1))
+                let opciones = document.getElementById('opciones')
+                for(let i=0; i<opciones.childNodes.length; i++){
+                    if( opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].className!="precioTotal"){
+                        let tipoAgregado = opciones.childNodes[i]
+                        for(let j=0; j<tipoAgregado.childNodes.length; j++){
+                            if(tipoAgregado.childNodes[j].tagName=="UL"){
+                                let extras = tipoAgregado.childNodes[j]
+                                for(let w = 0; w < extras.childNodes.length; w++){
+                                    if(extras.childNodes[w].tagName=="LI"){
+                                        let extra = extras.childNodes[w]
+                                        let ok=false
+                                        for(let q=0; q<extra.childNodes.length ;q++){
+                                            if(extra.childNodes[q].tagName=="INPUT"){
+                                                if(extra.childNodes[q].checked){
+                                                    ok = true
+                                                }
+                                            }
+                                            else if(ok && extra.childNodes[q].tagName=="DIV"){
+                                                for(let z = 0; z < extra.childNodes[q].childNodes.length; z++){
+                                                    if(extra.childNodes[q].childNodes[z].tagName=="H2"){
+                                                        let precioADD = ""
+                                                        for(let y=0; y<extra.childNodes[q].childNodes[z].innerHTML.length; y++){
+                                                            if(extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)<58 && extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)>47){
+                                                                precioADD = precioADD + extra.childNodes[q].childNodes[z].innerHTML[y]
+                                                            }
+                                                        }
+                                                        precio = precio + Number(precioADD)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                }
+                document.getElementById("precioActualizado").innerHTML = precio
+            }
+        </script>
     </body>
 </html>
+
+<!--
+    1)A esto va a haber que agregarle que con ciertas elecciones, porción por ejemplo, solo se puede marcar un radioButton 
+    2)Agregarle que se puedan poner en false los radioButton y que resten el precio, 
+    para esto necesito saber como vamos a agregar las opciones desde la base ya que necesito el id de ese LI
+-->
