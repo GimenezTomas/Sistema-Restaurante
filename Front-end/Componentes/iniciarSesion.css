@@ -69,7 +69,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 30%;
+    width: 50%;
     padding-left: 11%;
   }
 
@@ -84,7 +84,7 @@
   }
   
   .modalIni .containerFormulario{
-    margin-top: 10%;
+    margin-top: 7%;
   }
   
   .modalIni .contentInput{
@@ -231,9 +231,10 @@
   }
 
   .modalIni .wppArea{
-    display: inline-flex;
+    display: flex;
     /*background-image: linear-gradient(130deg,#9ef8aa 0,#03c744 70%);*/
     background-color: limegreen;
+    align-items: center;
   }
 
   .modalIni .wppArea:hover{
