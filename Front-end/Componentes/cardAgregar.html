@@ -21,63 +21,63 @@
                     <div class = "salsas">
                         <h1 class="header">SALSAS</h1>
                         <ul class="body">
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa1" class="botonMasAgregado" onmousedown="checkButton('botonSalsa1')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Fileto</h3>
                                     <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>
                             </li>
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa2" class="botonMasAgregado" onmousedown="checkButton('botonSalsa2')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Crema</h3>
                                     <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa3" class="botonMasAgregado" onmousedown="checkButton('botonSalsa3')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Boloñesa</h3>
                                     <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa4" class="botonMasAgregado" onmousedown="checkButton('botonSalsa4')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Salsa Rosa</h3>
                                     <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa5" class="botonMasAgregado" onmousedown="('botonSalsa5')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Salsa Blanca</h3>
                                     <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa6" class="botonMasAgregado" onmousedown="checkButton('botonSalsa6')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Fileto</h3>
                                     <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                           
                             </li>
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa7" class="botonMasAgregado" onmousedown="checkButton('botonSalsa7')">
+                                <input type="radio" value="checked"></input>
+                                <div>
+                                    <h3>Fileto</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>                            
+                            </li>
+                            <li id="botonSalsa8" class="botonMasAgregado" onmousedown="checkButton('botonSalsa8')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Fileto</h3>
                                     <h2 class = "precioAgregado">(+$45)</h2>
                                 </div>                            
                             </li>
-                            <li class="botonMasAgregado">
-                                <input type="radio"></input>
-                                <div>
-                                    <h3>Fileto</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>                            
-                            </li>
-                            <li class="botonMasAgregado">
+                            <li id="botonSalsa9" class="botonMasAgregado" onmousedown="checkButton('botonSalsa9')">
                                 <input type="radio"></input>
                                 <div>
                                     <h3>Fileto</h3>
@@ -103,8 +103,22 @@
         <div style="height: 500px;"></div>
         <script>
             calcularPrecio()
-            function checkButton(){
+            function checkButton(idBoton){
                 /*implementar para que se pueda poner el check button en false*/
+                let button = document.getElementById(idBoton)
+                
+                for(let i=0; i<button.childNodes.length; i++){
+                    if(button.childNodes[i].tagName=="INPUT"){
+                        if (button.childNodes[i].checked){
+                            button.childNodes[i].checked=""
+                            console.log(button.childNodes[i].checked)
+                        }
+                        else{
+                            console.log(button.childNodes[i].checked)
+                            button.childNodes[i].checked=true
+                        }
+                    }
+                }
             }
             function calcularPrecio(){
                 let precio = Number((document.getElementById("precioBase").innerHTML).substr(1))
