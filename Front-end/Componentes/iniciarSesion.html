@@ -100,30 +100,6 @@
                 }
 
                 function mailVerification(idFormulario, viaMail, idIniciarSesionForm){
-                    /*let form = document.getElementById("containerFormulario")
-                    for(let i=0; i<form.childNodes.length; i++){
-                        if(form.childNodes[i].tagName=="DIV"){
-                            for(let j = 0; j<form.childNodes[i].childNodes.length; j++){
-                                if (form.childNodes[i].childNodes[j].id!="mailArea" && form.childNodes[i].childNodes[j].id!=undefined){
-                                    document.getElementById(form.childNodes[i].childNodes[j].id).style.display="none"
-                                }
-                                else if(form.childNodes[i].childNodes[j].id=="mailArea"){
-                                    console.log(form.childNodes[i].childNodes[j].innerHTML)
-                                    //poner que le cambie el texto y cuando lo toquen vaya se deje de mostrar el formulario
-                                    for(let l = 0; l < form.childNodes[i].childNodes[j].childNodes.length; l++){
-                                        if(form.childNodes[i].childNodes[j].childNodes[l].tagName=="H1"){//fijarse de que sea una lista y que cuando toco se desplieguen los metodos, creo que es mas comodo
-                                            form.childNodes[i].childNodes[j].childNodes[l].innerHTML="Cambiar metodo"
-                                            form.childNodes[i].childNodes[j].onmousedown = function(){
-                                                console.log("mousedowm")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    document.getElementById("iniciarSesionForm").style.display="block"*/
-                    console.log("entreAlMailVerification")
                     let form = document.getElementById(idFormulario)
                     for(let i=0; i<form.childNodes.length; i++){
                         if(form.childNodes[i].tagName=="DIV"){
