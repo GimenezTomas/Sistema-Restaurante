@@ -1,0 +1,170 @@
+.modalIni {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modalIni .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    /*padding: 20px;*/
+    border: 3px solid #c2bbbb;
+    width: 30%;
+    height:500px;
+    border-radius: 80px;
+    overflow: hidden;
+  }
+  
+  /* The Close Button */
+  .modalIni .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .modalIni .close:hover,
+  .modalIni .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .modalIni .iniciarSesionContainer{
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 100%;
+  }
+
+  .modalIni .logoContainer{
+     width: 95%;
+  }
+
+  .modalIni .headerIniciarSesion{
+    margin-top: 10px;
+    display: inline-flex;
+  }
+
+  .modalIni .headerIniciarSesion svg{
+    width: 30px;
+    height: 30px;
+  }/*
+
+  .modalIni .headerIniciarSesion svg:hover{
+    width: 35px;
+    height: 35px;
+    margin-bottom: -5px;
+  }*/
+
+  .modalIni .headerIniciarSesion img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding-left: 11%;
+  }
+
+  .modalIni .headerIniciarSesion div{
+    width: 90%;
+  }
+
+  .modalIni .labelIniciarSesion {
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+  
+  .modalIni .containerFormulario{
+    margin-top: 7%;
+  }
+  
+  .modalIni .contentInput{
+    margin-bottom: 25px;
+  }
+
+  .modalIni #registrarseForm{
+    margin-bottom: 45px;
+    margin-top: 15%;
+  }
+
+  .modalIni #registrarseForm input{
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 20px;
+    border-style: none;
+    font-size: 15px;
+    border-bottom: 1px solid #cacaca;  
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+
+  .modalIni #registrarseForm input:focus{
+    border-width: 0px;
+    outline:0; /* I have also tried outline:none */
+    -webkit-appearance:none;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-style: none;
+    border-bottom: 1px solid rgb(151, 0, 221);
+  }
+
+  .modalIni #registrarseForm button{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 70%;
+    height: 35px;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: rgb(178, 13, 255);
+    border-style: none;
+    color: whitesmoke;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+
+
+  .modalIni .registrate{
+    text-align: center;
+    margin-top: 15%;
+  }
+
+  .modalIni .registrate h1,a{
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .modalIni .registrate a{
+    color: #2ba6cb;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+  }
+
+  .modalIni .registrate a:hover{
+    border-bottom-style: solid;
+    border-color:#2ba6cb;
+    border-width: 1px;
+  }
+
+  .ocultar {
+    display: none;
+}
+ 
+.mostrar {
+    display: block;
+}
+
+
