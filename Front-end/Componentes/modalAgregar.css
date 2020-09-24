@@ -1,0 +1,170 @@
+.cardAgregados{
+    margin-left: 28%;
+    margin-right: 28%;
+    height: auto; 
+    max-height: 820px;
+    border-style: none; 
+    border-radius: 5%; 
+    border-color: black;
+    margin-top: 40px;
+}
+.cardAgregados img{
+    border-bottom-style: solid;
+    border-style: solid;
+    border-width: 1px;
+    border-bottom-style: none; 
+    border-color: black;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    height: 300px;
+    width: 100%;
+}
+
+.cardAgregados .card-body{
+    border-style: solid;
+    border-width: 1px;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+}
+
+.cardAgregados .card-body .nombre{
+    height: auto;
+    border-bottom-width: 1px;
+    border-bottom-color: gainsboro; 
+    border-bottom-style: solid;
+    margin-bottom: 10px;
+}
+.cardAgregados .card-body .nombre h3{
+    font-size: 25px;
+}
+.cardAgregados .card-body .nombre p{
+    font-size: 14px;
+    color: silver;
+}
+
+.cardAgregados .card-body #opciones{
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.cardAgregados .card-body #opciones .salsas h1{
+    font-size: 20px;
+}
+
+.cardAgregados .card-body #opciones .salsas{
+    border-bottom-width: 1px;
+    border-bottom-color: gainsboro; 
+    border-bottom-style: solid;
+} 
+
+.cardAgregados .card-body #opciones .salsas .body{
+    display: inline-block;
+    margin-left: -35px;
+}
+
+.cardAgregados .card-body #opciones .salsas .body .botonMasAgregado{
+    width: 48.5%;
+    display: inline-flex;
+    margin-bottom: .5%;
+    vertical-align: top;
+}
+
+.cardAgregados .card-body #opciones .salsas .body .botonMasAgregado h3 {
+    margin-left: 5px;
+    vertical-align: top; 
+    font-weight: 450;
+    font-size: 13px;
+}
+
+.cardAgregados .card-body #opciones .salsas .body .botonMasAgregado input {
+    vertical-align: top; 
+    margin-top: 2px; 
+    box-sizing: border-box; 
+    padding: 0; 
+    line-height: normal; 
+    margin: 0;
+    /*text-align: start;*/
+}
+
+.cardAgregados .card-body #opciones .precioTotal{
+    border-bottom-width: 1px;
+    border-bottom-color: gainsboro; 
+    border-bottom-style: solid;
+}
+
+.cardAgregados .card-body #opciones .precioTotal h1, h2{
+    display: inline-flex;
+}
+
+.cardAgregados .card-body #opciones .precioTotal h1{
+    font-size: 20px;
+}
+
+.cardAgregados .card-body #opciones .precioTotal h2{
+    font-size: 20px;
+    /*color: #F52F41;*/
+    margin-left: -5px;
+}
+
+.cardAgregados .card-body #opciones .precioTotal h3{
+    font-size: 15px;
+    color: silver;
+    text-decoration-line: line-through;
+    font-weight: 400;
+    margin-left: -10px;
+
+}
+
+.cardAgregados .card-body #opciones .precioTotal span{
+    display: inline-grid;
+}
+
+.botonAgregar{
+    background-color: #F52F41;
+    border-radius: 6px;
+    margin-top: 10px;
+    color: white;
+    border: #F52F41;
+    height: 30px;
+    width: 50%;
+    margin-left: 50%;
+    margin-right: 50%;
+}
+.aclaraciones{
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: auto;
+    margin-top: 15px;
+}
+
+.padre{
+    position: relative;
+}
+
+.padre textarea{
+    display: block;
+}
+
+.padre button{
+    margin: 0;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin-top:40px;
+    height: 40px;
+}
+
+.precioAgregado{
+    color: red; 
+    display: block; 
+    font-size: 10px; 
+    margin-top: -5px;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+/*ponerle scrollbar al body de la carta*/
