@@ -1,0 +1,20 @@
+{
+    "1": {
+        "username": "AlumnoTomas",
+        "email": "Alumno21.GIMENEZ.Tomas@ipm.edu.ar",
+        "password": "hola123",
+        "telefono": "1155655565"
+    },
+    "2":{
+        "username": "AlumnoMosca",
+        "email": "Alumno21.MOSCA.Franco@ipm.edu.ar",
+        "password": "hola123",
+        "telefono": "1130655565"        
+    },
+    "3":{
+        "username": "AlumnoSinPel",
+        "email": "Alumno21.ETCHEGOYEN.Inaki@ipm.edu.ar",
+        "password": "hola123",
+        "telefono": "1131655565"        
+    }
+}
