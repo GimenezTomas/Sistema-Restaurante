@@ -10,7 +10,124 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <div class="card cardAgregados">
+        <button onmousedown="llamarCarrito('hola')" class="hola">ICONO CANASTA</button>
+        <div id="factura" class="containerFactura" >
+            <div class="modalContent">
+                
+            </div>
+        </div>
+        <script>
+            actualizarPrecioTotal('platos', 'precio', 'botonPedir')
+
+            function activarDisplayFactura(id, display){
+                if(display){
+                    document.getElementById(id).style.display="block"
+                }
+                else{
+                    document.getElementById(id).style.display="none"
+                }
+            }
+            function botonEliminar(id,display){
+                if(display){
+                    document.getElementById(id).style.display="block"
+                }
+                else{
+                    document.getElementById(id).style.display="none"
+                }
+            }
+
+            function eliminarPlato(idEliminar){
+                let plato = document.getElementById(idEliminar)
+                plato.parentNode.removeChild(plato)
+                actualizarPrecioTotal('platos', 'precio', 'botonPedir')
+            }
+
+            function vaciarCanasta(id){
+                let platos = document.getElementById(id)
+                for(let plato = 0;  plato<platos.childNodes.length; plato++){
+                    platos.removeChild(platos.childNodes[plato])
+                    plato--
+                }
+                actualizarPrecioTotal('platos', 'precio', 'botonPedir')
+            }
+
+            function actualizarPrecioTotal(idPlatos, classNamePrecio, clasePedir){
+                let platos = document.getElementById(idPlatos)
+                let precio = 0 
+                for(let plato = 0;  plato<platos.childNodes.length; plato++){
+                    if(platos.childNodes[plato].childNodes.length>0){
+                        for(let x = 0; x < platos.childNodes[plato].childNodes.length; x++){
+                            if(platos.childNodes[plato].childNodes[x].tagName=="DIV"){
+                                for(let w=0; w<platos.childNodes[plato].childNodes[x].childNodes.length; w++){
+                                    if(platos.childNodes[plato].childNodes[x].childNodes[w].className == classNamePrecio){
+                                        precio = precio + Number(platos.childNodes[plato].childNodes[x].childNodes[w].innerHTML)
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                document.getElementById(clasePedir).innerHTML = "Pedir ($"+precio+")"
+                if(precio==0){
+                    canastaVacia()
+                }
+            }
+
+            function canastaVacia(){
+                document.getElementById("pedidos").style.display="none"
+                document.getElementById("carritoVacio").style.display="flex"
+                 
+            }
+            /*modal vaciar canasta*/
+            function vaciarCanastaModal(){
+                var modal = document.getElementById("myModal");
+
+                // Get the <span> element that closes the modal
+                var span = [document.getElementsByClassName("closer")[0], document.getElementsByClassName("closer")[2]];
+
+                // When the user clicks the button, open the modal 
+                modal.style.display = "block";
+
+                // When the user clicks on <span> (x), close the modal
+                span[0].onclick = function() {
+                modal.style.display = "none";
+                }
+
+                span[1].onclick = function() {
+                modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            }
+            function llamarCarrito(claseIcono){
+                var modal = document.getElementById("factura");
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName(claseIcono)[0];
+
+                // When the user clicks the button, open the modal 
+                modal.style.display = "block";
+
+                // When the user clicks on <span> (x), close the modal
+                span[0].onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            }
+        </script>
+        <!--<div class="card cardAgregados">
             <img class="card-img-top" src="../Images/ñoquis.jpg" alt="Card image cap">
             <div class="card-body">
                 <div class="nombre">
@@ -100,7 +217,8 @@
                 </section>            
             </div>
         </div>
-        <div style="height: 500px;"></div>
+        <div style="height: 500px;"></div>-->
+        
         <script>
             calcularPrecio()
             function checkButton(idBoton){
