@@ -15,6 +15,7 @@ public class Restaurante {
     private String nombre;
     private ArrayList<Ocupacion> ocupaciones = new ArrayList<>();
     public static SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
+    public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
 
@@ -478,10 +479,10 @@ public class Restaurante {
                 opciones.setVisible(true);
                 panel.add(opciones);
 
-                JButton boton = new JButton("AGREGAR");
-                boton.setBounds(ventana.getWidth() / 2 + 50, opciones.getY() + opciones.getHeight() + 30, 150, 50);
-                boton.setVisible(true);
-                panel.add(boton);
+                JButton botonAgregar = new JButton("AGREGAR");
+                botonAgregar.setBounds(ventana.getWidth() / 2 + 50, opciones.getY() + opciones.getHeight() + 30, 150, 50);
+                botonAgregar.setVisible(true);
+                panel.add(botonAgregar);
 
                 JButton botonOut = new JButton("SALIR");
                 botonOut.setBounds(ventana.getWidth() / 2 - 200, opciones.getY() + opciones.getHeight() + 30, 150, 50);
@@ -497,12 +498,62 @@ public class Restaurante {
                         gestionarRestaurante(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack);
                     }
                 });
+
+                botonAgregar.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        /*if agregados ok y todo los demas inputs ok*/
+
+                        JFrame frameAgregados = new JFrame("AGREGADOS");
+                        frameAgregados.setSize(500, 730);
+                        frameAgregados.setLayout(null);
+                        frameAgregados.setVisible(true);
+
+                        JPanel panelAgregados = new JPanel();
+                        panelAgregados.setName("menu");
+                        panelAgregados.setSize(frameAgregados.getSize());
+                        panelAgregados.setLayout(null);
+                        panelAgregados.setVisible(true);
+
+                        JLabel labelAgregados2 = new JLabel("AGREGADOS");
+                        labelAgregados2.setName("labelAgregados2");
+                        labelAgregados2.setVisible(true);
+                        labelAgregados2.setFont(fuentes.get("Times New Roman"));
+                        labelAgregados2.setBounds(panelAgregados.getWidth()/2-150, 20, 300, 50);
+                        panelAgregados.add(labelAgregados2);
+
+                        JButton botonTipoAgregado = new JButton("Añadir tipo de agregado");
+                        botonTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, labelAgregados2.getHeight()+labelAgregados2.getY()+120, 200, 50);
+                        botonTipoAgregado.setVisible(true);
+                        panelAgregados.add(botonTipoAgregado);
+
+                        JButton botonAgregado = new JButton("Añadir agregado");
+                        botonAgregado.setBounds(panelAgregados.getWidth()/2-100, botonTipoAgregado.getHeight()+botonTipoAgregado.getY()+40, 200, 50);
+                        botonAgregado.setVisible(true);
+                        panelAgregados.add(botonAgregado);
+
+                        JButton botonEditTipoAgregado = new JButton("Editar tipo de agregado");
+                        botonEditTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, botonAgregado.getHeight()+botonAgregado.getY()+40, 200, 50);
+                        botonEditTipoAgregado.setVisible(true);
+                        panelAgregados.add(botonEditTipoAgregado);
+
+                        JButton botonEditAgregado = new JButton("Editar agregado");
+                        botonEditAgregado.setBounds(panelAgregados.getWidth()/2-100, botonEditTipoAgregado.getHeight()+botonEditTipoAgregado.getY()+40, 200, 50);
+                        botonEditAgregado.setVisible(true);
+                        panelAgregados.add(botonEditAgregado);
+
+                        frameAgregados.add(panelAgregados);
+                    }
+                });
             }
         });
     }
 
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante("La cantina");
+
+        fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
+        fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
 
         restaurante.agregarPlato("Milanesa con puré de papas", 0.0f);
         restaurante.agregarPlato("Ravioles rellenos con carne", 0f);
