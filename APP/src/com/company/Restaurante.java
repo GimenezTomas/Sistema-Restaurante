@@ -595,8 +595,9 @@ public class Restaurante {
 
         JLabel nombreSistema = new JLabel();
         nombreSistema.setText(restaurante.getNombre());
-        nombreSistema.setSize(150, 50);
+        nombreSistema.setSize(250, 50);
         nombreSistema.setLocation(ventana.getWidth() / 2 - nombreSistema.getWidth() / 2, 100);
+        nombreSistema.setFont(fuentes.get("Times New Roman"));
         panelMenu.add(nombreSistema);
 
         JLabel labelIngresar = new JLabel();
@@ -837,3 +838,16 @@ public class Restaurante {
         });
     }
 }
+ /*
+    Tomás:
+    -Desarrollar "editar plato" de 0
+    -Desarrollar "Ver plato" de 0
+    -Desarrollar la logica en añadir plato
+        -manejar los datos ingresados
+        -agregar el plato
+        -Desarrollar "AGREGADOS"
+            -Desarrollar "Añadir tipo agregado"
+            -Desarrollar "Añadir agregado"
+            -Desarrollar "Editar tipo agregado"
+            -Desarrollar "Editar agregado"
+ */
