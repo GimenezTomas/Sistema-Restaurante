@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
@@ -263,7 +265,7 @@ public class Restaurante {
         return pedidoProx;
     }
 
-    public void agregarPlato(String nombre, Float precio){
+    public boolean agregarPlato(String nombre, String precio, String imagen, String descripcion, String tiempoDemora){
         boolean ok = true;
         for (Plato plato: this.platos) {
             if (plato.getNombre().equals(nombre)){
@@ -271,12 +273,29 @@ public class Restaurante {
             }
         }
         if (ok) {
-            this.platos.add(new Plato(nombre, precio));
-            HashMap<String, Object> platoNuevo = new HashMap<>();
-            platoNuevo.put("nombre", nombre);
-            platoNuevo.put("precio", precio);
-            platoNuevo.put("Restaurante_nombre", this.nombre);
+            this.platos.add(new Plato(nombre, Float.parseFloat(precio), new File(imagen), descripcion, tiempoDemora));
+            /*agregar en mongo*/
         }
+        else{
+            JOptionPane.showMessageDialog(null, "El plato ya existe");
+        }
+
+        return ok;
+    }
+
+    public boolean agregarPlato(Plato newPlato){
+        boolean ok = true;
+        for (Plato plato: this.platos) {
+            if (plato.getNombre().equals(newPlato.getNombre())){
+                ok = false;
+            }
+        }
+        if (ok) {
+            this.platos.add(newPlato);
+            /*agregar en mongo*/
+        }
+
+        return ok;
     }
     public void ocuparMesa(JFrame ventana, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack, boolean ocupar) {
         cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
@@ -361,6 +380,169 @@ public class Restaurante {
 
     public void agregarMesa(Mesa mesa){
         this.mesas.add(mesa);
+    }
+
+    public void crearMenuAgregados(JPanel panelAgregados, JFrame frameAgregados, Plato plato){
+        cleanPanel(panelAgregados, new Component[]{});
+
+        JLabel labelAgregados2 = new JLabel("AGREGADOS");
+        labelAgregados2.setName("labelAgregados2");
+        labelAgregados2.setVisible(true);
+        labelAgregados2.setFont(fuentes.get("Times New Roman"));
+        labelAgregados2.setBounds(panelAgregados.getWidth()/2-150, 20, 300, 50);
+        panelAgregados.add(labelAgregados2);
+
+        JButton botonTipoAgregado = new JButton("Añadir tipo de agregado");
+        botonTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, labelAgregados2.getHeight()+labelAgregados2.getY()+120, 200, 50);
+        botonTipoAgregado.setVisible(true);
+        panelAgregados.add(botonTipoAgregado);
+
+        JButton botonAgregado = new JButton("Añadir agregado");
+        botonAgregado.setBounds(panelAgregados.getWidth()/2-100, botonTipoAgregado.getHeight()+botonTipoAgregado.getY()+40, 200, 50);
+        botonAgregado.setVisible(true);
+        panelAgregados.add(botonAgregado);
+
+        JButton botonEditTipoAgregado = new JButton("Editar tipo de agregado");
+        botonEditTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, botonAgregado.getHeight()+botonAgregado.getY()+40, 200, 50);
+        botonEditTipoAgregado.setVisible(true);
+        panelAgregados.add(botonEditTipoAgregado);
+
+        JButton botonEditAgregado = new JButton("Editar agregado");
+        botonEditAgregado.setBounds(panelAgregados.getWidth()/2-100, botonEditTipoAgregado.getHeight()+botonEditTipoAgregado.getY()+40, 200, 50);
+        botonEditAgregado.setVisible(true);
+        panelAgregados.add(botonEditAgregado);
+
+        JButton botonSalir = new JButton("Salir");
+        botonSalir.setBounds(panelAgregados.getWidth()/2-125, 550, 100, 50);
+        botonSalir.setVisible(true);
+
+        botonSalir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                crearMenuAgregados(panelAgregados, frameAgregados, plato);
+            }
+        });
+        botonTipoAgregado.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cleanPanel(panelAgregados, new Component[]{});
+
+                panelAgregados.add(labelAgregados2);
+
+                JLabel labelNuevaSeccion = new JLabel("Ingresa la nueva seccion de agregados que desees");
+                labelNuevaSeccion.setName("labelNuevaSeccion");
+                labelNuevaSeccion.setVisible(true);
+                labelNuevaSeccion.setFont(fuentes.get("Garamond"));
+                labelNuevaSeccion.setBounds(panelAgregados.getWidth()/2-175, 200, 350, 50);
+                panelAgregados.add(labelNuevaSeccion);
+
+                JTextField textFieldNuevaSeccion = new JTextField();
+                textFieldNuevaSeccion.setSize(450, 40);
+                textFieldNuevaSeccion.setLocation(panelAgregados.getWidth() / 2 - 230, labelNuevaSeccion.getY() + labelNuevaSeccion.getHeight() + 2);
+                textFieldNuevaSeccion.setVisible(true);
+                textFieldNuevaSeccion.setName("textFieldNuevaSeccion");
+                panelAgregados.add(textFieldNuevaSeccion);
+
+                JLabel labelImportancia = new JLabel("¿Esta nueva seccion debe ser completada de forma obligatoria?");
+                labelImportancia.setName("labelImportancia");
+                labelImportancia.setVisible(true);
+                labelImportancia.setFont(fuentes.get("Garamond"));
+                labelImportancia.setBounds(panelAgregados.getWidth()/2-200, textFieldNuevaSeccion.getY() + textFieldNuevaSeccion.getHeight() + 30, 400, 50);
+                panelAgregados.add(labelImportancia);
+
+
+                JComboBox comboBoxImportancia = new JComboBox();
+                comboBoxImportancia.setName("comboboxFechas");
+                comboBoxImportancia.setBounds(panelAgregados.getWidth()/2-100, labelImportancia.getY() + labelImportancia.getHeight() + 2, 200, 20);
+                comboBoxImportancia.addItem("NO");
+                comboBoxImportancia.addItem("SI");
+                comboBoxImportancia.setVisible(true);
+                panelAgregados.add(comboBoxImportancia);
+
+                JButton botonAgSeccion = new JButton("Agregar");
+                botonAgSeccion.setBounds(panelAgregados.getWidth()/2+25, 550, 100, 50);
+                botonAgSeccion.setVisible(true);
+                panelAgregados.add(botonAgSeccion);
+
+                panelAgregados.add(botonSalir);
+
+                botonAgSeccion.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        System.out.println("entre");
+                        if(textFieldNuevaSeccion.getText().equals("")){
+                            JOptionPane.showMessageDialog(null, "Formulario incompleto");
+                        }
+                        else{
+                            boolean ok=true;
+                            if(comboBoxImportancia.getSelectedItem().equals("NO")){
+                                ok=false;
+                            }
+                            /*agregar que se fije si hay una seccion con el mismo nombre*/
+                            HashMap<String, Float> agregado=new HashMap<>();
+                            HashMap<Boolean, HashMap<String, Float>> seccion = new HashMap<>();
+                            seccion.put(ok, agregado);
+                            plato.getAgregados().put(textFieldNuevaSeccion.getText(), seccion);
+                            crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                        }
+                    }
+                });
+            }
+        });
+
+        botonAgregado.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cleanPanel(panelAgregados, new Component[]{});
+
+                panelAgregados.add(labelAgregados2);
+
+                JLabel labelNuevaSeccion = new JLabel("Ingresa la seccion de agregados que desees");
+                labelNuevaSeccion.setName("labelNuevaSeccion");
+                labelNuevaSeccion.setVisible(true);
+                labelNuevaSeccion.setFont(fuentes.get("Garamond"));
+                labelNuevaSeccion.setBounds(panelAgregados.getWidth()/2-125, 200, 250, 50);
+                panelAgregados.add(labelNuevaSeccion);
+
+                JComboBox comboBoxImportancia = new JComboBox();
+                comboBoxImportancia.setName("comboboxFechas");
+                comboBoxImportancia.setBounds(panelAgregados.getWidth()/2-100, labelNuevaSeccion.getY() + labelNuevaSeccion.getHeight() + 2, 200, 20);
+                comboBoxImportancia.setVisible(true);
+
+                for(String seccion: plato.getAgregados().keySet()){
+                    comboBoxImportancia.addItem(seccion);
+                }
+                panelAgregados.add(comboBoxImportancia);
+
+                panelAgregados.add(botonSalir);
+
+                JButton botonAgSeccion = new JButton("Agregar");
+                botonAgSeccion.setBounds(panelAgregados.getWidth()/2+25, 550, 100, 50);
+                botonAgSeccion.setVisible(true);
+                panelAgregados.add(botonAgSeccion);
+
+                botonAgSeccion.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        /*hacerlo*/
+                    }
+                });
+            }
+        });
+
+        botonEditTipoAgregado.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+        });
+
+        botonEditAgregado.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+        });
     }
 
     public void gestionarRestaurante(JFrame ventana, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack){
@@ -547,34 +729,23 @@ public class Restaurante {
                             panelAgregados.setLayout(null);
                             panelAgregados.setVisible(true);
 
-                            JLabel labelAgregados2 = new JLabel("AGREGADOS");
-                            labelAgregados2.setName("labelAgregados2");
-                            labelAgregados2.setVisible(true);
-                            labelAgregados2.setFont(fuentes.get("Times New Roman"));
-                            labelAgregados2.setBounds(panelAgregados.getWidth()/2-150, 20, 300, 50);
-                            panelAgregados.add(labelAgregados2);
+                            Plato plato = new Plato(datosNewPlato.get("Nombre"), Float.parseFloat(datosNewPlato.get("Precio")), new File(datosNewPlato.get("Imagen")), datosNewPlato.get("Descripcion"), datosNewPlato.get("TiempoDemora"));
 
-                            JButton botonTipoAgregado = new JButton("Añadir tipo de agregado");
-                            botonTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, labelAgregados2.getHeight()+labelAgregados2.getY()+120, 200, 50);
-                            botonTipoAgregado.setVisible(true);
-                            panelAgregados.add(botonTipoAgregado);
-
-                            JButton botonAgregado = new JButton("Añadir agregado");
-                            botonAgregado.setBounds(panelAgregados.getWidth()/2-100, botonTipoAgregado.getHeight()+botonTipoAgregado.getY()+40, 200, 50);
-                            botonAgregado.setVisible(true);
-                            panelAgregados.add(botonAgregado);
-
-                            JButton botonEditTipoAgregado = new JButton("Editar tipo de agregado");
-                            botonEditTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, botonAgregado.getHeight()+botonAgregado.getY()+40, 200, 50);
-                            botonEditTipoAgregado.setVisible(true);
-                            panelAgregados.add(botonEditTipoAgregado);
-
-                            JButton botonEditAgregado = new JButton("Editar agregado");
-                            botonEditAgregado.setBounds(panelAgregados.getWidth()/2-100, botonEditTipoAgregado.getHeight()+botonEditTipoAgregado.getY()+40, 200, 50);
-                            botonEditAgregado.setVisible(true);
-                            panelAgregados.add(botonEditAgregado);
+                            crearMenuAgregados(panelAgregados, frameAgregados, plato);
 
                             frameAgregados.add(panelAgregados);
+
+                            frameAgregados.addWindowListener(new WindowAdapter() {
+                                @Override
+                                public void windowClosing(WindowEvent event) {
+                                    agregarPlato(plato);
+                                }
+                            });
+                        }
+                        else if(ok && !opciones.getSelectedItem().equals("SI")){
+                            if(agregarPlato(datosNewPlato.get("Nombre"), datosNewPlato.get("Precio"), datosNewPlato.get("Imagen"), datosNewPlato.get("Descripcion"), datosNewPlato.get("TiempoDemora"))){
+                                JOptionPane.showMessageDialog(null, "El plato se agrego correctamente");
+                            }
                         }
                     }
                 });
@@ -582,17 +753,19 @@ public class Restaurante {
         });
     }
 
+    //public void crearPanelMenu(){}
+
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante("La cantina");
 
         fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
         fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
 
-        restaurante.agregarPlato("Milanesa con puré de papas", 0.0f);
+        /*restaurante.agregarPlato("Milanesa con puré de papas", 0.0f);
         restaurante.agregarPlato("Ravioles rellenos con carne", 0f);
         restaurante.agregarPlato("Pizza a la Piedra", 0f);
         restaurante.agregarPlato("Polenta con salsa Fileto", 0f);
-        restaurante.agregarPlato("Arroz primavera", 0f);
+        restaurante.agregarPlato("Arroz primavera", 0f);*/
 
         for (int i = 0; i < 6; i++) {
             restaurante.agregarMesa(new Mesa());
@@ -877,11 +1050,10 @@ public class Restaurante {
     -Desarrollar "editar plato" de 0
     -Desarrollar "Ver plato" de 0
     -Desarrollar la logica en añadir plato
-        -manejar los datos ingresados
-        -agregar el plato
         -Desarrollar "AGREGADOS" (hacer que sea un modal, que se bloquee la ventana donde se ingresan los datos hasta que se cierre "agregados")
-            -Desarrollar "Añadir tipo agregado"
+            -Desarrollar "Añadir tipo agregado"-termiando(agregar que no se puedan repetir)
             -Desarrollar "Añadir agregado"
             -Desarrollar "Editar tipo agregado"
             -Desarrollar "Editar agregado"
  */
+//C:\Users\Familia Gimenez\Documents\GitHub\ProyectoFinal\Front-end\Images\ñoquis.jpg
