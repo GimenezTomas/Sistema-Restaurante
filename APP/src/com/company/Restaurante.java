@@ -502,47 +502,80 @@ public class Restaurante {
                 botonAgregar.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        /*if agregados ok y todo los demas inputs ok*/
 
-                        JFrame frameAgregados = new JFrame("AGREGADOS");
-                        frameAgregados.setSize(500, 730);
-                        frameAgregados.setLayout(null);
-                        frameAgregados.setVisible(true);
+                        HashMap<String, String> datosNewPlato = new HashMap<>();
+                        boolean ok = true;
 
-                        JPanel panelAgregados = new JPanel();
-                        panelAgregados.setName("menu");
-                        panelAgregados.setSize(frameAgregados.getSize());
-                        panelAgregados.setLayout(null);
-                        panelAgregados.setVisible(true);
+                        if(textFieldTiempoDemora.getText().equals("")||textFieldPrecio.getText().equals("")||textFieldDescripcion.getText().equals("") || textFieldImagen.getText().equals("") || textFieldName.getText().equals("")){
+                            ok = false;
+                            JOptionPane.showMessageDialog(null, "Formulario incompleto");
+                        }
+                        else {
+                            try{
+                                float a = Float.parseFloat(textFieldPrecio.getText());
+                                if(a<0){
+                                    ok=false;
+                                    JOptionPane.showMessageDialog(null, "El precio es menor a 0");
+                                }
+                            }catch (NumberFormatException ex){
+                                ok = false;
+                                JOptionPane.showMessageDialog(null, "La sintaxis del precio es incorrecta, ej: 200.0");
+                            }
+                            if(!new File(textFieldImagen.getText()).exists() || (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length()-4).equals(".png")) && (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length()-4).equals(".png")) && (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length()-4).equals(".jpg"))){
+                                ok = false;
+                                JOptionPane.showMessageDialog(null, "El archivo no es una imagen o la ubicacion es erronea, las imagenes solo pueden ser png o jpg");
+                            }
+                        }
 
-                        JLabel labelAgregados2 = new JLabel("AGREGADOS");
-                        labelAgregados2.setName("labelAgregados2");
-                        labelAgregados2.setVisible(true);
-                        labelAgregados2.setFont(fuentes.get("Times New Roman"));
-                        labelAgregados2.setBounds(panelAgregados.getWidth()/2-150, 20, 300, 50);
-                        panelAgregados.add(labelAgregados2);
+                        if(ok){
+                            datosNewPlato.put("Nombre", textFieldName.getText());
+                            datosNewPlato.put("Descripcion", textFieldDescripcion.getText());
+                            datosNewPlato.put("TiempoDemora", textFieldTiempoDemora.getText());
+                            datosNewPlato.put("Precio", textFieldPrecio.getText());
+                            datosNewPlato.put("Imagen", textFieldImagen.getText());
+                        }
+                        if (ok && opciones.getSelectedItem().equals("SI")){
 
-                        JButton botonTipoAgregado = new JButton("Añadir tipo de agregado");
-                        botonTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, labelAgregados2.getHeight()+labelAgregados2.getY()+120, 200, 50);
-                        botonTipoAgregado.setVisible(true);
-                        panelAgregados.add(botonTipoAgregado);
+                            JFrame frameAgregados = new JFrame("AGREGADOS");
+                            frameAgregados.setSize(500, 730);
+                            frameAgregados.setLayout(null);
+                            frameAgregados.setVisible(true);
 
-                        JButton botonAgregado = new JButton("Añadir agregado");
-                        botonAgregado.setBounds(panelAgregados.getWidth()/2-100, botonTipoAgregado.getHeight()+botonTipoAgregado.getY()+40, 200, 50);
-                        botonAgregado.setVisible(true);
-                        panelAgregados.add(botonAgregado);
+                            JPanel panelAgregados = new JPanel();
+                            panelAgregados.setName("menu");
+                            panelAgregados.setSize(frameAgregados.getSize());
+                            panelAgregados.setLayout(null);
+                            panelAgregados.setVisible(true);
 
-                        JButton botonEditTipoAgregado = new JButton("Editar tipo de agregado");
-                        botonEditTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, botonAgregado.getHeight()+botonAgregado.getY()+40, 200, 50);
-                        botonEditTipoAgregado.setVisible(true);
-                        panelAgregados.add(botonEditTipoAgregado);
+                            JLabel labelAgregados2 = new JLabel("AGREGADOS");
+                            labelAgregados2.setName("labelAgregados2");
+                            labelAgregados2.setVisible(true);
+                            labelAgregados2.setFont(fuentes.get("Times New Roman"));
+                            labelAgregados2.setBounds(panelAgregados.getWidth()/2-150, 20, 300, 50);
+                            panelAgregados.add(labelAgregados2);
 
-                        JButton botonEditAgregado = new JButton("Editar agregado");
-                        botonEditAgregado.setBounds(panelAgregados.getWidth()/2-100, botonEditTipoAgregado.getHeight()+botonEditTipoAgregado.getY()+40, 200, 50);
-                        botonEditAgregado.setVisible(true);
-                        panelAgregados.add(botonEditAgregado);
+                            JButton botonTipoAgregado = new JButton("Añadir tipo de agregado");
+                            botonTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, labelAgregados2.getHeight()+labelAgregados2.getY()+120, 200, 50);
+                            botonTipoAgregado.setVisible(true);
+                            panelAgregados.add(botonTipoAgregado);
 
-                        frameAgregados.add(panelAgregados);
+                            JButton botonAgregado = new JButton("Añadir agregado");
+                            botonAgregado.setBounds(panelAgregados.getWidth()/2-100, botonTipoAgregado.getHeight()+botonTipoAgregado.getY()+40, 200, 50);
+                            botonAgregado.setVisible(true);
+                            panelAgregados.add(botonAgregado);
+
+                            JButton botonEditTipoAgregado = new JButton("Editar tipo de agregado");
+                            botonEditTipoAgregado.setBounds(panelAgregados.getWidth()/2-100, botonAgregado.getHeight()+botonAgregado.getY()+40, 200, 50);
+                            botonEditTipoAgregado.setVisible(true);
+                            panelAgregados.add(botonEditTipoAgregado);
+
+                            JButton botonEditAgregado = new JButton("Editar agregado");
+                            botonEditAgregado.setBounds(panelAgregados.getWidth()/2-100, botonEditTipoAgregado.getHeight()+botonEditTipoAgregado.getY()+40, 200, 50);
+                            botonEditAgregado.setVisible(true);
+                            panelAgregados.add(botonEditAgregado);
+
+                            frameAgregados.add(panelAgregados);
+                        }
                     }
                 });
             }
@@ -839,13 +872,14 @@ public class Restaurante {
     }
 }
  /*
+    puse para que las imagenes solo puedan ser png o jpg fijarse si hay que cambiarlo
     Tomás:
     -Desarrollar "editar plato" de 0
     -Desarrollar "Ver plato" de 0
     -Desarrollar la logica en añadir plato
         -manejar los datos ingresados
         -agregar el plato
-        -Desarrollar "AGREGADOS"
+        -Desarrollar "AGREGADOS" (hacer que sea un modal, que se bloquee la ventana donde se ingresan los datos hasta que se cierre "agregados")
             -Desarrollar "Añadir tipo agregado"
             -Desarrollar "Añadir agregado"
             -Desarrollar "Editar tipo agregado"
