@@ -474,8 +474,9 @@ public class Restaurante {
                         }
                         else{
                             boolean ok=true, check=true;
-                            for(String seccion: plato.getAgregados().keySet()){
-                                if (seccion.equals(textFieldNuevaSeccion.getText())){
+
+                            for(TipoAgregados agregados: plato.getAgregados()){
+                                if (agregados.getNombre().equals(textFieldNuevaSeccion.getText())){
                                     check=false;
                                 }
                             }
@@ -487,10 +488,11 @@ public class Restaurante {
                                     ok=false;
                                 }
                                 /*agregar que se fije si hay una seccion con el mismo nombre*/
-                                HashMap<String, Float> agregado=new HashMap<>();
+                                /*HashMap<String, Float> agregado=new HashMap<>();
                                 HashMap<Boolean, HashMap<String, Float>> seccion = new HashMap<>();
-                                seccion.put(ok, agregado);
-                                plato.getAgregados().put(textFieldNuevaSeccion.getText(), seccion);
+                                seccion.put(ok, agregado);*/
+                                plato.getAgregados().add(new TipoAgregados(textFieldNuevaSeccion.getText(), ok));
+                                //plato.getAgregados().put(textFieldNuevaSeccion.getText(), seccion);
                                 crearMenuAgregados(panelAgregados, frameAgregados, plato);
                             }
                         }
@@ -517,9 +519,10 @@ public class Restaurante {
                 comboBoxImportancia.setBounds(panelAgregados.getWidth()/2-100, labelNuevaSeccion.getY() + labelNuevaSeccion.getHeight() + 2, 200, 20);
                 comboBoxImportancia.setVisible(true);
 
-                for(String seccion: plato.getAgregados().keySet()){
-                    comboBoxImportancia.addItem(seccion);
+                for(TipoAgregados agregados: plato.getAgregados()){
+                    comboBoxImportancia.addItem(agregados.getNombre());
                 }
+
                 panelAgregados.add(comboBoxImportancia);
 
                 JLabel labelNuevoAgregado = new JLabel("Ingresa el nuevo agregado, ej: bolognesa");
@@ -564,7 +567,7 @@ public class Restaurante {
                             try{
                                 boolean ok=true;
                                 Float.parseFloat(textFieldAgregadoPrecio.getText());
-                                for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
+                                /*for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
                                     if(seccion.getKey().equals(comboBoxImportancia.getSelectedItem())){
                                         for(Map.Entry<Boolean, HashMap<String, Float>> sec: seccion.getValue().entrySet()){
                                             for(Map.Entry<String, Float> agregado : sec.getValue().entrySet() ){
@@ -576,16 +579,33 @@ public class Restaurante {
                                             }
                                         }
                                     }
+                                }*/
+
+                                for(TipoAgregados agregados : plato.getAgregados()){
+                                    for (String agregado: agregados.getAgregados().keySet()){
+                                        if (agregado.equals(textFieldNuevoAgregado.getText())){
+                                            ok=false;
+                                            JOptionPane.showMessageDialog(null, "Este agregado ya existe");
+                                            break;
+                                        }
+                                    }
                                 }
+
                                 if (ok){
-                                    for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
+                                    /*for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
                                         if(seccion.getKey().equals(comboBoxImportancia.getSelectedItem())){
                                             for(Map.Entry<Boolean, HashMap<String, Float>> sec: seccion.getValue().entrySet()){
                                                 sec.getValue().put(textFieldNuevoAgregado.getText(), Float.parseFloat(textFieldAgregadoPrecio.getText()));
                                                 break;
                                             }
                                         }
+                                    }*/
+                                    for(TipoAgregados agregados: plato.getAgregados()){
+                                        if(agregados.getNombre().equals(comboBoxImportancia.getSelectedItem())){
+                                            agregados.getAgregados().put(textFieldNuevoAgregado.getText(), Float.parseFloat(textFieldAgregadoPrecio.getText()));
+                                        }
                                     }
+
                                     cleanPanel(panelAgregados, new Component[]{});
                                     crearMenuAgregados(panelAgregados,frameAgregados, plato);
                                 }
@@ -1117,14 +1137,12 @@ public class Restaurante {
     }
 }
  /*
-    puse para que las imagenes solo puedan ser png o jpg fijarse si hay que cambiarlo
+    averiguar bien lo del modal porque si bien se puede hacer con Jdialog al no tener el boton para ocultar no se cargan los datos
     Tomás:
     -Desarrollar "editar plato" de 0
     -Desarrollar "Ver plato" de 0
     -Desarrollar la logica en añadir plato
         -Desarrollar "AGREGADOS" (hacer que sea un modal, que se bloquee la ventana donde se ingresan los datos hasta que se cierre "agregados")
-            -Desarrollar "Añadir tipo agregado"-termiando(agregar que no se puedan repetir)
-            -Desarrollar "Añadir agregado"
             -Desarrollar "Editar tipo agregado"
             -Desarrollar "Editar agregado"
  */

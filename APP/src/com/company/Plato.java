@@ -3,6 +3,7 @@ package com.company;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Plato {
     private String nombre;
@@ -10,7 +11,8 @@ public class Plato {
     private File img;
     private String descripcion;
     private String tiempoDemora;
-    private HashMap<String, HashMap<Boolean, HashMap<String, Float>>> agregados = new HashMap<>();
+    private HashSet<TipoAgregados> agregados = new HashSet<>();
+    //private HashMap<String, HashMap<Boolean, HashMap<String, Float>>> agregados = new HashMap<>();
     //private HashMap<String/*tipo ej:salsas*/, HashMap<String/*importancia, ej:tipo:"porcion" importancia:"true=indispensable/false = despreciable"*/, HashMap<String, Float>/*agregado, ej: key="cheddar" value=15p*/>> agregados;
 
     //GETTERS && SETTERS
@@ -54,13 +56,20 @@ public class Plato {
         this.tiempoDemora = tiempoDemora;
     }
 
-    public HashMap<String, HashMap<Boolean, HashMap<String, Float>>> getAgregados() {
+    public HashSet<TipoAgregados> getAgregados() {
+        return agregados;
+    }
+
+    public void setAgregados(HashSet<TipoAgregados> agregados) {
+        this.agregados = agregados;
+    }
+/*public HashMap<String, HashMap<Boolean, HashMap<String, Float>>> getAgregados() {
         return agregados;
     }
 
     public void setAgregados(HashMap<String, HashMap<Boolean, HashMap<String, Float>>> agregados) {
         this.agregados = agregados;
-    }
+    }*/
 
     //CONSTRUCTOR
 
@@ -72,7 +81,7 @@ public class Plato {
         this.tiempoDemora = tiempoDemora;
     }
 
-    public Plato(String nombre, float precio, File img, String descripcion, String tiempoDemora, HashMap<String, HashMap<Boolean, HashMap<String, Float>>> agregados) {
+    public Plato(String nombre, float precio, File img, String descripcion, String tiempoDemora, HashSet<TipoAgregados> agregados) {
         this.nombre = nombre;
         this.precio = precio;
         this.img = img;
@@ -80,4 +89,12 @@ public class Plato {
         this.tiempoDemora = tiempoDemora;
         this.agregados = agregados;
     }
+/*public Plato(String nombre, float precio, File img, String descripcion, String tiempoDemora, HashMap<String, HashMap<Boolean, HashMap<String, Float>>> agregados) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.img = img;
+        this.descripcion = descripcion;
+        this.tiempoDemora = tiempoDemora;
+        this.agregados = agregados;
+    }*/
 }
