@@ -469,27 +469,35 @@ public class Restaurante {
                 botonAgSeccion.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        System.out.println("entre");
                         if(textFieldNuevaSeccion.getText().equals("")){
                             JOptionPane.showMessageDialog(null, "Formulario incompleto");
                         }
                         else{
-                            boolean ok=true;
-                            if(comboBoxImportancia.getSelectedItem().equals("NO")){
-                                ok=false;
+                            boolean ok=true, check=true;
+                            for(String seccion: plato.getAgregados().keySet()){
+                                if (seccion.equals(textFieldNuevaSeccion.getText())){
+                                    check=false;
+                                }
                             }
-                            /*agregar que se fije si hay una seccion con el mismo nombre*/
-                            HashMap<String, Float> agregado=new HashMap<>();
-                            HashMap<Boolean, HashMap<String, Float>> seccion = new HashMap<>();
-                            seccion.put(ok, agregado);
-                            plato.getAgregados().put(textFieldNuevaSeccion.getText(), seccion);
-                            crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                            if (!check){
+                                JOptionPane.showMessageDialog(null, "Esta seccion ya existe");
+                            }
+                            else{
+                                if(comboBoxImportancia.getSelectedItem().equals("NO")){
+                                    ok=false;
+                                }
+                                /*agregar que se fije si hay una seccion con el mismo nombre*/
+                                HashMap<String, Float> agregado=new HashMap<>();
+                                HashMap<Boolean, HashMap<String, Float>> seccion = new HashMap<>();
+                                seccion.put(ok, agregado);
+                                plato.getAgregados().put(textFieldNuevaSeccion.getText(), seccion);
+                                crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                            }
                         }
                     }
                 });
             }
         });
-
         botonAgregado.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -514,6 +522,34 @@ public class Restaurante {
                 }
                 panelAgregados.add(comboBoxImportancia);
 
+                JLabel labelNuevoAgregado = new JLabel("Ingresa el nuevo agregado, ej: bolognesa");
+                labelNuevoAgregado.setName("labelNuevoAgregado");
+                labelNuevoAgregado.setVisible(true);
+                labelNuevoAgregado.setFont(fuentes.get("Garamond"));
+                labelNuevoAgregado.setBounds(panelAgregados.getWidth()/2-150, comboBoxImportancia.getY()+comboBoxImportancia.getHeight()+20, 350, 50);
+                panelAgregados.add(labelNuevoAgregado);
+
+                JTextField textFieldNuevoAgregado = new JTextField();
+                textFieldNuevoAgregado.setSize(450, 40);
+                textFieldNuevoAgregado.setLocation(panelAgregados.getWidth() / 2 - 230, labelNuevoAgregado.getY() + labelNuevoAgregado.getHeight() + 2);
+                textFieldNuevoAgregado.setVisible(true);
+                textFieldNuevoAgregado.setName("textFieldNuevoAgregado");
+                panelAgregados.add(textFieldNuevoAgregado);
+
+                JLabel labelNuevoAgregadoPrecio = new JLabel("Ingresa el precio del agregado, ej: 145.15");
+                labelNuevoAgregadoPrecio.setName("labelNuevoAgregadoPrecio");
+                labelNuevoAgregadoPrecio.setVisible(true);
+                labelNuevoAgregadoPrecio.setFont(fuentes.get("Garamond"));
+                labelNuevoAgregadoPrecio.setBounds(panelAgregados.getWidth()/2-150, textFieldNuevoAgregado.getY()+textFieldNuevoAgregado.getHeight()+20, 350, 50);
+                panelAgregados.add(labelNuevoAgregadoPrecio);
+
+                JTextField textFieldAgregadoPrecio = new JTextField();
+                textFieldAgregadoPrecio.setSize(450, 40);
+                textFieldAgregadoPrecio.setLocation(panelAgregados.getWidth() / 2 - 230, labelNuevoAgregadoPrecio.getY() + labelNuevoAgregadoPrecio.getHeight() + 2);
+                textFieldAgregadoPrecio.setVisible(true);
+                textFieldAgregadoPrecio.setName("textFieldAgregadoPrecio");
+                panelAgregados.add(textFieldAgregadoPrecio);
+
                 panelAgregados.add(botonSalir);
 
                 JButton botonAgSeccion = new JButton("Agregar");
@@ -524,7 +560,43 @@ public class Restaurante {
                 botonAgSeccion.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        /*hacerlo*/
+                        if(!comboBoxImportancia.getSelectedItem().equals("") && !textFieldNuevoAgregado.getText().equals("") && !textFieldNuevoAgregado.getText().equals("")){
+                            try{
+                                boolean ok=true;
+                                Float.parseFloat(textFieldAgregadoPrecio.getText());
+                                for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
+                                    if(seccion.getKey().equals(comboBoxImportancia.getSelectedItem())){
+                                        for(Map.Entry<Boolean, HashMap<String, Float>> sec: seccion.getValue().entrySet()){
+                                            for(Map.Entry<String, Float> agregado : sec.getValue().entrySet() ){
+                                                if(agregado.getKey().equals(textFieldNuevoAgregado.getText())){
+                                                    ok=false;
+                                                    JOptionPane.showMessageDialog(null, "Este agregado ya existe");
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if (ok){
+                                    for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
+                                        if(seccion.getKey().equals(comboBoxImportancia.getSelectedItem())){
+                                            for(Map.Entry<Boolean, HashMap<String, Float>> sec: seccion.getValue().entrySet()){
+                                                sec.getValue().put(textFieldNuevoAgregado.getText(), Float.parseFloat(textFieldAgregadoPrecio.getText()));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    cleanPanel(panelAgregados, new Component[]{});
+                                    crearMenuAgregados(panelAgregados,frameAgregados, plato);
+                                }
+                            }
+                            catch (NumberFormatException ex){
+                                JOptionPane.showMessageDialog(null, "La sintaxis del precio es incorrecta, ej: 185.15");
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "El formulario esta incompleto");
+                        }
                     }
                 });
             }
@@ -533,7 +605,7 @@ public class Restaurante {
         botonEditTipoAgregado.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                /*usar scrollbar, poner el nombre, precio, al lado un simbolo boton editar y por ultimo un boton delete*/
             }
         });
 
@@ -545,7 +617,7 @@ public class Restaurante {
         });
     }
 
-    public void gestionarRestaurante(JFrame ventana, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack){
+    public void gestionarRestaurante(JFrame ventana, JPanel panelIngresar){
 
         JPanel panel = new JPanel();
         panel.setName("panelGR");
@@ -677,7 +749,7 @@ public class Restaurante {
                         ventana.remove(panel);
 
                         cleanPanel(panel, new Component[]{});
-                        gestionarRestaurante(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack);
+                        gestionarRestaurante(ventana, panelIngresar);
                     }
                 });
 
@@ -939,7 +1011,7 @@ public class Restaurante {
                 });
             }
         });
-        /*PEDIR*/
+        /*GESTIONAR RESTAURANTE*/
         boton3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -948,7 +1020,7 @@ public class Restaurante {
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
 
-                restaurante.gestionarRestaurante(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack);
+                restaurante.gestionarRestaurante(ventana, panelIngresar);
                 /*boton11.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
