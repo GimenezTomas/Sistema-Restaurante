@@ -15,11 +15,37 @@ public class Restaurante {
     private HashSet<Plato> platos = new HashSet<>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     private String nombre;
+    private File imagen;
+    private String direccion;
     private ArrayList<Ocupacion> ocupaciones = new ArrayList<>();
     public static SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
+
+    public File getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(File imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public ArrayList<Ocupacion> getOcupaciones() {
+        return ocupaciones;
+    }
+
+    public void setOcupaciones(ArrayList<Ocupacion> ocupaciones) {
+        this.ocupaciones = ocupaciones;
+    }
 
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
@@ -288,6 +314,10 @@ public class Restaurante {
         for (Plato plato: this.platos) {
             if (plato.getNombre().equals(newPlato.getNombre())){
                 ok = false;
+                System.out.println("entre al ok=false, newPlato: "+newPlato.getNombre()+" "+newPlato.getAgregados().size());
+                System.out.println("plato: "+plato.getNombre()+" "+plato.getAgregados().size());
+                plato=newPlato;
+                break;
             }
         }
         if (ok) {
@@ -487,12 +517,7 @@ public class Restaurante {
                                 if(comboBoxImportancia.getSelectedItem().equals("NO")){
                                     ok=false;
                                 }
-                                /*agregar que se fije si hay una seccion con el mismo nombre*/
-                                /*HashMap<String, Float> agregado=new HashMap<>();
-                                HashMap<Boolean, HashMap<String, Float>> seccion = new HashMap<>();
-                                seccion.put(ok, agregado);*/
                                 plato.getAgregados().add(new TipoAgregados(textFieldNuevaSeccion.getText(), ok));
-                                //plato.getAgregados().put(textFieldNuevaSeccion.getText(), seccion);
                                 crearMenuAgregados(panelAgregados, frameAgregados, plato);
                             }
                         }
@@ -567,19 +592,6 @@ public class Restaurante {
                             try{
                                 boolean ok=true;
                                 Float.parseFloat(textFieldAgregadoPrecio.getText());
-                                /*for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
-                                    if(seccion.getKey().equals(comboBoxImportancia.getSelectedItem())){
-                                        for(Map.Entry<Boolean, HashMap<String, Float>> sec: seccion.getValue().entrySet()){
-                                            for(Map.Entry<String, Float> agregado : sec.getValue().entrySet() ){
-                                                if(agregado.getKey().equals(textFieldNuevoAgregado.getText())){
-                                                    ok=false;
-                                                    JOptionPane.showMessageDialog(null, "Este agregado ya existe");
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }*/
 
                                 for(TipoAgregados agregados : plato.getAgregados()){
                                     for (String agregado: agregados.getAgregados().keySet()){
@@ -592,14 +604,6 @@ public class Restaurante {
                                 }
 
                                 if (ok){
-                                    /*for(Map.Entry<String, HashMap<Boolean, HashMap<String, Float>>> seccion: plato.getAgregados().entrySet()){
-                                        if(seccion.getKey().equals(comboBoxImportancia.getSelectedItem())){
-                                            for(Map.Entry<Boolean, HashMap<String, Float>> sec: seccion.getValue().entrySet()){
-                                                sec.getValue().put(textFieldNuevoAgregado.getText(), Float.parseFloat(textFieldAgregadoPrecio.getText()));
-                                                break;
-                                            }
-                                        }
-                                    }*/
                                     for(TipoAgregados agregados: plato.getAgregados()){
                                         if(agregados.getNombre().equals(comboBoxImportancia.getSelectedItem())){
                                             agregados.getAgregados().put(textFieldNuevoAgregado.getText(), Float.parseFloat(textFieldAgregadoPrecio.getText()));
@@ -626,6 +630,72 @@ public class Restaurante {
             @Override
             public void mouseClicked(MouseEvent e) {
                 /*usar scrollbar, poner el nombre, precio, al lado un simbolo boton editar y por ultimo un boton delete*/
+                cleanPanel(panelAgregados, new Component[]{});
+                frameAgregados.remove(panelAgregados);
+
+                panelAgregados.add(labelAgregados2);
+
+                JLabel labelExplicacion = new JLabel("Si quieres cambiar el nombre de la seccion, reescribelo en el input y preciona el lapiz. En caso de querer borrarlo, presiona la cruz");
+                labelExplicacion.setName("labelExplicacion");
+                labelExplicacion.setVisible(true);
+                labelExplicacion.setFont(fuentes.get("Garamond"));
+                labelExplicacion.setBounds(panelAgregados.getWidth()/2-225, labelAgregados2.getY()+labelAgregados2.getHeight()+30, 450, 50);
+                panelAgregados.add(labelExplicacion);
+
+                int vueltas = 0;
+
+                if (plato.getAgregados().size()==0){
+                    labelExplicacion.setText("No hay secciones que editar");
+                }
+                else{
+                    for(TipoAgregados agregados:plato.getAgregados()){
+                        JTextField textFieldSeccion = new JTextField();
+                        textFieldSeccion.setSize(200, 50);
+                        if (vueltas==0){
+                            textFieldSeccion.setLocation(50, labelExplicacion.getY() + labelExplicacion.getHeight() + 15);
+                        }
+                        else{
+                            textFieldSeccion.setLocation(50, textFieldSeccion.getY() + textFieldSeccion.getHeight() + 15);
+                        }
+                        textFieldSeccion.setVisible(true);
+                        textFieldSeccion.setName("textFieldSeccion"+vueltas);
+                        textFieldSeccion.setText(agregados.getNombre());
+                        panelAgregados.add(textFieldSeccion);
+
+                        JComboBox opciones = new JComboBox();
+                        opciones.setName("comboBoxOpciones");
+                        opciones.setBounds(textFieldSeccion.getWidth() + textFieldSeccion.getX()+1, textFieldSeccion.getY(),100, 50);
+                        if(agregados.getIndispensable()){
+                            opciones.addItem("SI");
+                            opciones.addItem("NO");
+                        }
+                        else{
+                            opciones.addItem("NO");
+                            opciones.addItem("SI");
+                        }
+                        opciones.setVisible(true);
+                        panelAgregados.add(opciones);
+
+                        JButton botonEdit = new JButton("EDITAR");
+                        botonEdit.setBounds(textFieldSeccion.getX()+textFieldSeccion.getWidth()+1, textFieldSeccion.getY(), 10, 50);
+                        botonEdit.setVisible(true);
+                        panelAgregados.add(botonEdit);
+
+                        JButton botonDelete = new JButton("EDITAR");
+                        botonDelete.setBounds(botonEdit.getX()+botonEdit.getWidth()+1, botonEdit.getY(), 10, 50);
+                        botonDelete.setVisible(true);
+                        panelAgregados.add(botonDelete);
+
+                        vueltas++;
+                        panelAgregados.add(textFieldSeccion);
+                    }
+                }
+                botonSalir.setLocation(panelAgregados.getWidth()/2-botonSalir.getWidth()/2, panelAgregados.getComponent(panelAgregados.getComponents().length-1).getY()+panelAgregados.getComponent(panelAgregados.getComponents().length-1).getHeight()+50);
+                panelAgregados.add(botonSalir);
+                panelAgregados.setPreferredSize(new Dimension(1000, botonSalir.getHeight()+botonSalir.getY()+50));
+                JScrollPane scrollBar = new JScrollPane(panelAgregados, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//C:\Users\Familia Gimenez\Documents\Tomás\IACeh\tareas\tarea2 wps\Captura.png
+                frameAgregados.add(scrollBar);
             }
         });
 
@@ -643,7 +713,7 @@ public class Restaurante {
         panel.setName("panelGR");
         panel.setSize(1350, 700);
         panel.setLayout(null);
-        panel.setVisible(true);
+        panel.setVisible(false);
         ventana.add(panel);
 
         JButton boton1 = new JButton("AÑADIR PLATO");
@@ -662,7 +732,6 @@ public class Restaurante {
         panel.add(boton3);
 
         panel.setVisible(true);
-        ventana.add(panelIngresar);
 
         boton1.addMouseListener(new MouseAdapter() {
             @Override
@@ -812,7 +881,6 @@ public class Restaurante {
 
                             JFrame frameAgregados = new JFrame("AGREGADOS");
                             frameAgregados.setSize(500, 730);
-                            frameAgregados.setLayout(null);
                             frameAgregados.setVisible(true);
 
                             JPanel panelAgregados = new JPanel();
@@ -874,8 +942,7 @@ public class Restaurante {
         panelMenu.setName("menu");
         panelMenu.setSize(1350, 700);
         panelMenu.setLayout(null);
-        panelMenu.setVisible(true);
-        ventana.add(panelMenu);
+        panelMenu.setVisible(false);
 
         JPanel panelIngresar = new JPanel();
         panelIngresar.setSize(1400, 700);
@@ -1134,6 +1201,9 @@ public class Restaurante {
                 });
             }
         });
+
+        panelMenu.setVisible(true);
+        ventana.add(panelMenu);
     }
 }
  /*
@@ -1146,4 +1216,4 @@ public class Restaurante {
             -Desarrollar "Editar tipo agregado"
             -Desarrollar "Editar agregado"
  */
-//C:\Users\Familia Gimenez\Documents\GitHub\ProyectoFinal\Front-end\Images\ñoquis.jpg
+
