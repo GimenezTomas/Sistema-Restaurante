@@ -418,6 +418,8 @@ public class Restaurante {
     }
 
     public void clickEditAgregados(JFrame frameAgregados, JPanel panelAgregados, JLabel labelAgregados2, Plato plato, JButton botonSalir){
+        panelAgregados.setPreferredSize(new Dimension(530,730));
+
         panelAgregados.removeAll();
         frameAgregados.remove(panelAgregados);
 
@@ -484,16 +486,15 @@ public class Restaurante {
                         botonEdit.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
-                                boolean check=false;
+                                int coincidencias=0;
 
                                 for (TipoAgregados ag:platoActual.getAgregados()){
                                     if (ag.getNombre().equals(textFieldSeccion.getText())){
-                                        JOptionPane.showMessageDialog(null, "Ya existe");
-                                        check=true;
+                                        coincidencias++;
                                         break;
                                     }
                                 }
-                                if (!check){
+                                if (coincidencias<2){
                                     if(opciones.getSelectedItem().equals("SI")){
                                         agregados.setIndispensable(true);
                                     }
@@ -502,6 +503,9 @@ public class Restaurante {
                                     }
                                     JOptionPane.showMessageDialog(null, "se cambio correctamente");
                                     agregados.setNombre(textFieldSeccion.getText());
+                                }
+                                else{
+                                    JOptionPane.showMessageDialog(null, "El nombre ya esta usado");
                                 }
                             }
                         });
@@ -535,15 +539,7 @@ public class Restaurante {
     }
 
     public void clickEditAgregado(JFrame frameAgregados, JPanel panelAgregados, JLabel labelAgregados2, Plato plato, JButton botonSalir) {
-
-        for (Plato platossss: this.platos){
-            if (platossss.getNombre().equals(plato.getNombre())){
-                System.out.println(platossss.getAgregados().size());
-                for (TipoAgregados af: platossss.getAgregados()){
-                    System.out.println(af.getNombre());
-                }
-            }
-        }
+        panelAgregados.setPreferredSize(new Dimension(530,730));
 
         panelAgregados.removeAll();
         frameAgregados.remove(panelAgregados);
@@ -586,76 +582,90 @@ public class Restaurante {
                         public void mouseClicked(MouseEvent e) {
                             for (TipoAgregados agregados : platoActual.getAgregados()) {
                                 if (agregados.getNombre().equals(opciones.getSelectedItem())) {
-                                    int vueltas = 1;
-                                    for (Map.Entry<String, Float> agregado : agregados.getAgregados().entrySet()) {
-                                        JTextField textFieldNombre = new JTextField();
-                                        textFieldNombre.setSize(120, 50);
-                                        if (vueltas == 1) {
-                                            textFieldNombre.setLocation(80, opciones.getY() + opciones.getHeight() + 15);
-                                        } else {
-                                            textFieldNombre.setLocation(80, Math.round((opciones.getY() + opciones.getHeight() + 15) * (vueltas / 1.8f)) + 85);
-                                        }
-                                        textFieldNombre.setVisible(true);
-                                        textFieldNombre.setName("textFieldSeccion" + vueltas);
-                                        textFieldNombre.setText(agregado.getKey());
-                                        panelAgregados.add(textFieldNombre);
+                                    if (agregados.getAgregados().size()==0){
+                                        labelExplicacion.setText("No hay agregados que editar" + plato.getAgregados().size());
+                                    }else{
+                                        int vueltas = 1;
+                                        for (Map.Entry<String, Float> agregado : agregados.getAgregados().entrySet()) {
+                                            JTextField textFieldNombre = new JTextField();
+                                            textFieldNombre.setSize(120, 50);
+                                            if (vueltas == 1) {
+                                                textFieldNombre.setLocation(80, opciones.getY() + opciones.getHeight() + 15);
+                                            } else {
+                                                textFieldNombre.setLocation(80, Math.round((opciones.getY() + opciones.getHeight() + 15) * (vueltas / 1.8f)) + 85);
+                                            }
+                                            textFieldNombre.setVisible(true);
+                                            textFieldNombre.setName("textFieldSeccion" + vueltas);
+                                            textFieldNombre.setText(agregado.getKey());
+                                            panelAgregados.add(textFieldNombre);
 
-                                        JTextField textFieldPrecio = new JTextField();
-                                        textFieldPrecio.setSize(120, 50);
-                                        textFieldPrecio.setLocation(textFieldNombre.getX() + textFieldNombre.getWidth(), textFieldNombre.getY());
-                                        textFieldPrecio.setVisible(true);
-                                        textFieldPrecio.setName("textFieldSeccion" + vueltas);
-                                        textFieldPrecio.setText(agregado.getValue()+"");
-                                        panelAgregados.add(textFieldPrecio);
+                                            JTextField textFieldPrecio = new JTextField();
+                                            textFieldPrecio.setSize(120, 50);
+                                            textFieldPrecio.setLocation(textFieldNombre.getX() + textFieldNombre.getWidth(), textFieldNombre.getY());
+                                            textFieldPrecio.setVisible(true);
+                                            textFieldPrecio.setName("textFieldSeccion" + vueltas);
+                                            textFieldPrecio.setText(agregado.getValue()+"");
+                                            panelAgregados.add(textFieldPrecio);
 
-                                        JButton botonEdit = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\pencil.png"));
-                                        botonEdit.setBounds(textFieldPrecio.getX() + textFieldPrecio.getWidth() + 1, textFieldPrecio.getY(), 50, 50);
-                                        botonEdit.setVisible(true);
-                                        panelAgregados.add(botonEdit);
+                                            JButton botonEdit = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\pencil.png"));
+                                            botonEdit.setBounds(textFieldPrecio.getX() + textFieldPrecio.getWidth() + 1, textFieldPrecio.getY(), 50, 50);
+                                            botonEdit.setVisible(true);
+                                            panelAgregados.add(botonEdit);
 
-                                        JButton botonDelete = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\delete.png"));
-                                        botonDelete.setBounds(botonEdit.getX() + botonEdit.getWidth() + 1, textFieldPrecio.getY(), 50, 50);
-                                        botonDelete.setVisible(true);
-                                        panelAgregados.add(botonDelete);
+                                            JButton botonDelete = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\delete.png"));
+                                            botonDelete.setBounds(botonEdit.getX() + botonEdit.getWidth() + 1, textFieldPrecio.getY(), 50, 50);
+                                            botonDelete.setVisible(true);
+                                            panelAgregados.add(botonDelete);
 
-                                        botonEdit.addMouseListener(new MouseAdapter() {
-                                            @Override
-                                            public void mouseClicked(MouseEvent e) {
-                                                for (Map.Entry<String, Float> agre : agregados.getAgregados().entrySet()) {
-                                                    if (textFieldNombre.getText().equals("") || textFieldPrecio.equals("")) {
-                                                        JOptionPane.showMessageDialog(null, "formulario incompleto");
-                                                    } else {
-                                                        try {
-                                                            float precio = Float.parseFloat(textFieldPrecio.getText());
-                                                            if (precio<0){
-                                                                JOptionPane.showMessageDialog(null, "El precio debe ser mayor a 0");
+                                            botonEdit.addMouseListener(new MouseAdapter() {
+                                                @Override
+                                                public void mouseClicked(MouseEvent e) {
+                                                        if (textFieldNombre.getText().equals("") || textFieldPrecio.equals("")) {
+                                                            JOptionPane.showMessageDialog(null, "formulario incompleto");
+                                                        } else {
+                                                            try {
+                                                                float precio = Float.parseFloat(textFieldPrecio.getText());
+                                                                if (precio<0){
+                                                                    JOptionPane.showMessageDialog(null, "El precio debe ser mayor a 0");
+                                                                }
+                                                                int coincidencias=0;
+                                                                for (Map.Entry<String, Float> ag : agregados.getAgregados().entrySet()){
+                                                                    if (ag.getKey().equals(textFieldNombre.getText())){
+                                                                        coincidencias++;
+                                                                    }
+                                                                }
+                                                                if (coincidencias>=2){
+                                                                    JOptionPane.showMessageDialog(null, "El nombre ya esta usado");
+                                                                }
+                                                                else{
+                                                                    JOptionPane.showMessageDialog(null, "Se cambio correctamente");
+                                                                    agregados.getAgregados().put(textFieldNombre.getText(), precio);
+                                                                    agregados.getAgregados().remove(agregado.getKey());
+                                                                }
+                                                            } catch (NumberFormatException ex) {
+                                                                JOptionPane.showMessageDialog(null, "La sintaxis del precio es incorrecta, ej:80.15");
                                                             }
-                                                            agregados.getAgregados().put(textFieldNombre.getText(), precio);
-                                                            agregados.getAgregados().remove(agregado.getKey());
-                                                        } catch (NumberFormatException ex) {
-                                                            JOptionPane.showMessageDialog(null, "La sintaxis del precio es incorrecta, ej:80.15");
                                                         }
+                                                }
+                                            });
+                                            botonDelete.addMouseListener(new MouseAdapter() {
+                                                @Override
+                                                public void mouseClicked(MouseEvent e) {
+                                                    int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? ");
+                                                    if (confirmD == JOptionPane.YES_OPTION) {
+                                                        System.out.println("si "+agregados.getAgregados().size());
+                                                        agregados.getAgregados().remove(agregado.getKey());
+                                                        System.out.println("des "+agregados.getAgregados().size());
+                                                        textFieldNombre.setVisible(false);
+                                                        textFieldPrecio.setVisible(false);
+                                                        botonDelete.setVisible(false);
+                                                        botonEdit.setVisible(false);
+                                                        clickEditAgregados(frameAgregados, panelAgregados, labelAgregados2, plato, botonSalir);
                                                     }
                                                 }
-                                            }
-                                        });
-                                        botonDelete.addMouseListener(new MouseAdapter() {
-                                            @Override
-                                            public void mouseClicked(MouseEvent e) {
-                                                int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? ");
-                                                if (confirmD == JOptionPane.YES_OPTION) {
-                                                    System.out.println("si "+agregados.getAgregados().size());
-                                                    agregados.getAgregados().remove(agregado.getKey());
-                                                    System.out.println("des "+agregados.getAgregados().size());
-                                                    textFieldNombre.setVisible(false);
-                                                    textFieldPrecio.setVisible(false);
-                                                    botonDelete.setVisible(false);
-                                                    botonEdit.setVisible(false);
-                                                    clickEditAgregados(frameAgregados, panelAgregados, labelAgregados2, plato, botonSalir);
-                                                }
-                                            }
-                                        });
-                                        vueltas++;
+                                            });
+                                            vueltas++;
+                                        }
                                     }
                                     break;
                                 }
@@ -673,11 +683,11 @@ public class Restaurante {
         JScrollPane scrollBar = new JScrollPane(panelAgregados, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 //C:\Users\Familia Gimenez\Documents\Tomás\IACeh\tareas\tarea2 wps\Captura.png
         frameAgregados.add(scrollBar);
-        System.out.println(panelAgregados.getComponents().length);
     }
 
     public void crearMenuAgregados(JPanel panelAgregados, JFrame frameAgregados, Plato plato){
         panelAgregados.removeAll();
+        panelAgregados.setPreferredSize(new Dimension(530,730));
         //cleanPanel(panelAgregados, new Component[]{});
 
         JLabel labelAgregados2 = new JLabel("AGREGADOS");
@@ -911,8 +921,179 @@ public class Restaurante {
             }
         });
     }
+    public void editarPlato(JFrame ventana, JPanel panel){
+        //ventana.remove(panel);
+         panel.removeAll();
 
-    public void gestionarRestaurante(JFrame ventana, JPanel panelIngresar){
+        JLabel labelPlatos = new JLabel("PLATOS");
+        labelPlatos.setName("labelPlatos");
+        labelPlatos.setVisible(true);
+        labelPlatos.setFont(fuentes.get("Times New Roman"));
+        labelPlatos.setBounds(panel.getWidth()/2-100, 20, 300, 50);
+        panel.add(labelPlatos);
+
+        JLabel labelExplicacion = new JLabel("<html><body> Si quieres cambiar el nombre de la seccion, reescribelo en el input y<br> preciona el lapiz. En caso de querer borrarlo, presiona la cruz <br></body></html>");
+        labelExplicacion.setName("labelExplicacion");
+        labelExplicacion.setVisible(true);
+        labelExplicacion.setFont(fuentes.get("Garamond"));
+        labelExplicacion.setBounds(panel.getWidth()/2-225, labelPlatos.getY()+labelPlatos.getHeight()+30, 450, 50);
+        panel.add(labelExplicacion);
+
+        JButton botonSalir = new JButton("Salir");
+        botonSalir.setBounds(panel.getWidth()/2-125, 550, 100, 50);
+        botonSalir.setVisible(true);
+
+        botonSalir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                gestionarRestaurante(ventana);
+            }
+        });
+
+        if (platos.size()==0){
+            labelExplicacion.setText("No hay platos que editar");
+        }else{
+            int vueltas=1;
+            for (Plato platosAux: this.platos){
+                System.out.println(vueltas);
+                JTextField jtxtNombre = new JTextField();
+                jtxtNombre.setSize(250, 50);
+                if (vueltas == 1) {
+                    jtxtNombre.setLocation(85, labelExplicacion.getY() + labelExplicacion.getHeight() + 15);
+                } else {
+                    jtxtNombre.setLocation(85, Math.round((labelExplicacion.getY() + labelExplicacion.getHeight() + 15) * (vueltas / 1.8f)) + 85);
+                }
+                jtxtNombre.setText(platosAux.getNombre());
+                jtxtNombre.setVisible(true);
+                panel.add(jtxtNombre);
+
+                JTextField jtxtPrecio = new JTextField();
+                jtxtPrecio.setSize(80, 50);
+                jtxtPrecio.setLocation(jtxtNombre.getX()+jtxtNombre.getWidth(), jtxtNombre.getY());
+                jtxtPrecio.setText(platosAux.getPrecio()+"");
+                jtxtPrecio.setVisible(true);
+                panel.add(jtxtPrecio);
+
+                JTextField jtxtDescripcion = new JTextField();
+                jtxtDescripcion.setSize(400, 50);
+                jtxtDescripcion.setLocation(jtxtPrecio.getX()+jtxtPrecio.getWidth(), jtxtNombre.getY());
+                jtxtDescripcion.setText(platosAux.getDescripcion());
+                jtxtDescripcion.setVisible(true);
+                panel.add(jtxtDescripcion);
+
+                JTextField jtxtDemora= new JTextField();
+                jtxtDemora.setSize(80, 50);
+                jtxtDemora.setLocation(jtxtDescripcion.getX()+jtxtDescripcion.getWidth(), jtxtDescripcion.getY());
+                jtxtDemora.setText(platosAux.getTiempoDemora());
+                jtxtDemora.setVisible(true);
+                panel.add(jtxtDemora);
+
+                JTextField jtxtImg = new JTextField();
+                jtxtImg.setSize(120, 50);
+                jtxtImg.setLocation(jtxtDemora.getX()+jtxtDemora.getWidth(), jtxtDemora.getY());
+                jtxtImg.setText(platosAux.getImg().getName());
+                jtxtImg.setVisible(true);
+                panel.add(jtxtImg);
+
+                JButton botonAg = new JButton("Edit agregados");
+                botonAg.setBounds(jtxtImg.getX() + jtxtImg.getWidth() + 1, jtxtDemora.getY(), 150, 50);
+                botonAg.setVisible(true);
+                panel.add(botonAg);
+
+                JButton botonEdit = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\pencil.png"));
+                botonEdit.setBounds(botonAg.getX() + botonAg.getWidth() + 1, botonAg.getY(), 50, 50);
+                botonEdit.setVisible(true);
+                panel.add(botonEdit);
+
+                JButton botonDelete = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\delete.png"));
+                botonDelete.setBounds(botonEdit.getX() + botonEdit.getWidth() + 1, botonAg.getY(), 50, 50);
+                botonDelete.setVisible(true);
+                panel.add(botonDelete);
+                vueltas++;
+
+                botonEdit.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (jtxtDemora.getText().equals("") || jtxtDescripcion.getText().equals("") || jtxtImg.getText().equals("") || jtxtNombre.getText().equals("") || jtxtPrecio.getText().equals("")) {
+                            JOptionPane.showMessageDialog(null, "El formulario esta incompleto");
+                        }else if (!new File(jtxtImg.getText()).exists()){
+                            JOptionPane.showMessageDialog(null, "El archivo no existe o no es png, ( ej: C:\\Users\\Restaurante\\Pancho.png )");
+                        }
+                        else {
+                            try {
+                                if(Float.parseFloat(jtxtPrecio.getText())<0){
+                                    JOptionPane.showMessageDialog(null, "El precio no puede ser menor a 0");
+                                }else{
+                                    int coicidencias=0;
+                                    for (Plato platoAux: platos){
+                                        if (platoAux.getNombre().equals(jtxtNombre.getText())){
+                                            coicidencias++;
+                                        }
+                                    }
+                                    if (coicidencias>=2){
+                                        JOptionPane.showMessageDialog(null, "El nombre del plato ya esta usado");
+                                    }else{
+                                        platosAux.setNombre(jtxtNombre.getText());
+                                        platosAux.setDescripcion(jtxtDescripcion.getText());
+                                        platosAux.setTiempoDemora(jtxtDemora.getText());
+                                        platosAux.setPrecio(Float.parseFloat(jtxtPrecio.getText()));
+                                        platosAux.setImg(new File(jtxtImg.getText()));
+                                        JOptionPane.showMessageDialog(null, "Se cambio correctamente");
+                                    }
+                                }
+                            } catch (NumberFormatException ex) {
+                                JOptionPane.showMessageDialog(null, "La sintaxis del precio es incorrecta, ej: 180.15");
+                            }
+                        }
+                    }
+                });
+                botonDelete.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? ");
+                        if (confirmD == JOptionPane.YES_OPTION) {
+                            platos.remove(platosAux);
+                            jtxtDemora.setVisible(false);
+                            jtxtDescripcion.setVisible(false);
+                            jtxtImg.setVisible(false);
+                            jtxtNombre.setVisible(false);
+                            jtxtPrecio.setVisible(false);
+                            botonDelete.setVisible(false);
+                            botonEdit.setVisible(false);
+                            botonAg.setVisible(false);
+                            editarPlato(ventana, panel);
+                            editarPlato(ventana, panel);
+                        }
+                    }
+                });
+                botonAg.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        JFrame frameAgregados = new JFrame("AGREGADOS");
+                        frameAgregados.setSize(500, 730);
+                        frameAgregados.setVisible(true);
+
+                        JPanel panelAgregados = new JPanel();
+                        panelAgregados.setName("menu");
+                        panelAgregados.setSize(frameAgregados.getSize());
+                        panelAgregados.setLayout(null);
+                        panelAgregados.setVisible(true);
+
+                        frameAgregados.add(panelAgregados);
+                        crearMenuAgregados(panelAgregados, frameAgregados,platosAux);
+                    }
+                });
+            }
+        }/*
+        botonSalir.setLocation(panel.getWidth() / 2 - botonSalir.getWidth() / 2, panel.getComponent(panel.getComponents().length - 1).getY() + panel.getComponent(panel.getComponents().length - 1).getHeight() + 50);
+        panel.add(botonSalir);
+        panel.setPreferredSize(new Dimension(1350, botonSalir.getHeight() + botonSalir.getY() + 50));
+        JScrollPane scrollBar = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//C:\Users\Familia Gimenez\Documents\Tomás\IACeh\tareas\tarea2 wps\Captura.png
+        ventana.add(scrollBar);*/
+    }
+    public void gestionarRestaurante(JFrame ventana) {
+        //ventana.remove(0);
 
         JPanel panel = new JPanel();
         panel.setName("panelGR");
@@ -922,17 +1103,17 @@ public class Restaurante {
         ventana.add(panel);
 
         JButton boton1 = new JButton("AÑADIR PLATO");
-        boton1.setBounds(ventana.getWidth()/2-100, ventana.getHeight()/2-200, 200, 100);
+        boton1.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 - 200, 200, 100);
         boton1.setVisible(true);
         panel.add(boton1);
 
         JButton boton2 = new JButton("EDITAR PLATO");
-        boton2.setBounds(ventana.getWidth()/2-100, ventana.getHeight()/2-50, 200, 100);
+        boton2.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 - 50, 200, 100);
         boton2.setVisible(true);
         panel.add(boton2);
 
-        JButton boton3 = new JButton("VER PLATO");
-        boton3.setBounds(ventana.getWidth()/2-100, ventana.getHeight()/2+100, 200, 100);
+        JButton boton3 = new JButton("BORRAR MENU");
+        boton3.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 + 100, 200, 100);
         boton3.setVisible(true);
         panel.add(boton3);
 
@@ -1045,7 +1226,7 @@ public class Restaurante {
 
                         panel.removeAll();
                         //cleanPanel(panel, new Component[]{});
-                        gestionarRestaurante(ventana, panelIngresar);
+                        gestionarRestaurante(ventana);
                     }
                 });
 
@@ -1056,35 +1237,34 @@ public class Restaurante {
                         HashMap<String, String> datosNewPlato = new HashMap<>();
                         boolean ok = true;
 
-                        if(textFieldTiempoDemora.getText().equals("")||textFieldPrecio.getText().equals("")||textFieldDescripcion.getText().equals("") || textFieldImagen.getText().equals("") || textFieldName.getText().equals("")){
+                        if (textFieldTiempoDemora.getText().equals("") || textFieldPrecio.getText().equals("") || textFieldDescripcion.getText().equals("") || textFieldImagen.getText().equals("") || textFieldName.getText().equals("")) {
                             ok = false;
                             JOptionPane.showMessageDialog(null, "Formulario incompleto");
-                        }
-                        else {
-                            try{
+                        } else {
+                            try {
                                 float a = Float.parseFloat(textFieldPrecio.getText());
-                                if(a<0){
-                                    ok=false;
+                                if (a < 0) {
+                                    ok = false;
                                     JOptionPane.showMessageDialog(null, "El precio es menor a 0");
                                 }
-                            }catch (NumberFormatException ex){
+                            } catch (NumberFormatException ex) {
                                 ok = false;
                                 JOptionPane.showMessageDialog(null, "La sintaxis del precio es incorrecta, ej: 200.0");
                             }
-                            if(!new File(textFieldImagen.getText()).exists() || (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length()-4).equals(".png")) && (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length()-4).equals(".png")) && (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length()-4).equals(".jpg"))){
+                            if (!new File(textFieldImagen.getText()).exists() || (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length() - 4).equals(".png")) && (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length() - 4).equals(".png")) && (!new File(textFieldImagen.getText()).getName().substring(new File(textFieldImagen.getText()).getName().length() - 4).equals(".jpg"))) {
                                 ok = false;
                                 JOptionPane.showMessageDialog(null, "El archivo no es una imagen o la ubicacion es erronea, las imagenes solo pueden ser png o jpg");
                             }
                         }
 
-                        if(ok){
+                        if (ok) {
                             datosNewPlato.put("Nombre", textFieldName.getText());
                             datosNewPlato.put("Descripcion", textFieldDescripcion.getText());
                             datosNewPlato.put("TiempoDemora", textFieldTiempoDemora.getText());
                             datosNewPlato.put("Precio", textFieldPrecio.getText());
                             datosNewPlato.put("Imagen", textFieldImagen.getText());
                         }
-                        if (ok && opciones.getSelectedItem().equals("SI")){
+                        if (ok && opciones.getSelectedItem().equals("SI")) {
 
                             JFrame frameAgregados = new JFrame("AGREGADOS");
                             frameAgregados.setSize(500, 730);
@@ -1110,14 +1290,29 @@ public class Restaurante {
                                     agregarPlato(plato);
                                 }
                             });
-                        }
-                        else if(ok && !opciones.getSelectedItem().equals("SI")){
-                            if(agregarPlato(datosNewPlato.get("Nombre"), datosNewPlato.get("Precio"), datosNewPlato.get("Imagen"), datosNewPlato.get("Descripcion"), datosNewPlato.get("TiempoDemora"))){
+                        } else if (ok && !opciones.getSelectedItem().equals("SI")) {
+                            if (agregarPlato(datosNewPlato.get("Nombre"), datosNewPlato.get("Precio"), datosNewPlato.get("Imagen"), datosNewPlato.get("Descripcion"), datosNewPlato.get("TiempoDemora"))) {
                                 JOptionPane.showMessageDialog(null, "El plato se agrego correctamente");
                             }
                         }
                     }
                 });
+            }
+        });
+        boton2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                editarPlato(ventana, panel);
+            }
+        });
+        boton3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los platos del menu");
+                if (confirmD== JOptionPane.YES_NO_OPTION){
+                    platos.clear();
+                    JOptionPane.showMessageDialog(null, "Se borraron todos los platos, la cantidad de platos es "+platos.size());
+                }
             }
         });
     }
@@ -1317,7 +1512,7 @@ public class Restaurante {
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
 
-                restaurante.gestionarRestaurante(ventana, panelIngresar);
+                restaurante.gestionarRestaurante(ventana);
                 /*boton11.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -1416,14 +1611,6 @@ public class Restaurante {
         ventana.add(panelMenu);
     }
 }
- /*
-    averiguar bien lo del modal porque si bien se puede hacer con Jdialog al no tener el boton para ocultar no se cargan los datos
-    Tomás:
-    -Desarrollar "editar plato" de 0
-    -Desarrollar "Ver plato" de 0
-    -Desarrollar la logica en añadir plato
-        -Desarrollar "AGREGADOS" (hacer que sea un modal, que se bloquee la ventana donde se ingresan los datos hasta que se cierre "agregados")
-            -Desarrollar "Editar agregado"
- */
-
 //editar tipo agregado error en salir (debe ser por el scrollbar)
+// en editar plato hay que hacer que ande el scrollbar, esta comentado
+//corregir boton salir cuando esta el scrollbar, imagino que tiene que ver con el preferredSize. Agregue preferredSize al principio de varias funciones, verificar que no se haya roto nada y ver si corrigio el error
