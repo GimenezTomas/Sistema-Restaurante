@@ -15,77 +15,40 @@ public class Restaurante {
     private HashSet<Mesa> mesas = new HashSet<>();
     private HashSet<Plato> platos = new HashSet<>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
-    private String nombre;
-    private File imagen;
-    private String direccion;
+
     private ArrayList<Ocupacion> ocupaciones = new ArrayList<>();
     public static SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
 
-    public File getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(File imagen) {
-        this.imagen = imagen;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public ArrayList<Ocupacion> getOcupaciones() {
         return ocupaciones;
     }
-
     public void setOcupaciones(ArrayList<Ocupacion> ocupaciones) {
         this.ocupaciones = ocupaciones;
     }
-
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
-
     public void setPedidos(ArrayList<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
-
     public HashSet<Mesa> getMesas() {
         return mesas;
     }
-
     public void setMesas(HashSet<Mesa> mesas) {
         this.mesas = mesas;
     }
-
     public HashSet<Plato> getPlatos() {
         return platos;
     }
-
     public void setPlatos(HashSet<Plato> platos) {
         this.platos = platos;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     //CONSTRUCTOR
-
-    public Restaurante (String nombre){
-        this.nombre = nombre;
-    }
-
     public void cleanPanel(JPanel panelIngresar, Component components[]){
         for (int i = 0; i < panelIngresar.getComponents().length ; i++) {
             if (panelIngresar.getComponent(i).getName() != null) {
@@ -112,107 +75,14 @@ public class Restaurante {
         }
     }
 
-    public boolean comprobarMesa(int mesa) {
+    /*public boolean comprobarMesa(int mesa) {
         for (Mesa mesaAux : this.mesas) {
             if (mesaAux.getnMesa() == mesa && !mesaAux.isOcupada()) {
                 return false;
             }
         }
         return true;
-    }
-
-    public void platoMasPedido(JFrame ventana,JPanel panelMenu,JPanel panelIngresar,JButton boton11, JLabel labelFeedBack, boolean masMenos) {
-
-        JButton botonAgr= new JButton("INGRESAR");
-        botonAgr.setBounds(ventana.getWidth()/2+10, boton11.getY(), boton11.getWidth(), boton11.getHeight());
-        botonAgr.setVisible(true);
-        panelIngresar.add(botonAgr);
-
-        JButton botonSalir = new JButton("SALIR");
-        botonSalir.setBounds(ventana.getWidth()/2-boton11.getWidth()-10, boton11.getY(), boton11.getWidth(), boton11.getHeight());
-        botonSalir.setVisible(true);
-        panelIngresar.add(botonSalir);
-
-        JComboBox fechas = new JComboBox();
-        fechas.setName("comboboxFechas");
-        fechas.setBounds(ventana.getWidth()/2-150, 120,300,100);
-        fechas.addItem(dateFormatSQL.format(new Date()));
-
-        for(Pedido pedido: this.pedidos){
-            boolean check = true;
-            for (int i = 0; i <fechas.getItemCount() ; i++) {
-                if (fechas.getItemAt(i)==pedido.getFecha()){
-                    check=false;
-                }
-            }
-            if (check){
-                fechas.addItem(pedido.getFecha());
-            }
-        }
-
-        fechas.setVisible(true);
-        panelIngresar.add(fechas);
-        panelIngresar.setVisible(true);
-        ventana.add(panelIngresar);
-
-        botonSalir.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ventana.remove(panelIngresar);
-                panelIngresar.setVisible(false);
-
-                panelIngresar.removeAll();
-                ventana.add(panelMenu);
-                panelMenu.setVisible(true);
-            }
-        });
-        botonAgr.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                final HashMap<String, Integer> platosAux = new HashMap<>();
-                for (Plato plato : platos){
-                    platosAux.put(plato.getNombre(), 0);
-                }
-                for(Pedido pedido: pedidos){
-                    if (pedido.getFecha().equals(fechas.getSelectedItem())){
-                        for(Map.Entry<String, Integer> plato: pedido.getPlatos().entrySet())
-                        {
-                            platosAux.put(plato.getKey(), platosAux.get(plato.getKey())+plato.getValue());
-                        }
-                    }
-                }
-                String platoGanador  = "";
-                int contador = 0;
-                for(Map.Entry<String, Integer> plato: platosAux.entrySet()){
-                    if (masMenos) {
-                        if (plato.getValue() >= contador) {
-                            platoGanador = plato.getKey();
-                            contador = plato.getValue();
-                        }
-                    }
-                    else
-                    {
-                        if (plato.getValue() <= contador || contador == 0){
-                            platoGanador = plato.getKey();
-                            contador = plato.getValue();
-                        }
-                    }
-                }
-                if (masMenos) {
-                    labelFeedBack.setText("El pedido mas solicitado fue " + platoGanador + ", pedidos: " + contador);
-                }
-                else {
-                    labelFeedBack.setText("El pedido menos solicitado fue " + platoGanador + ", pedidos: " + contador);
-                }
-                labelFeedBack.setVisible(true);
-                boton11.setVisible(true);
-
-                panelIngresar.removeAll();
-                panelIngresar.add(botonSalir);
-                panelIngresar.add(labelFeedBack);
-            }
-        });
-    }
+    }*/
 
     public void entregarPedido(JFrame ventana,JPanel panelMenu, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack) {
         JButton boton = new JButton("AGREGAR");
@@ -411,10 +281,6 @@ public class Restaurante {
 
             }
         });
-    }
-
-    public void agregarMesa(Mesa mesa){
-        this.mesas.add(mesa);
     }
 
     public void clickEditAgregados(JFrame frameAgregados, JPanel panelAgregados, JLabel labelAgregados2, Plato plato, JButton botonSalir){
@@ -1320,7 +1186,7 @@ public class Restaurante {
     //public void crearPanelMenu(){}
 
     public static void main(String[] args) {
-        Restaurante restaurante = new Restaurante("La cantina");
+        Restaurante restaurante = new Restaurante();
 
         fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
         fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
@@ -1352,8 +1218,7 @@ public class Restaurante {
 
         /*LABELs*/
 
-        JLabel nombreSistema = new JLabel();
-        nombreSistema.setText(restaurante.getNombre());
+        JLabel nombreSistema = new JLabel("La cantina");
         nombreSistema.setSize(250, 50);
         nombreSistema.setLocation(ventana.getWidth() / 2 - nombreSistema.getWidth() / 2, 100);
         nombreSistema.setFont(fuentes.get("Times New Roman"));
@@ -1492,7 +1357,7 @@ public class Restaurante {
                 });
             }
         });
-        /*GESTIONAR RESTAURANTE*/
+        /*GESTIONAR MENU*/
         boton3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -1513,37 +1378,6 @@ public class Restaurante {
                         panelMenu.setVisible(true);
                     }
                 });*/
-            }
-        });
-        boton4.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                restaurante.cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
-                restaurante.cleanPanel(panelFeedBack, new Component[]{labelFeedBack, boton11});
-                ventana.remove(panelMenu);
-                panelMenu.setVisible(false);
-
-                restaurante.platoMasPedido(ventana, panelMenu, panelIngresar, boton11, labelFeedBack, true);
-
-            }
-        });
-        boton5.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ventana.remove(panelMenu);
-                panelMenu.setVisible(false);
-
-                restaurante.platoMasPedido(ventana, panelMenu, panelIngresar, boton11, labelFeedBack, false);
-
-            }
-        });
-        boton6.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                /*restaurante.mesaMasOcupada(ventana, panelMenu,panelIngresar, panelMenu, boton11, "INGRESAR", labelFeedBack, labelIngresar, textField);
-
-                ventana.remove(panelMenu);
-                panelMenu.setVisible(false);*/
             }
         });
         boton7.addMouseListener(new MouseAdapter() {

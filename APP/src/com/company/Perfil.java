@@ -1,3 +1,4 @@
+package com.company;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
