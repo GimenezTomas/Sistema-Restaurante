@@ -15,7 +15,6 @@ public class Restaurante {
     private HashSet<Mesa> mesas = new HashSet<>();
     private HashSet<Plato> platos = new HashSet<>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
-
     private ArrayList<Ocupacion> ocupaciones = new ArrayList<>();
     public static SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
     public static HashMap<String, Font> fuentes = new HashMap<>();
@@ -1187,6 +1186,7 @@ public class Restaurante {
 
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante();
+        Perfil p1 = new Perfil();
 
         fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
         fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
@@ -1215,6 +1215,13 @@ public class Restaurante {
         panelFeedBack.setLayout(null);
         panelFeedBack.setVisible(false);
         panelFeedBack.setName("feedback");
+
+        JPanel panelPerfil = new JPanel();
+        panelPerfil.setSize(1400, 700);
+        panelPerfil.setLayout(null);
+        panelPerfil.setVisible(false);
+        panelPerfil.setName("perfil");
+
 
         /*LABELs*/
 
@@ -1246,6 +1253,12 @@ public class Restaurante {
         textField.setVisible(false);
         textField.setName("textFieldIngresar");
         panelIngresar.add(textField);
+
+        JTextField texto1 = new JTextField();
+        texto1.setLocation(500, 200);
+        texto1.setSize(500, 50);
+        texto1.setName("name");
+        texto1.setVisible(true);
 
         /*BOTONES*/
 
@@ -1284,12 +1297,12 @@ public class Restaurante {
         boton5.setName("MenosPedido");
         panelMenu.add(boton5);
 
-        JButton boton6 = new JButton("MESA MAS OCUPADA");
+        /*JButton boton6 = new JButton("MESA MAS OCUPADA");
         boton6.setSize(200, 50);
         boton6.setLocation(1250 - boton3.getWidth(), 50 + boton3.getHeight() + boton3.getY());
         boton6.setVisible(true);
         boton6.setName("MesaMasPedida");
-        panelMenu.add(boton6);
+        panelMenu.add(boton6);*/
 
         JButton boton7 = new JButton("ENTREGAR PEDIDO");
         boton7.setSize(200, 50);
@@ -1314,6 +1327,58 @@ public class Restaurante {
         boton11.setLocation(ventana.getWidth() / 2 - boton10.getWidth() / 2, ventana.getHeight() / 2 + textField.getHeight() + 50);
         boton11.setVisible(false);
         boton11.setName("boton11");
+
+        JButton botonp = new JButton("EDITAR PERFIL");
+        botonp.setLocation(1250 - boton3.getWidth(), 50 + boton3.getHeight() + boton3.getY());
+        botonp.setSize(200, 50);
+        botonp.setName("perfil");
+        botonp.setVisible(true);
+        panelMenu.add(botonp);
+
+        JButton botonp2 = new JButton("Ingrese la foto");
+        botonp2.setLocation(150, 200);
+        botonp2.setSize(200, 50);
+        botonp2.setName("Ft");
+        botonp2.setVisible(true);
+
+        JButton botonp3 = new JButton("Guardar cambios");
+        botonp3.setLocation(300, 300);
+        botonp3.setSize(200, 50);
+        botonp3.setName("Guardar");
+        botonp3.setVisible(true);
+
+        /*Perfil*/
+        botonp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ventana.remove(panelMenu);
+                panelMenu.setVisible(false);
+                ventana.add(panelPerfil);
+                panelPerfil.add(botonp2);
+                panelPerfil.add(texto1);
+                panelPerfil.add(botonp3);
+                panelPerfil.setVisible(true);
+
+                botonp2.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        p1.Chooser();
+                    }
+                });
+
+                botonp3.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        p1.nombreRest= texto1.getText();
+                        System.out.println(p1.nombreRest);
+                        System.out.println("Se guardo el nombre y la foto");
+                        panelPerfil.removeAll();
+                        ventana.add(panelMenu);
+                        panelMenu.setVisible(true);
+                    }
+                });
+            }
+        });
 
         /* FUNCION OCUPAR*/
         boton1.addMouseListener(new MouseAdapter() {
