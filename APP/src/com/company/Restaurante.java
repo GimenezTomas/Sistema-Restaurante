@@ -991,7 +991,7 @@ public class Restaurante {
                 JTextField jtxtImg = new JTextField();
                 jtxtImg.setSize(120, 50);
                 jtxtImg.setLocation(jtxtDemora.getX()+jtxtDemora.getWidth(), jtxtDemora.getY());
-                jtxtImg.setText(platosAux.getImg().getName());
+                jtxtImg.setText(platosAux.getImg().getPath());
                 jtxtImg.setVisible(true);
                 panel.add(jtxtImg);
 
@@ -1324,16 +1324,6 @@ public class Restaurante {
 
         fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
         fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
-
-        /*restaurante.agregarPlato("Milanesa con puré de papas", 0.0f);
-        restaurante.agregarPlato("Ravioles rellenos con carne", 0f);
-        restaurante.agregarPlato("Pizza a la Piedra", 0f);
-        restaurante.agregarPlato("Polenta con salsa Fileto", 0f);
-        restaurante.agregarPlato("Arroz primavera", 0f);*/
-
-        for (int i = 0; i < 6; i++) {
-            restaurante.agregarMesa(new Mesa());
-        }
 
         /*VENTANA*/
         JFrame ventana = new JFrame("RESTAURANTE");

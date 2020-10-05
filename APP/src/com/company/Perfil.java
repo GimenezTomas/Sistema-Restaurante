@@ -42,7 +42,7 @@ public void Chooser(){
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
             File copiaFt = chooser.getSelectedFile();
-                if (copiaFt.isFile() && (copiaFt.getName().endsWith(".png"))){
+            if (copiaFt.isFile() && (copiaFt.getName().endsWith(".png"))){
                 FotoPerfil = chooser.getSelectedFile();
                 System.out.println(FotoPerfil);
             }
