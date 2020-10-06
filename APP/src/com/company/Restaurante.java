@@ -20,7 +20,6 @@ public class Restaurante {
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
-
     public ArrayList<Ocupacion> getOcupaciones() {
         return ocupaciones;
     }
@@ -73,15 +72,6 @@ public class Restaurante {
             }
         }
     }
-
-    /*public boolean comprobarMesa(int mesa) {
-        for (Mesa mesaAux : this.mesas) {
-            if (mesaAux.getnMesa() == mesa && !mesaAux.isOcupada()) {
-                return false;
-            }
-        }
-        return true;
-    }*/
 
     public void entregarPedido(JFrame ventana,JPanel panelMenu, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack) {
         JButton boton = new JButton("AGREGAR");
@@ -201,7 +191,7 @@ public class Restaurante {
 
         return ok;
     }
-    public void ocuparMesa(JFrame ventana, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack, boolean ocupar) {
+    /*public void ocuparMesa(JFrame ventana, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack, boolean ocupar) {
         cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
 
         final HashSet<Mesa> mesasClon = (HashSet<Mesa>) this.mesas.clone();
@@ -280,7 +270,7 @@ public class Restaurante {
 
             }
         });
-    }
+    }*/
 
     public void clickEditAgregados(JFrame frameAgregados, JPanel panelAgregados, JLabel labelAgregados2, Plato plato, JButton botonSalir){
         panelAgregados.setPreferredSize(new Dimension(530,730));
@@ -1182,8 +1172,6 @@ public class Restaurante {
         });
     }
 
-    //public void crearPanelMenu(){}
-
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante();
         Perfil p1 = new Perfil();
@@ -1225,11 +1213,12 @@ public class Restaurante {
 
         /*LABELs*/
 
-        JLabel nombreSistema = new JLabel("La cantina");
+        JLabel nombreSistema = new JLabel("que pasa pa");
         nombreSistema.setSize(250, 50);
         nombreSistema.setLocation(ventana.getWidth() / 2 - nombreSistema.getWidth() / 2, 100);
         nombreSistema.setFont(fuentes.get("Times New Roman"));
         panelMenu.add(nombreSistema);
+
 
         JLabel labelIngresar = new JLabel();
         labelIngresar.setSize(500, 50);
@@ -1391,7 +1380,7 @@ public class Restaurante {
         });
 
         /* FUNCION OCUPAR*/
-        boton1.addMouseListener(new MouseAdapter() {
+        /*boton1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 restaurante.ocuparMesa(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack, true);
@@ -1410,9 +1399,9 @@ public class Restaurante {
                     }
                 });
             }
-        });
+        });*/
         /*FUNCION DESOCUPAR*/
-        boton2.addMouseListener(new MouseAdapter() {
+       /* boton2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 restaurante.ocuparMesa(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack, false);
@@ -1431,7 +1420,7 @@ public class Restaurante {
                     }
                 });
             }
-        });
+        });*/
         /*GESTIONAR MENU*/
         boton3.addMouseListener(new MouseAdapter() {
             @Override
