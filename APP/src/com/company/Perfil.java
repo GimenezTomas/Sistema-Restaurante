@@ -10,8 +10,20 @@ public class Perfil {
     public  String nombreRest;
 
     public void Chooser(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         JFileChooser chooser = new JFileChooser(".");
         FileNameExtensionFilter formato = new FileNameExtensionFilter("png", "png");
+
         chooser.setFileFilter(formato);
 
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -21,7 +33,6 @@ public class Perfil {
             File copiaFt = chooser.getSelectedFile();
             if (copiaFt.isFile() && (copiaFt.getName().endsWith(".png"))){
                 FotoPerfil = chooser.getSelectedFile();
-                System.out.println(FotoPerfil);
             }
             else{
                 JOptionPane.showMessageDialog(null, "Use una foto PNG");

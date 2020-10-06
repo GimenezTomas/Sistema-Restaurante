@@ -8,8 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import java.io.File;
+import javax.swing.ImageIcon;
 
 public class Restaurante {
     private HashSet<Mesa> mesas = new HashSet<>();
@@ -1245,8 +1245,18 @@ public class Restaurante {
         labelFeedBack.setName("labelFeedBack");
         panelFeedBack.add(labelFeedBack);
 
-        /*TEXTFIELDS*/
+        JLabel perfiLabel = new JLabel("Ingrese el nombre de su restaurante");
+        perfiLabel.setSize(500, 50);
+        perfiLabel.setLocation(150,150);
+        perfiLabel.setVisible(true);
+        perfiLabel.setName("perfiLabel");
+        panelPerfil.add(perfiLabel);
 
+        JLabel imgPerfil = new JLabel();
+        imgPerfil.setSize(150,150);
+        imgPerfil.setLocation(450, 300);
+
+        /*TEXTFIELDS*/
         JTextField textField = new JTextField();
         textField.setSize(500, 50);
         textField.setLocation(ventana.getWidth() / 2 - textField.getWidth() / 2, ventana.getHeight() / 2);
@@ -1255,7 +1265,7 @@ public class Restaurante {
         panelIngresar.add(textField);
 
         JTextField texto1 = new JTextField();
-        texto1.setLocation(500, 200);
+        texto1.setLocation(150, 200);
         texto1.setSize(500, 50);
         texto1.setName("name");
         texto1.setVisible(true);
@@ -1297,13 +1307,6 @@ public class Restaurante {
         boton5.setName("MenosPedido");
         panelMenu.add(boton5);
 
-        /*JButton boton6 = new JButton("MESA MAS OCUPADA");
-        boton6.setSize(200, 50);
-        boton6.setLocation(1250 - boton3.getWidth(), 50 + boton3.getHeight() + boton3.getY());
-        boton6.setVisible(true);
-        boton6.setName("MesaMasPedida");
-        panelMenu.add(boton6);*/
-
         JButton boton7 = new JButton("ENTREGAR PEDIDO");
         boton7.setSize(200, 50);
         boton7.setLocation(150, 50 + boton4.getHeight() + boton4.getY());
@@ -1336,13 +1339,13 @@ public class Restaurante {
         panelMenu.add(botonp);
 
         JButton botonp2 = new JButton("Ingrese la foto");
-        botonp2.setLocation(150, 200);
+        botonp2.setLocation(150, 300);
         botonp2.setSize(200, 50);
         botonp2.setName("Ft");
         botonp2.setVisible(true);
 
         JButton botonp3 = new JButton("Guardar cambios");
-        botonp3.setLocation(300, 300);
+        botonp3.setLocation(950,500);
         botonp3.setSize(200, 50);
         botonp3.setName("Guardar");
         botonp3.setVisible(true);
@@ -1354,6 +1357,8 @@ public class Restaurante {
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
                 ventana.add(panelPerfil);
+                panelPerfil.add(perfiLabel);
+                panelPerfil.add(imgPerfil);
                 panelPerfil.add(botonp2);
                 panelPerfil.add(texto1);
                 panelPerfil.add(botonp3);
@@ -1363,6 +1368,10 @@ public class Restaurante {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         p1.Chooser();
+                        ImageIcon ft = new ImageIcon(p1.FotoPerfil.toString());
+                        Icon ftito = new ImageIcon(ft.getImage().getScaledInstance(imgPerfil.getWidth(),imgPerfil.getHeight(),Image.SCALE_DEFAULT));
+                        imgPerfil.setText(null);
+                        imgPerfil.setIcon(ftito);
                     }
                 });
 
@@ -1371,8 +1380,9 @@ public class Restaurante {
                     public void mouseClicked(MouseEvent e) {
                         p1.nombreRest= texto1.getText();
                         System.out.println(p1.nombreRest);
-                        System.out.println("Se guardo el nombre y la foto");
-                        panelPerfil.removeAll();
+                        System.out.println("Se guardo correctamente");
+                        ventana.remove(panelPerfil);
+                        panelPerfil.setVisible(false);
                         ventana.add(panelMenu);
                         panelMenu.setVisible(true);
                     }
