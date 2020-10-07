@@ -1,8 +1,6 @@
 package com.company;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class Plato {
@@ -12,8 +10,6 @@ public class Plato {
     private String descripcion;
     private String tiempoDemora;
     private HashSet<TipoAgregados> agregados = new HashSet<>();
-    //private HashMap<String, HashMap<Boolean, HashMap<String, Float>>> agregados = new HashMap<>();
-    //private HashMap<String/*tipo ej:salsas*/, HashMap<String/*importancia, ej:tipo:"porcion" importancia:"true=indispensable/false = despreciable"*/, HashMap<String, Float>/*agregado, ej: key="cheddar" value=15p*/>> agregados;
 
     //GETTERS && SETTERS
     public String getNombre() {

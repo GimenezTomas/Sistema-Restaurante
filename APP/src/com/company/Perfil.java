@@ -9,7 +9,7 @@ public class Perfil {
     public int respuesta;
     public  String nombreRest;
 
-    public void Chooser(){
+    public void chooser(String extension, String descripcion, String errorMessage, File file){
         JFileChooser chooser = new JFileChooser(".");
         FileNameExtensionFilter formato = new FileNameExtensionFilter("png", "png");
 
@@ -20,8 +20,8 @@ public class Perfil {
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
             File copiaFt = chooser.getSelectedFile();
-            if (copiaFt.isFile() && (copiaFt.getName().endsWith(".png"))){
-                FotoPerfil = chooser.getSelectedFile();
+            if (copiaFt.isFile() && (copiaFt.getName().endsWith("."+extension))){
+                file = chooser.getSelectedFile();
             }
             else{
                 JOptionPane.showMessageDialog(null, "Use una foto PNG");

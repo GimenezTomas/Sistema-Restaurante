@@ -10,16 +10,39 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Restaurante {
     private HashSet<Mesa> mesas = new HashSet<>();
     private HashSet<Plato> platos = new HashSet<>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     private ArrayList<Ocupacion> ocupaciones = new ArrayList<>();
+    private String nombre;
+    private File logo;
+    private String direccion;
     public static SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
+
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public File getLogo() {
+        return logo;
+    }
+    public void setLogo(File logo) {
+        this.logo = logo;
+    }
+    public String getDireccion() {
+        return direccion;
+    }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
     public ArrayList<Ocupacion> getOcupaciones() {
         return ocupaciones;
     }
@@ -47,6 +70,32 @@ public class Restaurante {
 
 
     //CONSTRUCTOR
+
+    public File chooser(String extension, String descripcion, String errorMessage){
+        JFileChooser chooser = new JFileChooser(".");
+        FileNameExtensionFilter formato = new FileNameExtensionFilter(descripcion, extension);
+
+        int respuesta;
+
+        chooser.setFileFilter(formato);
+
+        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        respuesta = chooser.showOpenDialog(null);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            File copiaFt = chooser.getSelectedFile();
+            if (copiaFt.isFile() && (copiaFt.getName().endsWith(".png"))){
+                return chooser.getSelectedFile();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, errorMessage);
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
     public void cleanPanel(JPanel panelIngresar, Component components[]){
         for (int i = 0; i < panelIngresar.getComponents().length ; i++) {
             if (panelIngresar.getComponent(i).getName() != null) {
@@ -877,22 +926,34 @@ public class Restaurante {
         ventana.add(panel);
 
         JButton boton1 = new JButton("AÑADIR PLATO");
-        boton1.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 - 200, 200, 100);
+        boton1.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 - 300, 200, 100);
         boton1.setVisible(true);
         panel.add(boton1);
 
         JButton boton2 = new JButton("EDITAR PLATO");
-        boton2.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 - 50, 200, 100);
+        boton2.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 - 125, 200, 100);
         boton2.setVisible(true);
         panel.add(boton2);
 
         JButton boton3 = new JButton("BORRAR MENU");
-        boton3.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 + 100, 200, 100);
+        boton3.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 + 25, 200, 100);
         boton3.setVisible(true);
         panel.add(boton3);
 
+        JButton salir = new JButton("Salir");
+        salir.setBounds(ventana.getWidth() / 2 - 100, ventana.getHeight() / 2 + 200, 200, 100);
+        salir.setVisible(true);
+        panel.add(salir);
+
         panel.setVisible(true);
 
+        salir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ventana.remove(panel);
+                panelMenu(ventana);
+            }
+        });
         boton1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -956,18 +1017,23 @@ public class Restaurante {
                 textFieldPrecio.setName("textFieldPrecio");
                 panel.add(textFieldPrecio);
 
-                JLabel labelImagen = new JLabel("Imagen: ( ej: C:\\Users\\Restaurante\\Pancho.png )");
+                JLabel labelImagen = new JLabel("Imagen: las imagenes solo pueden ser png, toca el boton o pega la ruta en el input");
                 labelImagen.setBounds(ventana.getWidth() / 2 - 350, textFieldPrecio.getY() + textFieldPrecio.getHeight() + 20, 700, 30);
                 labelImagen.setVisible(true);
                 labelImagen.setName("labelImagen");
                 panel.add(labelImagen);
 
                 JTextField textFieldImagen = new JTextField();
-                textFieldImagen.setSize(700, 40);
+                textFieldImagen.setSize(550, 40);
                 textFieldImagen.setLocation(ventana.getWidth() / 2 - 350, labelImagen.getY() + labelImagen.getHeight() + 2);
                 textFieldImagen.setVisible(true);
                 textFieldImagen.setName("textFieldImagen");
                 panel.add(textFieldImagen);
+
+                JButton botonImagen = new JButton("Ingresa la imagen");
+                botonImagen.setBounds(textFieldImagen.getX()+textFieldImagen.getWidth(), textFieldImagen.getY(), 150, 40);
+                botonImagen.setVisible(true);
+                panel.add(botonImagen);
 
                 JLabel labelAgregados = new JLabel("El plato va a tener agregados?");
                 labelAgregados.setBounds(ventana.getWidth() / 2 - 350, textFieldImagen.getY() + textFieldImagen.getHeight() + 20, 700, 30);
@@ -992,6 +1058,13 @@ public class Restaurante {
                 botonOut.setBounds(ventana.getWidth() / 2 - 200, opciones.getY() + opciones.getHeight() + 30, 150, 50);
                 botonOut.setVisible(true);
                 panel.add(botonOut);
+
+                botonImagen.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+
+                    }
+                });
 
                 botonOut.addMouseListener(new MouseAdapter() {
                     @Override
@@ -1091,55 +1164,10 @@ public class Restaurante {
         });
     }
 
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+    public void gestionarMesas(JFrame ventana){
+        while (ventana.getComponents().length>1){
+            ventana.remove(ventana.getComponents().length-1);
         }
-        Restaurante restaurante = new Restaurante();
-        Perfil p1 = new Perfil();
-
-        fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
-        fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
-
-        /*VENTANA*/
-        JFrame ventana = new JFrame("RESTAURANTE");
-        ventana.setSize(1350, 730);
-        ventana.setLayout(null);
-        ventana.setVisible(true);
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        /*PANELES*/
-        JPanel panelMenu = new JPanel();
-        panelMenu.setName("menu");
-        panelMenu.setSize(1350, 700);
-        panelMenu.setLayout(null);
-        panelMenu.setVisible(false);
-
-        JPanel panelIngresar = new JPanel();
-        panelIngresar.setSize(1400, 700);
-        panelIngresar.setLayout(null);
-        panelIngresar.setVisible(false);
-        panelIngresar.setName("ingresar");
-
-        JPanel panelFeedBack = new JPanel();
-        panelFeedBack.setSize(1400, 700);
-        panelFeedBack.setLayout(null);
-        panelFeedBack.setVisible(false);
-        panelFeedBack.setName("feedback");
-
-        JPanel panelPerfil = new JPanel();
-        panelPerfil.setSize(1400, 700);
-        panelPerfil.setLayout(null);
-        panelPerfil.setVisible(false);
-        panelPerfil.setName("perfil");
 
         JPanel panelMesas = new JPanel();
         panelMesas.setSize(1400, 700);
@@ -1147,58 +1175,87 @@ public class Restaurante {
         panelMesas.setVisible(false);
         panelMesas.setName("mesas");
 
+        JButton salir = new JButton("Salir");
+        salir.setSize(200, 50);
+        salir.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 300);
+        salir.setVisible(true);
+        salir.setName("boton11");
 
-        /*LABELs*/
+        JButton agregarM = new JButton("AGREGAR MESAS");
+        agregarM.setLocation(150, 200);
+        agregarM.setSize(200, 50);
+        agregarM.setName("agregarM");
+        agregarM.setVisible(true);
+
+        JButton ocuparM = new JButton("OCUPAR MESA");
+        ocuparM.setLocation((1200 / 2 - agregarM.getWidth() / 2) + 100, 200);
+        ocuparM.setSize(200, 50);
+        ocuparM.setName("ocuparM");
+        ocuparM.setVisible(true);
+
+        JButton desocuparM = new JButton("DESOCUPAR MESA");
+        desocuparM.setLocation(1250 - ocuparM.getWidth(), 200);
+        desocuparM.setSize(200, 50);
+        desocuparM.setName("desocuparM");
+        desocuparM.setVisible(true);
+
+        JButton borrarM = new JButton("BORRAR MESA ESPECIFICA");
+        borrarM.setLocation(150, 50 + agregarM.getHeight() + agregarM.getY());
+        borrarM.setSize(200, 50);
+        borrarM.setName("borrarM");
+        borrarM.setVisible(true);
+
+        JButton borrarNmesas = new JButton("BORRAR VARIAS MESAS");
+        borrarNmesas.setLocation((1200 / 2 - ocuparM.getWidth() / 2) + 100, 50 + ocuparM.getHeight() + ocuparM.getY());
+        borrarNmesas.setSize(200, 50);
+        borrarNmesas.setName("borrarNmesas");
+        borrarNmesas.setVisible(true);
+
+        JButton Qrs = new JButton("QRS");
+        Qrs.setLocation(1250 - desocuparM.getWidth(), 50 + desocuparM.getHeight() + desocuparM.getY());
+        Qrs.setSize(200, 50);
+        Qrs.setName("Qrs");
+        Qrs.setVisible(true);
+
+        ventana.add(panelMesas);
+        panelMesas.add(salir);
+        panelMesas.add(agregarM);
+        panelMesas.add(ocuparM);
+        panelMesas.add(desocuparM);
+        panelMesas.add(borrarM);
+        panelMesas.add(borrarNmesas);
+        panelMesas.add(Qrs);
+        panelMesas.setVisible(true);
+
+        salir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ventana.remove(panelMesas);
+                panelMenu(ventana);
+            }
+        });
+    }
+
+    public void panelMenu(JFrame ventana){
+        System.out.println("entre al panel menu");
+
+        while (ventana.getComponents().length>1){
+            ventana.remove(ventana.getComponents().length-1);
+        }
+
+        System.out.println(ventana.getComponents().length);
+
+        JPanel panelMenu = new JPanel();
+        panelMenu.setName("menu");
+        panelMenu.setSize(1350, 700);
+        panelMenu.setLayout(null);
+        panelMenu.setVisible(false);
 
         JLabel nombreSistema = new JLabel("que pasa pa");
         nombreSistema.setSize(250, 50);
         nombreSistema.setLocation(ventana.getWidth() / 2 - nombreSistema.getWidth() / 2, 100);
         nombreSistema.setFont(fuentes.get("Times New Roman"));
         panelMenu.add(nombreSistema);
-
-
-        JLabel labelIngresar = new JLabel();
-        labelIngresar.setSize(500, 50);
-        labelIngresar.setLocation(ventana.getWidth() / 2 - labelIngresar.getWidth() / 2, ventana.getHeight() / 2 - 50);
-        labelIngresar.setVisible(false);
-        labelIngresar.setName("labelIngresar");
-        panelIngresar.add(labelIngresar);
-
-        JLabel labelFeedBack = new JLabel();
-        labelFeedBack.setSize(500, 50);
-        labelFeedBack.setLocation(ventana.getWidth() / 2 - labelFeedBack.getWidth() / 2, ventana.getHeight() / 2 - 50);
-        labelFeedBack.setVisible(false);
-        labelFeedBack.setName("labelFeedBack");
-        panelFeedBack.add(labelFeedBack);
-
-        JLabel perfiLabel = new JLabel("Ingrese el nombre de su restaurante");
-        perfiLabel.setSize(500, 50);
-        perfiLabel.setLocation(150,150);
-        perfiLabel.setVisible(true);
-        perfiLabel.setName("perfiLabel");
-        panelPerfil.add(perfiLabel);
-
-
-        /*Mostrar img en el editar perfil*/
-        JLabel imgPerfil = new JLabel();
-        imgPerfil.setSize(150,150);
-        imgPerfil.setLocation(450, 300);
-
-        /*TEXTFIELDS*/
-        JTextField textField = new JTextField();
-        textField.setSize(500, 50);
-        textField.setLocation(ventana.getWidth() / 2 - textField.getWidth() / 2, ventana.getHeight() / 2);
-        textField.setVisible(false);
-        textField.setName("textFieldIngresar");
-        panelIngresar.add(textField);
-
-        JTextField texto1 = new JTextField();
-        texto1.setLocation(150, 200);
-        texto1.setSize(500, 50);
-        texto1.setName("name");
-        texto1.setVisible(true);
-
-        /*BOTONES*/
 
         JButton boton1 = new JButton("GESTIONAR MESAS");
         boton1.setLocation(150, 200);
@@ -1248,17 +1305,6 @@ public class Restaurante {
         boton8.setVisible(true);
         panelMenu.add(boton8);
 
-        JButton boton10 = new JButton("INGRESAR");
-        boton10.setSize(200, 50);
-        boton10.setLocation(ventana.getWidth() / 2 - boton10.getWidth() / 2, ventana.getHeight() / 2 + textField.getHeight() + 50);
-        boton10.setVisible(false);
-
-        JButton boton11 = new JButton("SALIR");
-        boton11.setSize(200, 50);
-        boton11.setLocation(ventana.getWidth() / 2 - boton10.getWidth() / 2, ventana.getHeight() / 2 + textField.getHeight() + 50);
-        boton11.setVisible(true);
-        boton11.setName("boton11");
-
         JButton botonp = new JButton("EDITAR PERFIL");
         botonp.setLocation(1250 - boton3.getWidth(), 50 + boton3.getHeight() + boton3.getY());
         botonp.setSize(200, 50);
@@ -1266,91 +1312,16 @@ public class Restaurante {
         botonp.setVisible(true);
         panelMenu.add(botonp);
 
-        JButton botonp2 = new JButton("INGRESE LA FOTO");
-        botonp2.setLocation(150, 300);
-        botonp2.setSize(200, 50);
-        botonp2.setName("Ft");
-        botonp2.setVisible(true);
+        panelMenu.setVisible(true);
+        ventana.add(panelMenu);
 
-        JButton botonp3 = new JButton("GUARDAR CAMBIOS");
-        botonp3.setLocation(950,500);
-        botonp3.setSize(200, 50);
-        botonp3.setName("Guardar");
-        botonp3.setVisible(true);
-
-        JButton agregarM = new JButton("AGREGAR MESAS");
-        agregarM.setLocation(150, 200);
-        agregarM.setSize(200, 50);
-        agregarM.setName("agregarM");
-        agregarM.setVisible(true);
-
-        JButton ocuparM = new JButton("OCUPAR MESA");
-        ocuparM.setLocation((1200 / 2 - agregarM.getWidth() / 2) + 100, 200);
-        ocuparM.setSize(200, 50);
-        ocuparM.setName("ocuparM");
-        ocuparM.setVisible(true);
-
-        JButton desocuparM = new JButton("DESOCUPAR MESA");
-        desocuparM.setLocation(1250 - boton3.getWidth(), 200);
-        desocuparM.setSize(200, 50);
-        desocuparM.setName("desocuparM");
-        desocuparM.setVisible(true);
-
-        JButton borrarM = new JButton("BORRAR MESA ESPECIFICA");
-        borrarM.setLocation(150, 50 + agregarM.getHeight() + agregarM.getY());
-        borrarM.setSize(200, 50);
-        borrarM.setName("borrarM");
-        borrarM.setVisible(true);
-
-        JButton borrarNmesas = new JButton("BORRAR VARIAS MESAS");
-        borrarNmesas.setLocation((1200 / 2 - ocuparM.getWidth() / 2) + 100, 50 + ocuparM.getHeight() + ocuparM.getY());
-        borrarNmesas.setSize(200, 50);
-        borrarNmesas.setName("borrarNmesas");
-        borrarNmesas.setVisible(true);
-
-        JButton Qrs = new JButton("QRS");
-        Qrs.setLocation(1250 - desocuparM.getWidth(), 50 + desocuparM.getHeight() + desocuparM.getY());
-        Qrs.setSize(200, 50);
-        Qrs.setName("Qrs");
-        Qrs.setVisible(true);
-
-        /*PERFIL*/
         botonp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
-                ventana.add(panelPerfil);
-                panelPerfil.add(perfiLabel);
-                panelPerfil.add(imgPerfil);
-                panelPerfil.add(botonp2);
-                panelPerfil.add(texto1);
-                panelPerfil.add(botonp3);
-                panelPerfil.setVisible(true);
 
-                botonp2.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        p1.Chooser();
-                        ImageIcon ft = new ImageIcon(p1.FotoPerfil.toString());
-                        Icon ftito = new ImageIcon(ft.getImage().getScaledInstance(imgPerfil.getWidth(),imgPerfil.getHeight(),Image.SCALE_DEFAULT));
-                        imgPerfil.setText(null);
-                        imgPerfil.setIcon(ftito);
-                    }
-                });
-
-                botonp3.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        p1.nombreRest= texto1.getText();
-                        System.out.println(p1.nombreRest);
-                        System.out.println("Se guardo correctamente");
-                        ventana.remove(panelPerfil);
-                        panelPerfil.setVisible(false);
-                        ventana.add(panelMenu);
-                        panelMenu.setVisible(true);
-                    }
-                });
+                manejarPerfil(ventana);
             }
         });
 
@@ -1360,17 +1331,10 @@ public class Restaurante {
             public void mouseClicked(MouseEvent e) {
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
-                ventana.add(panelMesas);
-                panelMesas.add(boton11);
-                panelMesas.add(agregarM);
-                panelMesas.add(ocuparM);
-                panelMesas.add(desocuparM);
-                panelMesas.add(borrarM);
-                panelMesas.add(borrarNmesas);
-                panelMesas.add(Qrs);
-                panelMesas.setVisible(true);
 
-                boton11.addMouseListener(new MouseAdapter() {
+                gestionarMesas(ventana);
+
+                /*boton11.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         ventana.remove(panelMesas);
@@ -1379,7 +1343,7 @@ public class Restaurante {
                         ventana.add(panelMenu);
                         panelMenu.setVisible(true);
                     }
-                });
+                });*/
             }
         });
         /*FUNCION DESOCUPAR*/
@@ -1407,29 +1371,17 @@ public class Restaurante {
         boton3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                panelIngresar.removeAll();
-                //restaurante.cleanPanel(panelIngresar, new Component[]{});
 
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
 
-                restaurante.gestionarRestaurante(ventana);
-                /*boton11.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ventana.remove(panelFeedBack);
-                        panelFeedBack.setVisible(false);
-                        panelFeedBack.remove(boton11);
-                        ventana.add(panelMenu);
-                        panelMenu.setVisible(true);
-                    }
-                });*/
+                gestionarRestaurante(ventana);
             }
         });
         boton7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                restaurante.cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
+                /*restaurante.cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
 
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
@@ -1445,13 +1397,13 @@ public class Restaurante {
                         ventana.add(panelMenu);
                         panelMenu.setVisible(true);
                     }
-                });
+                });*/
             }
         });
         boton8.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+/*
                 ventana.remove(panelMenu);
                 panelMenu.setVisible(false);
 
@@ -1473,12 +1425,156 @@ public class Restaurante {
                         ventana.add(panelMenu);
                         panelMenu.setVisible(true);
                     }
-                });
+                });*/
+            }
+        });
+    }
+
+    public void manejarPerfil(JFrame ventana){
+        JPanel panelPerfil = new JPanel();
+        panelPerfil.setSize(1400, 700);
+        panelPerfil.setLayout(null);
+        panelPerfil.setVisible(false);
+        panelPerfil.setName("perfil");
+
+        JButton botonp2 = new JButton("INGRESE LA FOTO");
+        botonp2.setLocation(150, 300);
+        botonp2.setSize(200, 50);
+        botonp2.setName("Ft");
+        botonp2.setVisible(true);
+
+        JButton botonp3 = new JButton("GUARDAR CAMBIOS");
+        botonp3.setLocation(950,500);
+        botonp3.setSize(200, 50);
+        botonp3.setName("Guardar");
+        botonp3.setVisible(true);
+
+        JLabel perfiLabel = new JLabel("Ingrese el nombre de su restaurante");
+        perfiLabel.setSize(500, 50);
+        perfiLabel.setLocation(150,150);
+        perfiLabel.setVisible(true);
+        perfiLabel.setName("perfiLabel");
+        panelPerfil.add(perfiLabel);
+
+        JLabel imgPerfil = new JLabel();
+        imgPerfil.setSize(150,150);
+        imgPerfil.setLocation(450, 300);
+
+        JTextField texto1 = new JTextField();
+        texto1.setLocation(150, 200);
+        texto1.setSize(500, 50);
+        texto1.setName("name");
+        texto1.setText(nombre);
+        texto1.setVisible(true);
+
+        ventana.add(panelPerfil);
+        panelPerfil.add(perfiLabel);
+        panelPerfil.add(imgPerfil);
+        panelPerfil.add(botonp2);
+        panelPerfil.add(texto1);
+        panelPerfil.add(botonp3);
+        panelPerfil.setVisible(true);
+
+        botonp2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                logo = chooser("png", "png", "Use una foto PNG");
+                ImageIcon ft = new ImageIcon(logo.getPath());
+                Icon ftito = new ImageIcon(ft.getImage().getScaledInstance(imgPerfil.getWidth(),imgPerfil.getHeight(),Image.SCALE_DEFAULT));
+                imgPerfil.setText(null);
+                imgPerfil.setIcon(ftito);
             }
         });
 
-        panelMenu.setVisible(true);
-        ventana.add(panelMenu);
+        botonp3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                nombre= texto1.getText();
+                System.out.println(nombre);
+                System.out.println("Se guardo correctamente");
+                ventana.remove(panelPerfil);
+                panelMenu(ventana);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        Restaurante restaurante = new Restaurante();
+        //Perfil p1 = new Perfil();
+
+        fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
+        fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
+
+        /*VENTANA*/
+        JFrame ventana = new JFrame("RESTAURANTE");
+        ventana.setSize(1350, 730);
+        ventana.setLayout(null);
+        ventana.setVisible(true);
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        /*PANELES*/
+
+        JPanel panelIngresar = new JPanel();
+        panelIngresar.setSize(1400, 700);
+        panelIngresar.setLayout(null);
+        panelIngresar.setVisible(false);
+        panelIngresar.setName("ingresar");
+
+        JPanel panelFeedBack = new JPanel();
+        panelFeedBack.setSize(1400, 700);
+        panelFeedBack.setLayout(null);
+        panelFeedBack.setVisible(false);
+        panelFeedBack.setName("feedback");
+
+        /*LABELs*/
+
+        JLabel labelIngresar = new JLabel();
+        labelIngresar.setSize(500, 50);
+        labelIngresar.setLocation(ventana.getWidth() / 2 - labelIngresar.getWidth() / 2, ventana.getHeight() / 2 - 50);
+        labelIngresar.setVisible(false);
+        labelIngresar.setName("labelIngresar");
+        panelIngresar.add(labelIngresar);
+
+        JLabel labelFeedBack = new JLabel();
+        labelFeedBack.setSize(500, 50);
+        labelFeedBack.setLocation(ventana.getWidth() / 2 - labelFeedBack.getWidth() / 2, ventana.getHeight() / 2 - 50);
+        labelFeedBack.setVisible(false);
+        labelFeedBack.setName("labelFeedBack");
+        panelFeedBack.add(labelFeedBack);
+
+        /*TEXTFIELDS*/
+        JTextField textField = new JTextField();
+        textField.setSize(500, 50);
+        textField.setLocation(ventana.getWidth() / 2 - textField.getWidth() / 2, ventana.getHeight() / 2);
+        textField.setVisible(false);
+        textField.setName("textFieldIngresar");
+        panelIngresar.add(textField);
+
+        /*BOTONES*/
+
+        JButton boton10 = new JButton("INGRESAR");
+        boton10.setSize(200, 50);
+        boton10.setLocation(ventana.getWidth() / 2 - boton10.getWidth() / 2, ventana.getHeight() / 2 + textField.getHeight() + 50);
+        boton10.setVisible(false);
+
+        JButton boton11 = new JButton("SALIR");
+        boton11.setSize(200, 50);
+        boton11.setLocation(ventana.getWidth() / 2 - boton10.getWidth() / 2, ventana.getHeight() / 2 + textField.getHeight() + 50);
+        boton11.setVisible(true);
+        boton11.setName("boton11");
+
+        restaurante.panelMenu(ventana);
     }
 }
 //editar tipo agregado error en salir (debe ser por el scrollbar)
