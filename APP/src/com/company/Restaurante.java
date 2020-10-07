@@ -1175,7 +1175,7 @@ public class Restaurante {
         panelMesas.setVisible(false);
         panelMesas.setName("mesas");
 
-        JButton salir = new JButton("Salir");
+        JButton salir = new JButton("SALIR");
         salir.setSize(200, 50);
         salir.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 300);
         salir.setVisible(true);
@@ -1237,13 +1237,9 @@ public class Restaurante {
     }
 
     public void panelMenu(JFrame ventana){
-        System.out.println("entre al panel menu");
-
         while (ventana.getComponents().length>1){
             ventana.remove(ventana.getComponents().length-1);
         }
-
-        System.out.println(ventana.getComponents().length);
 
         JPanel panelMenu = new JPanel();
         panelMenu.setName("menu");
@@ -1333,40 +1329,9 @@ public class Restaurante {
                 panelMenu.setVisible(false);
 
                 gestionarMesas(ventana);
-
-                /*boton11.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ventana.remove(panelMesas);
-                        panelMesas.setVisible(false);
-                        panelMesas.remove(boton11);
-                        ventana.add(panelMenu);
-                        panelMenu.setVisible(true);
-                    }
-                });*/
             }
         });
-        /*FUNCION DESOCUPAR*/
-       /* boton2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                restaurante.ocuparMesa(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack, false);
 
-                ventana.remove(panelMenu);
-                panelMenu.setVisible(false);
-
-                boton11.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ventana.remove(panelFeedBack);
-                        panelFeedBack.setVisible(false);
-                        panelFeedBack.remove(boton11);
-                        ventana.add(panelMenu);
-                        panelMenu.setVisible(true);
-                    }
-                });
-            }
-        });*/
         /*GESTIONAR MENU*/
         boton3.addMouseListener(new MouseAdapter() {
             @Override
@@ -1478,7 +1443,7 @@ public class Restaurante {
         botonp2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                logo = chooser("png", "png", "Use una foto PNG");
+                logo = chooser("png", "Png", "Use una foto PNG");
                 ImageIcon ft = new ImageIcon(logo.getPath());
                 Icon ftito = new ImageIcon(ft.getImage().getScaledInstance(imgPerfil.getWidth(),imgPerfil.getHeight(),Image.SCALE_DEFAULT));
                 imgPerfil.setText(null);

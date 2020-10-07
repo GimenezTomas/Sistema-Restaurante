@@ -99,3 +99,25 @@ public class Mesa {
             }
         });
     }*/
+
+/*FUNCION DESOCUPAR*/
+       /* boton2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                restaurante.ocuparMesa(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack, false);
+
+                ventana.remove(panelMenu);
+                panelMenu.setVisible(false);
+
+                boton11.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        ventana.remove(panelFeedBack);
+                        panelFeedBack.setVisible(false);
+                        panelFeedBack.remove(boton11);
+                        ventana.add(panelMenu);
+                        panelMenu.setVisible(true);
+                    }
+                });
+            }
+        });*/
