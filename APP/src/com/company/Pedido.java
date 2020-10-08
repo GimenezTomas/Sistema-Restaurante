@@ -1,24 +1,34 @@
 package com.company;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Pedido {
-    private HashMap<String, Integer> platos = new HashMap<>();
     public static int count=1;
     private int nPedido;
-    private boolean entregado=false;
+    private boolean abierto=false;
     private String fecha;
-    private int nOcupacion;
+    private int nMesa;
+    private ArrayList<PlatoPedido> platos = new ArrayList<>();
+
     //GETTERS && SETTERS
 
-    public int getnOcupacion() {
-        return nOcupacion;
+    public int getnPedido() {
+        return nPedido;
     }
 
-    public void setnOcupacion(int nOcupacion) {
-        this.nOcupacion = nOcupacion;
+    public void setnPedido(int nPedido) {
+        this.nPedido = nPedido;
+    }
+
+    public boolean isAbierto() {
+        return abierto;
+    }
+
+    public void setAbierto(boolean abierto) {
+        this.abierto = abierto;
     }
 
     public String getFecha() {
@@ -29,42 +39,29 @@ public class Pedido {
         this.fecha = fecha;
     }
 
-    public boolean isEntregado() {
-        return entregado;
+    public int getnMesa() {
+        return nMesa;
     }
 
-    public void setEntregado(boolean entregado) {
-        this.entregado = entregado;
+    public void setnMesa(int nMesa) {
+        this.nMesa = nMesa;
     }
 
-    public HashMap<String, Integer> getPlatos() {
+    public ArrayList<PlatoPedido> getPlatos() {
         return platos;
     }
 
-    public void setPlatos(HashMap<String, Integer> platos) {
+    public void setPlatos(ArrayList<PlatoPedido> platos) {
         this.platos = platos;
     }
 
-    public int getnPedido() {
-        return nPedido;
-    }
-
-    public void setnPedido(int nPedido) {
-        this.nPedido = nPedido;
-    }
     //CONSTRUCTOR
-    public Pedido(HashMap<String, Integer> platos, int nOcupacion) {
-        this.platos = platos;
+
+    public Pedido(int nPedido, boolean abierto, String fecha, int nMesa, ArrayList<PlatoPedido> platos) {
         this.nPedido = count++;
+        this.abierto = abierto;
         this.fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        this.nOcupacion=nOcupacion;
-    }
-    public Pedido(HashMap<String, Integer> platos, int nOcupacion, int nPedido, String fecha, boolean entregado){
+        this.nMesa = nMesa;
         this.platos = platos;
-        this.nPedido = nPedido;
-        this.fecha = fecha;
-        this.nOcupacion=nOcupacion;
-        this.entregado = entregado;
-        count = nPedido + 1;
     }
 }
