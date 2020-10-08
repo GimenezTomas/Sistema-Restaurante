@@ -135,8 +135,11 @@ public class Restaurante {
             }
         }
     }
-
-    public void entregarPedido(JFrame ventana,JPanel panelMenu, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack) {
+/*                                            PLATOS                        ENTREGAR
+Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CHECKBUTTON)
+                                                                            GUARDAR(BUTTON)
+*/
+    /*public void entregarPedido(JFrame ventana,JPanel panelMenu, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack) {
         JButton boton = new JButton("AGREGAR");
         boton.setBounds(ventana.getWidth()/2+10, boton10.getY()+30, boton10.getWidth(), boton10.getHeight());
         boton.setVisible(true);
@@ -153,11 +156,19 @@ public class Restaurante {
 
         JComboBox menuPedidos = new JComboBox();
         menuPedidos.setName("comboboxMenu");
-        menuPedidos.setBounds(ventana.getWidth()/2-150, 120,300,100);
+        menuPedidos.setBounds(ventana.getWidth()/2-200, 120,300,100);
+
+        JButton buttonOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
+        buttonOK.setBounds(menuPedidos.getX()+menuPedidos.getWidth(), menuPedidos.getY(), 100, 100);
+        buttonOK.setVisible(true);
+        panelIngresar.add(buttonOK);
 
         for(Pedido pedidoAux : this.pedidos){
-            if(!pedidoAux.isEntregado()){
-                menuPedidos.addItem("PEDIDO N°"+pedidoAux.getnPedido());
+            for (PlatoPedido plato : pedidoAux.getPlatos()) {
+                if (!plato.isEntregado()) {
+                    menuPedidos.addItem("PEDIDO N°" + pedidoAux.getnPedido());
+                    break;
+                }
             }
         }
 
@@ -179,11 +190,44 @@ public class Restaurante {
                 panelMenu.setVisible(true);
             }
         });
+        buttonOK.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for (Pedido pedido : pedidos) {
+                    if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
+                        JComboBox platos = new JComboBox();
+                        menuPedidos.setName("comboboxPlatos");
+                        menuPedidos.setBounds(ventana.getWidth()/2-425, menuPedidos.getY()+menuPedidos.getHeight()+20,800,50);
+
+                        JButton btnOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
+                        btnOK.setBounds(platos.getX()+platos.getWidth(), platos.getY(), 50, 50);
+                        btnOK.setVisible(true);
+                        panelIngresar.add(btnOK);
+
+                        for (PlatoPedido plato: pedido.getPlatos()){
+                            if (!plato.isEntregado()){
+                                String agregadosString = "";
+                                for (String agregado : plato.getAgregados().keySet()){
+                                    agregadosString.concat(" "+agregado);
+                                }
+                                platos.addItem(plato.getNombre() + ", agregados:"+ agregadosString);
+                            }
+                        }
+                        panelIngresar.add(platos);
+                        break;
+                    }
+                }
+            }
+        });
         boton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 for (Pedido pedido : pedidos) {
                     if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
+                        for (PlatoPedido plato: pedido.getPlatos()){
+
+                            }
+                        }
                         pedido.setEntregado(true);
                         break;
                     }
@@ -201,9 +245,9 @@ public class Restaurante {
                 cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
             }
         });
-    }
+    }*/
 
-    public String proximoPedido() {
+    /*public String proximoPedido() {
         String pedidoProx = "NO HAY PEDIDOS PENDIENTES";
         for (int i = 0; i <this.pedidos.size() ; i++) {
             if(!this.pedidos.get(i).isEntregado()){
@@ -212,7 +256,7 @@ public class Restaurante {
             }
         }
         return pedidoProx;
-    }
+    }*/
 
     public boolean agregarPlato(String nombre, String precio, String imagen, String descripcion, String tiempoDemora){
         boolean ok = true;
