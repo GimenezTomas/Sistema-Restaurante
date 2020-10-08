@@ -71,6 +71,20 @@ public class Restaurante {
 
     //CONSTRUCTOR
 
+    public static boolean esNumero(String cadena) {
+
+        boolean resultado;
+
+        try {
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
+    }
+
     public File chooser(String extension, String descripcion, String errorMessage){
         JFileChooser chooser = new JFileChooser(".");
         FileNameExtensionFilter formato = new FileNameExtensionFilter(descripcion, extension);
@@ -958,7 +972,6 @@ public class Restaurante {
             @Override
             public void mouseClicked(MouseEvent e) {
                 panel.removeAll();
-                //cleanPanel(panel, new Component[]{});
 
                 JLabel labelTitulo = new JLabel("¡INGRESAR EL NUEVO PLATO!");
                 labelTitulo.setBounds(ventana.getWidth() / 2 - 100, 20, 200, 15);
@@ -1181,6 +1194,12 @@ public class Restaurante {
         salir.setVisible(true);
         salir.setName("boton11");
 
+        JButton agregar = new JButton("AGREGAR");
+        agregar.setSize(200, 50);
+        agregar.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 400);
+        agregar.setVisible(true);
+        agregar.setName("agregar");
+
         JButton agregarM = new JButton("AGREGAR MESAS");
         agregarM.setLocation(150, 200);
         agregarM.setSize(200, 50);
@@ -1217,6 +1236,12 @@ public class Restaurante {
         Qrs.setName("Qrs");
         Qrs.setVisible(true);
 
+        JTextField textMesas = new JTextField();
+        textMesas.setLocation(ventana.getWidth() / 2 - 250,200);
+        textMesas.setSize(500, 50);
+        textMesas.setName("nMesas");
+        textMesas.setVisible(true);
+
         ventana.add(panelMesas);
         panelMesas.add(salir);
         panelMesas.add(agregarM);
@@ -1227,10 +1252,112 @@ public class Restaurante {
         panelMesas.add(Qrs);
         panelMesas.setVisible(true);
 
+        agregarM.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                panelMesas.removeAll();
+                panelMesas.add(textMesas);
+                //panelMesas.add();
+                panelMesas.add(agregar);
+                panelMesas.add(salir);
+
+                agregar.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e){
+                        if (esNumero(textMesas.getText())) {
+                            int n = Integer.parseInt(textMesas.getText());
+                            Mesa.agregarMesas(n,mesas);
+                            panelMesas.removeAll();
+                            ventana.add(panelMesas);
+                            panelMesas.add(salir);
+                            panelMesas.add(agregarM);
+                            panelMesas.add(ocuparM);
+                            panelMesas.add(desocuparM);
+                            panelMesas.add(borrarM);
+                            panelMesas.add(borrarNmesas);
+                            panelMesas.add(Qrs);
+                            panelMesas.setVisible(true);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Ingrese un Numero entero");
+                        }
+                    }
+                });
+            }
+        });
+
         salir.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ventana.remove(panelMesas);
+                panelMenu(ventana);
+            }
+        });
+    }
+
+    public void manejarPerfil(JFrame ventana){
+        JPanel panelPerfil = new JPanel();
+        panelPerfil.setSize(1400, 700);
+        panelPerfil.setLayout(null);
+        panelPerfil.setVisible(false);
+        panelPerfil.setName("perfil");
+
+        JButton botonp2 = new JButton("INGRESE LA FOTO");
+        botonp2.setLocation(150, 300);
+        botonp2.setSize(200, 50);
+        botonp2.setName("Ft");
+        botonp2.setVisible(true);
+
+        JButton botonp3 = new JButton("GUARDAR CAMBIOS");
+        botonp3.setLocation(950,500);
+        botonp3.setSize(200, 50);
+        botonp3.setName("Guardar");
+        botonp3.setVisible(true);
+
+        JLabel perfiLabel = new JLabel("Ingrese el nombre de su restaurante");
+        perfiLabel.setSize(500, 50);
+        perfiLabel.setLocation(150,150);
+        perfiLabel.setVisible(true);
+        perfiLabel.setName("perfiLabel");
+        panelPerfil.add(perfiLabel);
+
+        JLabel imgPerfil = new JLabel();
+        imgPerfil.setSize(150,150);
+        imgPerfil.setLocation(450, 300);
+
+        JTextField texto1 = new JTextField();
+        texto1.setLocation(150, 200);
+        texto1.setSize(500, 50);
+        texto1.setName("name");
+        texto1.setText(nombre);
+        texto1.setVisible(true);
+
+        ventana.add(panelPerfil);
+        panelPerfil.add(perfiLabel);
+        panelPerfil.add(imgPerfil);
+        panelPerfil.add(botonp2);
+        panelPerfil.add(texto1);
+        panelPerfil.add(botonp3);
+        panelPerfil.setVisible(true);
+
+        botonp2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                logo = chooser("png", "Png", "Use una foto PNG");
+                ImageIcon ft = new ImageIcon(logo.getPath());
+                Icon ftito = new ImageIcon(ft.getImage().getScaledInstance(imgPerfil.getWidth(),imgPerfil.getHeight(),Image.SCALE_DEFAULT));
+                imgPerfil.setText(null);
+                imgPerfil.setIcon(ftito);
+            }
+        });
+
+        botonp3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                nombre= texto1.getText();
+                System.out.println(nombre);
+                System.out.println("Se guardo correctamente");
+                ventana.remove(panelPerfil);
                 panelMenu(ventana);
             }
         });
@@ -1391,74 +1518,6 @@ public class Restaurante {
                         panelMenu.setVisible(true);
                     }
                 });*/
-            }
-        });
-    }
-
-    public void manejarPerfil(JFrame ventana){
-        JPanel panelPerfil = new JPanel();
-        panelPerfil.setSize(1400, 700);
-        panelPerfil.setLayout(null);
-        panelPerfil.setVisible(false);
-        panelPerfil.setName("perfil");
-
-        JButton botonp2 = new JButton("INGRESE LA FOTO");
-        botonp2.setLocation(150, 300);
-        botonp2.setSize(200, 50);
-        botonp2.setName("Ft");
-        botonp2.setVisible(true);
-
-        JButton botonp3 = new JButton("GUARDAR CAMBIOS");
-        botonp3.setLocation(950,500);
-        botonp3.setSize(200, 50);
-        botonp3.setName("Guardar");
-        botonp3.setVisible(true);
-
-        JLabel perfiLabel = new JLabel("Ingrese el nombre de su restaurante");
-        perfiLabel.setSize(500, 50);
-        perfiLabel.setLocation(150,150);
-        perfiLabel.setVisible(true);
-        perfiLabel.setName("perfiLabel");
-        panelPerfil.add(perfiLabel);
-
-        JLabel imgPerfil = new JLabel();
-        imgPerfil.setSize(150,150);
-        imgPerfil.setLocation(450, 300);
-
-        JTextField texto1 = new JTextField();
-        texto1.setLocation(150, 200);
-        texto1.setSize(500, 50);
-        texto1.setName("name");
-        texto1.setText(nombre);
-        texto1.setVisible(true);
-
-        ventana.add(panelPerfil);
-        panelPerfil.add(perfiLabel);
-        panelPerfil.add(imgPerfil);
-        panelPerfil.add(botonp2);
-        panelPerfil.add(texto1);
-        panelPerfil.add(botonp3);
-        panelPerfil.setVisible(true);
-
-        botonp2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                logo = chooser("png", "Png", "Use una foto PNG");
-                ImageIcon ft = new ImageIcon(logo.getPath());
-                Icon ftito = new ImageIcon(ft.getImage().getScaledInstance(imgPerfil.getWidth(),imgPerfil.getHeight(),Image.SCALE_DEFAULT));
-                imgPerfil.setText(null);
-                imgPerfil.setIcon(ftito);
-            }
-        });
-
-        botonp3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                nombre= texto1.getText();
-                System.out.println(nombre);
-                System.out.println("Se guardo correctamente");
-                ventana.remove(panelPerfil);
-                panelMenu(ventana);
             }
         });
     }

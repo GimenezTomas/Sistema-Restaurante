@@ -2,11 +2,25 @@ package com.company;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.HashSet;
 
 public class Mesa {
     public int numMesa;
-    public boolean Ocupada = false;
+    public boolean Ocupada;
     public File QR;
+    public static int count=1;
+
+
+    public static void agregarMesas(int textfield, HashSet<Mesa> mesas){
+        for (int i = 0; i < textfield; i++) {
+             Mesa mesa = new Mesa();
+             mesa.numMesa = count++;
+             mesa.Ocupada = false;
+             mesas.add(mesa);
+        }
+        System.out.println(mesas.size());
+
+    }
 
 }
 
