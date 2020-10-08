@@ -1186,6 +1186,8 @@ public class Restaurante {
         });
     }
 
+
+
     public void gestionarMesas(JFrame ventana){
         while (ventana.getComponents().length>1){
             ventana.remove(ventana.getComponents().length-1);
@@ -1203,11 +1205,23 @@ public class Restaurante {
         salir.setVisible(true);
         salir.setName("boton11");
 
+        JButton salir1 = new JButton("SALIR");
+        salir1.setSize(200, 50);
+        salir1.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 300);
+        salir1.setVisible(true);
+        salir1.setName("salir1");
+
         JButton agregar = new JButton("AGREGAR");
         agregar.setSize(200, 50);
         agregar.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 400);
         agregar.setVisible(true);
         agregar.setName("agregar");
+
+        JButton ocupar = new JButton("OCUPAR");
+        ocupar.setSize(200, 50);
+        ocupar.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 400);
+        ocupar.setVisible(true);
+        ocupar.setName("ocupar");
 
         JButton agregarM = new JButton("AGREGAR MESAS");
         agregarM.setLocation(150, 200);
@@ -1251,6 +1265,18 @@ public class Restaurante {
         textMesas.setName("nMesas");
         textMesas.setVisible(true);
 
+        JLabel mesasAdd = new JLabel("Cuantas mesas quiere agregar?");
+        mesasAdd.setSize(500, 50);
+        mesasAdd.setLocation(ventana.getWidth() / 2 - 250,150);
+        mesasAdd.setVisible(true);
+        mesasAdd.setName("perfiLabel");
+
+        JLabel mesasOcup = new JLabel("Que mesa quiere ocupar?");
+        mesasOcup.setSize(500, 50);
+        mesasOcup.setLocation(ventana.getWidth() / 2 - 250,150);
+        mesasOcup.setVisible(true);
+        mesasOcup.setName("perfiLabel");
+
         ventana.add(panelMesas);
         panelMesas.add(salir);
         panelMesas.add(agregarM);
@@ -1266,32 +1292,95 @@ public class Restaurante {
             public void mouseClicked(MouseEvent e){
                 panelMesas.removeAll();
                 panelMesas.add(textMesas);
-                //panelMesas.add();
+                panelMesas.add(mesasAdd);
                 panelMesas.add(agregar);
-                panelMesas.add(salir);
+                panelMesas.add(salir1);
 
                 agregar.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e){
                         if (esNumero(textMesas.getText())) {
                             int n = Integer.parseInt(textMesas.getText());
-                            Mesa.agregarMesas(n,mesas);
-                            panelMesas.removeAll();
-                            ventana.add(panelMesas);
-                            panelMesas.add(salir);
-                            panelMesas.add(agregarM);
-                            panelMesas.add(ocuparM);
-                            panelMesas.add(desocuparM);
-                            panelMesas.add(borrarM);
-                            panelMesas.add(borrarNmesas);
-                            panelMesas.add(Qrs);
-                            panelMesas.setVisible(true);
+                            Mesa.agregarMesas(mesas,n);
+                            JOptionPane.showMessageDialog(null, "Se agregaron "+n+" mesas");
+                            ventana.remove(panelMesas);
+                            gestionarMesas(ventana);;
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "Ingrese un Numero entero");
                         }
                     }
                 });
+            }
+        });
+
+        ocuparM.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                panelMesas.removeAll();
+                panelMesas.add(textMesas);
+                panelMesas.add(mesasOcup);
+                panelMesas.add(ocupar);
+                panelMesas.add(salir1);
+
+                ocupar.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e){
+                        if (esNumero(textMesas.getText())) {
+                            int n = Integer.parseInt(textMesas.getText());
+                            if (Mesa.comprobarMesa(mesas,n)){
+                                Mesa.ocuparMesas(mesas,n);
+                                ventana.remove(panelMesas);
+                                gestionarMesas(ventana);
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "La mesa no existe en el restaurante");
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Ingrese un Numero entero");
+                        }
+                    }
+                });
+            }
+        });
+
+        ocuparM.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                panelMesas.removeAll();
+                panelMesas.add(textMesas);
+                panelMesas.add(mesasOcup);
+                panelMesas.add(ocupar);
+                panelMesas.add(salir1);
+
+                ocupar.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e){
+                        if (esNumero(textMesas.getText())) {
+                            int n = Integer.parseInt(textMesas.getText());
+                            if (Mesa.comprobarMesa(mesas,n)){
+                                Mesa.ocuparMesas(mesas,n);
+                                ventana.remove(panelMesas);
+                                gestionarMesas(ventana);
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "La mesa no existe en el restaurante");
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Ingrese un Numero entero");
+                        }
+                    }
+                });
+            }
+        });
+
+        salir1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ventana.remove(panelMesas);
+                gestionarMesas(ventana);
             }
         });
 

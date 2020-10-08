@@ -8,58 +8,42 @@ public class Mesa {
     public int numMesa;
     public boolean Ocupada;
     public File QR;
-    public static int count=1;
+    public static int count = 1;
 
+    public static boolean comprobarMesa(HashSet<Mesa> mesas, int textfield){
+        for (Mesa mesa : mesas) {
+            if (textfield == mesa.numMesa) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public static void agregarMesas(int textfield, HashSet<Mesa> mesas){
-        for (int i = 0; i < textfield; i++) {
-             Mesa mesa = new Mesa();
-             mesa.numMesa = count++;
-             mesa.Ocupada = false;
-             mesas.add(mesa);
+    public static void agregarMesas(HashSet<Mesa> mesas,int textfield) {
+        for (int i = 1; i <= textfield; i++) {
+            Mesa mesa = new Mesa();
+            mesa.numMesa = count++;
+            mesa.Ocupada = false;
+            mesas.add(mesa);
         }
         System.out.println(mesas.size());
+    }
 
+    public static void ocuparMesas(HashSet<Mesa>mesas, int textfield) {
+        for (Mesa mesa : mesas) {
+            if (textfield == mesa.numMesa && mesa.Ocupada == false) {
+                mesa.Ocupada = true;
+                JOptionPane.showMessageDialog(null, "La mesa se ocupo correctamente");
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "La mesa esta ocupada");
     }
 
 }
 
-    /*public boolean comprobarMesa(int mesa) {
-        for (Mesa mesaAux : this.mesas) {
-            if (mesaAux.getnMesa() == mesa && !mesaAux.isOcupada()) {
-                return false;
-            }
-        }
-        return true;
-    }*/
 
 /*public void ocuparMesa(JFrame ventana, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack, boolean ocupar) {
-        cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
-
-        final HashSet<Mesa> mesasClon = (HashSet<Mesa>) this.mesas.clone();
-        final ArrayList<Ocupacion> ocupacionesClon = this.ocupaciones;
-
-        JButton botonIngresar = new JButton("INGRESAR");
-        botonIngresar.setBounds(ventana.getWidth()/2-boton10.getWidth()-10, boton10.getY()+30, boton10.getWidth(), boton10.getHeight());
-        botonIngresar.setVisible(true);
-        panelIngresar.add(botonIngresar);
-
-        JTextField textFieldMesa = new JTextField();
-        textFieldMesa.setSize(500,50);
-        textFieldMesa.setLocation(ventana.getWidth()/2-textFieldMesa.getWidth()/2, ventana.getHeight()/2);
-        textFieldMesa.setVisible(true);
-        panelIngresar.add(textFieldMesa);
-
-        JLabel labelMesa = new JLabel();
-        labelMesa.setVisible(true);
-        labelMesa.setSize(500, 50);
-        labelMesa.setText("Ingrese la mesa deseada");
-        labelMesa.setLocation(ventana.getWidth()/2-labelMesa.getWidth()/2, ventana.getHeight()/2-50);
-        panelIngresar.add(labelMesa);
-
-        panelIngresar.setVisible(true);
-        ventana.add(panelIngresar);
-
         botonIngresar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -78,9 +62,6 @@ public class Mesa {
                         break;
                     }
                 }
-
-                ventana.remove(panelIngresar);
-                panelIngresar.setVisible(false);
 
                 if(ok && ocupar)
                 {
@@ -113,25 +94,3 @@ public class Mesa {
             }
         });
     }*/
-
-/*FUNCION DESOCUPAR*/
-       /* boton2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                restaurante.ocuparMesa(ventana, panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack, false);
-
-                ventana.remove(panelMenu);
-                panelMenu.setVisible(false);
-
-                boton11.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ventana.remove(panelFeedBack);
-                        panelFeedBack.setVisible(false);
-                        panelFeedBack.remove(boton11);
-                        ventana.add(panelMenu);
-                        panelMenu.setVisible(true);
-                    }
-                });
-            }
-        });*/
