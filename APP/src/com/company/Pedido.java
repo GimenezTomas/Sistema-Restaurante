@@ -57,9 +57,8 @@ public class Pedido {
 
     //CONSTRUCTOR
 
-    public Pedido(int nPedido, boolean abierto, String fecha, int nMesa, ArrayList<PlatoPedido> platos) {
+    public Pedido( int nMesa, ArrayList<PlatoPedido> platos, Date fecha) {
         this.nPedido = count++;
-        this.abierto = abierto;
         this.fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         this.nMesa = nMesa;
         this.platos = platos;

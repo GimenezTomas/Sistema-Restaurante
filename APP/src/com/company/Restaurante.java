@@ -8,8 +8,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
+//import java.sql.Date;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Restaurante {
@@ -139,18 +141,27 @@ public class Restaurante {
 Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CHECKBUTTON)
                                                                             GUARDAR(BUTTON)
 */
-    /*public void entregarPedido(JFrame ventana,JPanel panelMenu, JPanel panelFeedBack, JPanel panelIngresar, JButton boton10, JButton boton11, JTextField textField, JLabel labelIngresar, JLabel labelFeedBack) {
+    public void entregarPedido(JFrame ventana) {
+
+        final HashSet<PlatoPedido> platosChecked = new HashSet<>();
+
+        JPanel panelIngresar = new JPanel();
+        panelIngresar.setSize(1400, 700);
+        panelIngresar.setLayout(null);
+        panelIngresar.setVisible(false);
+        panelIngresar.setName("ingresar");
+
         JButton boton = new JButton("AGREGAR");
-        boton.setBounds(ventana.getWidth()/2+10, boton10.getY()+30, boton10.getWidth(), boton10.getHeight());
         boton.setVisible(true);
         panelIngresar.add(boton);
 
         JButton botonOut = new JButton("SALIR");
-        botonOut.setBounds(ventana.getWidth()/2-boton10.getWidth()-10, boton10.getY()+30, boton10.getWidth(), boton10.getHeight());
         botonOut.setVisible(true);
+        botonOut.setBounds(ventana.getWidth()/2-250, 550, 200, 50);
         panelIngresar.add(botonOut);
 
-        labelIngresar.setText("Selecciona el pedido a entregar");
+        JLabel labelIngresar = new JLabel("Selecciona el pedido a entregar");
+        labelIngresar.setSize(200, 50);
         labelIngresar.setLocation(ventana.getWidth()/2-labelIngresar.getWidth()/2, 20);
         labelIngresar.setVisible(true);
 
@@ -158,104 +169,224 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         menuPedidos.setName("comboboxMenu");
         menuPedidos.setBounds(ventana.getWidth()/2-200, 120,300,100);
 
-        JButton buttonOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
-        buttonOK.setBounds(menuPedidos.getX()+menuPedidos.getWidth(), menuPedidos.getY(), 100, 100);
-        buttonOK.setVisible(true);
-        panelIngresar.add(buttonOK);
-
+        boolean ceroPlatos=true;
         for(Pedido pedidoAux : this.pedidos){
             for (PlatoPedido plato : pedidoAux.getPlatos()) {
                 if (!plato.isEntregado()) {
                     menuPedidos.addItem("PEDIDO N°" + pedidoAux.getnPedido());
+                    ceroPlatos = false;
                     break;
                 }
             }
         }
 
-        menuPedidos.setVisible(true);
+        if (ceroPlatos){
+            JLabel label = new JLabel("No hay mesas con platos sin entregar");
+            label.setBounds(panelIngresar.getWidth()/2 - 350, 100, 800, 50);
+            label.setFont(fuentes.get("Times New Roman"));
+            label.setVisible(true);
+            panelIngresar.add(label);
 
-        panelIngresar.add(menuPedidos);
+            labelIngresar.setVisible(false);
+        }else{
+            menuPedidos.setVisible(true);
+
+            JButton buttonOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
+            buttonOK.setBounds(menuPedidos.getX()+menuPedidos.getWidth(), menuPedidos.getY(), 100, 100);
+            buttonOK.setVisible(true);
+            panelIngresar.add(buttonOK);
+
+            panelIngresar.add(labelIngresar);
+            panelIngresar.add(menuPedidos);
+
+            buttonOK.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JLabel labelP = new JLabel("Platos");
+                    labelP.setFont(fuentes.get("Garamond"));
+                    labelP.setBounds(ventana.getWidth()/2-450, buttonOK.getY()+buttonOK.getHeight()+30, 200, 100);
+                    labelP.setVisible(true);
+                    panelIngresar.add(labelP);
+
+                    JLabel labelEntregado = new JLabel("Entregado");
+                    labelEntregado.setFont(fuentes.get("Garamond"));
+                    labelEntregado.setBounds(ventana.getWidth()/2+350, buttonOK.getY()+buttonOK.getHeight()+30, 100, 50);
+                    labelEntregado.setVisible(true);
+                    panelIngresar.add(labelEntregado);
+
+                    for (Pedido pedido : pedidos) {
+                        if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
+
+                            int vueltas = 1;
+
+                            for (PlatoPedido plato: pedido.getPlatos()){
+                                if (!plato.isEntregado()){
+                                    String agregadosString = "";
+                                    for (String agregado : plato.getAgregados().keySet()){
+                                        agregadosString = agregadosString + " " + agregado;
+                                    }
+                                    JLabel labelPlatos = new JLabel(plato.getNombre() + ", agregados:"+agregadosString);
+                                    labelPlatos.setSize(800, 35);
+                                    labelPlatos.setLocation(ventana.getWidth()/2-labelPlatos.getWidth()/2-50, Math.round((labelP.getY() + labelP.getHeight())+((labelP.getHeight()/2)*(vueltas-1))));
+
+                                    Border border = BorderFactory.createLineBorder(Color.black, 1);
+
+                                    labelPlatos.setBorder(border);
+                                    labelPlatos.setBackground(Color.white);
+                                    labelPlatos.setOpaque(true);
+                                    labelPlatos.setVisible(true);
+                                    panelIngresar.add(labelPlatos);
+
+                                    JCheckBox checkBox = new JCheckBox();
+                                    checkBox.setBounds(labelPlatos.getWidth()+labelPlatos.getX()+25, labelPlatos.getY(), 50, 35);
+                                    checkBox.setVisible(true);
+                                    panelIngresar.add(checkBox);
+
+                                    checkBox.addMouseListener(new MouseAdapter() {
+                                        @Override
+                                        public void mouseClicked(MouseEvent e) {
+                                            if (checkBox.isSelected()){
+                                                platosChecked.add(plato);
+                                            }else{
+                                                platosChecked.remove(plato);
+                                            }
+                                        }
+                                    });
+
+                                    vueltas++;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    botonOut.setBounds(ventana.getWidth()/2-250, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
+                    //boton.setBounds(ventana.getWidth()/2-50, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
+                    boton.setBounds(700, 50, 200, 50);
+
+                    //scrollbar
+                    /*panelIngresar.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
+                    JScrollPane scrollPane = new JScrollPane(panelIngresar, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    ventana.remove(panelIngresar);
+                    ventana.add(scrollPane);*/
+                }
+            });
+        }
+
         panelIngresar.setVisible(true);
 
         ventana.add(panelIngresar);
 
-        final ArrayList<Pedido> pedidos = (ArrayList<Pedido>) this.pedidos.clone();
         botonOut.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ventana.remove(panelIngresar);
-                panelIngresar.setVisible(false);
-                cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
-                ventana.add(panelMenu);
-                panelMenu.setVisible(true);
-            }
-        });
-        buttonOK.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                for (Pedido pedido : pedidos) {
-                    if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
-                        JComboBox platos = new JComboBox();
-                        menuPedidos.setName("comboboxPlatos");
-                        menuPedidos.setBounds(ventana.getWidth()/2-425, menuPedidos.getY()+menuPedidos.getHeight()+20,800,50);
 
-                        JButton btnOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
-                        btnOK.setBounds(platos.getX()+platos.getWidth(), platos.getY(), 50, 50);
-                        btnOK.setVisible(true);
-                        panelIngresar.add(btnOK);
-
-                        for (PlatoPedido plato: pedido.getPlatos()){
-                            if (!plato.isEntregado()){
-                                String agregadosString = "";
-                                for (String agregado : plato.getAgregados().keySet()){
-                                    agregadosString.concat(" "+agregado);
-                                }
-                                platos.addItem(plato.getNombre() + ", agregados:"+ agregadosString);
-                            }
-                        }
-                        panelIngresar.add(platos);
-                        break;
-                    }
-                }
+                panelMenu(ventana);
             }
         });
         boton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                for (Pedido pedido : pedidos) {
-                    if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
-                        for (PlatoPedido plato: pedido.getPlatos()){
-
+                for (PlatoPedido platoPedido : platosChecked){
+                    for (Pedido pedidosAux : pedidos) {
+                        if (pedidosAux.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
+                            for (PlatoPedido platoFromPedido : pedidosAux.getPlatos()){
+                                if (platoFromPedido==platoPedido){
+                                    platoFromPedido.setEntregado(true);
+                                }
                             }
                         }
-                        pedido.setEntregado(true);
-                        break;
                     }
                 }
+                JOptionPane.showMessageDialog(null, "Se entregaron los pedidos correctamente!!!");
                 ventana.remove(panelIngresar);
-                panelIngresar.setVisible(false);
-
-                labelFeedBack.setVisible(true);
-                labelFeedBack.setText("El pedido se entrego correctamente");
-                boton11.setVisible(true);
-                panelFeedBack.add(boton11);
-
-                panelFeedBack.setVisible(true);
-                ventana.add(panelFeedBack);
-                cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
+                panelMenu(ventana);
             }
         });
-    }*/
+    }
 
-    /*public String proximoPedido() {
-        String pedidoProx = "NO HAY PEDIDOS PENDIENTES";
-        for (int i = 0; i <this.pedidos.size() ; i++) {
-            if(!this.pedidos.get(i).isEntregado()){
-                pedidoProx = ""+this.pedidos.get(i).getnPedido();
+    /*public void proximoPedido(JFrame ventana) {
+        JPanel panel = new JPanel();
+        panel.setSize(1350, 700);
+        panel.setLayout(null);
+        panel.setVisible(false);
+        ventana.add(panel);
+
+        JLabel labelExplicacion = new JLabel("PROXIMOS PLATOS");
+        labelExplicacion.setName("labelExplicacion");
+        labelExplicacion.setVisible(true);
+        labelExplicacion.setFont(fuentes.get("Times New Roman"));
+        labelExplicacion.setBounds(panel.getWidth()/2-225, 50, 300, 100);
+        panel.add(labelExplicacion);
+
+        final ArrayList<PlatoPedido> platosP = new ArrayList<>();
+
+        for (Pedido pedido : pedidos){
+            for (PlatoPedido platoPedido: pedido.getPlatos()){
+                if (!platoPedido.isEntregado()) {
+                    platosP.add(platoPedido);
+                }
+            }
+        }
+        Collections.sort(platosP);
+        for (PlatoPedido platoOrdenado : platosP){
+            for (Pedido pedido : pedidos){
+                for (PlatoPedido platoPedido : pedido.getPlatos()){
+                    if (platoOrdenado==platoPedido){
+
+                    }
+                }
+            }
+        }
+        for (Pedido pedido : pedidos) {
+            for (PlatoPedido platoPedido : pedido.getPlatos()){
+                if (platoPedido == )
+            }
+            if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
+
+                int vueltas = 1;
+
+                for (PlatoPedido plato: pedido.getPlatos()){
+                    if (!plato.isEntregado()){
+                        String agregadosString = "";
+                        for (String agregado : plato.getAgregados().keySet()){
+                            agregadosString = agregadosString + " " + agregado;
+                        }
+                        JLabel labelPlatos = new JLabel(plato.getNombre() + ", agregados:"+agregadosString);
+                        labelPlatos.setSize(800, 35);
+                        labelPlatos.setLocation(ventana.getWidth()/2-labelPlatos.getWidth()/2-50, Math.round((labelP.getY() + labelP.getHeight())+((labelP.getHeight()/2)*(vueltas-1))));
+
+                        Border border = BorderFactory.createLineBorder(Color.black, 1);
+
+                        labelPlatos.setBorder(border);
+                        labelPlatos.setBackground(Color.white);
+                        labelPlatos.setOpaque(true);
+                        labelPlatos.setVisible(true);
+                        panelIngresar.add(labelPlatos);
+
+                        JCheckBox checkBox = new JCheckBox();
+                        checkBox.setBounds(labelPlatos.getWidth()+labelPlatos.getX()+25, labelPlatos.getY(), 50, 35);
+                        checkBox.setVisible(true);
+                        panelIngresar.add(checkBox);
+
+                        checkBox.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                if (checkBox.isSelected()){
+                                    platosChecked.add(plato);
+                                }else{
+                                    platosChecked.remove(plato);
+                                }
+                            }
+                        });
+
+                        vueltas++;
+                    }
+                }
                 break;
             }
         }
-        return pedidoProx;
+
     }*/
 
     public boolean agregarPlato(String nombre, String precio, String imagen, String descripcion, String tiempoDemora){
@@ -1615,6 +1746,8 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         boton7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                ventana.remove(panelMenu);
+                entregarPedido(ventana);
                 /*restaurante.cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
 
                 ventana.remove(panelMenu);
@@ -1740,6 +1873,31 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         boton11.setVisible(true);
         boton11.setName("boton11");
 
+//iña no seas virgo y borres esto es para probar entregar pedidos y otras funciones
+        for (int i = 0; i <5 ; i++) {
+            restaurante.getMesas().add(new Mesa());
+        }
+
+        HashMap<String, Float> agregados = new HashMap<>();
+        agregados.put("Bolognesa", 100f);
+        agregados.put("Crena", 100f);
+        agregados.put("Papa", 100f);
+        ArrayList<PlatoPedido> platos = new ArrayList<>();
+        platos.add(new PlatoPedido("tercero", 150.20f, agregados, new Date()));
+        platos.add(new PlatoPedido("sexto", 1215.20f, agregados, new Date()));
+        platos.add(new PlatoPedido("segundo", 450.20f, agregados, new Date(120-04-01)));
+        platos.add(new PlatoPedido("primero", 150.20f, agregados, new Date(120-04-01)));
+        platos.add(new PlatoPedido("quinto", 1215.20f, agregados, new Date()));
+        platos.add(new PlatoPedido("cuarto", 450.20f, agregados, new Date()));
+        for(PlatoPedido p: platos){
+          //  System.out.println(p.getFecha()+" "+p.getNombre());
+        }
+        Collections.sort(platos);
+        for(PlatoPedido p: platos){
+            System.out.println(p.getFecha()+" "+p.getNombre());
+        }
+
+        restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
         restaurante.panelMenu(ventana);
     }
 }

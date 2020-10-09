@@ -1,10 +1,14 @@
 package com.company;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlatoPedido extends PlatoAbs{
+public class PlatoPedido extends PlatoAbs implements Comparable<PlatoPedido>{
     private boolean entregado = false;
+    private Date fecha;
+    public static int count=1;
+    private int id;
     private HashMap<String, Float> agregados=new HashMap<>();
 
     public boolean isEntregado() {
@@ -27,8 +31,29 @@ public class PlatoPedido extends PlatoAbs{
         super(nombre, precio);
     }
 
-    public PlatoPedido(String nombre, Float precio, HashMap<String, Float> agregados) {
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public PlatoPedido(String nombre, Float precio, HashMap<String, Float> agregados, Date fecha) {
         super(nombre, precio);
         this.agregados = agregados;
+        this.fecha = fecha;
+        this.id = count++;
+    }
+
+    @Override
+    public int compareTo(PlatoPedido o) {
+        if (o.getFecha().after(fecha)){
+            return -1;
+        }else if (o.getFecha().after(fecha)){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 }
