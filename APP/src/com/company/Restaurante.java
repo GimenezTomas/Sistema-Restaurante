@@ -112,35 +112,21 @@ public class Restaurante {
         }
     }
 
-    public void cleanPanel(JPanel panelIngresar, Component components[]){
-        for (int i = 0; i < panelIngresar.getComponents().length ; i++) {
-            if (panelIngresar.getComponent(i).getName() != null) {
-                boolean check=true;
-                for (Component componente : components){
-                    if (panelIngresar.getComponent(i).getName().equals(componente.getName())) {
-                        check = false;
-                    }
-                }
-                if(check){
-                    panelIngresar.remove(panelIngresar.getComponent(i));
-                    i--;
-                }
-                else
-                {
-                    panelIngresar.getComponent(i).setVisible(false);
-                }
-            }
-            else
-            {
+    public void clearPanel(JPanel panelIngresar, Component components[]){
+        HashSet<String> nombres = new HashSet<>();
+
+        for (Component component: components){
+            nombres.add(component.getName());
+        }
+
+        for (int i = 0; i < panelIngresar.getComponents().length; i++) {
+            if (nombres.contains(panelIngresar.getComponent(i).getName())){
+                nombres.remove(panelIngresar.getComponent(i).getName());
+            }else{
                 panelIngresar.remove(panelIngresar.getComponent(i));
-                i--;
             }
         }
     }
-/*                                            PLATOS                        ENTREGAR
-Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CHECKBUTTON)
-                                                                            GUARDAR(BUTTON)
-*/
     public void entregarPedido(JFrame ventana) {
 
         final HashSet<PlatoPedido> platosChecked = new HashSet<>();
@@ -223,22 +209,8 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                     labelEntregado.setName("labelEntregado");
                     panelIngresar.add(labelEntregado);
 
-                    HashSet<String> nombres = new HashSet<>();
-                    nombres.add(boton.getName());
-                    nombres.add(botonOut.getName());
-                    nombres.add(buttonOK.getName());
-                    nombres.add(labelIngresar.getName());
-                    nombres.add(labelEntregado.getName());
-                    nombres.add(labelP.getName());
-                    nombres.add(menuPedidos.getName());
-
-                    for (int i = 0; i < panelIngresar.getComponents().length; i++) {
-                        if (nombres.contains(panelIngresar.getComponent(i).getName())){
-                            nombres.remove(panelIngresar.getComponent(i).getName());
-                        }else{
-                            panelIngresar.remove(panelIngresar.getComponent(i));
-                        }
-                    }
+                    Component componentes[]={boton, botonOut, buttonOK, labelIngresar, labelEntregado, labelP, menuPedidos};
+                    clearPanel(panelIngresar, componentes);
 
                     for (Pedido pedido : pedidos) {
                         if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
@@ -286,15 +258,15 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                         }
                     }
                     botonOut.setBounds(ventana.getWidth()/2-250, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
-                    //boton.setBounds(ventana.getWidth()/2-50, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
-                    boton.setBounds(700, 50, 200, 50);
+                    boton.setBounds(ventana.getWidth()/2-50, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
+                    //boton.setBounds(700, 50, 200, 50);
                     panelIngresar.setVisible(true);
 
                     //scrollbar
-                    /*panelIngresar.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
+                    panelIngresar.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
                     JScrollPane scrollPane = new JScrollPane(panelIngresar, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                     ventana.remove(panelIngresar);
-                    ventana.add(scrollPane);*/
+                    ventana.add(scrollPane);
                 }
             });
         }
@@ -426,62 +398,11 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
             botonOut.setBounds(700, 50, 200, 50);
             panel.setVisible(true);
             //scrollbar
-                    /*panelIngresar.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
-                    JScrollPane scrollPane = new JScrollPane(panelIngresar, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                    ventana.remove(panelIngresar);
-                    ventana.add(scrollPane);*/
+                    panel.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
+                    JScrollPane scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    ventana.remove(panel);
+                    ventana.add(scrollPane);
         }
-        /*for (Pedido pedido : pedidos) {
-            for (PlatoPedido platoPedido : pedido.getPlatos()){
-                if (platoPedido == ){
-
-                }
-            }
-            if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
-
-                int vueltas = 1;
-
-                for (PlatoPedido plato: pedido.getPlatos()){
-                    if (!plato.isEntregado()){
-                        String agregadosString = "";
-                        for (String agregado : plato.getAgregados().keySet()){
-                            agregadosString = agregadosString + " " + agregado;
-                        }
-                        JLabel labelPlatos = new JLabel(plato.getNombre() + ", agregados:"+agregadosString);
-                        labelPlatos.setSize(800, 35);
-                        labelPlatos.setLocation(ventana.getWidth()/2-labelPlatos.getWidth()/2-50, Math.round((labelP.getY() + labelP.getHeight())+((labelP.getHeight()/2)*(vueltas-1))));
-
-                        Border border = BorderFactory.createLineBorder(Color.black, 1);
-
-                        labelPlatos.setBorder(border);
-                        labelPlatos.setBackground(Color.white);
-                        labelPlatos.setOpaque(true);
-                        labelPlatos.setVisible(true);
-                        panelIngresar.add(labelPlatos);
-
-                        JCheckBox checkBox = new JCheckBox();
-                        checkBox.setBounds(labelPlatos.getWidth()+labelPlatos.getX()+25, labelPlatos.getY(), 50, 35);
-                        checkBox.setVisible(true);
-                        panelIngresar.add(checkBox);
-
-                        checkBox.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                if (checkBox.isSelected()){
-                                    platosChecked.add(plato);
-                                }else{
-                                    platosChecked.remove(plato);
-                                }
-                            }
-                        });
-
-                        vueltas++;
-                    }
-                }
-                break;
-            }
-        }*/
-
     }
 
     public boolean agregarPlato(String nombre, String precio, String imagen, String descripcion, String tiempoDemora){
@@ -794,7 +715,6 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
     public void crearMenuAgregados(JPanel panelAgregados, JFrame frameAgregados, Plato plato){
         panelAgregados.removeAll();
         panelAgregados.setPreferredSize(new Dimension(530,730));
-        //cleanPanel(panelAgregados, new Component[]{});
 
         JLabel labelAgregados2 = new JLabel("AGREGADOS");
         labelAgregados2.setName("labelAgregados2");
@@ -837,7 +757,6 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
             @Override
             public void mouseClicked(MouseEvent e) {
                 panelAgregados.removeAll();
-                //cleanPanel(panelAgregados, new Component[]{});
 
                 panelAgregados.add(labelAgregados2);
 
@@ -911,7 +830,7 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
             @Override
             public void mouseClicked(MouseEvent e) {
                 panelAgregados.removeAll();
-                cleanPanel(panelAgregados, new Component[]{});
+                panelAgregados.removeAll();
 
                 panelAgregados.add(labelAgregados2);
 
@@ -995,7 +914,6 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                                             }
                                         }
                                         panelAgregados.removeAll();
-                                        //cleanPanel(panelAgregados, new Component[]{});
                                         crearMenuAgregados(panelAgregados, frameAgregados, plato);
                                     }
                                 }
@@ -1364,7 +1282,6 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                         ventana.remove(panel);
 
                         panel.removeAll();
-                        //cleanPanel(panel, new Component[]{});
                         gestionarRestaurante(ventana);
                     }
                 });
@@ -1769,7 +1686,7 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         boton3.setName("HacerPedido");
         panelMenu.add(boton3);
 
-        JButton boton4 = new JButton("--");
+        JButton boton4 = new JButton("COBRAR");
         boton4.setSize(200, 50);
         boton4.setLocation(150, 50 + boton1.getHeight() + boton1.getY());
         boton4.setVisible(true);
@@ -1838,6 +1755,13 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                 gestionarRestaurante(ventana);
             }
         });
+        boton4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ventana.remove(panelMenu);
+                cobrar(ventana);
+            }
+        });
         boton7.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -1854,6 +1778,268 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         });
     }
 
+    public void cobrar(JFrame ventana){
+        JPanel panelIngresar = new JPanel();
+        panelIngresar.setSize(1400, 700);
+        panelIngresar.setLayout(null);
+        panelIngresar.setVisible(false);
+        panelIngresar.setName("ingresar");
+        ventana.add(panelIngresar);
+
+        JButton boton = new JButton("COBRAR");
+        boton.setVisible(true);
+        boton.setName("boton");
+        panelIngresar.add(boton);
+
+        JButton botonOut = new JButton("SALIR");
+        botonOut.setVisible(true);
+        botonOut.setName("botonOUT");
+        botonOut.setBounds(ventana.getWidth()/2-250, 550, 200, 50);
+        panelIngresar.add(botonOut);
+
+        JLabel labelIngresar = new JLabel("Selecciona el pedido a cobrar");
+        labelIngresar.setSize(200, 50);
+        labelIngresar.setName("labelIngresar");
+        labelIngresar.setLocation(ventana.getWidth()/2-labelIngresar.getWidth()/2, 20);
+        labelIngresar.setVisible(true);
+
+        JComboBox menuPedidos = new JComboBox();
+        menuPedidos.setName("comboboxMenu");
+        menuPedidos.setBounds(ventana.getWidth()/2-200, 120,300,100);
+
+        boolean ceroPedidos=true;
+        for(Pedido pedidoAux : this.pedidos){
+            if (pedidoAux.isAbierto()){
+                menuPedidos.addItem("MESA "+pedidoAux.getnMesa()/*+" (pedido n°" + pedidoAux.getnPedido() + " )"*/);
+                ceroPedidos = false;
+            }
+        }
+
+        if (ceroPedidos){
+            JLabel label = new JLabel("No hay pedidos sin cobrar");
+            label.setBounds(panelIngresar.getWidth()/2 - 350, 100, 800, 50);
+            label.setFont(fuentes.get("Times New Roman"));
+            label.setVisible(true);
+            panelIngresar.add(label);
+
+            panelIngresar.setVisible(true);
+            labelIngresar.setVisible(false);
+        }else{
+            menuPedidos.setVisible(true);
+
+            JButton buttonOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
+            buttonOK.setBounds(menuPedidos.getX()+menuPedidos.getWidth(), menuPedidos.getY(), 100, 100);
+            buttonOK.setVisible(true);
+            panelIngresar.add(buttonOK);
+
+            panelIngresar.add(labelIngresar);
+            panelIngresar.add(menuPedidos);
+
+            panelIngresar.setVisible(true);
+
+            buttonOK.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    float total = 0;
+
+                    panelIngresar.setVisible(false);
+
+                    JLabel labelP = new JLabel("Platos");
+                    labelP.setFont(fuentes.get("Garamond"));
+                    labelP.setBounds(ventana.getWidth()/2-150, buttonOK.getY()+buttonOK.getHeight()+30, 200, 100);
+                    labelP.setVisible(true);
+                    labelP.setName("labelPlatos");
+                    panelIngresar.add(labelP);
+
+                    JLabel labelEntregado = new JLabel("Precio");
+                    labelEntregado.setFont(fuentes.get("Garamond"));
+                    labelEntregado.setBounds(ventana.getWidth()/2+80, labelP.getY(), 100, 100);
+                    labelEntregado.setVisible(true);
+                    labelEntregado.setName("labelEntregado");
+                    panelIngresar.add(labelEntregado);
+
+                    JLabel labelDetalle = new JLabel("Detalle");
+                    labelDetalle.setFont(fuentes.get("Garamond"));
+                    labelDetalle.setBounds(ventana.getWidth()/2+150, labelP.getY(), 100, 100);
+                    labelDetalle.setVisible(true);
+                    labelDetalle.setName("labelDetalle");
+                    panelIngresar.add(labelDetalle);
+
+
+
+                    Component componentes[]={boton, botonOut, buttonOK, labelIngresar, labelDetalle,labelEntregado, labelP, menuPedidos};
+                    clearPanel(panelIngresar, componentes);
+
+                    int npedido = 0;
+                    for (Pedido pedido: pedidos){
+                        if (pedido.getnMesa() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(5)) && pedido.isAbierto()){
+                            npedido = pedido.getnPedido();
+                        }
+                    }
+
+                    JFrame frameAgregados = new JFrame("DETALLE PLATO");
+                    frameAgregados.setSize(500, 730);
+                    frameAgregados.setVisible(false);
+
+                    for (Pedido pedido : pedidos) {
+                        System.out.println("pedido : "+pedido.getnPedido() + "npedido: "+npedido);
+                        if (pedido.getnPedido() == npedido) {
+                            System.out.println("emtre el pedido es el"+npedido);
+                            int vueltas = 1;
+
+                            for (PlatoPedido plato: pedido.getPlatos()){
+
+                                JLabel labelPlatos = new JLabel(plato.getNombre());
+                                labelPlatos.setSize(200, 35);
+                                labelPlatos.setLocation(labelP.getX(), Math.round((labelP.getY() + labelP.getHeight())+((labelP.getHeight()/2)*(vueltas-1))));
+
+                                Border border = BorderFactory.createLineBorder(Color.black, 1);
+
+                                labelPlatos.setBorder(border);
+                                labelPlatos.setBackground(Color.white);
+                                labelPlatos.setOpaque(true);
+                                labelPlatos.setVisible(true);
+                                panelIngresar.add(labelPlatos);
+
+                                float precioFinalPlato = plato.getPrecio();
+                                for (Float agregadoPrecio: plato.getAgregados().values()){
+                                    precioFinalPlato = precioFinalPlato + agregadoPrecio;
+                                }
+
+                                JLabel labelPrecio = new JLabel(precioFinalPlato + "");
+                                labelPrecio.setSize(35, 35);
+                                labelPrecio.setLocation(labelPlatos.getX() + labelPlatos.getWidth() + 30, labelPlatos.getY());
+                                labelPrecio.setVisible(true);
+                                panelIngresar.add(labelPrecio);
+
+                                JButton botonDetalle = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\factura.png"));
+                                botonDetalle.setBounds(labelDetalle.getX()+9, labelPrecio.getY(), 35, 35);
+                                botonDetalle.setVisible(true);
+                                panelIngresar.add(botonDetalle);
+
+                                botonDetalle.addMouseListener(new MouseAdapter() {
+                                    @Override
+                                    public void mouseClicked(MouseEvent e) {
+                                        JPanel panelDetalle = new JPanel();
+                                        frameAgregados.remove(panelDetalle);
+                                        panelDetalle.setSize(frameAgregados.getSize());
+                                        panelDetalle.setVisible(false);
+                                        panelDetalle.setLayout(null);
+
+                                        JLabel labelNombre = new JLabel("Nombre");
+                                        labelNombre.setFont(fuentes.get("Garamond"));
+                                        labelNombre.setBounds(frameAgregados.getWidth()/2-150, 50, 200, 100);
+                                        labelNombre.setVisible(true);
+                                        labelNombre.setName("labelNombre");
+                                        panelDetalle.add(labelNombre);
+
+                                        JLabel labelPre = new JLabel("Precio");
+                                        labelPre.setFont(fuentes.get("Garamond"));
+                                        labelPre.setBounds(frameAgregados.getWidth()/2+80, labelNombre.getY(), 100, 100);
+                                        labelPre.setVisible(true);
+                                        labelPre.setName("labelPre");
+                                        panelDetalle.add(labelPre);
+
+                                        JLabel labelPlatos = new JLabel("PLATO: "+plato.getNombre());
+                                        labelPlatos.setSize(200, 35);
+                                        labelPlatos.setLocation(labelNombre.getX(), Math.round((labelNombre.getY() + labelNombre.getHeight())));
+                                        labelPlatos.setBorder(border);
+                                        labelPlatos.setBackground(Color.white);
+                                        labelPlatos.setOpaque(true);
+                                        labelPlatos.setVisible(true);
+                                        panelDetalle.add(labelPlatos);
+
+                                        JLabel labelPrecio = new JLabel(plato.getPrecio()+"");
+                                        labelPrecio.setSize(35, 35);
+                                        labelPrecio.setLocation(labelPlatos.getX() + labelPlatos.getWidth() + 30, labelPlatos.getY());
+                                        labelPrecio.setVisible(true);
+                                        panelDetalle.add(labelPrecio);
+
+                                        int v = 1;
+                                        for (Map.Entry<String, Float> agregado : plato.getAgregados().entrySet()){
+                                            JLabel labelAgregado = new JLabel("AGREGADO: "+agregado.getKey());
+                                            labelAgregado.setSize(200, 35);
+                                            labelAgregado.setLocation(labelNombre.getX(), Math.round((labelNombre.getY() + labelNombre.getHeight()+((labelNombre.getHeight()/2)*(v)))));
+                                            labelAgregado.setBorder(border);
+                                            labelAgregado.setBackground(Color.white);
+                                            labelAgregado.setOpaque(true);
+                                            labelAgregado.setVisible(true);
+                                            panelDetalle.add(labelAgregado);
+
+                                            JLabel labelAgPrecio = new JLabel(agregado.getValue()+"");
+                                            labelAgPrecio.setSize(35, 35);
+                                            labelAgPrecio.setLocation(labelAgregado.getX() + labelAgregado.getWidth() + 30, labelAgregado.getY());
+                                            labelAgPrecio.setVisible(true);
+                                            panelDetalle.add(labelAgPrecio);
+
+                                            v++;
+                                        }
+                                        panelDetalle.setPreferredSize(new Dimension(1350, panelDetalle.getComponent(panelDetalle.getComponents().length-1).getY()+200));
+                                            JScrollPane scroll = new JScrollPane(panelDetalle, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                                            frameAgregados.remove(panelDetalle);
+                                            frameAgregados.add(scroll);
+                                        panelDetalle.setVisible(true);
+                                        //frameAgregados.add(panelDetalle);
+                                        frameAgregados.setVisible(true);
+                                    }
+                                });
+
+                                total = total + precioFinalPlato;
+
+                                vueltas++;
+                            }
+                            break;
+                        }
+                    }
+
+                    JLabel labelPrecioTotal = new JLabel("TOTAL: "+total);
+                    labelPrecioTotal.setBounds(ventana.getWidth()/2-150, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 400, 50);
+                    labelPrecioTotal.setFont(fuentes.get("Times New Roman"));
+                    labelPrecioTotal.setVisible(true);
+                    panelIngresar.add(labelPrecioTotal);
+
+                    botonOut.setBounds(ventana.getWidth()/2-250, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
+                    boton.setBounds(ventana.getWidth()/2+50, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
+                    //boton.setBounds(700, 50, 200, 50);
+                    panelIngresar.setVisible(true);
+
+                    //scrollbar
+                    panelIngresar.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
+                    JScrollPane scrollPane = new JScrollPane(panelIngresar, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    ventana.remove(panelIngresar);
+                    ventana.add(scrollPane);
+                }
+            });
+            boton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres cobrarlo");
+                    if(confirmD == JOptionPane.YES_OPTION){
+                        int npedido = 0;
+                        for (Pedido pedido: pedidos){
+                            if (pedido.getnMesa() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(5)) && pedido.isAbierto()){
+                                npedido = pedido.getnPedido();
+                            }
+                        }
+                        for (Pedido pedido: pedidos){
+                            if (npedido == pedido.getnPedido()){
+                                pedido.setAbierto(false);
+                                ventana.remove(panelIngresar);
+                                panelMenu(ventana);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        botonOut.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ventana.remove(panelIngresar);
+                panelMenu(ventana);
+            }
+        });
+    }
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -1875,7 +2061,7 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         /*VENTANA*/
         JFrame ventana = new JFrame("RESTAURANTE");
         ventana.setSize(1350, 730);
-        ventana.setLayout(null);
+        //ventana.setLayout(null);
         ventana.setVisible(true);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -1939,8 +2125,14 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         agregados.put("Bolognesa", 100f);
         agregados.put("Crena", 100f);
         agregados.put("Papa", 100f);
+        agregados.put("Boesa", 100f);
+        agregados.put("Crna", 400f);
+        agregados.put("Paa", 102f);
+        agregados.put("Boognesa", 100f);
+        agregados.put("Cr", 102f);
+        agregados.put("Pa", 107f);
         ArrayList<PlatoPedido> platos = new ArrayList<>();
-        platos.add(new PlatoPedido("Ñoquis", 150.20f, agregados, new Date()));
+        platos.add(new PlatoPedido("Ñoquis", 150.20f, new HashMap<>(), new Date()));
         platos.add(new PlatoPedido("Pizza", 1215.20f, agregados, new Date()));
         platos.add(new PlatoPedido("Sushi", 450.20f, agregados, new Date(120-04-01)));
         platos.add(new PlatoPedido("Salmon", 150.20f, agregados, new Date(120-04-01)));
@@ -1959,7 +2151,7 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         }
 
         restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
-        restaurante.getPedidos().add(new Pedido(1, platoss, new Date()));
+        restaurante.getPedidos().add(new Pedido(2, platoss, new Date()));
         restaurante.panelMenu(ventana);
     }
 }

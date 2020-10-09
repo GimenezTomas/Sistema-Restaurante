@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Pedido {
     public static int count=1;
     private int nPedido;
-    private boolean abierto=false;
+    private boolean abierto=true;
     private String fecha;
     private int nMesa;
     private ArrayList<PlatoPedido> platos = new ArrayList<>();
