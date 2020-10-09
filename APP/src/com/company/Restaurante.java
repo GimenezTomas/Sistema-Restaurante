@@ -153,15 +153,18 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
 
         JButton boton = new JButton("AGREGAR");
         boton.setVisible(true);
+        boton.setName("boton");
         panelIngresar.add(boton);
 
         JButton botonOut = new JButton("SALIR");
         botonOut.setVisible(true);
+        botonOut.setName("botonOUT");
         botonOut.setBounds(ventana.getWidth()/2-250, 550, 200, 50);
         panelIngresar.add(botonOut);
 
         JLabel labelIngresar = new JLabel("Selecciona el pedido a entregar");
         labelIngresar.setSize(200, 50);
+        labelIngresar.setName("labelIngresar");
         labelIngresar.setLocation(ventana.getWidth()/2-labelIngresar.getWidth()/2, 20);
         labelIngresar.setVisible(true);
 
@@ -187,8 +190,11 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
             label.setVisible(true);
             panelIngresar.add(label);
 
+            panelIngresar.setVisible(true);
             labelIngresar.setVisible(false);
         }else{
+            panelIngresar.setVisible(true);
+
             menuPedidos.setVisible(true);
 
             JButton buttonOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
@@ -202,17 +208,37 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
             buttonOK.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    panelIngresar.setVisible(false);
                     JLabel labelP = new JLabel("Platos");
                     labelP.setFont(fuentes.get("Garamond"));
                     labelP.setBounds(ventana.getWidth()/2-450, buttonOK.getY()+buttonOK.getHeight()+30, 200, 100);
                     labelP.setVisible(true);
+                    labelP.setName("labelPlatos");
                     panelIngresar.add(labelP);
 
                     JLabel labelEntregado = new JLabel("Entregado");
                     labelEntregado.setFont(fuentes.get("Garamond"));
                     labelEntregado.setBounds(ventana.getWidth()/2+350, buttonOK.getY()+buttonOK.getHeight()+30, 100, 50);
                     labelEntregado.setVisible(true);
+                    labelEntregado.setName("labelEntregado");
                     panelIngresar.add(labelEntregado);
+
+                    HashSet<String> nombres = new HashSet<>();
+                    nombres.add(boton.getName());
+                    nombres.add(botonOut.getName());
+                    nombres.add(buttonOK.getName());
+                    nombres.add(labelIngresar.getName());
+                    nombres.add(labelEntregado.getName());
+                    nombres.add(labelP.getName());
+                    nombres.add(menuPedidos.getName());
+
+                    for (int i = 0; i < panelIngresar.getComponents().length; i++) {
+                        if (nombres.contains(panelIngresar.getComponent(i).getName())){
+                            nombres.remove(panelIngresar.getComponent(i).getName());
+                        }else{
+                            panelIngresar.remove(panelIngresar.getComponent(i));
+                        }
+                    }
 
                     for (Pedido pedido : pedidos) {
                         if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
@@ -262,6 +288,7 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                     botonOut.setBounds(ventana.getWidth()/2-250, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
                     //boton.setBounds(ventana.getWidth()/2-50, panelIngresar.getComponent(panelIngresar.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
                     boton.setBounds(700, 50, 200, 50);
+                    panelIngresar.setVisible(true);
 
                     //scrollbar
                     /*panelIngresar.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
@@ -271,8 +298,6 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                 }
             });
         }
-
-        panelIngresar.setVisible(true);
 
         ventana.add(panelIngresar);
 
@@ -305,7 +330,7 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         });
     }
 
-    /*public void proximoPedido(JFrame ventana) {
+    public void proximoPedido(JFrame ventana) {
         JPanel panel = new JPanel();
         panel.setSize(1350, 700);
         panel.setLayout(null);
@@ -319,28 +344,98 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         labelExplicacion.setBounds(panel.getWidth()/2-225, 50, 300, 100);
         panel.add(labelExplicacion);
 
+        JButton botonOut = new JButton("SALIR");
+        botonOut.setVisible(true);
+        botonOut.setName("botonOUT");
+        botonOut.setBounds(ventana.getWidth()/2-250, 550, 200, 50);
+        panel.add(botonOut);
+
+        botonOut.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ventana.remove(panel);
+
+                panelMenu(ventana);
+            }
+        });
         final ArrayList<PlatoPedido> platosP = new ArrayList<>();
 
         for (Pedido pedido : pedidos){
+            System.out.println("emtre");
             for (PlatoPedido platoPedido: pedido.getPlatos()){
                 if (!platoPedido.isEntregado()) {
                     platosP.add(platoPedido);
                 }
             }
         }
-        Collections.sort(platosP);
-        for (PlatoPedido platoOrdenado : platosP){
-            for (Pedido pedido : pedidos){
-                for (PlatoPedido platoPedido : pedido.getPlatos()){
-                    if (platoOrdenado==platoPedido){
+        if (platosP.size()==0){
+            labelExplicacion.setText("No hay platos pendientes");
+            panel.setVisible(true);
+        }else {
 
+            Collections.sort(platosP);
+            JLabel labelP = new JLabel("Platos");
+            labelP.setFont(fuentes.get("Garamond"));
+            labelP.setBounds(ventana.getWidth() / 2 - 450, labelExplicacion.getY() + labelExplicacion.getHeight() + 30, 200, 100);
+            labelP.setVisible(true);
+            labelP.setName("labelPlatos");
+            panel.add(labelP);
+
+            JLabel labelEntregado = new JLabel("Mesa");
+            labelEntregado.setFont(fuentes.get("Garamond"));
+            labelEntregado.setBounds(ventana.getWidth() / 2 + 350, labelExplicacion.getY() + labelExplicacion.getHeight() + 30, 100, 50);
+            labelEntregado.setVisible(true);
+            labelEntregado.setName("labelEntregado");
+            panel.add(labelEntregado);
+
+            int vueltas = 0;
+            for (PlatoPedido platoOrdenado : platosP) {
+                vueltas++;
+                for (Pedido pedido : pedidos) {
+                    for (PlatoPedido platoPedido : pedido.getPlatos()) {
+                        if (platoOrdenado == platoPedido) {
+                            String agregadosString = "";
+                            for (String agregado : platoOrdenado.getAgregados().keySet()) {
+                                agregadosString = agregadosString + " " + agregado;
+                            }
+                            JLabel labelPlatos = new JLabel(platoOrdenado.getNombre() + ", agregados:" + agregadosString);
+                            labelPlatos.setSize(750, 35);
+                            labelPlatos.setLocation(ventana.getWidth() / 2 - labelPlatos.getWidth() / 2 - 75, Math.round((labelP.getY() + labelP.getHeight()) + ((labelP.getHeight() / 2) * (vueltas-1))));
+                            System.out.println("labelP.getHeight :"+labelP.getHeight()+" /2 = " + labelP.getHeight()/2 + " * "+(vueltas-1) + " = "+((labelP.getHeight()/2)*(vueltas-1)));
+                            System.out.println("LABELplatos: Y: "+labelPlatos.getY() + " height: "+labelPlatos.getHeight());
+                            Border border = BorderFactory.createLineBorder(Color.black, 1);
+
+                            labelPlatos.setBorder(border);
+                            labelPlatos.setBackground(Color.white);
+                            labelPlatos.setOpaque(true);
+                            labelPlatos.setVisible(true);
+                            panel.add(labelPlatos);
+
+                            JLabel labelPedidos = new JLabel(pedido.getnMesa() + "");
+                            labelPedidos.setSize(35, 35);
+                            labelPedidos.setLocation(labelPlatos.getX() + labelPlatos.getWidth() + 65, labelPlatos.getY());
+                            labelPedidos.setVisible(true);
+                            panel.add(labelPedidos);
+
+                            break;
+                        }
                     }
                 }
             }
+            //botonOut.setBounds(ventana.getWidth()/2-250, panel.getComponent(panel.getComponents().length-1).getY()+panelIngresar.getComponent(panelIngresar.getComponents().length-1).getHeight() + 50, 200, 50);
+            botonOut.setBounds(700, 50, 200, 50);
+            panel.setVisible(true);
+            //scrollbar
+                    /*panelIngresar.setPreferredSize(new Dimension(1350, botonOut.getY()+botonOut.getHeight()+30));
+                    JScrollPane scrollPane = new JScrollPane(panelIngresar, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                    ventana.remove(panelIngresar);
+                    ventana.add(scrollPane);*/
         }
-        for (Pedido pedido : pedidos) {
+        /*for (Pedido pedido : pedidos) {
             for (PlatoPedido platoPedido : pedido.getPlatos()){
-                if (platoPedido == )
+                if (platoPedido == ){
+
+                }
             }
             if (pedido.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
 
@@ -385,9 +480,9 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
                 }
                 break;
             }
-        }
+        }*/
 
-    }*/
+    }
 
     public boolean agregarPlato(String nombre, String precio, String imagen, String descripcion, String tiempoDemora){
         boolean ok = true;
@@ -1748,51 +1843,13 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
             public void mouseClicked(MouseEvent e) {
                 ventana.remove(panelMenu);
                 entregarPedido(ventana);
-                /*restaurante.cleanPanel(panelIngresar, new Component[]{labelIngresar, textField});
-
-                ventana.remove(panelMenu);
-                panelMenu.setVisible(false);
-
-                restaurante.entregarPedido(ventana, panelMenu,panelFeedBack, panelIngresar, boton10, boton11, textField, labelIngresar, labelFeedBack);
-
-                boton11.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ventana.remove(panelFeedBack);
-                        panelFeedBack.setVisible(false);
-                        panelFeedBack.remove(boton11);
-                        ventana.add(panelMenu);
-                        panelMenu.setVisible(true);
-                    }
-                });*/
             }
         });
         boton8.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-/*
                 ventana.remove(panelMenu);
-                panelMenu.setVisible(false);
-
-                labelFeedBack.setText("EL proximo pedido es: "+ restaurante.proximoPedido());
-                panelFeedBack.add(boton11);
-                labelFeedBack.setVisible(true);
-                boton11.setText("SALIR");
-                boton11.setVisible(true);
-
-                panelFeedBack.setVisible(true);
-                ventana.add(panelFeedBack);
-
-                boton11.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        ventana.remove(panelFeedBack);
-                        panelFeedBack.setVisible(false);
-                        panelFeedBack.remove(boton11);
-                        ventana.add(panelMenu);
-                        panelMenu.setVisible(true);
-                    }
-                });*/
+                proximoPedido(ventana);
             }
         });
     }
@@ -1883,21 +1940,26 @@ Modificar para que sea tipo una planilla, ej: ñoquis con bolognesa y queso  (CH
         agregados.put("Crena", 100f);
         agregados.put("Papa", 100f);
         ArrayList<PlatoPedido> platos = new ArrayList<>();
-        platos.add(new PlatoPedido("tercero", 150.20f, agregados, new Date()));
-        platos.add(new PlatoPedido("sexto", 1215.20f, agregados, new Date()));
-        platos.add(new PlatoPedido("segundo", 450.20f, agregados, new Date(120-04-01)));
-        platos.add(new PlatoPedido("primero", 150.20f, agregados, new Date(120-04-01)));
-        platos.add(new PlatoPedido("quinto", 1215.20f, agregados, new Date()));
-        platos.add(new PlatoPedido("cuarto", 450.20f, agregados, new Date()));
-        for(PlatoPedido p: platos){
-          //  System.out.println(p.getFecha()+" "+p.getNombre());
-        }
+        platos.add(new PlatoPedido("Ñoquis", 150.20f, agregados, new Date()));
+        platos.add(new PlatoPedido("Pizza", 1215.20f, agregados, new Date()));
+        platos.add(new PlatoPedido("Sushi", 450.20f, agregados, new Date(120-04-01)));
+        platos.add(new PlatoPedido("Salmon", 150.20f, agregados, new Date(120-04-01)));
+        platos.add(new PlatoPedido("Asado", 1215.20f, agregados, new Date()));
+        platos.add(new PlatoPedido("Ravioles", 450.20f, agregados, new Date()));
+        ArrayList<PlatoPedido> platoss = new ArrayList<>();
+        platoss.add(new PlatoPedido("Ravioles", 150.20f, agregados, new Date()));
+        platoss.add(new PlatoPedido("Zapallo", 1215.20f, agregados, new Date()));
+        platoss.add(new PlatoPedido("Ensalada", 450.20f, agregados, new Date(120-04-01)));
+        platoss.add(new PlatoPedido("Pizza", 150.20f, agregados, new Date(120-04-01)));
+        platoss.add(new PlatoPedido("Hamburguesa", 1215.20f, agregados, new Date()));
+
         Collections.sort(platos);
         for(PlatoPedido p: platos){
             System.out.println(p.getFecha()+" "+p.getNombre());
         }
 
         restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
+        restaurante.getPedidos().add(new Pedido(1, platoss, new Date()));
         restaurante.panelMenu(ventana);
     }
 }
