@@ -183,7 +183,7 @@ public class Restaurante {
 
             menuPedidos.setVisible(true);
 
-            JButton buttonOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
+            JButton buttonOK = new JButton(new ImageIcon(".\\src\\com\\company\\images\\check.png"));
             buttonOK.setBounds(menuPedidos.getX()+menuPedidos.getWidth(), menuPedidos.getY(), 100, 100);
             buttonOK.setVisible(true);
             panelIngresar.add(buttonOK);
@@ -502,12 +502,12 @@ public class Restaurante {
                         opciones.setVisible(true);
                         panelAgregados.add(opciones);
 
-                        JButton botonEdit = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\pencil.png"));
+                        JButton botonEdit = new JButton(new ImageIcon(".\\src\\com\\company\\images\\pencil.png"));
                         botonEdit.setBounds(opciones.getX() + opciones.getWidth() + 1, textFieldSeccion.getY(), 50, 50);
                         botonEdit.setVisible(true);
                         panelAgregados.add(botonEdit);
 
-                        JButton botonDelete = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\delete.png"));
+                        JButton botonDelete = new JButton(new ImageIcon(".\\src\\com\\company\\images\\delete.png"));
                         botonDelete.setBounds(botonEdit.getX() + botonEdit.getWidth() + 1, botonEdit.getY(), 50, 50);
                         botonDelete.setVisible(true);
                         panelAgregados.add(botonDelete);
@@ -623,7 +623,7 @@ public class Restaurante {
                     }
                     panelAgregados.add(opciones);
 
-                    JButton buttonElegir = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
+                    JButton buttonElegir = new JButton(new ImageIcon(".\\src\\com\\company\\images\\check.png"));
                     buttonElegir.setBounds(opciones.getX() + opciones.getWidth() + 1, opciones.getY(), 50, 50);
                     buttonElegir.setVisible(true);
                     panelAgregados.add(buttonElegir);
@@ -658,12 +658,12 @@ public class Restaurante {
                                             textFieldPrecio.setText(agregado.getValue()+"");
                                             panelAgregados.add(textFieldPrecio);
 
-                                            JButton botonEdit = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\pencil.png"));
+                                            JButton botonEdit = new JButton(new ImageIcon(".\\src\\com\\company\\images\\pencil.png"));
                                             botonEdit.setBounds(textFieldPrecio.getX() + textFieldPrecio.getWidth() + 1, textFieldPrecio.getY(), 50, 50);
                                             botonEdit.setVisible(true);
                                             panelAgregados.add(botonEdit);
 
-                                            JButton botonDelete = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\delete.png"));
+                                            JButton botonDelete = new JButton(new ImageIcon(".\\src\\com\\company\\images\\delete.png"));
                                             botonDelete.setBounds(botonEdit.getX() + botonEdit.getWidth() + 1, textFieldPrecio.getY(), 50, 50);
                                             botonDelete.setVisible(true);
                                             panelAgregados.add(botonDelete);
@@ -1081,12 +1081,12 @@ public class Restaurante {
                 botonAg.setVisible(true);
                 panel.add(botonAg);
 
-                JButton botonEdit = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\pencil.png"));
+                JButton botonEdit = new JButton(new ImageIcon(".\\src\\com\\company\\images\\pencil.png"));
                 botonEdit.setBounds(botonAg.getX() + botonAg.getWidth() + 1, botonAg.getY(), 50, 50);
                 botonEdit.setVisible(true);
                 panel.add(botonEdit);
 
-                JButton botonDelete = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\delete.png"));
+                JButton botonDelete = new JButton(new ImageIcon(".\\src\\com\\company\\images\\delete.png"));
                 botonDelete.setBounds(botonEdit.getX() + botonEdit.getWidth() + 1, botonAg.getY(), 50, 50);
                 botonDelete.setVisible(true);
                 panel.add(botonDelete);
@@ -1872,7 +1872,7 @@ public class Restaurante {
 
             menuPedidos.setVisible(true);
 
-            JButton buttonOK = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"));
+            JButton buttonOK = new JButton(new ImageIcon(".\\src\\com\\company\\images\\check.png"));
             buttonOK.setBounds(menuPedidos.getX()+menuPedidos.getWidth(), menuPedidos.getY(), 100, 100);
             buttonOK.setName("buttonOK");
             buttonOK.setVisible(true);
@@ -1956,7 +1956,7 @@ public class Restaurante {
                                 labelPrecio.setVisible(true);
                                 panelIngresar.add(labelPrecio);
 
-                                JButton botonDetalle = new JButton(new ImageIcon("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\factura.png"));
+                                JButton botonDetalle = new JButton(new ImageIcon(".\\src\\com\\company\\images\\factura.png"));
                                 botonDetalle.setBounds(labelDetalle.getX()+9, labelPrecio.getY(), 35, 35);
                                 botonDetalle.setVisible(true);
                                 panelIngresar.add(botonDetalle);
@@ -2141,7 +2141,7 @@ public class Restaurante {
         Collections.sort(platos);
 
         for (int i = 0; i <20 ; i++) {
-            restaurante.getPlatos().add(new Plato("Ñoquis", 100.9f, new File("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"), "Masa a base de harina, huevo y papa", "20 min"));
+            restaurante.getPlatos().add(new Plato("Ñoquis", 100.9f, new File(".\\src\\com\\company\\images\\check.png"), "Masa a base de harina, huevo y papa", "20 min"));
         }
 
         restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
