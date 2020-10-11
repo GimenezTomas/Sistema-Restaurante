@@ -440,15 +440,14 @@ public class Restaurante {
         return ok;
     }
 
-    public void clickEditAgregados(JFrame frameAgregados, JLabel labelAgregados2, Plato plato, JButton botonSalir){
+    public void clickEditAgregados(JFrame frameAgregados, JLabel labelAgregados2, Plato plato){
         JPanel panelAgregados = new JPanel();
         panelAgregados.setName("menu");
         panelAgregados.setSize(frameAgregados.getSize());
         panelAgregados.setLayout(null);
         panelAgregados.setVisible(true);
 
-        panelAgregados.removeAll();
-        frameAgregados.remove(panelAgregados);
+        frameAgregados.getContentPane().removeAll();
 
         panelAgregados.add(labelAgregados2);
 
@@ -459,12 +458,18 @@ public class Restaurante {
         labelExplicacion.setBounds(panelAgregados.getWidth()/2-225, labelAgregados2.getY()+labelAgregados2.getHeight()+30, 450, 50);
         panelAgregados.add(labelExplicacion);
 
+        JButton botonSalir = new JButton("Salir");
+        botonSalir.setBounds(panelAgregados.getWidth()/2-125, 550, 100, 50);
+        botonSalir.setVisible(true);
+
         int vueltas = 1;
 
         for(Plato platoActual: platos){
             if (platoActual.getNombre().equals(plato.getNombre())){
                 if (plato.getAgregados().size()>platoActual.getAgregados().size()){
+                    System.out.println("plato s: "+plato.getAgregados().size()+" PA size : "+platoActual.getAgregados().size());
                     agregarPlato(plato);
+                    System.out.println("plato s: "+plato.getAgregados().size()+" PA size : "+platoActual.getAgregados().size());
                 }
                 if (platoActual.getAgregados().size()==0){
                     labelExplicacion.setText("No hay secciones que editar"+plato.getAgregados().size());
@@ -541,12 +546,15 @@ public class Restaurante {
                             public void mouseClicked(MouseEvent e) {
                                 int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los agregados que le correspondan");
                                 if(confirmD == JOptionPane.YES_OPTION){
+                                    System.out.println("es ahora "+platoActual.getAgregados().size());
                                     platoActual.getAgregados().remove(agregados);
+                                    System.out.println(platoActual.getAgregados().size());
                                     textFieldSeccion.setVisible(false);
                                     botonDelete.setVisible(false);
                                     botonEdit.setVisible(false);
                                     opciones.setVisible(false);
-                                    clickEditAgregados(frameAgregados, labelAgregados2, plato, botonSalir);
+                                    frameAgregados.getContentPane().removeAll();
+                                    clickEditAgregados(frameAgregados, labelAgregados2, plato);
                                 }
                                 //platos.remove(plato);
                             }
@@ -556,6 +564,15 @@ public class Restaurante {
                 break;
             }
         }
+        botonSalir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frameAgregados.getContentPane().removeAll();
+                panelAgregados.setPreferredSize(null);
+
+                crearMenuAgregados(frameAgregados, plato);
+            }
+        });
         botonSalir.setLocation(panelAgregados.getWidth()/2-botonSalir.getWidth()/2, panelAgregados.getComponent(panelAgregados.getComponents().length-1).getY()+panelAgregados.getComponent(panelAgregados.getComponents().length-1).getHeight()+50);
         panelAgregados.add(botonSalir);
         panelAgregados.setPreferredSize(new Dimension(530, botonSalir.getHeight()+botonSalir.getY()+50));
@@ -565,10 +582,13 @@ public class Restaurante {
         frameAgregados.add(scrollBar);
     }
 
-    public void clickEditAgregado(JFrame frameAgregados, JPanel panelAgregados, JLabel labelAgregados2, Plato plato) {
-        panelAgregados.setPreferredSize(new Dimension(530,730));
+    public void clickEditAgregado(JFrame frameAgregados, JLabel labelAgregados2, Plato plato) {
+        JPanel panelAgregados = new JPanel();
+        panelAgregados.setName("menu");
+        panelAgregados.setSize(frameAgregados.getSize());
+        panelAgregados.setLayout(null);
+        panelAgregados.setVisible(true);
 
-        panelAgregados.removeAll();
         frameAgregados.getContentPane().removeAll();
 
         panelAgregados.add(labelAgregados2);
@@ -689,7 +709,8 @@ public class Restaurante {
                                                         textFieldPrecio.setVisible(false);
                                                         botonDelete.setVisible(false);
                                                         botonEdit.setVisible(false);
-                                                        clickEditAgregados(frameAgregados, labelAgregados2, plato, botonSalir);
+                                                        frameAgregados.getContentPane().removeAll();
+                                                        clickEditAgregado(frameAgregados, labelAgregados2, plato);
                                                     }
                                                 }
                                             });
@@ -710,9 +731,9 @@ public class Restaurante {
             @Override
             public void mouseClicked(MouseEvent e) {
                 frameAgregados.getContentPane().removeAll();
-                panelAgregados.setPreferredSize(new Dimension(frameAgregados.getSize()));
+                panelAgregados.setPreferredSize(new Dimension(500, 730));
 
-                crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                crearMenuAgregados(frameAgregados, plato);
             }
         });
         frameAgregados.getContentPane().removeAll();
@@ -724,9 +745,14 @@ public class Restaurante {
         frameAgregados.add(scrollBar);
     }
 
-    public void crearMenuAgregados(JPanel panelAgregados, JFrame frameAgregados, Plato plato){
-        panelAgregados.removeAll();
-        panelAgregados.setPreferredSize(new Dimension(530,730));
+    public void crearMenuAgregados( JFrame frameAgregados, Plato plato){
+        frameAgregados.getContentPane().removeAll();
+
+        JPanel panelAgregados = new JPanel();
+        panelAgregados.setName("menu");
+        panelAgregados.setSize(frameAgregados.getSize());
+        panelAgregados.setLayout(null);
+        panelAgregados.setVisible(false);
 
         JLabel labelAgregados2 = new JLabel("AGREGADOS");
         labelAgregados2.setName("labelAgregados2");
@@ -759,10 +785,13 @@ public class Restaurante {
         botonSalir.setBounds(panelAgregados.getWidth()/2-125, 550, 100, 50);
         botonSalir.setVisible(true);
 
+        panelAgregados.setVisible(true);
+        frameAgregados.add(panelAgregados);
+
         botonSalir.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                crearMenuAgregados(frameAgregados, plato);
             }
         });
         botonTipoAgregado.addMouseListener(new MouseAdapter() {
@@ -831,7 +860,7 @@ public class Restaurante {
                                     ok=false;
                                 }
                                 plato.getAgregados().add(new TipoAgregados(textFieldNuevaSeccion.getText(), ok));
-                                crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                                crearMenuAgregados(frameAgregados, plato);
                             }
                         }
                     }
@@ -929,7 +958,7 @@ public class Restaurante {
                                                 }
                                             }
                                             panelAgregados.removeAll();
-                                            crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                                            crearMenuAgregados(frameAgregados, plato);
                                         }
                                     }
                                 } catch (NumberFormatException ex) {
@@ -951,7 +980,7 @@ public class Restaurante {
                 if (plato.getAgregados().size()==0){
                     JOptionPane.showMessageDialog(null,"No hay tipos que editar");
                 }else{
-                    clickEditAgregados(frameAgregados, labelAgregados2, plato, botonSalir);
+                    clickEditAgregados(frameAgregados, labelAgregados2, plato);
                 }
             }
         });
@@ -959,19 +988,19 @@ public class Restaurante {
         botonEditAgregado.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                clickEditAgregado(frameAgregados, panelAgregados, labelAgregados2, plato);
+                clickEditAgregado(frameAgregados, labelAgregados2, plato);
             }
         });
     }
-    public void editarPlato(JFrame ventana, JPanel panel){
-        //ventana.remove(panel);
-        //System.out.println(ventana.getContentPane().getComponents().length);
+    public void editarPlato(JFrame ventana){
 
-        /*while (ventana.getContentPane().getComponents().length>0){
-            ventana.getContentPane().remove(ventana.getContentPane().getComponents().length-1);
-        }*/
+        JPanel panel = new JPanel();
+        panel.setName("panelGR");
+        panel.setSize(1350, 700);
+        panel.setLayout(null);
+        panel.setVisible(false);
 
-        panel.removeAll();
+        ventana.getContentPane().removeAll();
 
         JLabel labelPlatos = new JLabel("PLATOS");
         labelPlatos.setName("labelPlatos");
@@ -995,7 +1024,7 @@ public class Restaurante {
         botonSalir.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ventana.remove(panel);
+                ventana.getContentPane().removeAll();
                 gestionarRestaurante(ventana);
             }
         });
@@ -1113,8 +1142,8 @@ public class Restaurante {
                             botonDelete.setVisible(false);
                             botonEdit.setVisible(false);
                             botonAg.setVisible(false);
-                            ventana.remove(panel);
-                            editarPlato(ventana, panel);
+                            ventana.getContentPane().removeAll();
+                            editarPlato(ventana);
                         }
                     }
                 });
@@ -1132,16 +1161,16 @@ public class Restaurante {
                         panelAgregados.setVisible(true);
 
                         frameAgregados.add(panelAgregados);
-                        crearMenuAgregados(panelAgregados, frameAgregados,platosAux);
+                        crearMenuAgregados(frameAgregados,platosAux);
                     }
                 });
             }
-            /*botonSalir.setLocation(panel.getWidth() / 2 - botonSalir.getWidth() / 2, panel.getComponent(panel.getComponents().length - 1).getY() + panel.getComponent(panel.getComponents().length - 1).getHeight() + 50);
+            botonSalir.setLocation(panel.getWidth() / 2 - botonSalir.getWidth() / 2, panel.getComponent(panel.getComponents().length - 1).getY() + panel.getComponent(panel.getComponents().length - 1).getHeight() + 50);
             panel.setPreferredSize(new Dimension(1350, botonSalir.getHeight() + botonSalir.getY() + 50));
             JScrollPane scrollBar = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             panel.setVisible(true);
             System.out.println(ventana.getContentPane().getComponents().length);
-            ventana.add(scrollBar);*/
+            ventana.add(scrollBar);
         }
     }
     public void gestionarRestaurante(JFrame ventana) {
@@ -1349,7 +1378,7 @@ public class Restaurante {
 
                             Plato plato = new Plato(datosNewPlato.get("Nombre"), Float.parseFloat(datosNewPlato.get("Precio")), new File(datosNewPlato.get("Imagen")), datosNewPlato.get("Descripcion"), datosNewPlato.get("TiempoDemora"));
 
-                            crearMenuAgregados(panelAgregados, frameAgregados, plato);
+                            crearMenuAgregados(frameAgregados, plato);
 
                             frameAgregados.add(panelAgregados);
 
@@ -1373,7 +1402,7 @@ public class Restaurante {
         boton2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                editarPlato(ventana, panel);
+                editarPlato(ventana);
             }
         });
         boton3.addMouseListener(new MouseAdapter() {
@@ -2110,6 +2139,10 @@ public class Restaurante {
         platoss.add(new PlatoPedido("Hamburguesa", 1215.20f, agregados, new Date()));
 
         Collections.sort(platos);
+
+        for (int i = 0; i <20 ; i++) {
+            restaurante.getPlatos().add(new Plato("Ñoquis", 100.9f, new File("C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png"), "Masa a base de harina, huevo y papa", "20 min"));
+        }
 
         restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
         restaurante.getPedidos().add(new Pedido(2, platoss, new Date()));
