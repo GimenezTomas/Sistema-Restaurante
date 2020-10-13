@@ -2118,6 +2118,8 @@ public class Restaurante {
                 System.out.println(login.isSesion());
                 if (login.isSesion()) {
 
+                    restaurante.mongo.obtenerPlatos();
+
                     fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
                     fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
 

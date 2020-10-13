@@ -1,5 +1,6 @@
 package com.company;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -11,6 +12,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static com.mongodb.client.model.Filters.and;
 
@@ -21,6 +23,8 @@ public class AccesoMongoDB {
     private int puerto;
     private String usuario;
     private String password;
+
+    public static Bson requisitosLogin;
 
     public String getHost() {
         return host;
@@ -90,10 +94,26 @@ public class AccesoMongoDB {
         ArrayList<Pedido> pedidos = new ArrayList<>();
         MongoCollection collection = this.base.getCollection(nombreCollection);
 
-        
+
 
 
         return pedidos;
+    }
+
+    public /*HashSet<Plato>*/void obtenerPlatos(){
+        MongoCollection collection = this.base.getCollection("restaurante");
+        HashSet<Plato> platos = new HashSet<>();
+
+        String json = "{_id:0, platos:1, agregados: 1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+            System.out.println(document);
+        }/*pasarlo a objeto mirar video nadia*/
     }
 
     public boolean login(String username, String password){
@@ -108,9 +128,9 @@ public class AccesoMongoDB {
         filtros.add(filtroA);
         filtros.add(filtroB);
 
-        Bson requisitosAcumplir = and(filtros);
+        requisitosLogin = and(filtros);
 
-        FindIterable resultado = collection.find(requisitosAcumplir);
+        FindIterable resultado = collection.find(requisitosLogin);
 
         MongoCursor iterator = resultado.iterator();
 
