@@ -22,10 +22,19 @@ public class Restaurante {
     private String nombre;
     private File logo;
     private String direccion;
+    private AccesoMongoDB mongo;
     public static SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
+
+    public AccesoMongoDB getMongo() {
+        return mongo;
+    }
+
+    public void setMongo(AccesoMongoDB mongo) {
+        this.mongo = mongo;
+    }
 
     public String getNombre() {
         return nombre;
@@ -72,6 +81,10 @@ public class Restaurante {
 
 
     //CONSTRUCTOR
+
+    public Restaurante() {
+        this.mongo = new AccesoMongoDB("proyectoFinal");
+    }
 
     public static boolean esNumero(String cadena) {
 
@@ -2097,56 +2110,66 @@ public class Restaurante {
             e.printStackTrace();
         }
         Restaurante restaurante = new Restaurante();
-        //Perfil p1 = new Perfil();
 
-        fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
-        fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
+        Login login = new Login(600, 600, "Iniciar sesión");
+        login.getVentana().addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                System.out.println(login.isSesion());
+                if (login.isSesion()) {
 
-        /*VENTANA*/
-        JFrame ventana = new JFrame("RESTAURANTE");
-        ventana.setSize(1350, 730);
-        //ventana.setLayout(null);
-        ventana.setVisible(true);
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
+                    fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
+
+                    /*VENTANA*/
+                    JFrame ventana = new JFrame("RESTAURANTE");
+                    ventana.setSize(1350, 730);
+                    //ventana.setLayout(null);
+                    ventana.setVisible(true);
+                    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //iña no seas virgo y borres esto es para probar entregar pedidos y otras funciones
-        for (int i = 0; i <5 ; i++) {
-            restaurante.getMesas().add(new Mesa());
-        }
+                    for (int i = 0; i < 5; i++) {
+                        restaurante.getMesas().add(new Mesa());
+                    }
 
-        HashMap<String, Float> agregados = new HashMap<>();
-        agregados.put("Bolognesa", 100f);
-        agregados.put("Crena", 100f);
-        agregados.put("Papa", 100f);
-        agregados.put("Boesa", 100f);
-        agregados.put("Crna", 400f);
-        agregados.put("Paa", 102f);
-        agregados.put("Boognesa", 100f);
-        agregados.put("Cr", 102f);
-        agregados.put("Pa", 107f);
-        ArrayList<PlatoPedido> platos = new ArrayList<>();
-        platos.add(new PlatoPedido("Ñoquis", 150.20f, new HashMap<>(), new Date()));
-        platos.add(new PlatoPedido("Pizza", 1215.20f, agregados, new Date()));
-        platos.add(new PlatoPedido("Sushi", 450.20f, agregados, new Date(120-04-01)));
-        platos.add(new PlatoPedido("Salmon", 150.20f, agregados, new Date(120-04-01)));
-        platos.add(new PlatoPedido("Asado", 1215.20f, agregados, new Date()));
-        platos.add(new PlatoPedido("Ravioles", 450.20f, agregados, new Date()));
-        ArrayList<PlatoPedido> platoss = new ArrayList<>();
-        platoss.add(new PlatoPedido("Ravioles", 150.20f, agregados, new Date()));
-        platoss.add(new PlatoPedido("Zapallo", 1215.20f, agregados, new Date()));
-        platoss.add(new PlatoPedido("Ensalada", 450.20f, agregados, new Date(120-04-01)));
-        platoss.add(new PlatoPedido("Pizza", 150.20f, agregados, new Date(120-04-01)));
-        platoss.add(new PlatoPedido("Hamburguesa", 1215.20f, agregados, new Date()));
+                    HashMap<String, Float> agregados = new HashMap<>();
+                    agregados.put("Bolognesa", 100f);
+                    agregados.put("Crena", 100f);
+                    agregados.put("Papa", 100f);
+                    agregados.put("Boesa", 100f);
+                    agregados.put("Crna", 400f);
+                    agregados.put("Paa", 102f);
+                    agregados.put("Boognesa", 100f);
+                    agregados.put("Cr", 102f);
+                    agregados.put("Pa", 107f);
+                    ArrayList<PlatoPedido> platos = new ArrayList<>();
+                    platos.add(new PlatoPedido("Ñoquis", 150.20f, new HashMap<>(), new Date()));
+                    platos.add(new PlatoPedido("Pizza", 1215.20f, agregados, new Date()));
+                    platos.add(new PlatoPedido("Sushi", 450.20f, agregados, new Date(120 - 04 - 01)));
+                    platos.add(new PlatoPedido("Salmon", 150.20f, agregados, new Date(120 - 04 - 01)));
+                    platos.add(new PlatoPedido("Asado", 1215.20f, agregados, new Date()));
+                    platos.add(new PlatoPedido("Ravioles", 450.20f, agregados, new Date()));
+                    ArrayList<PlatoPedido> platoss = new ArrayList<>();
+                    platoss.add(new PlatoPedido("Ravioles", 150.20f, agregados, new Date()));
+                    platoss.add(new PlatoPedido("Zapallo", 1215.20f, agregados, new Date()));
+                    platoss.add(new PlatoPedido("Ensalada", 450.20f, agregados, new Date(120 - 04 - 01)));
+                    platoss.add(new PlatoPedido("Pizza", 150.20f, agregados, new Date(120 - 04 - 01)));
+                    platoss.add(new PlatoPedido("Hamburguesa", 1215.20f, agregados, new Date()));
 
-        Collections.sort(platos);
+                    Collections.sort(platos);
 
-        for (int i = 0; i <20 ; i++) {
-            restaurante.getPlatos().add(new Plato("Ñoquis", 100.9f, new File(".\\src\\com\\company\\images\\check.png"), "Masa a base de harina, huevo y papa", "20 min"));
-        }
+                    for (int i = 0; i < 20; i++) {
+                        restaurante.getPlatos().add(new Plato("Ñoquis", 100.9f, new File(".\\src\\com\\company\\images\\check.png"), "Masa a base de harina, huevo y papa", "20 min"));
+                    }
 
-        restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
-        restaurante.getPedidos().add(new Pedido(2, platoss, new Date()));
-        restaurante.panelMenu(ventana);
+                    restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
+                    restaurante.getPedidos().add(new Pedido(2, platoss, new Date()));
+
+                    restaurante.panelMenu(ventana);
+                }
+            }
+        });
     }
 }
 //editar tipo agregado error en salir (debe ser por el scrollbar)

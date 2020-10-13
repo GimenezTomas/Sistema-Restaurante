@@ -1,23 +1,66 @@
 package com.company;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.sun.jdi.connect.spi.Connection;
-import org.bson.BSON;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
+
+import static com.mongodb.client.model.Filters.and;
 
 public class AccesoMongoDB {
     private Connection connection;
     private MongoDatabase base;
     private String host;
     private int puerto;
+    private String usuario;
+    private String password;
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPuerto() {
+        return puerto;
+    }
+
+    public void setPuerto(int puerto) {
+        this.puerto = puerto;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public MongoClient getMongoClient() {
+        return mongoClient;
+    }
+
+    public void setMongoClient(MongoClient mongoClient) {
+        this.mongoClient = mongoClient;
+    }
 
     private MongoClient mongoClient;
 
@@ -37,8 +80,8 @@ public class AccesoMongoDB {
         this.base = base;
     }
 
-    public AccesoMongoDB(String nombreBase, String host, int puerto) {
-        MongoClient mongo = new MongoClient(host, puerto);//si no le pasas nada funciona tambien porque esta dentro de tu computadora, es decir es LOCAL
+    public AccesoMongoDB(String nombreBase/*, String host, int puerto*/) {
+        MongoClient mongo = new MongoClient(/*host, puerto*/);//si no le pasas nada funciona tambien porque esta dentro de tu computadora, es decir es LOCAL
         this.mongoClient = mongo;
         this.base = this.mongoClient.getDatabase(nombreBase);
     }
@@ -51,5 +94,34 @@ public class AccesoMongoDB {
 
 
         return pedidos;
+    }
+
+    public boolean login(String username, String password){
+        MongoCollection collection = this.base.getCollection("restaurante");
+        ArrayList<Bson> filtros = new ArrayList<>();
+
+        Bson filtro1= Filters.eq("user", username);
+        Bson filtro2 = Filters.eq("password", password);
+        Bson filtroA = Filters.elemMatch("login", filtro1);
+        Bson filtroB = Filters.elemMatch("login", filtro2);
+
+        filtros.add(filtroA);
+        filtros.add(filtroB);
+
+        Bson requisitosAcumplir = and(filtros);
+
+        FindIterable resultado = collection.find(requisitosAcumplir);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+
+            this.usuario = username;
+            this.password = password;
+
+            return true;
+        }
+        return false;
     }
 }
