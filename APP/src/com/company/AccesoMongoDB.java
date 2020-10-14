@@ -1,5 +1,8 @@
 package com.company;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
@@ -11,8 +14,12 @@ import com.sun.jdi.connect.spi.Connection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import static com.mongodb.client.model.Filters.and;
 
@@ -100,7 +107,7 @@ public class AccesoMongoDB {
         return pedidos;
     }
 
-    public /*HashSet<Plato>*/void obtenerPlatos(){
+    public HashSet<Plato> obtenerPlatos(){
         MongoCollection collection = this.base.getCollection("restaurante");
         HashSet<Plato> platos = new HashSet<>();
 
@@ -112,9 +119,33 @@ public class AccesoMongoDB {
 
         while (iterator.hasNext()){
             Document document = (Document) iterator.next();
-            System.out.println(document);
-        }/*pasarlo a objeto mirar video nadia*/
-    }
+
+            ArrayList<Document> doc = (ArrayList<Document>) document.get("platos");
+
+            for (Document docAUX: doc){
+
+                HashSet<TipoAgregados> tiposAgregados = new HashSet<>();
+                ArrayList<Document> agregadosDoc = (ArrayList<Document>) docAUX.get("agregados");
+
+                for (Document agregadosDocAux : agregadosDoc){
+
+                    ArrayList<Document> agregadoDoc = (ArrayList<Document>) agregadosDocAux.get("agregado");
+                    HashMap<String, Float> agregados = new HashMap<>();
+
+                    for (Document agregadoDocAux : agregadoDoc){
+
+                        agregados.put(agregadoDocAux.getString("nombre"), Float.parseFloat(agregadoDocAux.get("precio").toString()));
+
+                    }
+
+                    tiposAgregados.add(new TipoAgregados(agregadosDocAux.getString("tipo"), agregadosDocAux.getBoolean("indispensable"), agregados));
+
+                }
+                platos.add(new Plato(docAUX.getString("nombre"), Float.parseFloat(docAUX.get("precio").toString()), new File(docAUX.get("imagen").toString()), docAUX.getString("descripcion"), docAUX.getString("demora"), tiposAgregados));
+            }
+        }
+        return platos;
+    }/*String nombre, float precio, File img, String descripcion, String tiempoDemora, HashSet<TipoAgregados> agregados*/
 
     public boolean login(String username, String password){
         MongoCollection collection = this.base.getCollection("restaurante");

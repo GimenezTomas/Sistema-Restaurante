@@ -1,5 +1,7 @@
 package com.company;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -2118,7 +2120,7 @@ public class Restaurante {
                 System.out.println(login.isSesion());
                 if (login.isSesion()) {
 
-                    restaurante.mongo.obtenerPlatos();
+                    restaurante.getPlatos().addAll(restaurante.mongo.obtenerPlatos());
 
                     fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
                     fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
@@ -2126,11 +2128,9 @@ public class Restaurante {
                     /*VENTANA*/
                     JFrame ventana = new JFrame("RESTAURANTE");
                     ventana.setSize(1350, 730);
-                    //ventana.setLayout(null);
                     ventana.setVisible(true);
                     ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//iña no seas virgo y borres esto es para probar entregar pedidos y otras funciones
                     for (int i = 0; i < 5; i++) {
                         restaurante.getMesas().add(new Mesa());
                     }
@@ -2160,10 +2160,6 @@ public class Restaurante {
                     platoss.add(new PlatoPedido("Hamburguesa", 1215.20f, agregados, new Date()));
 
                     Collections.sort(platos);
-
-                    for (int i = 0; i < 20; i++) {
-                        restaurante.getPlatos().add(new Plato("Ñoquis", 100.9f, new File(".\\src\\com\\company\\images\\check.png"), "Masa a base de harina, huevo y papa", "20 min"));
-                    }
 
                     restaurante.getPedidos().add(new Pedido(1, platos, new Date()));
                     restaurante.getPedidos().add(new Pedido(2, platoss, new Date()));
