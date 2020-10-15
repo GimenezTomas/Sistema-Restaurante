@@ -5,10 +5,29 @@ import java.io.File;
 import java.util.HashSet;
 
 public class Mesa {
-    public int numMesa;
-    public boolean Ocupada;
-    public File QR;
+    private int numMesa;
+    private boolean Ocupada;
+    private File QR;
     public static int count = 1;
+    
+    public int getNumMesa() {
+        return numMesa;
+    }
+    public void setNumMesa(int numMesa) {
+        this.numMesa = numMesa;
+    }
+    public boolean isOcupada() {
+        return Ocupada;
+    }
+    public void setOcupada(boolean ocupada) {
+        Ocupada = ocupada;
+    }
+    public File getQR() {
+        return QR;
+    }
+    public void setQR(File QR) {
+        this.QR = QR;
+    }
 
     public Mesa(int id, File qr, boolean ocupada){
         this.numMesa = id;
@@ -53,3 +72,5 @@ public class Mesa {
     }
 
 }
+
+
