@@ -14,8 +14,12 @@ import com.sun.jdi.connect.spi.Connection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import javax.print.Doc;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,13 +101,50 @@ public class AccesoMongoDB {
         this.base = this.mongoClient.getDatabase(nombreBase);
     }
 
-    public ArrayList<Pedido> obtenerPedidos(String nombreCollection){
+    public ArrayList<Pedido> obtenerPedidos() {//resolver la fecha de los platos
+        MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Pedido> pedidos = new ArrayList<>();
-        MongoCollection collection = this.base.getCollection(nombreCollection);
 
+        String json = "{_id:0, pedidos:1}";
+        Bson bson = BasicDBObject.parse(json);
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
 
+        MongoCursor iterator = resultado.iterator();
 
+        while (iterator.hasNext()) {
+            Document document = (Document) iterator.next();
+            ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
 
+            for (Document dataPlato : documents) {
+                ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
+                ArrayList<PlatoPedido> platos = new ArrayList<>();
+
+                for (Document dataPLATO : platosDoc){
+                    ArrayList<Document> agregadosDoc = (ArrayList<Document>) dataPLATO.get("agregados");
+                    HashMap<String, Float> agregados = new HashMap<>();
+                    if (agregadosDoc != null){
+                        for (Document dataAgregado : agregadosDoc) {
+                            agregados.put(dataAgregado.getString("nombre"), Float.parseFloat(dataAgregado.get("precio").toString()));
+                        }
+                    }
+                    Date date = new Date();
+                    try{
+                        System.out.println("sa "+dataPLATO.getString("fecha"));
+                        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
+                    }catch (ParseException e){
+                        System.out.println("cause");
+                        e.getCause();
+                        System.out.println("message");
+                        e.getMessage();
+                        System.out.println("entre");
+                    }
+                    System.out.println(date+" date");
+                    System.out.println("dateFormat: "+ new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(date));
+                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date));
+                }
+                pedidos.add(new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido")));
+            }
+        }
         return pedidos;
     }
 

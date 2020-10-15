@@ -59,7 +59,15 @@ public class Pedido {
 
     public Pedido( int nMesa, ArrayList<PlatoPedido> platos, Date fecha) {
         this.nPedido = count++;
-        this.fecha = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        this.fecha = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fecha);
+        this.nMesa = nMesa;
+        this.platos = platos;
+    }
+
+    public Pedido( int nMesa, ArrayList<PlatoPedido> platos, String fecha, int id) {
+        this.nPedido = id;
+        count = id;
+        this.fecha = fecha;
         this.nMesa = nMesa;
         this.platos = platos;
     }
