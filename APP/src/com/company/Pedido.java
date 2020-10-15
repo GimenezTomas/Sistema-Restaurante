@@ -66,7 +66,7 @@ public class Pedido {
 
     public Pedido( int nMesa, ArrayList<PlatoPedido> platos, String fecha, int id) {
         this.nPedido = id;
-        count = id;
+        count = id+1;
         this.fecha = fecha;
         this.nMesa = nMesa;
         this.platos = platos;

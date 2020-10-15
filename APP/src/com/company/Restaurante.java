@@ -10,7 +10,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
-//import java.sql.Date;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.border.Border;
@@ -20,12 +19,10 @@ public class Restaurante {
     private HashSet<Mesa> mesas = new HashSet<>();
     private HashSet<Plato> platos = new HashSet<>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
-    private ArrayList<Ocupacion> ocupaciones = new ArrayList<>();
     private String nombre;
     private File logo;
     private String direccion;
     private AccesoMongoDB mongo;
-    public static SimpleDateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
@@ -55,12 +52,6 @@ public class Restaurante {
     }
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-    public ArrayList<Ocupacion> getOcupaciones() {
-        return ocupaciones;
-    }
-    public void setOcupaciones(ArrayList<Ocupacion> ocupaciones) {
-        this.ocupaciones = ocupaciones;
     }
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
@@ -1717,7 +1708,7 @@ public class Restaurante {
         panelMenu.setLayout(null);
         panelMenu.setVisible(false);
 
-        JLabel nombreSistema = new JLabel("que pasa pa");
+        JLabel nombreSistema = new JLabel(this.nombre);
         nombreSistema.setSize(250, 50);
         nombreSistema.setLocation(ventana.getWidth() / 2 - nombreSistema.getWidth() / 2, 100);
         nombreSistema.setFont(fuentes.get("Times New Roman"));
@@ -2102,6 +2093,12 @@ public class Restaurante {
     public void cargarDatos(){
         platos.addAll(this.mongo.obtenerPlatos());
         pedidos.addAll(this.mongo.obtenerPedidos());
+        mesas.addAll(this.mongo.obtenerMesas());
+        this.mongo.obtenerDataUser(this);
+    }
+
+    public void suma(int a, int b){
+        a += b;
     }
 
     public static void main(String[] args) {

@@ -129,23 +129,55 @@ public class AccesoMongoDB {
                     }
                     Date date = new Date();
                     try{
-                        System.out.println("sa "+dataPLATO.getString("fecha"));
                         date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
                     }catch (ParseException e){
-                        System.out.println("cause");
                         e.getCause();
-                        System.out.println("message");
                         e.getMessage();
-                        System.out.println("entre");
                     }
-                    System.out.println(date+" date");
-                    System.out.println("dateFormat: "+ new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(date));
                     platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date));
                 }
                 pedidos.add(new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido")));
             }
         }
         return pedidos;
+    }
+
+    public void obtenerDataUser(Restaurante restaurante){
+        MongoCollection collection = this.base.getCollection("restaurante");
+
+        FindIterable resultado = collection.find(requisitosLogin);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+            restaurante.setLogo(new File(document.getString("logo")));
+            restaurante.setNombre(document.getString("nombre"));
+            restaurante.setDireccion(document.getString("direccion"));
+        }
+    }
+
+    public HashSet<Mesa> obtenerMesas(){
+        MongoCollection collection = this.base.getCollection("restaurante");
+        HashSet<Mesa> mesas = new HashSet<>();
+
+        String json = "{_id:0, mesas:1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+
+            ArrayList<Document> doc = (ArrayList<Document>) document.get("mesas");
+
+            for (Document mesaDoc: doc){
+                mesas.add(new Mesa(mesaDoc.getInteger("id"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupado")));
+            }
+        }
+
+        return mesas;
     }
 
     public HashSet<Plato> obtenerPlatos(){
