@@ -200,6 +200,7 @@ public class Restaurante {
             buttonOK.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    ventana.getContentPane().removeAll();
                     panelIngresar.setVisible(false);
                     JLabel labelP = new JLabel("Platos");
                     labelP.setFont(fuentes.get("Garamond"));
