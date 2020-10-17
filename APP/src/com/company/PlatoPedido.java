@@ -39,11 +39,12 @@ public class PlatoPedido extends PlatoAbs implements Comparable<PlatoPedido>{
         this.fecha = fecha;
     }
 
-    public PlatoPedido(String nombre, Float precio, HashMap<String, Float> agregados, Date fecha) {
+    public PlatoPedido(String nombre, Float precio, HashMap<String, Float> agregados, Date fecha, boolean entregado) {
         super(nombre, precio);
         this.agregados = agregados;
         this.fecha = fecha;
         this.id = count++;
+        this.entregado = entregado;
     }
 
     @Override

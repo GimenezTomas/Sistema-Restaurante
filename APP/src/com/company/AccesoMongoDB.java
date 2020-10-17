@@ -134,7 +134,7 @@ public class AccesoMongoDB {
                         e.getCause();
                         e.getMessage();
                     }
-                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date));
+                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
                 }
                 pedidos.add(new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido")));
             }
@@ -218,7 +218,7 @@ public class AccesoMongoDB {
             }
         }
         return platos;
-    }/*String nombre, float precio, File img, String descripcion, String tiempoDemora, HashSet<TipoAgregados> agregados*/
+    }
 
     public boolean login(String username, String password){
         MongoCollection collection = this.base.getCollection("restaurante");
