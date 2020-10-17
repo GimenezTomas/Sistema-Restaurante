@@ -2183,7 +2183,6 @@ public class Restaurante {
                     fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
                     fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
 
-                    /*VENTANA*/
                     JFrame ventana = new JFrame("RESTAURANTE");
                     ventana.setSize(1350, 730);
                     ventana.setVisible(true);
