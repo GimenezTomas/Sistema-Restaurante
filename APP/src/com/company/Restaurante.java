@@ -1459,6 +1459,12 @@ public class Restaurante {
         ocupar.setVisible(true);
         ocupar.setName("ocupar");
 
+        JButton desocupar = new JButton("DESOCUPAR");
+        desocupar.setSize(200, 50);
+        desocupar.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 400);
+        desocupar.setVisible(true);
+        desocupar.setName("desocupar");
+
         JButton agregarM = new JButton("AGREGAR MESAS");
         agregarM.setLocation(150, 200);
         agregarM.setSize(200, 50);
@@ -1512,6 +1518,12 @@ public class Restaurante {
         mesasOcup.setLocation(ventana.getWidth() / 2 - 250,150);
         mesasOcup.setVisible(true);
         mesasOcup.setName("perfiLabel");
+
+        JLabel mesasDesocup = new JLabel("Que mesa quiere desocupar?");
+        mesasDesocup.setSize(500, 50);
+        mesasDesocup.setLocation(ventana.getWidth() / 2 - 250,150);
+        mesasDesocup.setVisible(true);
+        mesasDesocup.setName("perfiLabel");
 
         ventana.add(panelMesas);
         panelMesas.add(salir);
@@ -1581,22 +1593,22 @@ public class Restaurante {
             }
         });
 
-        ocuparM.addMouseListener(new MouseAdapter() {
+        desocuparM.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
                 panelMesas.removeAll();
                 panelMesas.add(textMesas);
-                panelMesas.add(mesasOcup);
-                panelMesas.add(ocupar);
+                panelMesas.add(desocupar);
+                panelMesas.add(mesasDesocup);
                 panelMesas.add(salir1);
 
-                ocupar.addMouseListener(new MouseAdapter() {
+                desocupar.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e){
                         if (esNumero(textMesas.getText())) {
                             int n = Integer.parseInt(textMesas.getText());
                             if (Mesa.comprobarMesa(mesas,n)){
-                                Mesa.ocuparMesas(mesas,n);
+                                Mesa.desocuparMesas(mesas,n);
                                 ventana.remove(panelMesas);
                                 gestionarMesas(ventana);
                             }
@@ -2132,10 +2144,6 @@ public class Restaurante {
                     ventana.setSize(1350, 730);
                     ventana.setVisible(true);
                     ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                    for (int i = 0; i < 5; i++) {
-                        restaurante.getMesas().add(new Mesa());
-                    }
 
                     restaurante.panelMenu(ventana);
                 }

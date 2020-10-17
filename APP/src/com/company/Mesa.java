@@ -71,6 +71,17 @@ public class Mesa {
         JOptionPane.showMessageDialog(null, "La mesa esta ocupada");
     }
 
+    public static void desocuparMesas(HashSet<Mesa>mesas, int textfield){
+        for (Mesa mesa : mesas) {
+            if (textfield == mesa.numMesa && mesa.Ocupada == true) {
+                mesa.Ocupada = true;
+                JOptionPane.showMessageDialog(null, "La mesa se desocupo correctamente");
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "La mesa ya esta desocupada");
+    }
+
 }
 
 
