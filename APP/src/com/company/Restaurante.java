@@ -1465,6 +1465,12 @@ public class Restaurante {
         desocupar.setVisible(true);
         desocupar.setName("desocupar");
 
+        JButton borro = new JButton("BORRAR");
+        borro.setSize(200, 50);
+        borro.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 400);
+        borro.setVisible(true);
+        borro.setName("borrar");
+
         JButton agregarM = new JButton("AGREGAR MESAS");
         agregarM.setLocation(150, 200);
         agregarM.setSize(200, 50);
@@ -1524,6 +1530,12 @@ public class Restaurante {
         mesasDesocup.setLocation(ventana.getWidth() / 2 - 250,150);
         mesasDesocup.setVisible(true);
         mesasDesocup.setName("perfiLabel");
+
+        JLabel mesasBorrar = new JLabel("Que mesa quiere borrar?");
+        mesasBorrar.setSize(500, 50);
+        mesasBorrar.setLocation(ventana.getWidth() / 2 - 250,150);
+        mesasBorrar.setVisible(true);
+        mesasBorrar.setName("perfiLabel");
 
         ventana.add(panelMesas);
         panelMesas.add(salir);
@@ -1609,6 +1621,37 @@ public class Restaurante {
                             int n = Integer.parseInt(textMesas.getText());
                             if (Mesa.comprobarMesa(mesas,n)){
                                 Mesa.desocuparMesas(mesas,n);
+                                ventana.remove(panelMesas);
+                                gestionarMesas(ventana);
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "La mesa no existe en el restaurante");
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Ingrese un Numero entero");
+                        }
+                    }
+                });
+            }
+        });
+
+        borrarM.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                panelMesas.removeAll();
+                panelMesas.add(textMesas);
+                panelMesas.add(mesasBorrar);
+                panelMesas.add(borro);
+                panelMesas.add(salir1);
+
+                borro.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e){
+                        if (esNumero(textMesas.getText())) {
+                            int n = Integer.parseInt(textMesas.getText());
+                            if (Mesa.comprobarMesa(mesas,n)){
+                                Mesa.borrarMesa(mesas,n);
                                 ventana.remove(panelMesas);
                                 gestionarMesas(ventana);
                             }

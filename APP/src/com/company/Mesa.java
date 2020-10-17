@@ -53,11 +53,8 @@ public class Mesa {
     public static void agregarMesas(HashSet<Mesa> mesas,int textfield) {
         for (int i = 1; i <= textfield; i++) {
             Mesa mesa = new Mesa();
-            mesa.numMesa = count++;
-            mesa.Ocupada = false;
             mesas.add(mesa);
         }
-        System.out.println(mesas.size());
     }
 
     public static void ocuparMesas(HashSet<Mesa>mesas, int textfield) {
@@ -74,7 +71,7 @@ public class Mesa {
     public static void desocuparMesas(HashSet<Mesa>mesas, int textfield){
         for (Mesa mesa : mesas) {
             if (textfield == mesa.numMesa && mesa.Ocupada == true) {
-                mesa.Ocupada = true;
+                mesa.Ocupada = false;
                 JOptionPane.showMessageDialog(null, "La mesa se desocupo correctamente");
                 return;
             }
@@ -82,6 +79,15 @@ public class Mesa {
         JOptionPane.showMessageDialog(null, "La mesa ya esta desocupada");
     }
 
+    public static void borrarMesa(HashSet<Mesa>mesas, int textfield){
+        for (Mesa mesa : mesas) {
+            if (textfield == mesa.numMesa) {
+                mesas.remove(mesa);
+                JOptionPane.showMessageDialog(null, "La mesa se borro correctamente");
+                return;
+            }
+        }
+    }
 }
 
 
