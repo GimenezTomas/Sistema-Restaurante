@@ -14,19 +14,19 @@
   ],
   "mesas": [
     {
-      "id": 1,
-      "qr": "qr1.png",
-      "ocupado": false
+      "numMesa": 1,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr1.png"
     },
     {
-      "id": 2,
-      "qr": "qr2.png",
-      "ocupado": false
+      "numMesa": 3,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr3.png"
     },
     {
-      "id": 3,
-      "qr": "qr3.png",
-      "ocupado": false
+      "numMesa": 2,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr2.png"
     }
   ],
   "platos": [
@@ -76,7 +76,7 @@
       "fecha": "18-05-2020 10:01:00",
       "platos": [
         {
-          "id":0,
+          "id": 0,
           "nombrePlato": "ñoquis",
           "precio": 70.2,
           "fecha": "18-05-2020 10:01:00",
@@ -97,7 +97,7 @@
       "fecha": "18-05-2020 10:01:00",
       "platos": [
         {
-          "id":0,
+          "id": 0,
           "nombrePlato": "fideos",
           "precio": 70.2,
           "fecha": "18-05-2020 10:01:00",
@@ -114,7 +114,7 @@
           ]
         },
         {
-          "id":1,
+          "id": 1,
           "nombrePlato": "ravioles",
           "precio": 70.2,
           "fecha": "18-05-2020 10:01:00",

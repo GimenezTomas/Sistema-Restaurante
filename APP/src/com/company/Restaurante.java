@@ -1,14 +1,11 @@
 package com.company;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -2108,6 +2105,7 @@ public class Restaurante {
         pedidos.addAll(this.mongo.obtenerPedidos());
         mesas.addAll(this.mongo.obtenerMesas());
         this.mongo.obtenerDataUser(this);
+        this.mongo.actualizarMesas(mesas);
     }
 
     public void suma(int a, int b){

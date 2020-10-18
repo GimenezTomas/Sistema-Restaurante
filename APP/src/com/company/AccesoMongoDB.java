@@ -10,6 +10,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import com.sun.jdi.connect.spi.Connection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -173,7 +174,7 @@ public class AccesoMongoDB {
             ArrayList<Document> doc = (ArrayList<Document>) document.get("mesas");
 
             for (Document mesaDoc: doc){
-                mesas.add(new Mesa(mesaDoc.getInteger("id"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupado")));
+                mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupada")));
             }
         }
 
@@ -218,6 +219,70 @@ public class AccesoMongoDB {
             }
         }
         return platos;
+    }
+
+    public void actualizarMesa(Mesa mesa){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            File json = new File(".\\src\\com\\company\\mesas.json");
+
+            HashMap<String, Object> jsonSerializar = new HashMap<>();
+            jsonSerializar.put("mesas", mesa);
+
+            mapper.writeValue(json, jsonSerializar);
+
+            ObjectMapper mapper1 = new ObjectMapper();
+            HashMap mesasMAP = mapper1.readValue(json, HashMap.class);
+            json.delete();
+
+            Bson filtro = Filters.elemMatch()
+
+            Document mesasDoc = new Document(mesasMAP);
+            Document operacion = new Document("$set", mesasDoc);
+
+            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+
+
+            Bson filtro1= Filters.eq("user", username);
+            Bson filtro2 = Filters.eq("password", password);
+            Bson filtroA = Filters.elemMatch("login", filtro1);
+            Bson filtroB = Filters.elemMatch("login", filtro2);
+
+            filtros.add(filtroA);
+            filtros.add(filtroB);
+
+            requisitosLogin = and(filtros);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void actualizarMesas(HashSet<Mesa>mesas){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            File json = new File(".\\src\\com\\company\\mesas.json");
+
+            HashMap<String, Object> jsonSerializar = new HashMap<>();
+            jsonSerializar.put("mesas", mesas);
+
+            mapper.writeValue(json, jsonSerializar);
+
+            ObjectMapper mapper1 = new ObjectMapper();
+            HashMap mesasMAP = mapper1.readValue(json, HashMap.class);
+            json.delete();
+
+            Document mesasDoc = new Document(mesasMAP);
+            Document operacion = new Document("$set", mesasDoc);
+
+            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean login(String username, String password){
