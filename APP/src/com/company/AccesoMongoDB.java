@@ -220,6 +220,7 @@ public class AccesoMongoDB {
         }
         return platos;
     }
+<<<<<<< Updated upstream
 
     public void actualizarMesa(Mesa mesa){
         try {
@@ -284,6 +285,8 @@ public class AccesoMongoDB {
             e.printStackTrace();
         }
     }
+=======
+>>>>>>> Stashed changes
 
     public boolean login(String username, String password){
         MongoCollection collection = this.base.getCollection("restaurante");
