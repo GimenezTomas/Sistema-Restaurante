@@ -1523,7 +1523,7 @@ public class Restaurante {
         mesasDesocup.setVisible(true);
         mesasDesocup.setName("perfiLabel");
 
-        JLabel nMesa = new JLabel("MEsaaaaaaaa");
+        JLabel nMesa = new JLabel();
         nMesa.setSize(500, 50);
         nMesa.setVisible(true);
         nMesa.setName("perfiLabel");
@@ -1641,11 +1641,12 @@ public class Restaurante {
             @Override
             public void mouseClicked(MouseEvent e){
                 panelMesas.removeAll();
-                for (Mesa mesa : mesas){
+                for(Mesa mesa : mesas){
                     panelMesas.add(checkMesa);
                     panelMesas.add(nMesa);
-                    nMesa.setLocation(ventana.getWidth()/2,50);//falta poner uno abajo de otro y lo del label con nMEsa
+                    nMesa.setLocation(ventana.getWidth()/2,50);//falta poner uno abajo de otro
                     checkMesa.setBounds(nMesa.getX() + 100, nMesa.getY()+5, 50, 35);
+                    nMesa.setText("Mesa numero "+mesa.getNumMesa());
                 }
                 panelMesas.add(borro);
                 panelMesas.add(salir1);
