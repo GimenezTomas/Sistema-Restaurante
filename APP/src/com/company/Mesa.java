@@ -79,15 +79,6 @@ public class Mesa {
         JOptionPane.showMessageDialog(null, "La mesa ya esta desocupada");
     }
 
-    public static void borrarMesa(HashSet<Mesa>mesas, int textfield){
-        for (Mesa mesa : mesas) {
-            if (textfield == mesa.numMesa) {
-                mesas.remove(mesa);
-                JOptionPane.showMessageDialog(null, "La mesa se borro correctamente");
-                return;
-            }
-        }
-    }
 }
 
 
