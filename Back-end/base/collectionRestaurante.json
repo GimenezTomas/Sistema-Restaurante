@@ -97,7 +97,7 @@
       "fecha": "18-05-2020 10:01:00",
       "platos": [
         {
-          "id": 0,
+          "id":0,
           "nombrePlato": "fideos",
           "precio": 70.2,
           "fecha": "18-05-2020 10:01:00",

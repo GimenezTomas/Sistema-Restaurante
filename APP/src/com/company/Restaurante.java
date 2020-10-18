@@ -2142,7 +2142,12 @@ public class Restaurante {
         pedidos.addAll(this.mongo.obtenerPedidos());
         mesas.addAll(this.mongo.obtenerMesas());
         this.mongo.obtenerDataUser(this);
-        this.mongo.actualizarMesas(mesas);
+        /*boolean ok = true;
+        for (Mesa mesa : mesas) {
+            ok =!ok;
+            mesa.setOcupada(ok);
+            this.mongo.actualizarMesa(mesa);
+        }*/
     }
 
     public void suma(int a, int b){

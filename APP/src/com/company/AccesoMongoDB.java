@@ -181,6 +181,29 @@ public class AccesoMongoDB {
         return mesas;
     }
 
+    public ArrayList<Mesa> obtenerMesasArr(){
+        MongoCollection collection = this.base.getCollection("restaurante");
+        ArrayList<Mesa> mesas = new ArrayList<>();
+
+        String json = "{_id:0, mesas:1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+
+            ArrayList<Document> doc = (ArrayList<Document>) document.get("mesas");
+
+            for (Document mesaDoc: doc){
+                mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupada")));
+            }
+        }
+
+        return mesas;
+    }
+
     public HashSet<Plato> obtenerPlatos(){
         MongoCollection collection = this.base.getCollection("restaurante");
         HashSet<Plato> platos = new HashSet<>();
@@ -220,45 +243,29 @@ public class AccesoMongoDB {
         }
         return platos;
     }
-<<<<<<< Updated upstream
 
-    public void actualizarMesa(Mesa mesa){
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            File json = new File(".\\src\\com\\company\\mesas.json");
+    public void actualizarMesa(Mesa mesa){//corregir
+        ArrayList<Mesa>mesas;
+        mesas = obtenerMesasArr();
 
-            HashMap<String, Object> jsonSerializar = new HashMap<>();
-            jsonSerializar.put("mesas", mesa);
+        for (int i = 0; i <mesas.size() ; i++) {
+            if (mesas.get(i).getNumMesa()==mesa.getNumMesa()){
+                System.out.println("entre");
+                HashMap<String, Object> mesaAtributos = new HashMap<>();
+                mesaAtributos.put("numMesa", mesa.getNumMesa());
+                mesaAtributos.put("qr", mesa.getQR());
+                mesaAtributos.put("ocupada", mesa.isOcupada());
 
-            mapper.writeValue(json, jsonSerializar);
+                Document mesaDoc = new Document(mesaAtributos);
+                Document mesasDoc = new Document("mesas."+i, mesaDoc);
+                Document operacion = new Document("$set", mesasDoc);
 
-            ObjectMapper mapper1 = new ObjectMapper();
-            HashMap mesasMAP = mapper1.readValue(json, HashMap.class);
-            json.delete();
-
-            Bson filtro = Filters.elemMatch()
-
-            Document mesasDoc = new Document(mesasMAP);
-            Document operacion = new Document("$set", mesasDoc);
-
-            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
-
-
-            Bson filtro1= Filters.eq("user", username);
-            Bson filtro2 = Filters.eq("password", password);
-            Bson filtroA = Filters.elemMatch("login", filtro1);
-            Bson filtroB = Filters.elemMatch("login", filtro2);
-
-            filtros.add(filtroA);
-            filtros.add(filtroB);
-
-            requisitosLogin = and(filtros);
-        }catch (JsonProcessingException e){
-            e.printStackTrace();
+                UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+                System.out.println("sali");
+                break;
+            }
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+//db.restaurante.update({id:1},{$set:{"mesas.1":{"numMesa":2,"qr":"C:\Users\Familia Gimenez\Documents\GitHub\ProyectoFinal\APP\qr1.png", "ocupada":false}}})
     }
     public void actualizarMesas(HashSet<Mesa>mesas){
         try {
@@ -285,8 +292,6 @@ public class AccesoMongoDB {
             e.printStackTrace();
         }
     }
-=======
->>>>>>> Stashed changes
 
     public boolean login(String username, String password){
         MongoCollection collection = this.base.getCollection("restaurante");
