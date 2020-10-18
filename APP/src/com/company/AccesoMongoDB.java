@@ -256,6 +256,30 @@ public class AccesoMongoDB {
                 mesaAtributos.put("qr", mesa.getQR());
                 mesaAtributos.put("ocupada", mesa.isOcupada());
 
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    File json = new File(".\\src\\com\\company\\mesas.json");
+
+                    Mesa jsonSerializar = new Mesa();
+                    jsonSerializar.put("mesas", mesa);
+
+                    mapper.writeValue(json, jsonSerializar);
+
+                    ObjectMapper mapper1 = new ObjectMapper();
+                    HashMap mesasMAP = mapper1.readValue(json, HashMap.class);
+                    json.delete();
+
+                    Document mesasDoc = new Document(mesasMAP);
+                    Document operacion = new Document("$set", mesasDoc);
+
+                    UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+                }catch (JsonProcessingException e){
+                    e.printStackTrace();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Document mesaDoc = new Document(mesaAtributos);
                 Document mesasDoc = new Document("mesas."+i, mesaDoc);
                 Document operacion = new Document("$set", mesasDoc);
