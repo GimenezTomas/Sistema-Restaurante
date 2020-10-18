@@ -1441,7 +1441,7 @@ public class Restaurante {
 
         JButton salir1 = new JButton("SALIR");
         salir1.setSize(200, 50);
-        salir1.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 300);
+        salir1.setLocation(ventana.getWidth() / 2 - 150, ventana.getHeight() - 200);
         salir1.setVisible(true);
         salir1.setName("salir1");
 
@@ -1522,6 +1522,21 @@ public class Restaurante {
         mesasDesocup.setLocation(ventana.getWidth() / 2 - 250,150);
         mesasDesocup.setVisible(true);
         mesasDesocup.setName("perfiLabel");
+
+        JLabel nMesa = new JLabel("MEsaaaaaaaa");
+        nMesa.setSize(500, 50);
+        nMesa.setVisible(true);
+        nMesa.setName("perfiLabel");
+
+        JButton borro = new JButton("BORRAR");
+        borro.setSize(200, 50);
+        borro.setLocation(salir1.getX() + 200, salir1.getY());
+        borro.setVisible(true);
+        borro.setName("borrar");
+
+        JCheckBox checkMesa = new JCheckBox();
+        checkMesa.setVisible(true);
+
 
         ventana.add(panelMesas);
         panelMesas.add(salir);
@@ -1617,6 +1632,28 @@ public class Restaurante {
                         else{
                             JOptionPane.showMessageDialog(null, "Ingrese un Numero entero");
                         }
+                    }
+                });
+            }
+        });
+
+        borrarM.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                panelMesas.removeAll();
+                for (Mesa mesa : mesas){
+                    panelMesas.add(checkMesa);
+                    panelMesas.add(nMesa);
+                    nMesa.setLocation(ventana.getWidth()/2,50);//falta poner uno abajo de otro y lo del label con nMEsa
+                    checkMesa.setBounds(nMesa.getX() + 100, nMesa.getY()+5, 50, 35);
+                }
+                panelMesas.add(borro);
+                panelMesas.add(salir1);
+
+                borro.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e){
+                    /*borra los tildados*/
                     }
                 });
             }
@@ -2138,7 +2175,6 @@ public class Restaurante {
                     fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
                     fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
 
-                    /*VENTANA*/
                     JFrame ventana = new JFrame("RESTAURANTE");
                     ventana.setSize(1350, 730);
                     ventana.setVisible(true);
