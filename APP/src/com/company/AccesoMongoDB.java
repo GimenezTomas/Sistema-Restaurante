@@ -250,7 +250,6 @@ public class AccesoMongoDB {
 
         for (int i = 0; i <mesas.size() ; i++) {
             if (mesas.get(i).getNumMesa()==mesa.getNumMesa()){
-                System.out.println("entre");
                 HashMap<String, Object> mesaAtributos = new HashMap<>();
                 mesaAtributos.put("numMesa", mesa.getNumMesa());
                 mesaAtributos.put("qr", mesa.getQR());
@@ -260,16 +259,13 @@ public class AccesoMongoDB {
                     ObjectMapper mapper = new ObjectMapper();
                     File json = new File(".\\src\\com\\company\\mesas.json");
 
-                    Mesa jsonSerializar = new Mesa();
-                    jsonSerializar.put("mesas", mesa);
-
-                    mapper.writeValue(json, jsonSerializar);
+                    mapper.writeValue(json, mesaAtributos);
 
                     ObjectMapper mapper1 = new ObjectMapper();
                     HashMap mesasMAP = mapper1.readValue(json, HashMap.class);
                     json.delete();
 
-                    Document mesasDoc = new Document(mesasMAP);
+                    Document mesasDoc = new Document("mesas."+i,mesasMAP);
                     Document operacion = new Document("$set", mesasDoc);
 
                     UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
@@ -279,13 +275,6 @@ public class AccesoMongoDB {
                 catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                Document mesaDoc = new Document(mesaAtributos);
-                Document mesasDoc = new Document("mesas."+i, mesaDoc);
-                Document operacion = new Document("$set", mesasDoc);
-
-                UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
-                System.out.println("sali");
                 break;
             }
         }
