@@ -3,6 +3,7 @@ package com.company;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.std.IterableSerializer;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
@@ -12,19 +13,18 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import com.sun.jdi.connect.spi.Connection;
+import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+
 import javax.print.Doc;
+import javax.swing.text.html.HTMLDocument;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.and;
 
@@ -244,6 +244,47 @@ public class AccesoMongoDB {
         return platos;
     }
 
+    public ArrayList<Plato> obtenerPlatosArr(){
+        MongoCollection collection = this.base.getCollection("restaurante");
+        ArrayList<Plato> platos = new ArrayList<>();
+
+        String json = "{_id:0, platos:1, agregados: 1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+
+            ArrayList<Document> doc = (ArrayList<Document>) document.get("platos");
+
+            for (Document docAUX: doc){
+
+                HashSet<TipoAgregados> tiposAgregados = new HashSet<>();
+                ArrayList<Document> agregadosDoc = (ArrayList<Document>) docAUX.get("agregados");
+
+                for (Document agregadosDocAux : agregadosDoc){
+
+                    ArrayList<Document> agregadoDoc = (ArrayList<Document>) agregadosDocAux.get("agregado");
+                    HashMap<String, Float> agregados = new HashMap<>();
+
+                    for (Document agregadoDocAux : agregadoDoc){
+
+                        agregados.put(agregadoDocAux.getString("nombre"), Float.parseFloat(agregadoDocAux.get("precio").toString()));
+
+                    }
+
+                    tiposAgregados.add(new TipoAgregados(agregadosDocAux.getString("tipo"), agregadosDocAux.getBoolean("indispensable"), agregados));
+
+                }
+                platos.add(new Plato(docAUX.getString("nombre"), Float.parseFloat(docAUX.get("precio").toString()), new File(docAUX.get("imagen").toString()), docAUX.getString("descripcion"), docAUX.getString("demora"), tiposAgregados));
+            }
+        }
+        return platos;
+    }
+
+
     public void actualizarMesa(Mesa mesa){//corregir
         ArrayList<Mesa>mesas;
         mesas = obtenerMesasArr();
@@ -305,7 +346,127 @@ public class AccesoMongoDB {
             e.printStackTrace();
         }
     }
+    public void actualizarPlatos(HashSet<Plato>platos){//averiguar como hacer para que todos los platos
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            File json = new File(".\\src\\com\\company\\platos.json");
 
+            HashMap<String, Object> jsonSerializar = new HashMap<>();
+            jsonSerializar.put("platos", platosMONGO(platos));
+
+            mapper.writeValue(json, jsonSerializar);
+
+            ObjectMapper mapper1 = new ObjectMapper();
+            HashMap platosMAP = mapper1.readValue(json, HashMap.class);
+            json.delete();
+
+            Document mesasDoc = new Document(platosMAP);
+            Document operacion = new Document("$set", mesasDoc);
+
+            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<HashMap<String, Object>> platosMONGO(HashSet<Plato>platos){
+        ArrayList<HashMap<String, Object>> platosMon = new ArrayList<>();
+        for (Plato plato : platos) {
+            HashMap<String, Object> platoAtributos = new HashMap<>();
+            platoAtributos.put("nombre", plato.getNombre());
+            platoAtributos.put("precio", plato.getPrecio());
+            platoAtributos.put("descripcion", plato.getDescripcion());
+            platoAtributos.put("demora", plato.getTiempoDemora());
+            platoAtributos.put("imagen", plato.getImg());
+
+            ArrayList<HashMap<String, Object>> agregadosSeccion = new ArrayList<>();
+
+            for (TipoAgregados agregadoSeccion : plato.getAgregados()) {
+
+                ArrayList<Map<String, Object>> agregados = new ArrayList<>();
+
+                for (Map.Entry<String, Float> agregadoAUX : agregadoSeccion.getAgregados().entrySet()) {
+
+                    HashMap<String, Object> agregado = new HashMap<>();
+                    agregado.put("nombre", agregadoAUX.getKey());
+                    agregado.put("precio", agregadoAUX.getValue());
+                    agregados.add(agregado);
+                }
+                HashMap<String, Object> agS = new HashMap<>();
+                agS.put("tipo", agregadoSeccion.getNombre());
+                agS.put("indispensable", agregadoSeccion.getIndispensable());
+                agS.put("agregado", agregados);
+                agregadosSeccion.add(agS);
+            }
+
+            platoAtributos.put("agregados", agregadosSeccion);
+            platosMon.add(platoAtributos);
+        }
+        platosMon.forEach(plato-> System.out.println(plato));
+        return platosMon;
+    }
+
+    public void actualizarPlato(Plato plato, String nombrePlatoViejo/*esto es porque si el nombre cambia no hay forma de encontrar el plato, ya que decidi no agregarle un id al plato*/){
+        ArrayList<Plato> platos = obtenerPlatosArr();
+
+        for (int i = 0; i < platos.size(); i++) {
+            if (platos.get(i).getNombre().equals(nombrePlatoViejo)){
+                HashMap<String, Object> platoAtributos = new HashMap<>();
+                platoAtributos.put("nombre", plato.getNombre());
+                platoAtributos.put("precio", plato.getPrecio());
+                platoAtributos.put("descripcion",plato.getDescripcion());
+                platoAtributos.put("demora", plato.getTiempoDemora());
+                platoAtributos.put("imagen", plato.getImg());
+
+                ArrayList<HashMap<String, Object>> agregadosSeccion = new ArrayList<>();
+
+                for (TipoAgregados agregadoSeccion : plato.getAgregados()){
+
+                    ArrayList<Map<String, Object>> agregados = new ArrayList<>();
+
+                    for (Map.Entry<String, Float> agregadoAUX : agregadoSeccion.getAgregados().entrySet()){
+
+                        HashMap<String, Object> agregado = new HashMap<>();
+                        agregado.put("nombre", agregadoAUX.getKey());
+                        agregado.put("precio", agregadoAUX.getValue());
+                        agregados.add(agregado);
+                    }
+                    HashMap<String,Object> agS = new HashMap<>();
+                    agS.put("tipo", agregadoSeccion.getNombre());
+                    agS.put("indispensable", agregadoSeccion.getIndispensable());
+                    agS.put("agregado", agregados);
+                    agregadosSeccion.add(agS);
+                }
+
+                platoAtributos.put("agregados", agregadosSeccion);
+
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    File json = new File(".\\src\\com\\company\\platos.json");
+
+                    mapper.writeValue(json, platoAtributos);
+
+                    ObjectMapper mapper1 = new ObjectMapper();
+                    HashMap platosMap = mapper1.readValue(json, HashMap.class);
+                    json.delete();
+
+                    Document platosDoc = new Document("platos." + i, platosMap);
+                    Document operacion = new Document("$set", platosDoc);
+
+                    UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
+        }
+    }
     public boolean login(String username, String password){
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Bson> filtros = new ArrayList<>();

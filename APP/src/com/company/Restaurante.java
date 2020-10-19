@@ -415,7 +415,6 @@ public class Restaurante {
         }
         if (ok) {
             this.platos.add(new Plato(nombre, Float.parseFloat(precio), new File(imagen), descripcion, tiempoDemora));
-            /*agregar en mongo*/
         }
         else{
             JOptionPane.showMessageDialog(null, "El plato ya existe");
@@ -439,7 +438,7 @@ public class Restaurante {
         }
         if (ok) {
             this.platos.add(newPlato);
-            /*agregar en mongo*/
+            //this.mongo.actualizarPlatos(platos);
         }
 
         return ok;
@@ -1219,6 +1218,8 @@ public class Restaurante {
             public void mouseClicked(MouseEvent e) {
                 panel.removeAll();
 
+                int platosSize = platos.size();
+
                 JLabel labelTitulo = new JLabel("¡INGRESAR EL NUEVO PLATO!");
                 labelTitulo.setBounds(ventana.getWidth() / 2 - 100, 20, 200, 15);
                 labelTitulo.setVisible(true);
@@ -1327,6 +1328,9 @@ public class Restaurante {
                 botonOut.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
+                        if (platosSize!=platos.size()){
+                            mongo.actualizarPlatos(platos);
+                        }
                         ventana.remove(panel);
 
                         panel.removeAll();
@@ -2165,6 +2169,9 @@ public class Restaurante {
         pedidos.addAll(this.mongo.obtenerPedidos());
         mesas.addAll(this.mongo.obtenerMesas());
         this.mongo.obtenerDataUser(this);
+        //this.mongo.actualizarPlatos(platos);
+        //this.mongo.actualizarPlato(plato, "aa");
+        //this.mongo.platosMONGO(platos);
     }
 
     public void suma(int a, int b){
@@ -2208,6 +2215,4 @@ public class Restaurante {
         });
     }
 }
-//editar tipo agregado error en salir (debe ser por el scrollbar)
-// en editar plato hay que hacer que ande el scrollbar, esta comentado
-//corregir boton salir cuando esta el scrollbar, imagino que tiene que ver con el preferredSize. Agregue preferredSize al principio de varias funciones, verificar que no se haya roto nada y ver si corrigio el error
+//agregar platos que se abra solo una vez
