@@ -2,14 +2,18 @@ package com.company;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
-public class Mesa {
+public class Mesa implements Comparable<Mesa>{
     private int numMesa;
     private boolean Ocupada;
     private File QR;
     public static int count = 1;
-    
+
+
     public int getNumMesa() {
         return numMesa;
     }
@@ -79,6 +83,16 @@ public class Mesa {
         JOptionPane.showMessageDialog(null, "La mesa ya esta desocupada");
     }
 
+    @Override
+    public int compareTo(Mesa o){
+        if (o.getNumMesa()>numMesa){
+            return -1;
+        }else if (o.getNumMesa()<numMesa){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
 }
 
 

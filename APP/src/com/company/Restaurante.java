@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.*;
 import java.io.File;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -1441,7 +1442,7 @@ public class Restaurante {
 
         JButton salir1 = new JButton("SALIR");
         salir1.setSize(200, 50);
-        salir1.setLocation(ventana.getWidth() / 2 - 150, ventana.getHeight() - 200);
+        salir1.setLocation(ventana.getWidth() / 2 - 200, ventana.getHeight() - 200);
         salir1.setVisible(true);
         salir1.setName("salir1");
 
@@ -1523,19 +1524,17 @@ public class Restaurante {
         mesasDesocup.setVisible(true);
         mesasDesocup.setName("perfiLabel");
 
-        JLabel nMesa = new JLabel();
-        nMesa.setSize(500, 50);
-        nMesa.setVisible(true);
-        nMesa.setName("perfiLabel");
-
         JButton borro = new JButton("BORRAR");
         borro.setSize(200, 50);
         borro.setLocation(salir1.getX() + 200, salir1.getY());
         borro.setVisible(true);
         borro.setName("borrar");
 
-        JCheckBox checkMesa = new JCheckBox();
-        checkMesa.setVisible(true);
+        JLabel labelM = new JLabel("MESAS");
+        labelM.setName("labelMesas");
+        labelM.setVisible(true);
+        labelM.setFont(fuentes.get("Times New Roman"));
+        labelM.setBounds(ventana.getWidth()/2-100, 20, 300, 50);
 
 
         ventana.add(panelMesas);
@@ -1641,12 +1640,28 @@ public class Restaurante {
             @Override
             public void mouseClicked(MouseEvent e){
                 panelMesas.removeAll();
-                for(Mesa mesa : mesas){
+                int vueltas = 1;
+
+                List<Mesa> mesasort = new ArrayList<>(mesas);
+                Collections.sort(mesasort);
+
+                for(Mesa mesa : mesasort) {
+
+                JLabel nMesa = new JLabel();
+                nMesa.setSize(500, 50);
+                nMesa.setVisible(true);
+                nMesa.setName("perfiLabel");
+
+                JCheckBox checkMesa = new JCheckBox();
+                checkMesa.setVisible(true);
+
                     panelMesas.add(checkMesa);
                     panelMesas.add(nMesa);
-                    nMesa.setLocation(ventana.getWidth()/2,50);//falta poner uno abajo de otro
-                    checkMesa.setBounds(nMesa.getX() + 100, nMesa.getY()+5, 50, 35);
+                    panelMesas.add(labelM);
+                    nMesa.setLocation(ventana.getWidth()/2-100,Math.round((labelM.getY() + labelM.getHeight())+((labelM.getHeight()/2)*(vueltas))));//falta poner uno abajo de otro
+                    checkMesa.setBounds(nMesa.getX() + 100, Math.round((labelM.getY() + labelM.getHeight())+((labelM.getHeight()/2)*(vueltas))+5), 50, 35);
                     nMesa.setText("Mesa numero "+mesa.getNumMesa());
+                    vueltas++;
                 }
                 panelMesas.add(borro);
                 panelMesas.add(salir1);
