@@ -2174,10 +2174,6 @@ public class Restaurante {
         //this.mongo.platosMONGO(platos);
     }
 
-    public void suma(int a, int b){
-        a += b;
-    }
-
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
