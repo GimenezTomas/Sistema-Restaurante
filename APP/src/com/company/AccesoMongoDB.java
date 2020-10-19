@@ -346,7 +346,7 @@ public class AccesoMongoDB {
             e.printStackTrace();
         }
     }
-    public void actualizarPlatos(HashSet<Plato>platos){//averiguar como hacer para que todos los platos
+    public void actualizarPlatos(HashSet<Plato>platos){
         try {
             ObjectMapper mapper = new ObjectMapper();
             File json = new File(".\\src\\com\\company\\platos.json");
