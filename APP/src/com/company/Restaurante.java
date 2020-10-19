@@ -1644,6 +1644,7 @@ public class Restaurante {
 
                 List<Mesa> mesasort = new ArrayList<>(mesas);
                 Collections.sort(mesasort);
+                System.out.println(mesasort.size());
 
                 for(Mesa mesa : mesasort) {
 
@@ -1672,6 +1673,11 @@ public class Restaurante {
                     /*borra los tildados*/
                     }
                 });
+                panelMesas.setPreferredSize(new Dimension(1350, panelMesas.getComponent(panelMesas.getComponents().length-1).getY()+200));
+                JScrollPane panele = new JScrollPane(panelMesas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                panele.setVisible(true);
+                ventana.getContentPane().removeAll();
+                ventana.add(panele);
             }
         });
 
@@ -1690,6 +1696,7 @@ public class Restaurante {
                 panelMenu(ventana);
             }
         });
+
     }
 
     public void manejarPerfil(JFrame ventana){
