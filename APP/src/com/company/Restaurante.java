@@ -297,6 +297,7 @@ public class Restaurante {
                                     platoFromPedido.setEntregado(true);
                                 }
                             }
+                            mongo.actualizarPedido(pedidosAux);
                         }
                     }
                 }
@@ -1117,12 +1118,14 @@ public class Restaurante {
                                     if (coicidencias>=2){
                                         JOptionPane.showMessageDialog(null, "El nombre del plato ya esta usado");
                                     }else{
+                                        String nombreViejo = platosAux.getNombre();
                                         platosAux.setNombre(jtxtNombre.getText());
                                         platosAux.setDescripcion(jtxtDescripcion.getText());
                                         platosAux.setTiempoDemora(jtxtDemora.getText());
                                         platosAux.setPrecio(Float.parseFloat(jtxtPrecio.getText()));
                                         platosAux.setImg(new File(jtxtImg.getText()));
                                         JOptionPane.showMessageDialog(null, "Se cambio correctamente");
+                                        mongo.actualizarPlato(platosAux, nombreViejo);
                                     }
                                 }
                             } catch (NumberFormatException ex) {
@@ -1137,6 +1140,7 @@ public class Restaurante {
                         int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? ");
                         if (confirmD == JOptionPane.YES_OPTION) {
                             platos.remove(platosAux);
+                            mongo.actualizarPlatos(platos);
                             jtxtDemora.setVisible(false);
                             jtxtDescripcion.setVisible(false);
                             jtxtImg.setVisible(false);
@@ -1419,6 +1423,7 @@ public class Restaurante {
                 int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los platos del menu");
                 if (confirmD== JOptionPane.YES_NO_OPTION){
                     platos.clear();
+                    mongo.actualizarPlatos(platos);
                     JOptionPane.showMessageDialog(null, "Se borraron todos los platos, la cantidad de platos es "+platos.size());
                 }
             }
@@ -2147,6 +2152,7 @@ public class Restaurante {
                         for (Pedido pedido: pedidos){
                             if (npedido == pedido.getnPedido()){
                                 pedido.setAbierto(false);
+                                mongo.actualizarPedido(pedido);
                                 ventana.getContentPane().removeAll();
                                 panelMenu(ventana);
                             }

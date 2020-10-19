@@ -409,6 +409,31 @@ public class AccesoMongoDB {
         return platosMon;
     }
 
+    public ArrayList<HashMap<String, Object>> platosPedidoMONGO(ArrayList<PlatoPedido>platos){
+        ArrayList<HashMap<String, Object>> platosMon = new ArrayList<>();
+        for (PlatoPedido plato : platos) {
+            HashMap<String, Object> platoAtributos = new HashMap<>();
+            platoAtributos.put("nombrePlato", plato.getNombre());
+            platoAtributos.put("precio", plato.getPrecio());
+            platoAtributos.put("fecha", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(plato.getFecha()));
+            platoAtributos.put("entregado", plato.isEntregado());
+
+            ArrayList<Map<String, Object>> agregados = new ArrayList<>();
+
+            for (Map.Entry<String, Float> agregadoAUX : plato.getAgregados().entrySet()) {
+                HashMap<String, Object> agregado = new HashMap<>();
+                agregado.put("nombre", agregadoAUX.getKey());
+                agregado.put("precio", agregadoAUX.getValue());
+                agregados.add(agregado);
+            }
+
+            platoAtributos.put("agregados", agregados);
+            platosMon.add(platoAtributos);
+        }
+        platosMon.forEach(plato-> System.out.println(plato));
+        return platosMon;
+    }
+
     public void actualizarPlato(Plato plato, String nombrePlatoViejo/*esto es porque si el nombre cambia no hay forma de encontrar el plato, ya que decidi no agregarle un id al plato*/){
         ArrayList<Plato> platos = obtenerPlatosArr();
 
@@ -467,6 +492,42 @@ public class AccesoMongoDB {
             }
         }
     }
+    public void actualizarPedido(Pedido pedido){
+        ArrayList<Pedido> pedidos = obtenerPedidos();
+
+        for (int i = 0; i < pedidos.size(); i++) {
+            if (pedidos.get(i).getnPedido() == pedido.getnPedido()){
+                HashMap<String, Object> pedidoAtributos = new HashMap<>();
+                pedidoAtributos.put("nPedido", pedido.getnPedido());
+                pedidoAtributos.put("nMesa", pedido.getnMesa());
+                pedidoAtributos.put("abierto", pedido.isAbierto());
+                pedidoAtributos.put("fecha", pedido.getFecha());
+                pedidoAtributos.put("platos", platosPedidoMONGO(pedido.getPlatos()));
+
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    File json = new File(".\\src\\com\\company\\pedidos.json");
+
+                    mapper.writeValue(json, pedidoAtributos);
+
+                    ObjectMapper mapper1 = new ObjectMapper();
+                    HashMap pedidoMap = mapper1.readValue(json, HashMap.class);
+                    json.delete();
+
+                    Document pedidosDoc = new Document("pedidos." + i, pedidoMap);
+                    Document operacion = new Document("$set", pedidosDoc);
+
+                    UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
+        }
+    }
     public boolean login(String username, String password){
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Bson> filtros = new ArrayList<>();
@@ -486,7 +547,7 @@ public class AccesoMongoDB {
         MongoCursor iterator = resultado.iterator();
 
         while (iterator.hasNext()){
-            Document document = (Document) iterator.next();
+            //Document document = (Document) iterator.next();
 
             this.usuario = username;
             this.password = password;
@@ -496,3 +557,4 @@ public class AccesoMongoDB {
         return false;
     }
 }
+//entrergar pedido a la primera no entrega, si a la segunda
