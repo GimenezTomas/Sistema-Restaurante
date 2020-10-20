@@ -132,6 +132,7 @@ public class Restaurante {
         }
     }
     public void entregarPedido(JFrame ventana) {
+        this.pedidos = mongo.obtenerPedidos();
 
         final HashSet<PlatoPedido> platosChecked = new HashSet<>();
 
@@ -309,6 +310,8 @@ public class Restaurante {
     }
 
     public void proximoPedido(JFrame ventana) {
+        this.pedidos = mongo.obtenerPedidos();
+
         JPanel panel = new JPanel();
         panel.setSize(1350, 700);
         panel.setLayout(null);
@@ -1342,6 +1345,8 @@ public class Restaurante {
                     }
                 });
 
+                final boolean[] abierto = {true};
+
                 botonAgregar.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -1376,8 +1381,9 @@ public class Restaurante {
                             datosNewPlato.put("Precio", textFieldPrecio.getText());
                             datosNewPlato.put("Imagen", textFieldImagen.getText());
                         }
-                        if (ok && opciones.getSelectedItem().equals("SI")) {
-
+                        if (ok && opciones.getSelectedItem().equals("SI") && abierto[0]) {
+                            System.out.println("entre");
+                            abierto[0] = false;
                             JFrame frameAgregados = new JFrame("AGREGADOS");
                             frameAgregados.setSize(500, 730);
                             frameAgregados.setVisible(true);
@@ -2217,4 +2223,3 @@ public class Restaurante {
         });
     }
 }
-//agregar platos que se abra solo una vez
