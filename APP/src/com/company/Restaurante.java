@@ -475,9 +475,7 @@ public class Restaurante {
         for(Plato platoActual: platos){
             if (platoActual.getNombre().equals(plato.getNombre())){
                 if (plato.getAgregados().size()>platoActual.getAgregados().size()){
-                    System.out.println("plato s: "+plato.getAgregados().size()+" PA size : "+platoActual.getAgregados().size());
                     agregarPlato(plato);
-                    System.out.println("plato s: "+plato.getAgregados().size()+" PA size : "+platoActual.getAgregados().size());
                 }
                 if (platoActual.getAgregados().size()==0){
                     labelExplicacion.setText("No hay secciones que editar"+plato.getAgregados().size());
@@ -554,9 +552,7 @@ public class Restaurante {
                             public void mouseClicked(MouseEvent e) {
                                 int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los agregados que le correspondan");
                                 if(confirmD == JOptionPane.YES_OPTION){
-                                    System.out.println("es ahora "+platoActual.getAgregados().size());
                                     platoActual.getAgregados().remove(agregados);
-                                    System.out.println(platoActual.getAgregados().size());
                                     textFieldSeccion.setVisible(false);
                                     botonDelete.setVisible(false);
                                     botonEdit.setVisible(false);
@@ -1179,7 +1175,6 @@ public class Restaurante {
             panel.setPreferredSize(new Dimension(1350, botonSalir.getHeight() + botonSalir.getY() + 50));
             JScrollPane scrollBar = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             panel.setVisible(true);
-            System.out.println(ventana.getContentPane().getComponents().length);
             ventana.add(scrollBar);
         }
     }
@@ -1382,7 +1377,6 @@ public class Restaurante {
                             datosNewPlato.put("Imagen", textFieldImagen.getText());
                         }
                         if (ok && opciones.getSelectedItem().equals("SI") && abierto[0]) {
-                            System.out.println("entre");
                             abierto[0] = false;
                             JFrame frameAgregados = new JFrame("AGREGADOS");
                             frameAgregados.setSize(500, 730);
@@ -1774,8 +1768,7 @@ public class Restaurante {
             @Override
             public void mouseClicked(MouseEvent e) {
                 nombre= texto1.getText();
-                System.out.println(nombre);
-                System.out.println("Se guardo correctamente");
+                JOptionPane.showMessageDialog(null, "se guardo correctamente");
                 ventana.remove(panelPerfil);
                 panelMenu(ventana);
             }
@@ -2204,7 +2197,6 @@ public class Restaurante {
         login.getVentana().addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                System.out.println(login.isSesion());
                 if (login.isSesion()) {
 
                     restaurante.cargarDatos();

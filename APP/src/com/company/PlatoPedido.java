@@ -7,8 +7,6 @@ import java.util.HashMap;
 public class PlatoPedido extends PlatoAbs implements Comparable<PlatoPedido>{
     private boolean entregado = false;
     private Date fecha;
-    //public static int count=1;
-    //private int id;
     private HashMap<String, Float> agregados=new HashMap<>();
 
     public boolean isEntregado() {

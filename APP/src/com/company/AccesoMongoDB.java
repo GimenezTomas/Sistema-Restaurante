@@ -405,7 +405,6 @@ public class AccesoMongoDB {
             platoAtributos.put("agregados", agregadosSeccion);
             platosMon.add(platoAtributos);
         }
-        platosMon.forEach(plato-> System.out.println(plato));
         return platosMon;
     }
 
@@ -430,7 +429,6 @@ public class AccesoMongoDB {
             platoAtributos.put("agregados", agregados);
             platosMon.add(platoAtributos);
         }
-        platosMon.forEach(plato-> System.out.println(plato));
         return platosMon;
     }
 
