@@ -18,51 +18,52 @@
     <body>
         <button id="myBtn">Open Modal</button>
         <div id="myModal" class="modal" style="display: flex;">
-        <div class="modalContent">
-        <span class="close">&times;</span>
-        <div id="card">
-          <div id="imagen">
-              <img src="ñoquis.jpg" alt="Card image cap">
-          </div>     
-      <div id="texto">
-          <div class="nombre">
-              <h1>Ñoquis con salsa</h1>
-          </div>
-      <div id="opciones">
-          <div class = "salsas">
-              <h1>SALSAS</h1>
-          <ul class="body">
-              <li id="botonSalsa1" class="botonMasAgregado" onmousedown="checkButton('botonSalsa1')">
-                  <input type="radio"> <label for="botonSalsa1">Fileto     (+$45)</label></input> 
-              </li>
-              <li id="botonSalsa2" class="botonMasAgregado" onmousedown="checkButton('botonSalsa2')">
-                  <input type="radio"><label for="botonSalsa2">Crema         (+$45)</label></input>                      
-              </li>
-              <li id="botonSalsa3" class="botonMasAgregado" onmousedown="checkButton('botonSalsa3')">
-                  <input type="radio"><label for="botonSalsa3">Bolognesa       (+$45)</label></input>                         
-              </li>
-              <li id="botonSalsa4" class="botonMasAgregado" onmousedown="checkButton('botonSalsa4')">
-                  <input type="radio"><label for="botonSalsa4">Salsa rosa (+$45)</label></input>            
-              </li>
-              <li id="botonSalsa5" class="botonMasAgregado" onmousedown="checkButton('botonSalsa5')">
-                  <input type="radio"><label for="botonSalsa5">Salsa Blanca (+$45)</label></input>                    
-              </li>
-          </ul>
-      </div>
-      <div class="total">
-          <span>
-              Total: $<h2 id="precioActualizado"> </h2><h3 id="precioBase"> 400 </h3>
-          </span>
-      </div>                                     
-      </div>
-          <section id="padre">
-              <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
-              <button onmousedown="calcularPrecio()" class="botonAgregar">Agregar</button>    
-          </section>            
-      </div>
-      </div>
+            <div class="modalContent">
+                <span class="close">&times;</span>
+                
+                <div id="card">
+                        <div id="imagen">
+                            <img src="ñoquis.jpg" alt="Card image cap">
+                        </div>     
+                        <div id="texto">
+                            <div class="nombre">
+                            <h1>Ñoquis con salsa</h1>
+                        </div>
+                        <div id="opciones">
+                            <div class = "salsas">
+                                <h1>SALSAS</h1>
+                            <ul class="body">
+                                <li id="botonSalsa1" class="botonMasAgregado" onmousedown="checkButton('botonSalsa1')">
+                                    <input type="checkbox"> <label for="botonSalsa1">Fileto     (+$45)</label></input> 
+                                </li>
+                                <li id="botonSalsa2" class="botonMasAgregado" onmousedown="checkButton('botonSalsa2')">
+                                    <input type="checkbox"><label for="botonSalsa2">Crema         (+$45)</label></input>                      
+                                </li>
+                                <li id="botonSalsa3" class="botonMasAgregado" onmousedown="checkButton('botonSalsa3')">
+                                    <input type="checkbox"><label for="botonSalsa3">Bolognesa       (+$45)</label></input>                         
+                                </li>
+                                <li id="botonSalsa4" class="botonMasAgregado" onmousedown="checkButton('botonSalsa4')">
+                                    <input type="checkbox"><label for="botonSalsa4">Salsa rosa (+$45)</label></input>            
+                                </li>
+                                <li id="botonSalsa5" class="botonMasAgregado" onmousedown="checkButton('botonSalsa5')">
+                                    <input type="checkbox"><label for="botonSalsa5">Salsa Blanca (+$45)</label></input>                    
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="total">
+                            <span>
+                                 Total: $<h2 id="precioActualizado"> </h2><h3 id="precioBase"> 400 </h3>
+                            </span>
+                        </div>                                     
+                    </div>
+                <section id="padre">
+                     <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
+                    <button onmousedown="calcularPrecio()" class="botonAgregar">Agregar</button>    
+                </section>            
+            </div>
         </div>
-        </div>
+    </div>
+    </div>
     <script>
 var modal = document.getElementById("myModal");
 
