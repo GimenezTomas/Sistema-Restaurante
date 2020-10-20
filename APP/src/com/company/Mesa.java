@@ -58,6 +58,7 @@ public class Mesa implements Comparable<Mesa>{
         for (int i = 1; i <= textfield; i++) {
             Mesa mesa = new Mesa();
             mesas.add(mesa);
+            //System.out.println(mesa.numMesa);
         }
     }
 
