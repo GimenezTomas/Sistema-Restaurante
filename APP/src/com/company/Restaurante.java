@@ -1655,6 +1655,9 @@ public class Restaurante {
                 Collections.sort(mesasort);
                 System.out.println(mesasort.size());
 
+                panelMesas.add(borro);
+                panelMesas.add(salir1);
+                
                 for(Mesa mesa : mesasort) {
 
                 JLabel nMesa = new JLabel();
@@ -1673,8 +1676,6 @@ public class Restaurante {
                     nMesa.setText("Mesa numero "+mesa.getNumMesa());
                     vueltas++;
                 }
-                panelMesas.add(borro);
-                panelMesas.add(salir1);
 
                 borro.addMouseListener(new MouseAdapter() {
                     @Override
@@ -1682,7 +1683,8 @@ public class Restaurante {
                     /*borra los tildados*/
                     }
                 });
-                panelMesas.setPreferredSize(new Dimension(1350, panelMesas.getComponent(panelMesas.getComponents().length-1).getY()+200));
+                //salir1.setLocation(ventana.getWidth() / 2 - 150, ventana.getHeight() - 200);
+                panelMesas.setPreferredSize(new Dimension(1350, panelMesas.getComponent(panelMesas.getComponents().length-1).getHeight()));
                 JScrollPane panele = new JScrollPane(panelMesas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 panele.setVisible(true);
                 ventana.getContentPane().removeAll();
@@ -1693,6 +1695,7 @@ public class Restaurante {
         salir1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                ventana.getContentPane().removeAll();
                 ventana.remove(panelMesas);
                 gestionarMesas(ventana);
             }
