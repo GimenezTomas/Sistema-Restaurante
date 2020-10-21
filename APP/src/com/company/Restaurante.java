@@ -1455,6 +1455,11 @@ public class Restaurante {
         salir1.setVisible(true);
         salir1.setName("salir1");
 
+        JButton salir2 = new JButton("SALIR");
+        salir2.setSize(200, 50);
+        salir2.setVisible(true);
+        salir2.setName("salir2");
+
         JButton agregar = new JButton("AGREGAR");
         agregar.setSize(200, 50);
         agregar.setLocation(ventana.getWidth() / 2 - 100, ventana.getHeight() - 400);
@@ -1543,7 +1548,7 @@ public class Restaurante {
         labelM.setName("labelMesas");
         labelM.setVisible(true);
         labelM.setFont(fuentes.get("Times New Roman"));
-        labelM.setBounds(ventana.getWidth()/2-100, 20, 300, 50);
+        labelM.setBounds(ventana.getWidth()/2-100, 20, 300, 120);
 
 
         ventana.add(panelMesas);
@@ -1649,46 +1654,39 @@ public class Restaurante {
             @Override
             public void mouseClicked(MouseEvent e){
                 panelMesas.removeAll();
-                int vueltas = 1;
+                int vueltas = 0;
 
                 List<Mesa> mesasort = new ArrayList<>(mesas);
                 Collections.sort(mesasort);
-                System.out.println(mesasort.size());
 
-                panelMesas.add(borro);
-                panelMesas.add(salir1);
-                
+                panelMesas.add(salir2);
                 for(Mesa mesa : mesasort) {
 
-                JLabel nMesa = new JLabel();
-                nMesa.setSize(500, 50);
-                nMesa.setVisible(true);
-                nMesa.setName("perfiLabel");
+                    JButton nMesa = new JButton();
+                    nMesa.setSize(150, 50);
+                    nMesa.setVisible(true);
+                    nMesa.setName("borrar");
 
-                JCheckBox checkMesa = new JCheckBox();
-                checkMesa.setVisible(true);
-
-                    panelMesas.add(checkMesa);
                     panelMesas.add(nMesa);
                     panelMesas.add(labelM);
-                    nMesa.setLocation(ventana.getWidth()/2-100,Math.round((labelM.getY() + labelM.getHeight())+((labelM.getHeight()/2)*(vueltas))));//falta poner uno abajo de otro
-                    checkMesa.setBounds(nMesa.getX() + 100, Math.round((labelM.getY() + labelM.getHeight())+((labelM.getHeight()/2)*(vueltas))+5), 50, 35);
-                    nMesa.setText("Mesa numero "+mesa.getNumMesa());
+                    nMesa.setLocation(ventana.getWidth() / 2 - 100, Math.round((labelM.getY() + labelM.getHeight()+15)+((labelM.getHeight()/2)*(vueltas))));
+                    nMesa.setText("Mesa numero " + mesa.getNumMesa());
                     vueltas++;
                 }
+                salir2.setLocation(panelMesas.getWidth() / 2 - salir2.getWidth() / 2, panelMesas.getComponent(panelMesas.getComponents().length - 1).getY() + panelMesas.getComponent(panelMesas.getComponents().length - 1).getHeight() + 100);
+                panelMesas.setPreferredSize(new Dimension(1350, 10000));
+                JScrollPane scrollBar = new JScrollPane(panelMesas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                panelMesas.setVisible(true);
+                ventana.add(scrollBar);
+            }
+        });
 
-                borro.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e){
-                    /*borra los tildados*/
-                    }
-                });
-                //salir1.setLocation(ventana.getWidth() / 2 - 150, ventana.getHeight() - 200);
-                panelMesas.setPreferredSize(new Dimension(1350, panelMesas.getComponent(panelMesas.getComponents().length-1).getHeight()));
-                JScrollPane panele = new JScrollPane(panelMesas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                panele.setVisible(true);
+        salir2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 ventana.getContentPane().removeAll();
-                ventana.add(panele);
+                ventana.remove(panelMesas);
+                gestionarMesas(ventana);
             }
         });
 
