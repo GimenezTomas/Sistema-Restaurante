@@ -31,41 +31,99 @@
   ],
   "platos": [
     {
-      "nombre": "ñoquis",
-      "precio": 50.2,
       "descripcion": "nuy ricos",
+      "precio": 50.2,
       "demora": "25min",
-      "imagen": "ñoquis.png",
       "agregados": [
         {
           "tipo": "salsas",
-          "indispensable": false,
           "agregado": [
             {
-              "nombre": "bolognesa",
-              "precio": 100
+              "precio": 100,
+              "nombre": "bolognesa"
             },
             {
-              "nombre": "tuco",
-              "precio": 120
+              "precio": 120,
+              "nombre": "tuco"
             }
-          ]
+          ],
+          "indispensable": false
         },
         {
           "tipo": "porcion",
-          "indispensable": true,
           "agregado": [
             {
-              "nombre": "entera",
-              "precio": 50
+              "precio": 50,
+              "nombre": "entera"
             },
             {
-              "nombre": "media",
-              "precio": 0
+              "precio": 0,
+              "nombre": "media"
             }
-          ]
+          ],
+          "indispensable": true
         }
-      ]
+      ],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
+      "nombre": "ñoquis"
+    },
+    {
+      "descripcion": "Tira de asado cortada fina a la parrilla",
+      "precio": 500.1,
+      "demora": "20min",
+      "agregados": [
+        {
+          "tipo": "Punto de la carne",
+          "agregado": [
+            {
+              "precio": 0,
+              "nombre": "Cocido"
+            },
+            {
+              "precio": 0,
+              "nombre": "A punto"
+            }
+          ],
+          "indispensable": true
+        }
+      ],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+      "nombre": "Asado banderita"
+    },
+    {
+      "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
+      "precio": 400,
+      "demora": "15min",
+      "agregados": [],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
+      "nombre": "Pizza napolitana"
+    },
+    {
+      "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
+      "precio": 699.5,
+      "demora": "30min",
+      "agregados": [
+        {
+          "tipo": "Postres",
+          "agregado": [
+            {
+              "precio": 0,
+              "nombre": "Nada"
+            },
+            {
+              "precio": 120.75,
+              "nombre": "Mousse de chocolate"
+            },
+            {
+              "precio": 100,
+              "nombre": "Flan con dulce de leche"
+            }
+          ],
+          "indispensable": true
+        }
+      ],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+      "nombre": "Pollo con papas fritas"
     }
   ],
   "pedidos": [
