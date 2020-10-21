@@ -6,6 +6,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="rest.css">
+        <script src="jquery-3.4.1.min.js"></script>
         <meta charset="UTF-8">
     </head>
     <body>
@@ -66,7 +67,7 @@
                           <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h3>
                           <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h3>
                       </div>
-                      <div class="boton"><img class="plus" src="../Images/plus.png" alt=""></div>
+                      <div class="boton" onclick="llamarAgregados('boton')"><img class="plus" src="../Images/plus.png" alt=""></div>
                   </div>
               </div>
           </div>
@@ -93,7 +94,7 @@
                           <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h3>
                           <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h3>
                       </div>
-                      <div class="boton"><img class="plus" src="../Images/plus.png" alt=""></div>
+                      <div class="boton" onclick="llamarAgregados()"><img class="plus" src="../Images/plus.png" alt=""></div>
                   </div>
               </div>
           </div>
@@ -120,7 +121,7 @@
                           <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h3>
                           <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h3>
                       </div>
-                      <div class="boton"><img class="plus" src="../Images/plus.png" alt=""></div>
+                      <div class="boton" onclick="llamarAgregados()"><img class="plus" src="../Images/plus.png" alt=""></div>
                   </div>
               </div>
           </div>
@@ -147,7 +148,7 @@
                           <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h3>
                           <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h3>
                       </div>
-                      <div class="boton"><img class="plus" src="../Images/plus.png" alt=""></div>
+                      <div class="boton" onclick="llamarAgregados()"><img class="plus" src="../Images/plus.png" alt=""></div>
                   </div>
               </div>
           </div>
@@ -174,7 +175,7 @@
                           <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h3>
                           <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h3>
                       </div>
-                      <div class="boton"><img class="plus" src="../Images/plus.png" alt=""></div>
+                      <div class="boton" onclick="llamarAgregados()"><img class="plus" src="../Images/plus.png" alt=""></div>
                   </div>
               </div>
           </div>
@@ -323,7 +324,201 @@
             </div>
         </div>
     </div>
+    <button onmousedown="llamarAgregados('hola')" class="hola">AGREGADOS</button>
+
+    <div id = "containerAgregados" class="containerAgregados">
+        <div class="mContent">
+            <div class="cardAgregados">
+                <div class="left">
+                    <img  src="../Images/ñoquis.jpg" alt="Card image cap">
+                </div>
+                <div class="right">
+                    <div class="borrar">
+                        <svg onclick = cerrarAgregados()  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
+                        </svg>
+                    </div>
+                    <div class="nombre">
+                        <h3>Ñoquis con salsa</h3>
+                        <p>Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
+                    </div>
+                    <div id="opciones">
+                        <div class = "salsas">
+                            <h1 class="header">SALSAS</h1>
+                            <ul class="body">
+                                <li id="botonSalsa1" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Fileto</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>
+                                </li>
+                                <li id="botonSalsa2" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Crema</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>                            
+                                </li>
+                                <li id="botonSalsa3" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Boloñesa</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>                            
+                                </li>
+                                <li id="botonSalsa4" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Salsa Rosa</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>                            
+                                </li>
+                                <li id="botonSalsa5" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Salsa Blanca</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>                            
+                                </li>
+                                <li id="botonSalsa6" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Fileto</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>                           
+                                </li>
+                                <li id="botonSalsa7" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Fileto</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>                            
+                                </li>
+                                <li id="botonSalsa8" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Fileto</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>                            
+                                </li>
+                                <li id="botonSalsa9" class="botonMasAgregado" onclick=calcularPrecio()>
+                                    <input type="checkbox"></input>
+                                    <div>
+                                        <h3>Fileto</h3>
+                                        <h2 class = "precioAgregado">(+$45)</h2>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="precioTotal">
+                            <h1>Total: $</h1>
+                            <span>
+                                <h2 id="precioActualizado">500</h2>
+                                <h3 id="precioBase">$400</h3>
+                            </span>
+                        </div>
+                    </div>
+                    <section class="padre">
+                        <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
+                        <button onclick="calcularPrecio()" class="botonAgregar">Agregar</button>    
+                    </section>            
+                </div>
+            </div>
+        </div>
+    </div>       
     <script>
+        /*modal agregados*/
+        function llamarAgregados(claseIcono){
+                var modal = document.getElementById("containerAgregados");
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName(claseIcono)[0];
+
+                // When the user clicks the button, open the modal 
+                modal.style.display = "block";
+
+                // When the user clicks on <span> (x), close the modal
+                span[0].onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            }
+
+            calcularPrecio()
+            function checkButton(idBoton){
+                /*implementar para que se pueda poner el check button en false*/
+                let button = document.getElementById(idBoton)
+
+                /*for(let i=0; i<button.childNodes.length; i++){
+                    if(button.childNodes[i].tagName=="INPUT"){
+                        if (button.childNodes[i].checked){
+                            button.childNodes[i].checked=""
+                            //console.log(button.childNodes[i].checked)
+                        }
+                        else{
+                            //console.log(button.childNodes[i].checked)
+                            button.childNodes[i].checked=true
+                        }
+                    }
+                }*/
+
+                calcularPrecio()
+
+            }
+            function calcularPrecio(){
+                let precio = Number((document.getElementById("precioBase").innerHTML).substr(1))
+                let opciones = document.getElementById('opciones')
+                for(let i=0; i<opciones.childNodes.length; i++){
+                    if( opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].className!="precioTotal"){
+                        let tipoAgregado = opciones.childNodes[i]
+                        for(let j=0; j<tipoAgregado.childNodes.length; j++){
+                            if(tipoAgregado.childNodes[j].tagName=="UL"){
+                                let extras = tipoAgregado.childNodes[j]
+                                for(let w = 0; w < extras.childNodes.length; w++){
+                                    if(extras.childNodes[w].tagName=="LI"){
+                                        let extra = extras.childNodes[w]
+                                        let ok=false
+                                        for(let q=0; q<extra.childNodes.length ;q++){
+                                            if(extra.childNodes[q].tagName=="INPUT"){
+                                                if(extra.childNodes[q].checked){
+                                                    ok = true
+                                                }
+                                            }
+                                            else if(ok && extra.childNodes[q].tagName=="DIV"){
+                                                for(let z = 0; z < extra.childNodes[q].childNodes.length; z++){
+                                                    if(extra.childNodes[q].childNodes[z].tagName=="H2"){
+                                                        let precioADD = ""
+                                                        for(let y=0; y<extra.childNodes[q].childNodes[z].innerHTML.length; y++){
+                                                            if(extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)<58 && extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)>47){
+                                                                precioADD = precioADD + extra.childNodes[q].childNodes[z].innerHTML[y]
+                                                            }
+                                                        }
+                                                        precio = precio + Number(precioADD)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                }
+                console.log("precio: "+precio)
+                document.getElementById("precioActualizado").innerHTML = precio
+            }
+            function cerrarAgregados(){
+                document.getElementById("containerAgregados").style.display = "none"
+            }
+        /*factura*/    
+
         actualizarPrecioTotal('platos', 'precio', 'botonPedir')
 
         function activarDisplayFactura(id, display){
