@@ -324,13 +324,11 @@
             </div>
         </div>
     </div>
-    <button onmousedown="llamarAgregados('hola')" class="hola">AGREGADOS</button>
-
     <div id = "containerAgregados" class="containerAgregados">
         <div class="mContent">
             <div class="cardAgregados">
                 <div class="left">
-                    <img  src="../Images/ñoquis.jpg" alt="Card image cap">
+                    <img id="imagenAG" src="../Images/ñoquis.jpg" alt="Card image cap">
                 </div>
                 <div class="right">
                     <div class="borrar">
@@ -338,8 +336,8 @@
                             <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
                         </svg>
                     </div>
-                    <div class="nombre">
-                        <h3>Ñoquis con salsa</h3>
+                    <div id="nombreAG"class="nombre">
+                        <h3>Ñoquis con crema y cebolla de verdeo</h3>
                         <p>Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
                     </div>
                     <div id="opciones">
@@ -421,13 +419,94 @@
                     </div>
                     <section class="padre">
                         <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
-                        <button onclick="calcularPrecio()" class="botonAgregar">Agregar</button>    
+                        <button onmousedown="addPlatoAlCarrito('nombreAG', 'precioActualizado','imagenAG', 'sxaxax')" class="botonAgregar">Agregar</button>    
                     </section>            
                 </div>
             </div>
         </div>
     </div>       
     <script>
+        /*clases*/ 
+        class Plato {
+            constructor(nombre, precio, descripcion, img, agregados){
+                this.nombre = nombre
+                this.precio = precio
+                this.descripcion = descripcion
+                this.img = img
+                this.agregados = agregados
+            }
+        }
+
+        platos=[]
+
+        function addPlatoAlCarrito(idnombre, idprecio, idimg, agregados){
+            let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
+            let descripcion = document.getElementById(idnombre).getElementsByTagName("P")[0].innerHTML
+            let img = document.getElementById(idimg).src
+            let precio = document.getElementById(idprecio).innerHTML
+
+            let plato = new Plato(nombre, precio, descripcion, img, agregados)
+            
+           // platos.add(plato)
+
+            let carrito = document.getElementById('platos')
+
+            let image = document.createElement("IMG")
+            image.src=img;
+            
+            let h3 = document.createElement("H3")
+            h3.innerHTML = nombre
+
+            let div = document.createElement("DIV")
+            div.classList.add("p")
+
+            let h2 = document.createElement("H2")
+            h2.innerHTML = "$"
+
+            let h4 = document.createElement("H4")
+            h4.classList.add("precio")
+            h4.innerHTML = precio
+
+            let svg = document.createElement("SVG")
+            let as = 'botonDelete'+(carrito.getElementsByTagName("LI").length+1)
+            svg.setAttribute("id", as)
+            let s = 'plato'+(carrito.getElementsByTagName("LI").length+1)
+            //svg.addEventListener("mousedown", eliminarPlato(s))
+            svg.classList.add("bi", "bi-x-circle-fill")
+            svg.setAttribute("fill", "currentColor")
+            svg.setAttribute("xlmns", "http://www.w3.org/2000/svg")
+            svg.setAttribute("viewBox", "0 0 16 16")
+
+            let path = document.createElement("PATH")
+            path.setAttribute("fill-rule", "evenodd")
+            path.setAttribute("d", "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z")
+
+            svg.appendChild(path)
+
+            div.appendChild(h2)
+            div.appendChild(h4)
+            div.appendChild(svg)
+
+            let node = document.createElement("LI")
+            node.classList.add("pedido")
+            console.log(carrito.getElementsByTagName("LI").length+1)
+            //node.addEventListener("mouseover", botonEliminar('botonDelete'+carrito.getElementsByTagName("LI").length+1, true))
+            //node.addEventListener("mouseout", botonEliminar('botonDelete'+carrito.getElementsByTagName("LI").length+1, false))
+            node.setAttribute("id", "plato"+(carrito.getElementsByTagName("LI").length+1))
+            
+            node.appendChild(image)
+            node.appendChild(h3)
+            node.appendChild(div)
+
+            carrito.appendChild(node)
+            svg.addEventListener("onmousedown", eliminarPlato(s))
+            node.addEventListener("mouseover", botonEliminar('botonDelete'+(carrito.getElementsByTagName("LI").length+1), true))
+            node.addEventListener("mouseout", botonEliminar('botonDelete'+(carrito.getElementsByTagName("LI").length+1), false))
+            
+            actualizarPrecioTotal('platos', 'precio', 'botonPedir')
+            cerrarAgregados()
+        }
+
         /*modal agregados*/
         function llamarAgregados(claseIcono){
                 var modal = document.getElementById("containerAgregados");
@@ -539,6 +618,7 @@
         }
 
         function eliminarPlato(idEliminar){
+            console.log(document.getElementById('platos').getElementsByTagName("LI")[8].id)
             let plato = document.getElementById(idEliminar)
             plato.parentNode.removeChild(plato)
             actualizarPrecioTotal('platos', 'precio', 'botonPedir')
