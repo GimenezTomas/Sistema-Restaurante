@@ -1456,7 +1456,7 @@ public class Restaurante {
         salir1.setName("salir1");
 
         JButton salir2 = new JButton("SALIR");
-        salir2.setSize(200, 50);
+        salir2.setSize(500, 50);
         salir2.setVisible(true);
         salir2.setName("salir2");
 
@@ -1496,23 +1496,17 @@ public class Restaurante {
         desocuparM.setName("desocuparM");
         desocuparM.setVisible(true);
 
-        JButton borrarM = new JButton("BORRAR MESA ESPECIFICA");
+        JButton borrarM = new JButton("BORRAR MESAS");
         borrarM.setLocation(150, 50 + agregarM.getHeight() + agregarM.getY());
         borrarM.setSize(200, 50);
         borrarM.setName("borrarM");
         borrarM.setVisible(true);
 
-        JButton borrarNmesas = new JButton("BORRAR VARIAS MESAS");
-        borrarNmesas.setLocation((1200 / 2 - ocuparM.getWidth() / 2) + 100, 50 + ocuparM.getHeight() + ocuparM.getY());
-        borrarNmesas.setSize(200, 50);
-        borrarNmesas.setName("borrarNmesas");
-        borrarNmesas.setVisible(true);
-
-        JButton Qrs = new JButton("QRS");
-        Qrs.setLocation(1250 - desocuparM.getWidth(), 50 + desocuparM.getHeight() + desocuparM.getY());
-        Qrs.setSize(200, 50);
-        Qrs.setName("Qrs");
-        Qrs.setVisible(true);
+        JButton qrs = new JButton("QRS");
+        qrs.setLocation((1200 / 2 - ocuparM.getWidth() / 2) + 100, 50 + ocuparM.getHeight() + ocuparM.getY());
+        qrs.setSize(200, 50);
+        qrs.setName("qrs");
+        qrs.setVisible(true);
 
         JTextField textMesas = new JTextField();
         textMesas.setLocation(ventana.getWidth() / 2 - 250,200);
@@ -1557,8 +1551,7 @@ public class Restaurante {
         panelMesas.add(ocuparM);
         panelMesas.add(desocuparM);
         panelMesas.add(borrarM);
-        panelMesas.add(borrarNmesas);
-        panelMesas.add(Qrs);
+        panelMesas.add(qrs);
         panelMesas.setVisible(true);
 
         agregarM.addMouseListener(new MouseAdapter() {
@@ -1658,7 +1651,7 @@ public class Restaurante {
 
                 List<Mesa> mesasort = new ArrayList<>(mesas);
                 Collections.sort(mesasort);
-
+                panelMesas.add(labelM);
                 panelMesas.add(salir2);
                 for(Mesa mesa : mesasort) {
 
@@ -1668,13 +1661,12 @@ public class Restaurante {
                     nMesa.setName("borrar");
 
                     panelMesas.add(nMesa);
-                    panelMesas.add(labelM);
                     nMesa.setLocation(ventana.getWidth() / 2 - 100, Math.round((labelM.getY() + labelM.getHeight()+15)+((labelM.getHeight()/2)*(vueltas))));
                     nMesa.setText("Mesa numero " + mesa.getNumMesa());
                     vueltas++;
                 }
                 salir2.setLocation(panelMesas.getWidth() / 2 - salir2.getWidth() / 2, panelMesas.getComponent(panelMesas.getComponents().length - 1).getY() + panelMesas.getComponent(panelMesas.getComponents().length - 1).getHeight() + 100);
-                panelMesas.setPreferredSize(new Dimension(1350, 10000));
+                panelMesas.setPreferredSize(new Dimension(1350, salir2.getHeight() + salir2.getY() + 50));
                 JScrollPane scrollBar = new JScrollPane(panelMesas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 panelMesas.setVisible(true);
                 ventana.add(scrollBar);
