@@ -426,6 +426,11 @@
         </div>
     </div>       
     <script>
+        function clearArray(array) {
+            while (array.length) {
+                array.pop();
+            }
+        }
         /*clases*/ 
         class Plato {
             constructor(nombre, precio, descripcion, img, agregados){
@@ -447,9 +452,12 @@
 
             let plato = new Plato(nombre, precio, descripcion, img, agregados)
             
-           // platos.add(plato)
-
+            platos.push(plato)
             let carrito = document.getElementById('platos')
+
+
+            let s = 'plato'+(carrito.getElementsByTagName("LI").length+1)
+            let as = 'botonDelete'+(carrito.getElementsByTagName("LI").length+1)
 
             let image = document.createElement("IMG")
             image.src=img;
@@ -468,14 +476,13 @@
             h4.innerHTML = precio
 
             let svg = document.createElement("SVG")
-            let as = 'botonDelete'+(carrito.getElementsByTagName("LI").length+1)
             svg.setAttribute("id", as)
-            let s = 'plato'+(carrito.getElementsByTagName("LI").length+1)
-            //svg.addEventListener("mousedown", eliminarPlato(s))
+            svg.addEventListener("mousedown", function(){eliminarPlato(s)})
+            svg.setAttribute("viewBox", "0 0 16 16")
+            svg.style= ""
             svg.classList.add("bi", "bi-x-circle-fill")
             svg.setAttribute("fill", "currentColor")
             svg.setAttribute("xlmns", "http://www.w3.org/2000/svg")
-            svg.setAttribute("viewBox", "0 0 16 16")
 
             let path = document.createElement("PATH")
             path.setAttribute("fill-rule", "evenodd")
@@ -490,8 +497,8 @@
             let node = document.createElement("LI")
             node.classList.add("pedido")
             console.log(carrito.getElementsByTagName("LI").length+1)
-            //node.addEventListener("mouseover", botonEliminar('botonDelete'+carrito.getElementsByTagName("LI").length+1, true))
-            //node.addEventListener("mouseout", botonEliminar('botonDelete'+carrito.getElementsByTagName("LI").length+1, false))
+            node.addEventListener("mouseover", function(){botonEliminar(as, true)})
+            node.addEventListener("mouseout", function(){botonEliminar(as, false)})
             node.setAttribute("id", "plato"+(carrito.getElementsByTagName("LI").length+1))
             
             node.appendChild(image)
@@ -499,9 +506,9 @@
             node.appendChild(div)
 
             carrito.appendChild(node)
-            svg.addEventListener("onmousedown", eliminarPlato(s))
-            node.addEventListener("mouseover", botonEliminar('botonDelete'+(carrito.getElementsByTagName("LI").length+1), true))
-            node.addEventListener("mouseout", botonEliminar('botonDelete'+(carrito.getElementsByTagName("LI").length+1), false))
+            //svg.addEventListener("onmousedown", eliminarPlato(s))
+            //node.addEventListener("mouseover", botonEliminar('botonDelete'+(carrito.getElementsByTagName("LI").length+1), true))
+            //node.addEventListener("mouseout", botonEliminar('botonDelete'+(carrito.getElementsByTagName("LI").length+1), false))
             
             actualizarPrecioTotal('platos', 'precio', 'botonPedir')
             cerrarAgregados()
@@ -531,26 +538,7 @@
             }
 
             calcularPrecio()
-            function checkButton(idBoton){
-                /*implementar para que se pueda poner el check button en false*/
-                let button = document.getElementById(idBoton)
 
-                /*for(let i=0; i<button.childNodes.length; i++){
-                    if(button.childNodes[i].tagName=="INPUT"){
-                        if (button.childNodes[i].checked){
-                            button.childNodes[i].checked=""
-                            //console.log(button.childNodes[i].checked)
-                        }
-                        else{
-                            //console.log(button.childNodes[i].checked)
-                            button.childNodes[i].checked=true
-                        }
-                    }
-                }*/
-
-                calcularPrecio()
-
-            }
             function calcularPrecio(){
                 let precio = Number((document.getElementById("precioBase").innerHTML).substr(1))
                 let opciones = document.getElementById('opciones')
@@ -618,7 +606,6 @@
         }
 
         function eliminarPlato(idEliminar){
-            console.log(document.getElementById('platos').getElementsByTagName("LI")[8].id)
             let plato = document.getElementById(idEliminar)
             plato.parentNode.removeChild(plato)
             actualizarPrecioTotal('platos', 'precio', 'botonPedir')
@@ -630,6 +617,7 @@
                 platos.removeChild(platos.childNodes[plato])
                 plato--
             }
+            clearArray(platos)
             actualizarPrecioTotal('platos', 'precio', 'botonPedir')
         }
 
@@ -652,14 +640,18 @@
             }
             document.getElementById(clasePedir).innerHTML = "Pedir ($"+precio+")"
             if(precio==0){
-                canastaVacia()
+                canastaVacia(true)
             }
         }
 
-        function canastaVacia(){
-            document.getElementById("pedidos").style.display="none"
-            document.getElementById("carritoVacio").style.display="flex"
-             
+        function canastaVacia(ok){
+            if(ok){
+                document.getElementById("pedidos").style.display="none"
+                document.getElementById("carritoVacio").style.display="flex"
+            }else{
+                document.getElementById("pedidos").style.display="block"
+                document.getElementById("carritoVacio").style.display="none"
+            }
         }
         /*modal vaciar canasta*/
         function vaciarCanastaModal(){
@@ -686,8 +678,16 @@
                     modal.style.display = "none";
                 }
             }
+            
         }
         function llamarCarrito(claseIcono){
+
+            if(platos.length>0){
+                canastaVacia(false)
+            }else{
+                canastaVacia(true)
+            }
+
             var modal = document.getElementById("factura");
 
             // Get the <span> element that closes the modal
@@ -712,3 +712,14 @@
     
     </body>
 </html>
+
+<!--
+    ERRORES:
+        1) MODAL VACIAR CANASTA aparece cuando abris el carrito(si antes lo vaciaste)
+        2) SVG CRUZ del carrito no aparece en los platos agregados con JS, existen pero no se muestran
+-->
+<!--
+    A Agregar:
+        1) Carrito:
+            a) Ver detalle plato
+-->
