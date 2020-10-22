@@ -1654,7 +1654,6 @@ public class Restaurante {
                 panelMesas.add(labelM);
                 panelMesas.add(salir2);
                 for(Mesa mesa : mesasort) {
-
                     JButton nMesa = new JButton();
                     nMesa.setSize(150, 50);
                     nMesa.setVisible(true);
