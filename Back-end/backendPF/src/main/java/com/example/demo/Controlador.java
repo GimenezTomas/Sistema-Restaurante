@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;*/
-import org.apache.commons.lang3.ObjectUtils;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,31 +15,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.print.Doc;
-import java.io.IOException;
-import java.lang.annotation.Documented;
-import java.math.BigInteger;
-import java.util.*;
-
 import java.io.IOException;
 import java.util.*;
 
 @Controller
 public class Controlador {
 
-    @Autowired
-    private AccesoMongoDB mongo;
+    private final AccesoMongoDB accesoMongoDB;
 
     /*@Autowired
     private Servicio servicioParaSubirArchivos;*/
 
-    public Controlador() {
-        this.accesoABaseDeDatos = new AccesoMongoDB();
+    public Controlador(AccesoMongoDB accesoMongoDB) {
+        this.accesoMongoDB = accesoMongoDB;
+        this.acces = new AccesoMongoDB("proyectoFInal");
         this.servicioParaSubirArchivos = new Servicio();
     }
 
     @GetMapping("/")
-    public String index() {
+    public String rest() {
         return "rest";
     }
 
@@ -63,7 +55,7 @@ public class Controlador {
         this.guardarDatosALaBase();
     }
 
-    public List<Socio> obtenerListaDeSocios(){
+    public List<Plato> obtenerListaDePlatos(){
 
         List<Socio> sociosList= new ArrayList<>();
         Iterator<String[]> iterador = archivoCSV.obtenerIterador();

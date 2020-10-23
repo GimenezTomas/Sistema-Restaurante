@@ -419,6 +419,20 @@ html{
     padding-inline-start: 0%;
 
 }
+#platos .platosPedidos{
+
+}
+
+#platos .header{
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    border-color: black;
+}
+
+#platos .header h1{
+    font-size: 15px;
+}
+
 .pedido{
     list-style-type: none;
     display: flex;
@@ -482,6 +496,7 @@ html{
     width: 30px;
     height: 30px;
 }
+
 .pedir{
     /*margin-left: 8%;*/
     margin-top: 10px;
@@ -590,6 +605,28 @@ cursor: pointer;
 }
 
 #carritoVacio h1{
+    margin-top: 10px;
+    font-size: 20px;
+    color: #7d7d7d;
+}
+
+#carritoVacio2{
+    display: none;
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-top: 20%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+#carritoVacio2 svg{
+    width: 70px;
+    height: 70px;
+    fill: #7d7d7d;
+}
+
+#carritoVacio2 h1{
     margin-top: 10px;
     font-size: 20px;
     color: #7d7d7d;
