@@ -6,20 +6,25 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '15'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-
+    compile group: 'com.opencsv', name: 'opencsv', version: '5.2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     compile 'org.mongodb:mongo-java-driver:3.4.2'
-
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 test {
