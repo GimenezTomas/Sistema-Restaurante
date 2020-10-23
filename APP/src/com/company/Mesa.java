@@ -1,7 +1,10 @@
 package com.company;
 
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
+
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -84,6 +87,22 @@ public class Mesa implements Comparable<Mesa>{
         }
         JOptionPane.showMessageDialog(null, "La mesa ya esta desocupada");
     }
+
+    public static void generarQr(HashSet<Mesa> mesas) throws IOException {
+        for (Mesa mesa : mesas) {
+            if (mesa.Ocupada == false){
+                String details = "https://www.instagram.com/inaaetchegoyen";
+                ByteArrayOutputStream out = QRCode.from(details).to(ImageType.PNG).stream();
+                File f = new File("C:\\Users\\iniae\\OneDrive\\Documentos\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\Qr\\"+"Mesa"+mesa.getNumMesa()+".png");
+                FileOutputStream fos = new FileOutputStream(f);
+                fos.write(out.toByteArray());
+                fos.flush();
+            }
+        }
+
+    }
+
+
 
     @Override
     public int compareTo(Mesa o){

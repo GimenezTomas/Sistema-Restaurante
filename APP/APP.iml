@@ -43,5 +43,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="qrgen-1.02" level="application" />
   </component>
 </module>
