@@ -38,7 +38,7 @@ public class Mesa implements Comparable<Mesa>{
         this.Ocupada = ocupada;
         this.QR = qr;
         if (id>count) {
-            count = id++;
+            count = id+1;
         }
     }
 

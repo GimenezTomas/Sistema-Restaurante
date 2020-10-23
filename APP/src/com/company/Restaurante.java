@@ -1569,6 +1569,7 @@ public class Restaurante {
                         if (esNumero(textMesas.getText())) {
                             int n = Integer.parseInt(textMesas.getText());
                             Mesa.agregarMesas(mesas,n);
+                            mongo.actualizarMesas(mesas);
                             JOptionPane.showMessageDialog(null, "Se agregaron "+n+" mesas");
                             ventana.remove(panelMesas);
                             gestionarMesas(ventana);;
@@ -1597,6 +1598,7 @@ public class Restaurante {
                             int n = Integer.parseInt(textMesas.getText());
                             if (Mesa.comprobarMesa(mesas,n)){
                                 Mesa.ocuparMesas(mesas,n);
+                                mongo.actualizarMesas(mesas);
                                 ventana.remove(panelMesas);
                                 gestionarMesas(ventana);
                             }
@@ -1628,6 +1630,7 @@ public class Restaurante {
                             int n = Integer.parseInt(textMesas.getText());
                             if (Mesa.comprobarMesa(mesas,n)){
                                 Mesa.desocuparMesas(mesas,n);
+                                mongo.actualizarMesas(mesas);
                                 ventana.remove(panelMesas);
                                 gestionarMesas(ventana);
                             }
@@ -1654,13 +1657,24 @@ public class Restaurante {
                 panelMesas.add(labelM);
                 panelMesas.add(salir2);
                 for(Mesa mesa : mesasort) {
-
                     JButton nMesa = new JButton();
                     nMesa.setSize(150, 50);
                     nMesa.setVisible(true);
                     nMesa.setName("borrar");
-
                     panelMesas.add(nMesa);
+
+                    nMesa.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            int BM = JOptionPane.showConfirmDialog(null,"Estas seguro que quiere borrar esta mesa?");
+                            if (BM == JOptionPane.YES_OPTION){
+                                mesas.remove(mesa);
+                                panelMesas.remove(nMesa);
+                                mongo.actualizarMesas(mesas);
+                            }
+                        }
+                    });
+
                     nMesa.setLocation(ventana.getWidth() / 2 - 100, Math.round((labelM.getY() + labelM.getHeight()+15)+((labelM.getHeight()/2)*(vueltas))));
                     nMesa.setText("Mesa numero " + mesa.getNumMesa());
                     vueltas++;
@@ -1670,6 +1684,14 @@ public class Restaurante {
                 JScrollPane scrollBar = new JScrollPane(panelMesas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 panelMesas.setVisible(true);
                 ventana.add(scrollBar);
+            }
+        });
+
+        qrs.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                
+
             }
         });
 
