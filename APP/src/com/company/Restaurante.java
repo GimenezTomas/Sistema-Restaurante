@@ -1672,14 +1672,11 @@ public class Restaurante {
                                 mesas.remove(mesa);
                                 panelMesas.remove(nMesa);
                                 mongo.actualizarMesas(mesas);
-                                System.out.println("Mesa"+mesa.getNumMesa());
                                 File imagen = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
-                                System.out.println("imagen exists? " + imagen.exists());
                                 imagen.delete();
                             }
                         }
                     });
-
                     nMesa.setLocation(ventana.getWidth() / 2 - 100, Math.round((labelM.getY() + labelM.getHeight()+15)+((labelM.getHeight()/2)*(vueltas))));
                     nMesa.setText("Mesa numero " + mesa.getNumMesa());
                     vueltas++;
