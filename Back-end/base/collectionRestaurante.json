@@ -14,19 +14,19 @@
   ],
   "mesas": [
     {
-      "numMesa": 1,
-      "ocupada": false,
-      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr1.png"
+      "numMesa": 4,
+      "qr": null,
+      "ocupada": false
     },
     {
-      "numMesa": 3,
-      "ocupada": false,
-      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr3.png"
+      "numMesa": 13,
+      "qr": null,
+      "ocupada": false
     },
     {
       "numMesa": 2,
-      "ocupada": false,
-      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr2.png"
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr2.png",
+      "ocupada": false
     }
   ],
   "platos": [

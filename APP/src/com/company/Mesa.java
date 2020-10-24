@@ -93,7 +93,8 @@ public class Mesa implements Comparable<Mesa>{
             if (mesa.Ocupada == false){
                 String details = "https://www.instagram.com/inaaetchegoyen";
                 ByteArrayOutputStream out = QRCode.from(details).to(ImageType.PNG).stream();
-                File f = new File("C:\\Users\\iniae\\OneDrive\\Documentos\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\Qr\\"+"Mesa"+mesa.getNumMesa()+".png");
+                //File f = new File("C:\\Users\\iniae\\OneDrive\\Documentos\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\Qr\\"+"Mesa"+mesa.getNumMesa()+".png");
+                File f = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
                 FileOutputStream fos = new FileOutputStream(f);
                 fos.write(out.toByteArray());
                 fos.flush();
