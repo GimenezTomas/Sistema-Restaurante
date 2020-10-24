@@ -1674,6 +1674,7 @@ public class Restaurante {
                                 mongo.actualizarMesas(mesas);
                                 System.out.println("Mesa"+mesa.getNumMesa());
                                 File imagen = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
+                                System.out.println("imagen exists? " + imagen.exists());
                                 imagen.delete();
                             }
                         }
