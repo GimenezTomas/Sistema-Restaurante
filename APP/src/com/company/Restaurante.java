@@ -1672,6 +1672,9 @@ public class Restaurante {
                                 mesas.remove(mesa);
                                 panelMesas.remove(nMesa);
                                 mongo.actualizarMesas(mesas);
+                                System.out.println("Mesa"+mesa.getNumMesa());
+                                File imagen = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
+                                imagen.delete();
                             }
                         }
                     });
