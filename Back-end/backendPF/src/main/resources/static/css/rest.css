@@ -301,7 +301,7 @@ html{
 }
 
 .modalContent {
-    background-color: #fefefe;
+    background-color: #282828;
     margin: auto;
     width: 500px;
     height: 100%;
@@ -333,6 +333,7 @@ html{
     width: var(--main-svg-width); 
     height: var(--main-svg-width);
     display: block;
+    fill: white;
     margin-right: calc(-1*(var(--main-svg-width)));
 }
 
@@ -365,6 +366,7 @@ html{
     font-size: 18px;
     text-align: center;
     margin-bottom: 5%;
+    color: white;
 }
 
 .headerRestaurante{
@@ -396,6 +398,7 @@ html{
     font-size: 15px;
     text-align: center;
     margin-bottom: 5%;
+    color: white;
 }
 .headerRestaurante h2{
     font-size: 12px;
@@ -426,11 +429,12 @@ html{
 #platos .header{
     border-bottom: solid;
     border-bottom-width: 1px;
-    border-color: black;
+    border-color: white;
 }
 
 #platos .header h1{
     font-size: 15px;
+    color: white;
 }
 
 .pedido{
@@ -440,8 +444,8 @@ html{
     justify-content: flex-start;
     flex-direction: row;
     border-bottom: solid;
-    border-bottom-width: 0.1px;
-    border-color: gainsboro;
+    border-bottom-width: 1px;
+    border-color: #7d7d7d;
     padding: 10px 5px;
 }
 
@@ -464,6 +468,7 @@ html{
     margin-bottom: 0px;
     max-width: 220px;
     white-space: nowrap;
+    color: white;
 }
 
 .pedidos .pedido .p h2, h4{
@@ -490,6 +495,7 @@ html{
     height: 20px;
     /*fill: #f7732d;*//*naranja o negro*/
     margin-left: 10px;
+    fill: white;
 }
 
 .pedidos .pedido .p svg:hover{
@@ -522,6 +528,7 @@ html{
     height: 25px;
     /*float: right;*/
     margin-top:8px;
+    fill: white;
     /*lo centre a mano fijarse de cambiarlo*/
 }
 .pedir svg:hover {
@@ -612,24 +619,24 @@ cursor: pointer;
 
 #carritoVacio2{
     display: none;
-    margin-left: 8%;
-    margin-right: 8%;
-    margin-top: 20%;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
+    margin-top: 5%;
+    margin-bottom: 20%;
 }
 
 #carritoVacio2 svg{
     width: 70px;
     height: 70px;
     fill: #7d7d7d;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #carritoVacio2 h1{
     margin-top: 10px;
     font-size: 20px;
     color: #7d7d7d;
+    text-align: center;
 }
 
 /*modal agregados*/

@@ -30,25 +30,25 @@
 </div>
 <div class="tiposBoxContainer">
     <nav class = tiposBox>
-        <a class = "tipos" href = "#seccionMinutas">
+        <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('postresTBOX', false)" onmouseover="mouseoverWHITE('postresTBOX', true)">
             <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
-            <h3 class = "tipos_font">Postres</h3>
+            <h3 id = "postresTBOX" class = "tipos_font">Postres</h3>
         </a>
-        <a class = "tipos" href = "#22">
+        <a class = "tipos" href = "#22" onmouseout="mouseoverWHITE('tragosTBOX', false)" onmouseover="mouseoverWHITE('tragosTBOX', true)">
             <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
-            <h3 class = "tipos_font">Tragos</h3>
+            <h3 id="tragosTBOX" class = "tipos_font">Tragos</h3>
         </a>
-        <a class = "tipos" href = "#seccionBebidas">
+        <a class = "tipos" href = "#seccionBebidas" onmouseout="mouseoverWHITE('bebidasTBOX', false)" onmouseover="mouseoverWHITE('bebidasTBOX', true)">
             <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
-            <h3 class = "tipos_font">Bebidas</h3>
+            <h3 id = "bebidasTBOX" class = "tipos_font">Bebidas</h3>
         </a>
-        <a class = "tipos" href = "#seccionMinutas">
+        <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('minutasTBOX', false)" onmouseover="mouseoverWHITE('minutasTBOX', true)">
             <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
-            <h3 class = "tipos_font">Minutas</h3>
+            <h3 id = "minutasTBOX" class = "tipos_font">Minutas</h3>
         </a>
-        <a class = "tipos" href = "#seccionEmpanadas">
+        <a class = "tipos" href = "#seccionEmpanadas" onmouseout="mouseoverWHITE('entradasTBOX', false)" onmouseover="mouseoverWHITE('entradasTBOX', true)">
             <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
-            <h3 class = "tipos_font">Entradas</h3>
+            <h3 id="entradasTBOX" class = "tipos_font">Entradas</h3>
         </a>
     </nav>
 </div>
@@ -400,7 +400,7 @@
                         <span class="close closer">&times;</span>
                         <h1 style="font-size: 20px;text-align: center;margin: 11%;">¿Estas seguro que quieres vaciar la canasta?</h1>
                         <div style="display: flex; justify-content: center;">
-                            <svg class="closer" onmousedown="vaciarCanasta('platos')" id = "canastaVaciaFalse"  style="margin-right:30px" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-check-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="closer" onmousedown="vaciarCanasta('proximaOrdenBody')" id = "canastaVaciaFalse"  style="margin-right:30px" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-check-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                             </svg>
                             <svg class="closer" id = "canastaVaciaTrue" margin-left="10px" width="30px" height="30px" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -475,9 +475,9 @@
                                 </li>
                             </div>
                             <div id="precioPlatosYAPEDIDOS" class="precio" style="margin-bottom: 15px; margin-top: 15px">
-                                <h1 style="display: contents; font-size: 20px">Total: $</h1>
+                                <h1 style="display: contents; font-size: 20px; color:white">Total: $</h1>
                                 <span>
-                                    <h2 style="font-size: 20px" id="precioActualizadoYP">500</h2>
+                                    <h2 style="font-size: 20px; color:white" id="precioActualizadoYP">500</h2>
                                 </span>
                             </div>
                         </div>
@@ -499,7 +499,7 @@
                                 </div>
                             </li>
                         </div>
-                        <div id="carritoVacio2" style="display: none;">
+                        <div id="carritoVacio2" style="display: block;">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
                             </svg>
@@ -511,7 +511,7 @@
             <div class="pedir">
                 <button id="botonPedir" onclick=pedir()>Pedir  ($1500)</button>
                 <div>
-                    <svg onmousedown="vaciarCanastaModal()" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <svg onmousedown="vaciarCanastaModal('proximaOrdenBody')" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                     </svg>
@@ -804,6 +804,7 @@
     function eliminarPlato(idEliminar){
         let plato = document.getElementById(idEliminar)
         plato.parentNode.removeChild(plato)
+        platos.pop(plato)
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
     }
 
@@ -814,6 +815,7 @@
             plato--
         }
         clearArray(platos)
+        document.getElementById("myModal").style.display="none"
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
     }
 
@@ -875,8 +877,8 @@
 
     function canastaVacia2(ok){
         if(ok){
-            document.getElementById("pedidos").style.display="none"
-            document.getElementById("carritoVacio2").style.display="flex"
+            document.getElementById("pedidos").style.display="block"
+            document.getElementById("carritoVacio2").style.display="block"
         }else{
             document.getElementById("proximaOrdenBody").style.display="block"
             document.getElementById("carritoVacio2").style.display="none"
@@ -964,6 +966,7 @@
 
         platosYaPedidos.push(platos)
         clearArray(platos)
+        llamarCarrito('car')
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
     }
 
@@ -971,10 +974,13 @@
         actualizarPrecioPlatosPedidos()
         if(platos.length==0 && platosYaPedidos.length==0){
             canastaVacia(true)
+            console.log("entre al if")
         }else if (platos.length==0 && platosYaPedidos.length>0){
             canastaVacia(false)
             canastaVacia2(true)
+            console.log("entre al else if")
         } else{
+            console.log("entre al else py"+platosYaPedidos.length+" p"+platos.length)
             canastaVacia(false)
             canastaVacia2(false)
         }
@@ -999,6 +1005,14 @@
             }
         }
     }
+    /*tipos box*/
+    function mouseoverWHITE(id, ok){
+        if (ok){
+            document.getElementById(id).style.color="white"
+        }else{
+            document.getElementById(id).style.color="#282828"
+        }
+    }
 </script>
 
 </body>
@@ -1006,7 +1020,7 @@
 
 <!--
     ERRORES:
-        1) MODAL VACIAR CANASTA aparece cuando abris el carrito(si antes lo vaciaste)
+        1) Corregir canasta vacia, anda pero hay veces que sale y no deberia
         2) SVG CRUZ del carrito no aparece en los platos agregados con JS, existen pero no se muestran
         3) VACIAR CANASTA
         4) CARRITOVACIO2
