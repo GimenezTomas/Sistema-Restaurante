@@ -1677,6 +1677,7 @@ public class Restaurante {
                             }
                         }
                     });
+
                     nMesa.setLocation(ventana.getWidth() / 2 - 100, Math.round((labelM.getY() + labelM.getHeight()+15)+((labelM.getHeight()/2)*(vueltas))));
                     nMesa.setText("Mesa numero " + mesa.getNumMesa());
                     vueltas++;
