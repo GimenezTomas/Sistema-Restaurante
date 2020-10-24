@@ -45,6 +45,14 @@ public class Mesa implements Comparable<Mesa>{
         }
     }
 
+    public Mesa(int id, boolean ocupada){
+    this.numMesa = id;
+    this.Ocupada = ocupada;
+    if (id>count) {
+        count = id+2;
+        }
+    }
+
     public Mesa() {
         this.numMesa = count++;
         this.Ocupada = false;
@@ -90,20 +98,18 @@ public class Mesa implements Comparable<Mesa>{
 
     public static void generarQr(HashSet<Mesa> mesas) throws IOException {
         for (Mesa mesa : mesas) {
-            if (mesa.Ocupada == false){
+            if (mesa.QR == null){
                 String details = "https://www.instagram.com/inaaetchegoyen";
                 ByteArrayOutputStream out = QRCode.from(details).to(ImageType.PNG).stream();
-                //File f = new File("C:\\Users\\iniae\\OneDrive\\Documentos\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\Qr\\"+"Mesa"+mesa.getNumMesa()+".png");
-                File f = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
-                FileOutputStream fos = new FileOutputStream(f);
+                File imgQr = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
+                FileOutputStream fos = new FileOutputStream(imgQr);
                 fos.write(out.toByteArray());
                 fos.flush();
+                mesa.QR = imgQr;
             }
         }
 
     }
-
-
 
     @Override
     public int compareTo(Mesa o){

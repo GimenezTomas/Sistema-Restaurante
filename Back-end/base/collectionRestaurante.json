@@ -13,21 +13,7 @@
     }
   ],
   "mesas": [
-    {
-      "numMesa": 4,
-      "qr": null,
-      "ocupada": false
-    },
-    {
-      "numMesa": 13,
-      "qr": null,
-      "ocupada": false
-    },
-    {
-      "numMesa": 2,
-      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr2.png",
-      "ocupada": false
-    }
+
   ],
   "platos": [
     {

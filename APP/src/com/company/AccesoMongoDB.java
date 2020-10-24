@@ -174,7 +174,12 @@ public class AccesoMongoDB {
             ArrayList<Document> doc = (ArrayList<Document>) document.get("mesas");
 
             for (Document mesaDoc: doc){
-                mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupada")));
+                if (mesaDoc.get("qr") == null){
+                    mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), mesaDoc.getBoolean("ocupada")));
+                }
+                else{
+                    mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupada")));
+                }
             }
         }
 

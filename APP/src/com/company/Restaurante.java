@@ -1698,7 +1698,7 @@ public class Restaurante {
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
-                    //mongo.actualizarMesas(mesas);
+                    mongo.actualizarMesas(mesas);
                 }
             }
         });
