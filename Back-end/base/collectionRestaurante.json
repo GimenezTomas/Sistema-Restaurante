@@ -13,103 +13,142 @@
     }
   ],
   "mesas": [
-
-  ],
-  "platos": [
     {
-      "descripcion": "nuy ricos",
-      "precio": 50.2,
-      "demora": "25min",
-      "agregados": [
+      "numMesa": 18,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\.\\src\\com\\company\\images\\qr\\Mesa18.png"
+    },
+    {
+      "numMesa": 15,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\.\\src\\com\\company\\images\\qr\\Mesa15.png"
+    },
+    {
+      "numMesa": 13,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\.\\src\\com\\company\\images\\qr\\Mesa13.png"
+    },
+    {
+      "numMesa": 17,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\.\\src\\com\\company\\images\\qr\\Mesa17.png"
+    },
+    {
+      "numMesa": 4,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\.\\src\\com\\company\\images\\qr\\Mesa4.png"
+    },
+    {
+      "numMesa": 2,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\qr2.png"
+    },
+    {
+      "numMesa": 16,
+      "ocupada": false,
+      "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\.\\src\\com\\company\\images\\qr\\Mesa16.png"
+    }
+  ],
+  "seccionesPlatos": [
+    {
+      "nombre": "Pastas",
+      "platos": [
         {
-          "tipo": "salsas",
-          "agregado": [
+          "descripcion": "muy ricos",
+          "precio": 50.2,
+          "demora": "25min",
+          "agregados": [
             {
-              "precio": 100,
-              "nombre": "bolognesa"
+              "tipo": "salsas",
+              "agregado": [
+                {
+                  "precio": 100,
+                  "nombre": "bolognesa"
+                },
+                {
+                  "precio": 120,
+                  "nombre": "tuco"
+                }
+              ],
+              "indispensable": false
             },
             {
-              "precio": 120,
-              "nombre": "tuco"
+              "tipo": "porcion",
+              "agregado": [
+                {
+                  "precio": 50,
+                  "nombre": "entera"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "media"
+                }
+              ],
+              "indispensable": true
             }
           ],
-          "indispensable": false
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
+          "nombre": "ñoquis"
         },
         {
-          "tipo": "porcion",
-          "agregado": [
+          "descripcion": "Tira de asado cortada fina a la parrilla",
+          "precio": 500.1,
+          "demora": "20min",
+          "agregados": [
             {
-              "precio": 50,
-              "nombre": "entera"
-            },
-            {
-              "precio": 0,
-              "nombre": "media"
+              "tipo": "Punto de la carne",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Cocido"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "A punto"
+                }
+              ],
+              "indispensable": true
             }
           ],
-          "indispensable": true
-        }
-      ],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
-      "nombre": "ñoquis"
-    },
-    {
-      "descripcion": "Tira de asado cortada fina a la parrilla",
-      "precio": 500.1,
-      "demora": "20min",
-      "agregados": [
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "nombre": "Asado banderita"
+        },
         {
-          "tipo": "Punto de la carne",
-          "agregado": [
-            {
-              "precio": 0,
-              "nombre": "Cocido"
-            },
-            {
-              "precio": 0,
-              "nombre": "A punto"
-            }
-          ],
-          "indispensable": true
-        }
-      ],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
-      "nombre": "Asado banderita"
-    },
-    {
-      "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
-      "precio": 400,
-      "demora": "15min",
-      "agregados": [],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
-      "nombre": "Pizza napolitana"
-    },
-    {
-      "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
-      "precio": 699.5,
-      "demora": "30min",
-      "agregados": [
+          "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
+          "precio": 400,
+          "demora": "15min",
+          "agregados": [],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
+          "nombre": "Pizza napolitana"
+        },
         {
-          "tipo": "Postres",
-          "agregado": [
+          "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
+          "precio": 699.5,
+          "demora": "30min",
+          "agregados": [
             {
-              "precio": 0,
-              "nombre": "Nada"
-            },
-            {
-              "precio": 120.75,
-              "nombre": "Mousse de chocolate"
-            },
-            {
-              "precio": 100,
-              "nombre": "Flan con dulce de leche"
+              "tipo": "Postres",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Nada"
+                },
+                {
+                  "precio": 120.75,
+                  "nombre": "Mousse de chocolate"
+                },
+                {
+                  "precio": 100,
+                  "nombre": "Flan con dulce de leche"
+                }
+              ],
+              "indispensable": true
             }
           ],
-          "indispensable": true
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "nombre": "Pollo con papas fritas"
         }
-      ],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
-      "nombre": "Pollo con papas fritas"
+      ]
     }
   ],
   "pedidos": [

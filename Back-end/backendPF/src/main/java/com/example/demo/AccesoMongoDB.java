@@ -104,6 +104,48 @@ public class AccesoMongoDB {
         return pedidos;
     }
 
+    public Pedido obtenerPedido(int nPedido) {
+        MongoCollection collection = this.base.getCollection("restaurante");
+
+        Pedido pedido = new Pedido();
+
+        String json = "{_id:0, pedidos:{$elemMatch:{'nPedido':"+nPedido+"}}}";
+        Bson bson = BasicDBObject.parse(json);
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()) {
+            Document document = (Document) iterator.next();
+            ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
+
+            for (Document dataPlato : documents) {
+                ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
+                ArrayList<PlatoPedido> platos = new ArrayList<>();
+
+                for (Document dataPLATO : platosDoc){
+                    ArrayList<Document> agregadosDoc = (ArrayList<Document>) dataPLATO.get("agregados");
+                    HashMap<String, Float> agregados = new HashMap<>();
+                    if (agregadosDoc != null){
+                        for (Document dataAgregado : agregadosDoc) {
+                            agregados.put(dataAgregado.getString("nombre"), Float.parseFloat(dataAgregado.get("precio").toString()));
+                        }
+                    }
+                    Date date = new Date();
+                    try{
+                        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
+                    }catch (ParseException e){
+                        e.getCause();
+                        e.getMessage();
+                    }
+                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
+                }
+                pedido = new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido"));
+            }
+        }
+        return pedido;
+    }
+
     public ArrayList<Plato> obtenerPlatosArr(){
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Plato> platos = new ArrayList<>();

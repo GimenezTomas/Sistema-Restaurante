@@ -519,6 +519,14 @@ html{
     width: 250px;
 }
 
+.pedir button:active{
+    border-style: none;
+}
+
+.pedir button:focus{
+    border-style: none;
+}
+
 .pedir div{
     margin-left: 75px;
 }

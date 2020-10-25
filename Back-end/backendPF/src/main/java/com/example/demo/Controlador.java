@@ -8,23 +8,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;*/
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.result.UpdateResult;
+import com.mongodb.util.JSONParseException;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 @Controller
 public class Controlador {
 
-    private final AccesoMongoDB accesoMongoDB;
+    @Autowired
+    private AccesoMongoDB accesoMongoDB;
 
-    /*@Autowired
-    private Servicio servicioParaSubirArchivos;*/
+    @Autowired
+    private Servicio servicioParaSubirArchivos;
 
     public Controlador(AccesoMongoDB accesoMongoDB) {
         this.accesoMongoDB = accesoMongoDB;
@@ -55,12 +65,54 @@ public class Controlador {
         this.guardarDatosALaBase();
     }
 
-    public List<Plato> obtenerListaDePlatos(){
+    public void mandarPedidosAPI(int nPedido){
+        Pedido pedido =  accesoMongoDB.obtenerPedido(nPedido);
 
-        List<Socio> sociosList= new ArrayList<>();
-        Iterator<String[]> iterador = archivoCSV.obtenerIterador();
+        if (pedido.getnPedido()>0) {
+            ArrayList<HashMap<String, Object>> platoJSONformat = accesoMongoDB.platosPedidoMONGO(pedido.getPlatos());
+            File jsonPedido = new File(".src/main/resources/files/jsonPedido");
 
-        while (iterador.hasNext()){
+            try{
+                ObjectMapper mapper = new ObjectMapper();
+
+                mapper.writeValue(jsonPedido, platoJSONformat);
+            }catch (JsonProcessingException e){
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }else{
+            System.out.println("No existe ese pedido");
+        }
+
+
+    }
+
+    public List<Plato> obtenerListaDePedidos(){
+
+        List<Pedido> pedidoList= new ArrayList<>();
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            File jsonPedidos = new File(".src/main/resources/files/jsonPedidos");
+
+            mapper.writeValue(json, mesaAtributos);
+
+            ObjectMapper mapper1 = new ObjectMapper();
+            HashMap mesasMAP = mapper1.readValue(json, HashMap.class);
+            json.delete();
+
+            Document mesasDoc = new Document("mesas."+i,mesasMAP);
+            Document operacion = new Document("$set", mesasDoc);
+
+            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*while (iterador.hasNext()){
 
             String[] fila = iterador.next();
 
@@ -75,7 +127,7 @@ public class Controlador {
 
         }
 
-        return sociosList;
+        return sociosList;*/
     }
 
     public void guardarDatosALaBase(){

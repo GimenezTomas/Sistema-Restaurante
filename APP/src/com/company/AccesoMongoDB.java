@@ -158,6 +158,21 @@ public class AccesoMongoDB {
         }
     }
 
+    public void actualizarDataUser(Restaurante restaurante){
+        MongoCollection collection = this.base.getCollection("restaurante");
+
+        FindIterable resultado = collection.find(requisitosLogin);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+            restaurante.setLogo(new File(document.getString("logo")));
+            restaurante.setNombre(document.getString("nombre"));
+            restaurante.setDireccion(document.getString("direccion"));
+        }
+    }
+
     public HashSet<Mesa> obtenerMesas(){
         MongoCollection collection = this.base.getCollection("restaurante");
         HashSet<Mesa> mesas = new HashSet<>();
