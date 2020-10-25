@@ -159,18 +159,15 @@ public class AccesoMongoDB {
     }
 
     public void actualizarDataUser(Restaurante restaurante){
-        MongoCollection collection = this.base.getCollection("restaurante");
+        HashMap<String, String> data = new HashMap<>();
+        data.put("nombre",restaurante.getNombre());
+        data.put("direccion", restaurante.getDireccion());
+        data.put("logo", restaurante.getLogo().getName());
 
-        FindIterable resultado = collection.find(requisitosLogin);
+        Document operacion = new Document("$set", data);
 
-        MongoCursor iterator = resultado.iterator();
+        UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
 
-        while (iterator.hasNext()){
-            Document document = (Document) iterator.next();
-            restaurante.setLogo(new File(document.getString("logo")));
-            restaurante.setNombre(document.getString("nombre"));
-            restaurante.setDireccion(document.getString("direccion"));
-        }
     }
 
     public HashSet<Mesa> obtenerMesas(){
@@ -304,6 +301,89 @@ public class AccesoMongoDB {
         return platos;
     }
 
+    public void actualizarSeccionesPlatos(ArrayList<SeccionesPlatos> seccionesPlatos){
+        try {
+            ArrayList<HashMap<String, Object>> secAtributos = new ArrayList<>();
+
+            for (SeccionesPlatos seccionesPlatos1 : seccionesPlatos){
+                HashMap<String, Object> seccion = new HashMap<>();
+                seccion.put("nombre", seccionesPlatos1.getNombre());
+                seccion.put("platos", platosMONGO(seccionesPlatos1.getPlatos()));
+                secAtributos.add(seccion);
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            File json = new File(".\\src\\com\\company\\secciones.json");
+
+            HashMap<String, Object> jsonSerializar = new HashMap<>();
+            jsonSerializar.put("seccionesPlatos", secAtributos);
+
+            mapper.writeValue(json, jsonSerializar);
+
+            ObjectMapper mapper1 = new ObjectMapper();
+            HashMap platosMAP = mapper1.readValue(json, HashMap.class);
+            json.delete();
+
+            Document mesasDoc = new Document(platosMAP);
+            Document operacion = new Document("$set", mesasDoc);
+
+            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<SeccionesPlatos> obtenerSecciones(){
+        ArrayList<SeccionesPlatos> seccionesPlatos = new ArrayList<>();
+
+        MongoCollection collection = this.base.getCollection("restaurante");
+
+        String json = "{_id:0, seccionesPlatos:1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while(iterator.hasNext()){
+            Document document = (Document) iterator.next();
+
+            ArrayList<Document> documentss = (ArrayList<Document>) document.get("seccionesPlatos");
+            for (Document doca :documentss){
+                SeccionesPlatos seccionesPlatos1 = new SeccionesPlatos(doca.get("nombre").toString());
+                ArrayList<Plato>platos = new ArrayList<>();
+
+                ArrayList<Document> doc = (ArrayList<Document>) doca.get("platos");
+
+                for (Document docAUX: doc){
+
+                    HashSet<TipoAgregados> tiposAgregados = new HashSet<>();
+                    ArrayList<Document> agregadosDoc = (ArrayList<Document>) docAUX.get("agregados");
+
+                    for (Document agregadosDocAux : agregadosDoc){
+
+                        ArrayList<Document> agregadoDoc = (ArrayList<Document>) agregadosDocAux.get("agregado");
+                        HashMap<String, Float> agregados = new HashMap<>();
+
+                        for (Document agregadoDocAux : agregadoDoc){
+
+                            agregados.put(agregadoDocAux.getString("nombre"), Float.parseFloat(agregadoDocAux.get("precio").toString()));
+
+                        }
+
+                        tiposAgregados.add(new TipoAgregados(agregadosDocAux.getString("tipo"), agregadosDocAux.getBoolean("indispensable"), agregados));
+
+                    }
+                    platos.add(new Plato(docAUX.getString("nombre"), Float.parseFloat(docAUX.get("precio").toString()), new File(docAUX.get("imagen").toString()), docAUX.getString("descripcion"), docAUX.getString("demora"), tiposAgregados));
+                }
+                seccionesPlatos1.getPlatos().addAll(platos);
+                seccionesPlatos.add(seccionesPlatos1);
+            }
+        }
+        return  seccionesPlatos;
+    }
 
     public void actualizarMesa(Mesa mesa){//corregir
         ArrayList<Mesa>mesas;
@@ -366,7 +446,7 @@ public class AccesoMongoDB {
             e.printStackTrace();
         }
     }
-    public void actualizarPlatos(HashSet<Plato>platos){
+    /*public void actualizarPlatos(HashSet<Plato>platos){
         try {
             ObjectMapper mapper = new ObjectMapper();
             File json = new File(".\\src\\com\\company\\platos.json");
@@ -390,9 +470,9 @@ public class AccesoMongoDB {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public ArrayList<HashMap<String, Object>> platosMONGO(HashSet<Plato>platos){
+    public ArrayList<HashMap<String, Object>> platosMONGO(ArrayList<Plato>platos){
         ArrayList<HashMap<String, Object>> platosMon = new ArrayList<>();
         for (Plato plato : platos) {
             HashMap<String, Object> platoAtributos = new HashMap<>();

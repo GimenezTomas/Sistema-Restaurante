@@ -59,20 +59,6 @@
           "demora": "25min",
           "agregados": [
             {
-              "tipo": "salsas",
-              "agregado": [
-                {
-                  "precio": 100,
-                  "nombre": "bolognesa"
-                },
-                {
-                  "precio": 120,
-                  "nombre": "tuco"
-                }
-              ],
-              "indispensable": false
-            },
-            {
               "tipo": "porcion",
               "agregado": [
                 {
@@ -85,33 +71,24 @@
                 }
               ],
               "indispensable": true
+            },
+            {
+              "tipo": "salsas",
+              "agregado": [
+                {
+                  "precio": 100,
+                  "nombre": "bolognesa"
+                },
+                {
+                  "precio": 120,
+                  "nombre": "tuco"
+                }
+              ],
+              "indispensable": false
             }
           ],
           "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
           "nombre": "ñoquis"
-        },
-        {
-          "descripcion": "Tira de asado cortada fina a la parrilla",
-          "precio": 500.1,
-          "demora": "20min",
-          "agregados": [
-            {
-              "tipo": "Punto de la carne",
-              "agregado": [
-                {
-                  "precio": 0,
-                  "nombre": "Cocido"
-                },
-                {
-                  "precio": 0,
-                  "nombre": "A punto"
-                }
-              ],
-              "indispensable": true
-            }
-          ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
-          "nombre": "Asado banderita"
         },
         {
           "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
@@ -120,6 +97,94 @@
           "agregados": [],
           "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
           "nombre": "Pizza napolitana"
+        }
+      ]
+    },
+    {
+      "nombre": "Carnes",
+      "platos": [
+        {
+          "descripcion": "500g de Bife de chorizo acompañado con una guarnición de papas fritas",
+          "precio": 860,
+          "demora": "30min",
+          "agregados": [
+            {
+              "tipo": "Punto",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Cocido"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Medio"
+                }
+              ],
+              "indispensable": true
+            },
+            {
+              "tipo": "Guarnición",
+              "agregado": [
+                {
+                  "precio": 20,
+                  "nombre": "Ensalada de zanahoria y huevo"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Papas fritas"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Back-end\\backendPF\\src\\main\\resources\\static\\images\\empanada.png",
+          "nombre": "Bife de chorizo con papas fritas"
+        },
+        {
+          "descripcion": "Tira de asado, vacio, entraña y un matrimonio acompañado con dos porciones de papas fritas. Comen 2 o 3.",
+          "precio": 1700,
+          "demora": "25MIN",
+          "agregados": [
+            {
+              "tipo": "Guarnición",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "2 porciones de papas fritas"
+                },
+                {
+                  "precio": 100,
+                  "nombre": "2 ensaladas mixtas"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "1 porción de papas fritas y 1  de ensalada "
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\factura.png",
+          "nombre": "Parrillada para 2"
+        },
+        {
+          "descripcion": "sanguche de chorizo a la parrilla con chimichurri",
+          "precio": 260,
+          "demora": "6min",
+          "agregados": [
+            {
+              "tipo": "Guarnición",
+              "agregado": [
+                {
+                  "precio": 120,
+                  "nombre": "Papas fritas"
+                }
+              ],
+              "indispensable": false
+            }
+          ],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "nombre": "Choripan"
         },
         {
           "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
@@ -147,6 +212,29 @@
           ],
           "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
           "nombre": "Pollo con papas fritas"
+        },
+        {
+          "descripcion": "Tira de asado cortada fina a la parrilla",
+          "precio": 500.1,
+          "demora": "20min",
+          "agregados": [
+            {
+              "tipo": "Punto de la carne",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Cocido"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "A punto"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "nombre": "Asado banderita"
         }
       ]
     }

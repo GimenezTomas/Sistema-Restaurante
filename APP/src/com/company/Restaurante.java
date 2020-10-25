@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.management.MalformedObjectNameException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -16,7 +17,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Restaurante {
     private HashSet<Mesa> mesas = new HashSet<>();
-    private HashSet<Plato> platos = new HashSet<>();
     private ArrayList<SeccionesPlatos> seccionesPlatos = new ArrayList<>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     private String nombre;
@@ -73,13 +73,6 @@ public class Restaurante {
     public void setMesas(HashSet<Mesa> mesas) {
         this.mesas = mesas;
     }
-    public HashSet<Plato> getPlatos() {
-        return platos;
-    }
-    public void setPlatos(HashSet<Plato> platos) {
-        this.platos = platos;
-    }
-
 
     //CONSTRUCTOR
 
@@ -435,11 +428,10 @@ public class Restaurante {
             for (SeccionesPlatos seccionPlato : seccionesPlatos){
                 if (seccionPlato.getNombre().equals(opcionesSec)) {
                     Plato plato = new Plato(nombre, Float.parseFloat(precio), new File(imagen), descripcion, tiempoDemora);
-                    this.platos.add(plato);
-                    System.out.println("entre, linea 439");
                     seccionPlato.getPlatos().add(plato);
                 }
             }
+            mongo.actualizarSeccionesPlatos(seccionesPlatos);
         }
         else{
             JOptionPane.showMessageDialog(null, "El plato ya existe");
@@ -465,13 +457,12 @@ public class Restaurante {
         }
 
         if (ok) {
-            this.platos.add(newPlato);
             for (SeccionesPlatos seccionPlato : seccionesPlatos){
                 if (seccionPlato.getNombre().equals(opcionesSec)) {
                     seccionPlato.getPlatos().add(newPlato);
-                    System.out.println("entre, linea 472");
                 }
             }
+            mongo.actualizarSeccionesPlatos(seccionesPlatos);
             //this.mongo.actualizarPlatos(platos);
         }
 
@@ -502,7 +493,7 @@ public class Restaurante {
 
         int vueltas = 1;
         for (SeccionesPlatos seccionPlato : seccionesPlatos){
-            for(Plato platoActual: platos){
+            for(Plato platoActual: seccionPlato.getPlatos()){
                 if (platoActual.getNombre().equals(plato.getNombre())){
                     if (plato.getAgregados().size()>platoActual.getAgregados().size()){
                         agregarPlato(plato, seccionPlato.getNombre());
@@ -1164,7 +1155,7 @@ public class Restaurante {
                                                     int coicidencias=0;
                                                     for (SeccionesPlatos seccionesPlatos : seccionesPlatos){
                                                         if (seccionPlato.getNombre().equals(opcionesSec.getSelectedItem().toString())){
-                                                            for (Plato platoAux: platos){
+                                                            for (Plato platoAux: seccionesPlatos.getPlatos()){
                                                                 if (platoAux.getNombre().equals(jtxtNombre.getText())){
                                                                     coicidencias++;
                                                                 }
@@ -1183,6 +1174,7 @@ public class Restaurante {
                                                         platosAux.setImg(new File(jtxtImg.getText()));
                                                         JOptionPane.showMessageDialog(null, "Se cambio correctamente");
                                                         //mongo.actualizarPlato(platosAux, nombreViejo);
+                                                        mongo.actualizarSeccionesPlatos(seccionesPlatos);
                                                     }
                                                 }
                                             } catch (NumberFormatException ex) {
@@ -1201,6 +1193,7 @@ public class Restaurante {
                                                     seccionPlato.getPlatos().remove(platosAux);
                                                 }
                                             }
+                                            mongo.actualizarSeccionesPlatos(seccionesPlatos);
                                             //mongo.actualizarPlatos(platos);
                                             jtxtDemora.setVisible(false);
                                             jtxtDescripcion.setVisible(false);
@@ -1338,6 +1331,7 @@ public class Restaurante {
                     int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los platos que le correspondan");
                     if(confirmD == JOptionPane.YES_OPTION){
                         seccionesPlatos.remove(seccionActual);
+                        mongo.actualizarSeccionesPlatos(seccionesPlatos);
                         textFieldSeccion.setVisible(false);
                         botonDelete.setVisible(false);
                         botonEdit.setVisible(false);
@@ -1425,6 +1419,7 @@ public class Restaurante {
                     }
                     if (ok){
                         seccionesPlatos.add(new SeccionesPlatos(nombre));
+                        mongo.actualizarSeccionesPlatos(seccionesPlatos);
                         JOptionPane.showMessageDialog(null,"Se agrego correctamente!");
                     }
                 }
@@ -1487,7 +1482,7 @@ public class Restaurante {
                 if (seccionesPlatos.size() > 0) {
                     panel.removeAll();
 
-                    int platosSize = platos.size();
+                    final int[] platosSize = {0};
 
                     JLabel labelTitulo = new JLabel("¡INGRESAR EL NUEVO PLATO!");
                     labelTitulo.setBounds(ventana.getWidth() / 2 - 100, 20, 200, 15);
@@ -1609,8 +1604,12 @@ public class Restaurante {
                     botonOut.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            if (platosSize != platos.size()) {
-                                mongo.actualizarPlatos(platos);
+                            for (SeccionesPlatos sec : seccionesPlatos){
+                                if (sec.getNombre().equals(opcionesSec.getSelectedItem().toString())){
+                                    if (platosSize[0] != sec.getPlatos().size()) {
+                                        mongo.actualizarSeccionesPlatos(seccionesPlatos);
+                                    }
+                                }
                             }
                             ventana.remove(panel);
 
@@ -1625,6 +1624,11 @@ public class Restaurante {
 
                             HashMap<String, String> datosNewPlato = new HashMap<>();
                             boolean ok = true;
+                            for (SeccionesPlatos sec : seccionesPlatos){
+                                if (opcionesSec.getSelectedItem().toString().equals(sec.getNombre())){
+                                    platosSize[0] = sec.getPlatos().size();
+                                }
+                            }
 
                             if (textFieldTiempoDemora.getText().equals("") || textFieldPrecio.getText().equals("") || textFieldDescripcion.getText().equals("") || textFieldImagen.getText().equals("") || textFieldName.getText().equals("")) {
                                 ok = false;
@@ -1705,9 +1709,9 @@ public class Restaurante {
             public void mouseClicked(MouseEvent e) {
                 int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los platos del menu");
                 if (confirmD== JOptionPane.YES_NO_OPTION){
-                    platos.clear();
-                    mongo.actualizarPlatos(platos);
-                    JOptionPane.showMessageDialog(null, "Se borraron todos los platos, la cantidad de platos es "+platos.size());
+                    seccionesPlatos.clear();
+                    mongo.actualizarSeccionesPlatos(seccionesPlatos);
+                    JOptionPane.showMessageDialog(null, "Se borraron todos los platos y sus secciones");
                 }
             }
         });
@@ -2076,10 +2080,13 @@ public class Restaurante {
         panelPerfil.add(botonp3);
         panelPerfil.setVisible(true);
 
+        Restaurante restaurante = this;
+
+        final File[] file = {logo};
         botonp2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                logo = chooser("png", "Png", "Use una foto PNG");
+                file[0] = chooser("png", "Png", "Use una foto PNG");
                 ImageIcon ft = new ImageIcon(logo.getPath());
                 Icon ftito = new ImageIcon(ft.getImage().getScaledInstance(imgPerfil.getWidth(),imgPerfil.getHeight(),Image.SCALE_DEFAULT));
                 imgPerfil.setText(null);
@@ -2090,7 +2097,9 @@ public class Restaurante {
         botonp3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                logo = file[0];
                 nombre= texto1.getText();
+                mongo.actualizarDataUser(restaurante);
                 JOptionPane.showMessageDialog(null, "se guardo correctamente");
                 ventana.remove(panelPerfil);
                 panelMenu(ventana);
@@ -2493,8 +2502,9 @@ public class Restaurante {
     }
 
     public void cargarDatos(){
+        seccionesPlatos.addAll(this.mongo.obtenerSecciones());
         //platos.addAll(this.mongo.obtenerPlatos());
-        //pedidos.addAll(this.mongo.obtenerPedidos());
+        pedidos.addAll(this.mongo.obtenerPedidos());
         mesas.addAll(this.mongo.obtenerMesas());
         this.mongo.obtenerDataUser(this);
         //this.mongo.actualizarPlatos(platos);
@@ -2532,6 +2542,14 @@ public class Restaurante {
                     ventana.setVisible(true);
                     ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+                    ventana.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                            restaurante.mongo.actualizarSeccionesPlatos(restaurante.getSeccionesPlatos());
+                            restaurante.mongo.actualizarMesas(restaurante.getMesas());
+                        }
+                    });
+
                     restaurante.panelMenu(ventana);
                 }
             }
@@ -2539,6 +2557,5 @@ public class Restaurante {
     }
 }
 
-//agregar a la base los cambios del perfil
 //hacer que se pueda abrir agregados solo una vez
 //hacer los cambios necesarios en acceso mongo (platos)
