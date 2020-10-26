@@ -739,7 +739,6 @@ cursor: pointer;
     border-bottom-width: 1px;
     border-bottom-color: gainsboro;
     border-bottom-style: solid;
-    margin-bottom: 28px;
 }
 
 .containerAgregados .cardAgregados .right .nombre h3{
@@ -761,36 +760,58 @@ cursor: pointer;
     overflow-y: scroll;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas h1{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion h1{
     font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: inline-flex;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion{
     border-bottom-width: 1px;
     border-bottom-color: gainsboro; 
     border-bottom-style: solid;
-} 
+}
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio{
+    float: right;
+    margin-top: 8px;/*centrar bien*/
+    display: none;
+}
+
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio h1{
+    text-align: right;
+    font-size: 11px;
+    color: #ff1517;
+    vertical-align: super;
+}
+
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio svg{
+    fill: #ff1517;
+    margin-left: 10px;
+    vertical-align: text-top;
+}
+
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body{
     display: inline-block;
     margin-left: -35px;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado{
     width: 48.5%;
     display: inline-flex;
     margin-bottom: .5%;
     vertical-align: top;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado h3 {
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado h3 {
     margin-left: 5px;
     vertical-align: top; 
     font-weight: 450;
     font-size: 13px;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado input {
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado input {
     vertical-align: top; 
     margin-top: 2px; 
     box-sizing: border-box; 
@@ -804,6 +825,7 @@ cursor: pointer;
     border-bottom-width: 1px;
     border-bottom-color: gainsboro; 
     border-bottom-style: solid;
+    margin-top: 15px;
 }
 
 .containerAgregados .cardAgregados .right #opciones .precioTotal h1, h2{

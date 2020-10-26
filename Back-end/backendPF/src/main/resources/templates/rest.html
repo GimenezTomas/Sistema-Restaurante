@@ -543,9 +543,18 @@
                     <p>Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
                 </div>
                 <div id="opciones">
-                    <div class = "salsas">
-                        <h1 class="header">SALSAS</h1>
-                        <ul class="body">
+                    <div class = "tiposSeccion">
+                        <div class="header">
+                            <h1>Salsas</h1>
+                            <div class="obligatorio">
+                                <h1>Obligatorio!</h1>
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <ul id="salsas" class="body indispensable">
                             <li id="botonSalsa1" class="botonMasAgregado" onclick=calcularPrecio()>
                                 <input type="checkbox"></input>
                                 <div>
@@ -611,6 +620,67 @@
                             </li>
                         </ul>
                     </div>
+                    <div class = "tiposSeccion">
+                        <h1 class="header">Postres</h1>
+                        <ul id="postres" class="body">
+                            <li id="btnS1" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Mousse de chocolate</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS2" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Mousse de limón</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS3" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Flan con dulce de leche</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS4" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Budin</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS5" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Chocotorta</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS6" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Ensalada de frutas</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS7" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Helado de chocolate</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS8" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Helado de crema</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="precioTotal">
                         <h1>Total: $</h1>
                         <span>
@@ -646,69 +716,102 @@
 
     platos=[]
     platosYaPedidos=[]
-
+    function confirmarSeccionesIndispensables(id){
+        let opciones = document.getElementById(id)
+        let enviarOK = false
+        for(let i=0; i<opciones.childNodes.length; i++) {
+            if (opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].classList.contains("tiposSeccion")){
+                for (let j = 0; j < opciones.childNodes[i].childNodes.length; j++) {
+                    if (opciones.childNodes[i].childNodes[j].tagName === 'UL' && opciones.childNodes[i].childNodes[j].classList.contains("indispensable")){
+                        let seccion = opciones.childNodes[i].childNodes[j]
+                        for (k = 0; k <seccion.childNodes.length ; k++) {
+                            if (seccion.childNodes[k].tagName === 'LI'){
+                                for (let l = 0; l < seccion.childNodes[k].childNodes.length ; l++) {
+                                    if (seccion.childNodes[k].childNodes[l].tagName === 'INPUT' && seccion.childNodes[k].childNodes[l].checked){
+                                        enviarOK = true
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        console.log(enviarOK)
+        return enviarOK
+    }
     function addPlatoAlCarrito(idnombre, idprecio, idimg, agregados){
-        let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
-        let descripcion = document.getElementById(idnombre).getElementsByTagName("P")[0].innerHTML
-        let img = document.getElementById(idimg).src
-        let precio = document.getElementById(idprecio).innerHTML
+        if (confirmarSeccionesIndispensables('opciones')){
+            let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
+            let descripcion = document.getElementById(idnombre).getElementsByTagName("P")[0].innerHTML
+            let img = document.getElementById(idimg).src
+            let precio = document.getElementById(idprecio).innerHTML
 
-        let plato = new Plato(nombre, precio, descripcion, img, agregados)
+            let plato = new Plato(nombre, precio, descripcion, img, agregados)
 
-        platos.push(plato)
-        let carrito = document.getElementById('proximaOrdenBody')
+            platos.push(plato)
+            let carrito = document.getElementById('proximaOrdenBody')
 
-        let s = 'plato'+(carrito.getElementsByTagName("LI").length+1)
-        let as = 'botonDelete'+(carrito.getElementsByTagName("LI").length+1)
+            let s = 'plato'+(carrito.getElementsByTagName("LI").length+1)
+            let as = 'botonDelete'+(carrito.getElementsByTagName("LI").length+1)
 
-        let image = document.createElement("IMG")
-        image.src=img;
+            let image = document.createElement("IMG")
+            image.src=img;
 
-        let h3 = document.createElement("H3")
-        h3.innerHTML = nombre
+            let h3 = document.createElement("H3")
+            h3.innerHTML = nombre
 
-        let div = document.createElement("DIV")
-        div.classList.add("p")
+            let div = document.createElement("DIV")
+            div.classList.add("p")
 
-        let h2 = document.createElement("H2")
-        h2.innerHTML = "$"
+            let h2 = document.createElement("H2")
+            h2.innerHTML = "$"
 
-        let h4 = document.createElement("H4")
-        h4.classList.add("precio")
-        h4.innerHTML = precio
+            let h4 = document.createElement("H4")
+            h4.classList.add("precio")
+            h4.innerHTML = precio
 
-        let svg = document.createElement("SVG")
-        svg.setAttribute("id", as)
-        svg.addEventListener("mousedown", function(){eliminarPlato(s)})
-        svg.setAttribute("viewBox", "0 0 16 16")
-        svg.classList.add("bi", "bi-x-circle-fill")
-        svg.setAttribute("fill", "currentColor")
-        svg.setAttribute("xlmns", "http://www.w3.org/2000/svg")
+            let svg = document.createElement("SVG")
+            svg.setAttribute("id", as)
+            svg.addEventListener("mousedown", function(){eliminarPlato(s)})
+            svg.setAttribute("viewBox", "0 0 16 16")
+            svg.classList.add("bi", "bi-x-circle-fill")
+            svg.setAttribute("fill", "currentColor")
+            svg.setAttribute("xlmns", "http://www.w3.org/2000/svg")
 
-        let path = document.createElement("PATH")
-        path.setAttribute("fill-rule", "evenodd")
-        path.setAttribute("d", "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z")
+            let path = document.createElement("PATH")
+            path.setAttribute("fill-rule", "evenodd")
+            path.setAttribute("d", "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z")
 
-        svg.appendChild(path)
+            svg.appendChild(path)
 
-        div.appendChild(h2)
-        div.appendChild(h4)
-        div.appendChild(svg)
+            div.appendChild(h2)
+            div.appendChild(h4)
+            div.appendChild(svg)
 
-        let node = document.createElement("LI")
-        node.classList.add("pedido")
-        node.addEventListener("mouseover", function(){botonEliminar(as, true)})
-        node.addEventListener("mouseout", function(){botonEliminar(as, false)})
-        node.setAttribute("id", "plato"+(carrito.getElementsByTagName("LI").length+1))
+            let node = document.createElement("LI")
+            node.classList.add("pedido")
+            node.addEventListener("mouseover", function(){botonEliminar(as, true)})
+            node.addEventListener("mouseout", function(){botonEliminar(as, false)})
+            node.setAttribute("id", "plato"+(carrito.getElementsByTagName("LI").length+1))
 
-        node.appendChild(image)
-        node.appendChild(h3)
-        node.appendChild(div)
+            node.appendChild(image)
+            node.appendChild(h3)
+            node.appendChild(div)
 
-        carrito.appendChild(node)
+            carrito.appendChild(node)
 
-        actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
-        cerrarAgregados()
+            actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
+            for (let i = 0; i < document.getElementsByClassName('obligatorio').length; i++) {
+                document.getElementsByClassName('obligatorio')[i].style.display="none"
+            }
+            cerrarAgregados()
+        }else{
+            for (let i = 0; i < document.getElementsByClassName('obligatorio').length; i++) {
+                document.getElementsByClassName('obligatorio')[i].style.display="block"
+            }
+        }
     }
 
     /*modal agregados*/
