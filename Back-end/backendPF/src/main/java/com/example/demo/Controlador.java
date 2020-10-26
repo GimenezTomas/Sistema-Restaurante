@@ -1,14 +1,5 @@
 package com.example.demo;
 
-/*import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;*/
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.result.UpdateResult;
@@ -36,7 +27,10 @@ public class Controlador {
     @Autowired
     private Servicio servicioParaSubirArchivos;
 
+    private File json;
+
     public Controlador(AccesoMongoDB accesoMongoDB) {
+        this.json = new File(".src/main/resources/files/archivoJSON");
         this.accesoMongoDB = accesoMongoDB;
         this.acces = new AccesoMongoDB("proyectoFInal");
         this.servicioParaSubirArchivos = new Servicio();
@@ -92,45 +86,10 @@ public class Controlador {
 
         List<Pedido> pedidoList= new ArrayList<>();
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            File jsonPedidos = new File(".src/main/resources/files/jsonPedidos");
-
-            mapper.writeValue(json, mesaAtributos);
-
-            ObjectMapper mapper1 = new ObjectMapper();
-            HashMap mesasMAP = mapper1.readValue(json, HashMap.class);
-            json.delete();
-
-            Document mesasDoc = new Document("mesas."+i,mesasMAP);
-            Document operacion = new Document("$set", mesasDoc);
-
-            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
-        }catch (JsonProcessingException e){
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        /*while (iterador.hasNext()){
-
-            String[] fila = iterador.next();
-
-            String nombre = fila[0];
-            int edad = Integer.parseInt(fila[1]);
-            String equipo = fila[2];
-            String estadoCivil = fila[3];
-            String nivelDeEstudios = fila[4];
-
-            Socio nuevoSocio = new Socio(nombre,edad,equipo,estadoCivil,nivelDeEstudios);
-            sociosList.add(nuevoSocio);
-
-        }
-
-        return sociosList;*/
+        Iterator<String[]> iterador = archivoCSV.obtenerIterador();
     }
 
-    public void guardarDatosALaBase(){
+    public void guardarPedidos(){
         List<Socio> sociosList = this.obtenerListaDeSocios();
         accesoABaseDeDatos.insertarSocios(sociosList);
     }

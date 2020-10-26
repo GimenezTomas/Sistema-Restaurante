@@ -9,12 +9,14 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.connection.Connection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Service
 public class AccesoMongoDB {
     private MongoDatabase base;
     private Connection connection;
@@ -55,7 +57,6 @@ public class AccesoMongoDB {
     }
 
     //public static Bson requisitosLogin;
-
     public AccesoMongoDB(String base/*, String host, int puerto*/) {
         MongoClient mongoClient = new MongoClient();
         this.base = mongoClient.getDatabase(base);
