@@ -41,7 +41,6 @@ div.res{
     width: 120px;
     display: flex;
     align-items: center;
-    background-color: white;
     position: fixed;
     text-align:center; 
     z-index: 3;   
@@ -519,14 +518,6 @@ html{
     width: 250px;
 }
 
-.pedir button:active{
-    border-style: none;
-}
-
-.pedir button:focus{
-    border-style: none;
-}
-
 .pedir div{
     margin-left: 75px;
 }
@@ -739,6 +730,7 @@ cursor: pointer;
     border-bottom-width: 1px;
     border-bottom-color: gainsboro;
     border-bottom-style: solid;
+    margin-bottom: 28px;
 }
 
 .containerAgregados .cardAgregados .right .nombre h3{
@@ -760,58 +752,36 @@ cursor: pointer;
     overflow-y: scroll;
 }
 
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion h1{
+.containerAgregados .cardAgregados .right #opciones .salsas h1{
     font-size: 20px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    display: inline-flex;
 }
 
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion{
+.containerAgregados .cardAgregados .right #opciones .salsas{
     border-bottom-width: 1px;
     border-bottom-color: gainsboro; 
     border-bottom-style: solid;
-}
+} 
 
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio{
-    float: right;
-    margin-top: 8px;/*centrar bien*/
-    display: none;
-}
-
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio h1{
-    text-align: right;
-    font-size: 11px;
-    color: #ff1517;
-    vertical-align: super;
-}
-
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio svg{
-    fill: #ff1517;
-    margin-left: 10px;
-    vertical-align: text-top;
-}
-
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body{
+.containerAgregados .cardAgregados .right #opciones .salsas .body{
     display: inline-block;
     margin-left: -35px;
 }
 
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado{
+.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado{
     width: 48.5%;
     display: inline-flex;
     margin-bottom: .5%;
     vertical-align: top;
 }
 
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado h3 {
+.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado h3 {
     margin-left: 5px;
     vertical-align: top; 
     font-weight: 450;
     font-size: 13px;
 }
 
-.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado input {
+.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado input {
     vertical-align: top; 
     margin-top: 2px; 
     box-sizing: border-box; 
@@ -825,7 +795,6 @@ cursor: pointer;
     border-bottom-width: 1px;
     border-bottom-color: gainsboro; 
     border-bottom-style: solid;
-    margin-top: 15px;
 }
 
 .containerAgregados .cardAgregados .right #opciones .precioTotal h1, h2{

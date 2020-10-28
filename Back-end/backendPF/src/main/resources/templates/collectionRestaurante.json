@@ -1,0 +1,167 @@
+{
+  "_id": {
+    "$oid": "5f83e3308a90e237302621ac"
+  },
+  "id": 1,
+  "nombre": "Mc'Dondalds",
+  "direccion": "Triunvirato 4600",
+  "logo": "images\\mc.png",
+  "login": [
+    {
+      "user": "iñako",
+      "password": "sinpel"
+    }
+  ],
+  "mesas": [
+
+  ],
+  "platos": [
+    {
+      "descripcion": "nuy ricos",
+      "precio": 50.2,
+      "demora": "25min",
+      "agregados": [
+        {
+          "tipo": "salsas",
+          "agregado": [
+            {
+              "precio": 100,
+              "nombre": "bolognesa"
+            },
+            {
+              "precio": 120,
+              "nombre": "tuco"
+            }
+          ],
+          "indispensable": false
+        },
+        {
+          "tipo": "porcion",
+          "agregado": [
+            {
+              "precio": 50,
+              "nombre": "entera"
+            },
+            {
+              "precio": 0,
+              "nombre": "media"
+            }
+          ],
+          "indispensable": true
+        }
+      ],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
+      "nombre": "ñoquis"
+    },
+    {
+      "descripcion": "Tira de asado cortada fina a la parrilla",
+      "precio": 500.1,
+      "demora": "20min",
+      "agregados": [
+        {
+          "tipo": "Punto de la carne",
+          "agregado": [
+            {
+              "precio": 0,
+              "nombre": "Cocido"
+            },
+            {
+              "precio": 0,
+              "nombre": "A punto"
+            }
+          ],
+          "indispensable": true
+        }
+      ],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+      "nombre": "Asado banderita"
+    },
+    {
+      "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
+      "precio": 400,
+      "demora": "15min",
+      "agregados": [],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
+      "nombre": "Pizza napolitana"
+    },
+    {
+      "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
+      "precio": 699.5,
+      "demora": "30min",
+      "agregados": [
+        {
+          "tipo": "Postres",
+          "agregado": [
+            {
+              "precio": 0,
+              "nombre": "Nada"
+            },
+            {
+              "precio": 120.75,
+              "nombre": "Mousse de chocolate"
+            },
+            {
+              "precio": 100,
+              "nombre": "Flan con dulce de leche"
+            }
+          ],
+          "indispensable": true
+        }
+      ],
+      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+      "nombre": "Pollo con papas fritas"
+    }
+  ],
+  "pedidos": [
+    {
+      "nPedido": 1,
+      "nMesa": 1,
+      "abierto": true,
+      "fecha": "18-05-2020 10:01:00",
+      "platos": [
+        {
+          "nombrePlato": "ñoquis",
+          "precio": 70.2,
+          "fecha": "18-05-2020 10:01:00",
+          "entregado": false,
+          "agregados": [
+            {
+              "nombre": "bolognesa",
+              "precio": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nPedido": 2,
+      "nMesa": 2,
+      "abierto": true,
+      "fecha": "18-05-2020 10:01:00",
+      "platos": [
+        {
+          "nombrePlato": "fideos",
+          "precio": 70.2,
+          "fecha": "18-05-2020 10:01:00",
+          "entregado": false,
+          "agregados": [
+            {
+              "nombre": "bolognesa",
+              "precio": 100
+            },
+            {
+              "nombre": "entera",
+              "precio": 50
+            }
+          ]
+        },
+        {
+          "nombrePlato": "ravioles",
+          "precio": 70.2,
+          "fecha": "18-05-2020 10:01:00",
+          "entregado": false
+        }
+      ]
+    }
+  ]
+}
