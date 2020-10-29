@@ -1901,7 +1901,12 @@ public class Restaurante {
                             int n = Integer.parseInt(textMesas.getText());
                             if (Mesa.comprobarMesa(mesas,n)){
                                 Mesa.ocuparMesas(mesas,n);
-                                mongo.actualizarMesas(mesas);
+                                for (Mesa mesa : mesas){
+                                    if (mesa.getNumMesa() == n){
+                                        mongo.actualizarMesa(mesa);
+                                        break;
+                                    }
+                                }
                                 ventana.remove(panelMesas);
                                 gestionarMesas(ventana);
                             }
@@ -1933,7 +1938,19 @@ public class Restaurante {
                             int n = Integer.parseInt(textMesas.getText());
                             if (Mesa.comprobarMesa(mesas,n)){
                                 Mesa.desocuparMesas(mesas,n);
-                                mongo.actualizarMesas(mesas);
+                                for (Mesa mesa : mesas){
+                                    if (mesa.getNumMesa() == n){
+                                        System.out.println("entre "+ mesa.isOcupada());
+                                        mongo.actualizarMesa(mesa);
+                                        break;
+                                    }
+                                }
+                                for (int i = pedidos.size()-1; i > 0 ; i--) {
+                                    if (pedidos.get(i).isAbierto() && pedidos.get(i).getnMesa() == n){
+                                        pedidos.get(i).setAbierto(false);
+                                        mongo.actualizarPedido(pedidos.get(i));
+                                    }
+                                }
                                 ventana.remove(panelMesas);
                                 gestionarMesas(ventana);
                             }
@@ -2502,14 +2519,10 @@ public class Restaurante {
     }
 
     public void cargarDatos(){
-        //seccionesPlatos.addAll(this.mongo.obtenerSecciones());
-        //platos.addAll(this.mongo.obtenerPlatos());
+        seccionesPlatos.addAll(this.mongo.obtenerSecciones());
         pedidos.addAll(this.mongo.obtenerPedidos());
         mesas.addAll(this.mongo.obtenerMesas());
         this.mongo.obtenerDataUser(this);
-        //this.mongo.actualizarPlatos(platos);
-        //this.mongo.actualizarPlato(plato, "aa");
-        //this.mongo.platosMONGO(platos);
     }
 
     public static void main(String[] args) {
@@ -2533,7 +2546,6 @@ public class Restaurante {
                 if (login.isSesion()) {
 
                     restaurante.cargarDatos();
-
                     fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
                     fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));
 

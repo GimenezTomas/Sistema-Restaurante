@@ -1,0 +1,54 @@
+{
+  "pedidos": [
+    {
+      "nPedido": 1,
+      "nMesa": 1,
+      "abierto": true,
+      "fecha": "18-05-2020 10:01:00",
+      "platos": [
+        {
+          "nombrePlato": "ñoquis",
+          "precio": 70.2,
+          "fecha": "18-05-2020 10:01:00",
+          "entregado": false,
+          "agregados": [
+            {
+              "nombre": "bolognesa",
+              "precio": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nPedido": 2,
+      "nMesa": 2,
+      "abierto": true,
+      "fecha": "18-05-2020 10:01:00",
+      "platos": [
+        {
+          "nombrePlato": "fideos",
+          "precio": 70.2,
+          "fecha": "18-05-2020 10:01:00",
+          "entregado": false,
+          "agregados": [
+            {
+              "nombre": "bolognesa",
+              "precio": 100
+            },
+            {
+              "nombre": "entera",
+              "precio": 50
+            }
+          ]
+        },
+        {
+          "nombrePlato": "ravioles",
+          "precio": 70.2,
+          "fecha": "18-05-2020 10:01:00",
+          "entregado": false
+        }
+      ]
+    }
+  ]
+}

@@ -82,16 +82,21 @@ public class Controlador {
 
     }
 
-    public List<Plato> obtenerListaDePedidos(){
+    public List<Pedido> obtenerListaDePedidos() throws IOException {
 
         List<Pedido> pedidoList= new ArrayList<>();
 
-        Iterator<String[]> iterador = archivoCSV.obtenerIterador();
+        ObjectMapper mapper1 = new ObjectMapper();
+        HashMap pedidosMAP = mapper1.readValue(json, HashMap.class);
+        System.out.println(pedidosMAP);
+        return pedidoList;
+        //que tiene el json que desglozo? solo los pedidos o todo? varia?
+        //siempre es el mismo y va cambiando?
     }
 
-    public void guardarPedidos(){
-        List<Socio> sociosList = this.obtenerListaDeSocios();
-        accesoABaseDeDatos.insertarSocios(sociosList);
+    public void guardarPedidos() throws IOException {
+        List<Pedido> pedidos = obtenerListaDePedidos();
+
     }
 
     public HashMap<String,Long> obtenerEquipoConCantidadDeSocios(){

@@ -7,20 +7,16 @@ import java.util.HashMap;
 
 public class Pedido {
     public static int count=1;
-    private int nPedido;
+    private final int nPedido;
     private boolean abierto=true;
-    private String fecha;
-    private int nMesa;
+    private final String fecha;
+    private final int nMesa;
     private ArrayList<PlatoPedido> platos = new ArrayList<>();
 
     //GETTERS && SETTERS
 
     public int getnPedido() {
         return nPedido;
-    }
-
-    public void setnPedido(int nPedido) {
-        this.nPedido = nPedido;
     }
 
     public boolean isAbierto() {
@@ -35,16 +31,8 @@ public class Pedido {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
     public int getnMesa() {
         return nMesa;
-    }
-
-    public void setnMesa(int nMesa) {
-        this.nMesa = nMesa;
     }
 
     public ArrayList<PlatoPedido> getPlatos() {

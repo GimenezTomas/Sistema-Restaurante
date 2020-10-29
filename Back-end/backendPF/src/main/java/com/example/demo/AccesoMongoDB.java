@@ -1,17 +1,22 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import com.mongodb.connection.Connection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -22,7 +27,6 @@ public class AccesoMongoDB {
     private Connection connection;
     private String host;
     private int puerto;
-    private Bson requisitosLogin;
 
     public MongoDatabase getBase() {
         return base;
@@ -64,7 +68,31 @@ public class AccesoMongoDB {
         this.puerto = puerto;*/
     }
 
-    public ArrayList<Pedido> obtenerPedidos() {//resolver la fecha de los platos
+    public ArrayList<PlatoPedido> serializarPlatoPedido(Document dataPlato){
+        ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
+        ArrayList<PlatoPedido> platos = new ArrayList<>();
+
+        for (Document dataPLATO : platosDoc){
+            ArrayList<Document> agregadosDoc = (ArrayList<Document>) dataPLATO.get("agregados");
+            HashMap<String, Float> agregados = new HashMap<>();
+            if (agregadosDoc != null){
+                for (Document dataAgregado : agregadosDoc) {
+                    agregados.put(dataAgregado.getString("nombre"), Float.parseFloat(dataAgregado.get("precio").toString()));
+                }
+            }
+            Date date = new Date();
+            try{
+                date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
+            }catch (ParseException e){
+                e.getCause();
+                e.getMessage();
+            }
+            platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
+        }
+        return platos;
+    }
+
+    public ArrayList<Pedido> obtenerPedidos(Bson requisitosLogin) {//resolver la fecha de los platos
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Pedido> pedidos = new ArrayList<>();
 
@@ -79,75 +107,13 @@ public class AccesoMongoDB {
             ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
 
             for (Document dataPlato : documents) {
-                ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
-                ArrayList<PlatoPedido> platos = new ArrayList<>();
-
-                for (Document dataPLATO : platosDoc){
-                    ArrayList<Document> agregadosDoc = (ArrayList<Document>) dataPLATO.get("agregados");
-                    HashMap<String, Float> agregados = new HashMap<>();
-                    if (agregadosDoc != null){
-                        for (Document dataAgregado : agregadosDoc) {
-                            agregados.put(dataAgregado.getString("nombre"), Float.parseFloat(dataAgregado.get("precio").toString()));
-                        }
-                    }
-                    Date date = new Date();
-                    try{
-                        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
-                    }catch (ParseException e){
-                        e.getCause();
-                        e.getMessage();
-                    }
-                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
-                }
-                pedidos.add(new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido")));
+                pedidos.add(new Pedido(dataPlato.getInteger("nMesa"), serializarPlatoPedido(dataPlato), dataPlato.getString("fecha"), dataPlato.getInteger("nPedido")));
             }
         }
         return pedidos;
     }
 
-    public Pedido obtenerPedido(int nPedido) {
-        MongoCollection collection = this.base.getCollection("restaurante");
-
-        Pedido pedido = new Pedido();
-
-        String json = "{_id:0, pedidos:{$elemMatch:{'nPedido':"+nPedido+"}}}";
-        Bson bson = BasicDBObject.parse(json);
-        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
-
-        MongoCursor iterator = resultado.iterator();
-
-        while (iterator.hasNext()) {
-            Document document = (Document) iterator.next();
-            ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
-
-            for (Document dataPlato : documents) {
-                ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
-                ArrayList<PlatoPedido> platos = new ArrayList<>();
-
-                for (Document dataPLATO : platosDoc){
-                    ArrayList<Document> agregadosDoc = (ArrayList<Document>) dataPLATO.get("agregados");
-                    HashMap<String, Float> agregados = new HashMap<>();
-                    if (agregadosDoc != null){
-                        for (Document dataAgregado : agregadosDoc) {
-                            agregados.put(dataAgregado.getString("nombre"), Float.parseFloat(dataAgregado.get("precio").toString()));
-                        }
-                    }
-                    Date date = new Date();
-                    try{
-                        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
-                    }catch (ParseException e){
-                        e.getCause();
-                        e.getMessage();
-                    }
-                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
-                }
-                pedido = new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido"));
-            }
-        }
-        return pedido;
-    }
-
-    public ArrayList<Plato> obtenerPlatosArr(){
+    public ArrayList<Plato> obtenerPlatosArr(Bson requisitosLogin){
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Plato> platos = new ArrayList<>();
 
@@ -246,4 +212,88 @@ public class AccesoMongoDB {
         }
         return platosMon;
     }
+
+    public Pedido obtenerPedido(int idRestaurante, int nMesa, Bson requisitosLogin){
+        MongoCollection  collection = this.base.getCollection("restaurante");
+
+        Bson filtro1= Filters.eq("id", idRestaurante);
+        String json = "{_id:0, pedidos:{$elemMatch:{nMesa:"+nMesa+", abierto:true}}}";
+        Bson bson = BasicDBObject.parse(json);
+        FindIterable resultado = collection.find(filtro1/*o requisitosLogin*/).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()) {
+            Document document = (Document) iterator.next();
+            ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
+            if (documents!=null) {
+                for (Document dataPlato : documents) {
+                    ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
+                    ArrayList<PlatoPedido> platos = new ArrayList<>();
+
+                    for (Document dataPLATO : platosDoc) {
+                        ArrayList<Document> agregadosDoc = (ArrayList<Document>) dataPLATO.get("agregados");
+                        HashMap<String, Float> agregados = new HashMap<>();
+                        if (agregadosDoc != null) {
+                            for (Document dataAgregado : agregadosDoc) {
+                                agregados.put(dataAgregado.getString("nombre"), Float.parseFloat(dataAgregado.get("precio").toString()));
+                            }
+                        }
+                        Date date = new Date();
+                        try {
+                            date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
+                        } catch (ParseException e) {
+                            e.getCause();
+                            e.getMessage();
+                        }
+                        platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
+                    }
+                    return new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido"));
+                }
+            }
+        }
+        return null;
+    }
+
+    public void agregarPedido(Pedido pedido, Bson requisitosLogin){
+        ArrayList<Pedido> pedidos = obtenerPedidos(requisitosLogin);
+
+        HashMap<String, Object> pedidoAtributos = new HashMap<>();
+        pedidoAtributos.put("nPedido", pedido.getnPedido());
+        pedidoAtributos.put("nMesa", pedido.getnMesa());
+        pedidoAtributos.put("abierto", pedido.isAbierto());
+        pedidoAtributos.put("fecha", pedido.getFecha());
+        pedidoAtributos.put("platos", platosPedidoMONGO(pedido.getPlatos()));
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            File json = new File(".\\src\\com\\company\\pedidos.json");
+
+            mapper.writeValue(json, pedidoAtributos);
+
+            ObjectMapper mapper1 = new ObjectMapper();
+            HashMap pedidoMap = mapper1.readValue(json, HashMap.class);
+            json.delete();
+
+            Document pedidosDoc = new Document("pedidos", pedidoMap);
+            Document operacion = new Document("$push", pedidosDoc);
+
+            UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertarPlatosPedido(ArrayList<PlatoPedido> platoPedidoList, int nPedido, Bson requisitosLogin) {
+        for (int i = 0; i < platoPedidoList.size(); i++) {
+            String ruta = "pedidos." + (nPedido - 1) + ".platos";
+            Document rutaDoc = new Document(ruta, platosPedidoMONGO(platoPedidoList).get(i));
+
+            Document operacion = new Document("$push", rutaDoc);
+
+            this.base.getCollection("restaurante").updateOne(requisitosLogin, operacion);
+        }
+    }//pregunatarle a piñeyro si esta forma puede llegar a treaer problemas(se puede llegar a perder un pedido o que se cambie el orden)
 }

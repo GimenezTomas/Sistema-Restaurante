@@ -49,101 +49,194 @@
       "qr": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\.\\src\\com\\company\\images\\qr\\Mesa16.png"
     }
   ],
-  "platos": [
+  "seccionesPlatos": [
     {
-      "descripcion": "nuy ricos",
-      "precio": 50.2,
-      "demora": "25min",
-      "agregados": [
+      "nombre": "Pastas",
+      "platos": [
         {
-          "tipo": "salsas",
-          "agregado": [
+          "descripcion": "muy ricos",
+          "precio": 50.2,
+          "demora": "25min",
+          "agregados": [
             {
-              "precio": 100,
-              "nombre": "bolognesa"
+              "tipo": "porcion",
+              "agregado": [
+                {
+                  "precio": 50,
+                  "nombre": "entera"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "media"
+                }
+              ],
+              "indispensable": true
             },
             {
-              "precio": 120,
-              "nombre": "tuco"
+              "tipo": "salsas",
+              "agregado": [
+                {
+                  "precio": 100,
+                  "nombre": "bolognesa"
+                },
+                {
+                  "precio": 120,
+                  "nombre": "tuco"
+                }
+              ],
+              "indispensable": false
             }
           ],
-          "indispensable": false
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
+          "nombre": "ñoquis"
         },
         {
-          "tipo": "porcion",
-          "agregado": [
-            {
-              "precio": 50,
-              "nombre": "entera"
-            },
-            {
-              "precio": 0,
-              "nombre": "media"
-            }
-          ],
-          "indispensable": true
+          "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
+          "precio": 400,
+          "demora": "15min",
+          "agregados": [],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
+          "nombre": "Pizza napolitana"
         }
-      ],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
-      "nombre": "ñoquis"
+      ]
     },
     {
-      "descripcion": "Tira de asado cortada fina a la parrilla",
-      "precio": 500.1,
-      "demora": "20min",
-      "agregados": [
+      "nombre": "Carnes",
+      "platos": [
         {
-          "tipo": "Punto de la carne",
-          "agregado": [
+          "descripcion": "500g de Bife de chorizo acompañado con una guarnición de papas fritas",
+          "precio": 860,
+          "demora": "30min",
+          "agregados": [
             {
-              "precio": 0,
-              "nombre": "Cocido"
+              "tipo": "Punto",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Cocido"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Medio"
+                }
+              ],
+              "indispensable": true
             },
             {
-              "precio": 0,
-              "nombre": "A punto"
+              "tipo": "Guarnición",
+              "agregado": [
+                {
+                  "precio": 20,
+                  "nombre": "Ensalada de zanahoria y huevo"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Papas fritas"
+                }
+              ],
+              "indispensable": true
             }
           ],
-          "indispensable": true
-        }
-      ],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
-      "nombre": "Asado banderita"
-    },
-    {
-      "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
-      "precio": 400,
-      "demora": "15min",
-      "agregados": [],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
-      "nombre": "Pizza napolitana"
-    },
-    {
-      "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
-      "precio": 699.5,
-      "demora": "30min",
-      "agregados": [
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Back-end\\backendPF\\src\\main\\resources\\static\\images\\empanada.png",
+          "nombre": "Bife de chorizo con papas fritas"
+        },
         {
-          "tipo": "Postres",
-          "agregado": [
+          "descripcion": "Tira de asado, vacio, entraña y un matrimonio acompañado con dos porciones de papas fritas. Comen 2 o 3.",
+          "precio": 1700,
+          "demora": "25MIN",
+          "agregados": [
             {
-              "precio": 0,
-              "nombre": "Nada"
-            },
-            {
-              "precio": 120.75,
-              "nombre": "Mousse de chocolate"
-            },
-            {
-              "precio": 100,
-              "nombre": "Flan con dulce de leche"
+              "tipo": "Guarnición",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "2 porciones de papas fritas"
+                },
+                {
+                  "precio": 100,
+                  "nombre": "2 ensaladas mixtas"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "1 porción de papas fritas y 1  de ensalada "
+                }
+              ],
+              "indispensable": true
             }
           ],
-          "indispensable": true
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\factura.png",
+          "nombre": "Parrillada para 2"
+        },
+        {
+          "descripcion": "sanguche de chorizo a la parrilla con chimichurri",
+          "precio": 260,
+          "demora": "6min",
+          "agregados": [
+            {
+              "tipo": "Guarnición",
+              "agregado": [
+                {
+                  "precio": 120,
+                  "nombre": "Papas fritas"
+                }
+              ],
+              "indispensable": false
+            }
+          ],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "nombre": "Choripan"
+        },
+        {
+          "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
+          "precio": 699.5,
+          "demora": "30min",
+          "agregados": [
+            {
+              "tipo": "Postres",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Nada"
+                },
+                {
+                  "precio": 120.75,
+                  "nombre": "Mousse de chocolate"
+                },
+                {
+                  "precio": 100,
+                  "nombre": "Flan con dulce de leche"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "nombre": "Pollo con papas fritas"
+        },
+        {
+          "descripcion": "Tira de asado cortada fina a la parrilla",
+          "precio": 500.1,
+          "demora": "20min",
+          "agregados": [
+            {
+              "tipo": "Punto de la carne",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Cocido"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "A punto"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "nombre": "Asado banderita"
         }
-      ],
-      "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
-      "nombre": "Pollo con papas fritas"
+      ]
     }
   ],
   "pedidos": [

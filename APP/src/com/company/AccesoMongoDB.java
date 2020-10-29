@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import static com.mongodb.client.model.Filters.and;
@@ -107,6 +108,8 @@ public class AccesoMongoDB {
         ArrayList<Pedido> pedidos = new ArrayList<>();
 
         String json = "{_id:0, pedidos:1}";
+        //Bson bsonREQ = requisitosLogin;
+        //bsonREQ = and(BasicDBObject.parse("{pedidos:{$elemMatch:{abierto:true}}}"));
         Bson bson = BasicDBObject.parse(json);
         FindIterable resultado = collection.find(requisitosLogin).projection(bson);
 
@@ -134,6 +137,8 @@ public class AccesoMongoDB {
                     }catch (ParseException e){
                         e.getCause();
                         e.getMessage();
+                    }catch (DateTimeParseException e){
+                        e.printStackTrace();
                     }
                     platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
                 }
@@ -213,8 +218,13 @@ public class AccesoMongoDB {
 
             ArrayList<Document> doc = (ArrayList<Document>) document.get("mesas");
 
-            for (Document mesaDoc: doc){
-                mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupada")));
+            for (Document mesaDoc: doc) {
+                System.out.println(mesaDoc.getString("qr"));
+                if (mesaDoc.get("qr")!=null) {
+                    mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), new File(mesaDoc.getString("qr")), mesaDoc.getBoolean("ocupada")));
+                }else{
+                    mesas.add(new Mesa(mesaDoc.getInteger("numMesa"), mesaDoc.getBoolean("ocupada")));
+                }
             }
         }
 
