@@ -1,3 +1,5 @@
+
+
 body{
     background-color: #141414f7;
 }
@@ -42,8 +44,8 @@ div.res{
     display: flex;
     align-items: center;
     position: fixed;
-    text-align:center; 
-    z-index: 3;   
+    text-align:center;
+    z-index: 3;
 }
 
 div.nn{
@@ -156,13 +158,13 @@ html{
     box-shadow: 0 0px 8px 5px rgba(128,98,96,.16);
     overflow: hidden;
 }
- .tipos:hover {
+.tipos:hover {
     background-image: linear-gradient(130deg,#ff451a,#ff1517 70%);
-     color: transparent;
+    color: transparent;
 }
 .tiposBoxContainer .tipos h3:hover{
-     color: white;
- }
+    color: white;
+}
 
 .tiposBoxContainer .tipos h3{
     color: #282828;
@@ -261,7 +263,7 @@ html{
     font-size:11px;
     line-height:32px;
     float:right;
-  }
+}
 .boton svg{
     width: 30px;
     height: auto;
@@ -281,13 +283,13 @@ html{
 /*CARRITO*/
 .containerFactura{
     display: none;
-    position: absolute; 
+    position: absolute;
     /* right: 0px; */
     /* width: 500px; */
     /* height: auto; */
     /* min-height: 100%; */
     position: fixed;
-     z-index: 3; 
+    z-index: 3;
     /* padding-top: 323px; */
     left: 0;
     top: 0;
@@ -296,7 +298,7 @@ html{
     height: 100%;
     overflow: auto;
     background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.6);    
+    background-color: rgba(0,0,0,0.6);
 }
 
 .modalContent {
@@ -329,7 +331,7 @@ html{
 .headerNombrePagina svg{
     --main-svg-width: 25px;
     float:left;
-    width: var(--main-svg-width); 
+    width: var(--main-svg-width);
     height: var(--main-svg-width);
     display: block;
     fill: white;
@@ -379,7 +381,7 @@ html{
     border-bottom: solid;
     border-bottom-width: 0.1px;
     border-color: #ff2426;
-    
+
 }
 
 .headerRestaurante img{
@@ -403,7 +405,7 @@ html{
     font-size: 12px;
     text-align: right;
     display: block;
-    color: #f7732d;    
+    color: #f7732d;
 }
 .headerRestaurante h2:hover{
     font-size: 15px;
@@ -457,7 +459,7 @@ html{
     border-radius: 10%;
 }
 
-.pedidos .pedido h3{    
+.pedidos .pedido h3{
     margin-left: 8px;
     font-size: 15px;
     font-weight: 400;
@@ -518,6 +520,14 @@ html{
     width: 250px;
 }
 
+.pedir button:active{
+    border-style: none;
+}
+
+.pedir button:focus{
+    border-style: none;
+}
+
 .pedir div{
     margin-left: 75px;
 }
@@ -540,7 +550,7 @@ html{
 .modal {
     display: none;
     /* position: fixed; */
-    z-index: 1; 
+    z-index: 1;
     padding-top: 323px;
     /* left: 0; */
     /* top: 0; */
@@ -552,13 +562,13 @@ html{
     background-color: rgba(0,0,0,0.6);
 }
 
-    /* Modal Content */
+/* Modal Content */
 .modal-content {
-background-color: #fefefe;
-margin: auto;
-border: 1px solid #888;
-width: 300px;
-height: 200px;
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 300px;
+    height: 200px;
 }
 
 /* The Close Button */
@@ -589,9 +599,9 @@ height: 200px;
 
 .close:hover,
 .close:focus {
-color: #000;
-text-decoration: none;
-cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 #carritoVacio{
@@ -650,7 +660,7 @@ cursor: pointer;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    outline: 0;    
+    outline: 0;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.6);
 }
@@ -665,11 +675,11 @@ cursor: pointer;
 .containerAgregados .cardAgregados{
     margin-left: auto;
     margin-right: auto;
-    height: 570px; 
+    height: 570px;
     width: 880px;
     max-height: 820px;/*
-    border-style: solid; 
-    border-radius: 15px; 
+    border-style: solid;
+    border-radius: 15px;
     border-color: grey;*/
     margin-top: 40px;
     display: flex;
@@ -730,7 +740,6 @@ cursor: pointer;
     border-bottom-width: 1px;
     border-bottom-color: gainsboro;
     border-bottom-style: solid;
-    margin-bottom: 28px;
 }
 
 .containerAgregados .cardAgregados .right .nombre h3{
@@ -752,49 +761,72 @@ cursor: pointer;
     overflow-y: scroll;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas h1{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion h1{
     font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: inline-flex;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion{
     border-bottom-width: 1px;
-    border-bottom-color: gainsboro; 
+    border-bottom-color: gainsboro;
     border-bottom-style: solid;
-} 
+}
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio{
+    float: right;
+    margin-top: 8px;/*centrar bien*/
+    display: none;
+}
+
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio h1{
+    text-align: right;
+    font-size: 11px;
+    color: #ff1517;
+    vertical-align: super;
+}
+
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .header .obligatorio svg{
+    fill: #ff1517;
+    margin-left: 10px;
+    vertical-align: text-top;
+}
+
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body{
     display: inline-block;
     margin-left: -35px;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado{
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado{
     width: 48.5%;
     display: inline-flex;
     margin-bottom: .5%;
     vertical-align: top;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado h3 {
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado h3 {
     margin-left: 5px;
-    vertical-align: top; 
+    vertical-align: top;
     font-weight: 450;
     font-size: 13px;
 }
 
-.containerAgregados .cardAgregados .right #opciones .salsas .body .botonMasAgregado input {
-    vertical-align: top; 
-    margin-top: 2px; 
-    box-sizing: border-box; 
-    padding: 0; 
-    line-height: normal; 
+.containerAgregados .cardAgregados .right #opciones .tiposSeccion .body .botonMasAgregado input {
+    vertical-align: top;
+    margin-top: 2px;
+    box-sizing: border-box;
+    padding: 0;
+    line-height: normal;
     margin: 0;
     /*text-align: start;*/
 }
 
 .containerAgregados .cardAgregados .right #opciones .precioTotal{
     border-bottom-width: 1px;
-    border-bottom-color: gainsboro; 
+    border-bottom-color: gainsboro;
     border-bottom-style: solid;
+    margin-top: 15px;
 }
 
 .containerAgregados .cardAgregados .right #opciones .precioTotal h1, h2{
@@ -869,9 +901,9 @@ cursor: pointer;
 }
 
 .containerAgregados .precioAgregado{
-    color: red; 
-    display: block; 
-    font-size: 10px; 
+    color: red;
+    display: block;
+    font-size: 10px;
     margin-top: -5px;
 }
 

@@ -7,7 +7,6 @@
         echo "<img class='zz' src='$ft'>";
         echo "<div class='nn'><h1 style='color: white'>$name</h1></div>";   
     }
-
 ?>
 <html>
 <head>
@@ -23,17 +22,16 @@
 <body>
 <header>
     <div class="cr">
-        <!--<img onmousedown="llamarCarrito('car')" class="car carrito" src="images/carrito.png" alt="Homepage">-->
+        <!--<img onmousedown="llamarCarrito('car')" class="car carrito" src="../static/images/carrito.png" alt="Homepage">-->
         <svg onmousedown="llamarCarrito('car')" viewBox="0 0 16 16" class="bi bi-cart4 car carrito" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
         </svg>
     </div>
-    
-    <!--<div class="cr"><img class="carrito" src="images/user.png" alt="Homepage"></div>-->
+    <!--<div class="cr"><img class="carrito" src="../static/images/user.png" alt="Homepage"></div>-->
 </header>
 
 <div class="padre">
-    <div class="nombre"><img class="zz" src="images/9z.png"></div>
+    <div class="nombre"><img class="zz" src="../static/images/9z.png"></div>
 </div>
 
 <div class="res">
@@ -42,23 +40,23 @@
 <div class="tiposBoxContainer">
     <nav class = tiposBox>
         <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('postresTBOX', false)" onmouseover="mouseoverWHITE('postresTBOX', true)">
-            <img src="images/helado.png" alt="not found" width = "25" height = "25">
+            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
             <h3 id = "postresTBOX" class = "tipos_font">Postres</h3>
         </a>
         <a class = "tipos" href = "#22" onmouseout="mouseoverWHITE('tragosTBOX', false)" onmouseover="mouseoverWHITE('tragosTBOX', true)">
-            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
+            <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
             <h3 id="tragosTBOX" class = "tipos_font">Tragos</h3>
         </a>
         <a class = "tipos" href = "#seccionBebidas" onmouseout="mouseoverWHITE('bebidasTBOX', false)" onmouseover="mouseoverWHITE('bebidasTBOX', true)">
-            <img src="images/helado.png" alt="not found" width = "25" height = "25">
+            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
             <h3 id = "bebidasTBOX" class = "tipos_font">Bebidas</h3>
         </a>
         <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('minutasTBOX', false)" onmouseover="mouseoverWHITE('minutasTBOX', true)">
-            <img src="images/helado.png" alt="not found" width = "25" height = "25">
+            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
             <h3 id = "minutasTBOX" class = "tipos_font">Minutas</h3>
         </a>
         <a class = "tipos" href = "#seccionEmpanadas" onmouseout="mouseoverWHITE('entradasTBOX', false)" onmouseover="mouseoverWHITE('entradasTBOX', true)">
-            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
+            <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
             <h3 id="entradasTBOX" class = "tipos_font">Entradas</h3>
         </a>
     </nav>
@@ -74,7 +72,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagenCoca1" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagenCoca1" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -84,9 +82,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Fanta</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados('boton')">
@@ -107,7 +109,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagenCoca1'" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagenCoca1'" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -117,9 +119,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Manaos</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados('boton')">
@@ -140,7 +146,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagenCoca1''" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagenCoca1''" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -179,7 +185,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagenCoca3" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagenCoca3" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -189,9 +195,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Coca cola</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados()">
@@ -213,7 +223,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagenCoca4" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagenCoca4" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -223,9 +233,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Coca cola</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados()">
@@ -246,7 +260,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagenCoca5" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagenCoca5" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -256,9 +270,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Coca cola</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados()">
@@ -288,7 +306,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="sax3" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="sax3" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -298,9 +316,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Coca cola</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados()">
@@ -322,7 +344,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagesanCoca4" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagesanCoca4" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -332,9 +354,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Coca cola</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados()">
@@ -355,7 +381,7 @@
                     <div class="face face1">
                         <div class="content">
                             <div class="icon">
-                                <img id="imagesanCoca5" src="images/reyes.jpg" style="height: 200px; width: 300px;">
+                                <img id="imagesanCoca5" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -365,9 +391,13 @@
                                 <h3 style="text-align: center;">
                                     <a>Coca cola</a>
                                 </h3>
-                                <p style="text-align: center;">$ 100</p>
+                                <p style="text-align: center; font-weight: 500">$ 100</p>
                                 <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    <span>
+                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
+                                    </span>
                                     <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
                                 </div>
                                 <div class="boton" onclick="llamarAgregados()">
@@ -393,15 +423,15 @@
             <svg onmousedown="activarDisplayFactura('factura', false)" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/>
             </svg>
-            <img src="images/appleLogo.png" alt="">
+            <img src="../static/images/appleLogo.png" alt="">
         </div>
         <div class="headerUsuario">
-            <img src="images/usuarioLogo.png" alt="">
+            <img src="../static/images/usuarioLogo.png" alt="">
             <h1>Tomás Giménez</h1>
             <!--<h2>PUNTOS: 0</h1> SI O NO?-->
         </div>
         <div class="headerRestaurante">
-            <img src="images/logoRestaurante.jpg" alt="">
+            <img src="../static/images/logoRestaurante.jpg" alt="">
             <h1>Cantina Los Lopez</h1>
         </div>
         <div id = "pedidos" class="pedidos">
@@ -428,7 +458,7 @@
                         <div class="body">
                             <div id="platosYaPedidos" class="platoss">
                                 <li id = "plato2" class="pedido">
-                                    <img src="images/ñoquis.jpg" alt="">
+                                    <img src="../static/images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -436,7 +466,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato3" class="pedido">
-                                    <img src="images/reyes.jpg" alt="">
+                                    <img src="../static/images/reyes.jpg" alt="">
                                     <h3>Milanesa con papas fritas</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -444,7 +474,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato4" class="pedido">
-                                    <img src="images/ñoquis.jpg" alt="">
+                                    <img src="../static/images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -452,7 +482,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato5" class="pedido">
-                                    <img src="images/reyes.jpg" alt="">
+                                    <img src="../static/images/reyes.jpg" alt="">
                                     <h3>Milanesa con papas fritas</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -460,7 +490,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato6" class="pedido">
-                                    <img src="images/ñoquis.jpg" alt="">
+                                    <img src="../static/images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -469,7 +499,7 @@
                                 </li>
 
                                 <li id = "plato7" class="pedido">
-                                    <img src="images/ñoquis.jpg" alt="">
+                                    <img src="../static/images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -477,7 +507,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato8" class="pedido">
-                                    <img src="images/ñoquis.jpg" alt="">
+                                    <img src="../static/images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -499,7 +529,7 @@
                         </div>
                         <div id="proximaOrdenBody" class="body">
                             <li id = "plato1" class="pedido" onmouseover="botonEliminar('botonDelete1', true)" onmouseout="botonEliminar('botonDelete1', false)">
-                                <img src="images/reyes.jpg" alt="">
+                                <img src="../static/images/reyes.jpg" alt="">
                                 <h3>Milanesa con papas fritas</h3>
                                 <div class="p">
                                     <h2>$</h2>
@@ -541,7 +571,7 @@
     <div class="mContent">
         <div class="cardAgregados">
             <div class="left">
-                <img id="imagenAG" src="images/ñoquis.jpg" alt="Card image cap">
+                <img id="imagenAG" src="../static/images/ñoquis.jpg" alt="Card image cap">
             </div>
             <div class="right">
                 <div class="borrar">
@@ -554,9 +584,18 @@
                     <p>Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
                 </div>
                 <div id="opciones">
-                    <div class = "salsas">
-                        <h1 class="header">SALSAS</h1>
-                        <ul class="body">
+                    <div class = "tiposSeccion">
+                        <div class="header">
+                            <h1>Salsas</h1>
+                            <div class="obligatorio">
+                                <h1>Obligatorio!</h1>
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <ul id="salsas" class="body indispensable">
                             <li id="botonSalsa1" class="botonMasAgregado" onclick=calcularPrecio()>
                                 <input type="checkbox"></input>
                                 <div>
@@ -622,6 +661,67 @@
                             </li>
                         </ul>
                     </div>
+                    <div class = "tiposSeccion">
+                        <h1 class="header">Postres</h1>
+                        <ul id="postres" class="body">
+                            <li id="btnS1" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Mousse de chocolate</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS2" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Mousse de limón</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS3" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Flan con dulce de leche</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS4" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Budin</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS5" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Chocotorta</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS6" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Ensalada de frutas</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS7" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Helado de chocolate</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                            <li id="btnS8" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3>Helado de crema</h3>
+                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="precioTotal">
                         <h1>Total: $</h1>
                         <span>
@@ -657,69 +757,102 @@
 
     platos=[]
     platosYaPedidos=[]
-
+    function confirmarSeccionesIndispensables(id){
+        let opciones = document.getElementById(id)
+        let enviarOK = false
+        for(let i=0; i<opciones.childNodes.length; i++) {
+            if (opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].classList.contains("tiposSeccion")){
+                for (let j = 0; j < opciones.childNodes[i].childNodes.length; j++) {
+                    if (opciones.childNodes[i].childNodes[j].tagName === 'UL' && opciones.childNodes[i].childNodes[j].classList.contains("indispensable")){
+                        let seccion = opciones.childNodes[i].childNodes[j]
+                        for (k = 0; k <seccion.childNodes.length ; k++) {
+                            if (seccion.childNodes[k].tagName === 'LI'){
+                                for (let l = 0; l < seccion.childNodes[k].childNodes.length ; l++) {
+                                    if (seccion.childNodes[k].childNodes[l].tagName === 'INPUT' && seccion.childNodes[k].childNodes[l].checked){
+                                        enviarOK = true
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        console.log(enviarOK)
+        return enviarOK
+    }
     function addPlatoAlCarrito(idnombre, idprecio, idimg, agregados){
-        let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
-        let descripcion = document.getElementById(idnombre).getElementsByTagName("P")[0].innerHTML
-        let img = document.getElementById(idimg).src
-        let precio = document.getElementById(idprecio).innerHTML
+        if (confirmarSeccionesIndispensables('opciones')){
+            let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
+            let descripcion = document.getElementById(idnombre).getElementsByTagName("P")[0].innerHTML
+            let img = document.getElementById(idimg).src
+            let precio = document.getElementById(idprecio).innerHTML
 
-        let plato = new Plato(nombre, precio, descripcion, img, agregados)
+            let plato = new Plato(nombre, precio, descripcion, img, agregados)
 
-        platos.push(plato)
-        let carrito = document.getElementById('proximaOrdenBody')
+            platos.push(plato)
+            let carrito = document.getElementById('proximaOrdenBody')
 
-        let s = 'plato'+(carrito.getElementsByTagName("LI").length+1)
-        let as = 'botonDelete'+(carrito.getElementsByTagName("LI").length+1)
+            let s = 'plato'+(carrito.getElementsByTagName("LI").length+1)
+            let as = 'botonDelete'+(carrito.getElementsByTagName("LI").length+1)
 
-        let image = document.createElement("IMG")
-        image.src=img;
+            let image = document.createElement("IMG")
+            image.src=img;
 
-        let h3 = document.createElement("H3")
-        h3.innerHTML = nombre
+            let h3 = document.createElement("H3")
+            h3.innerHTML = nombre
 
-        let div = document.createElement("DIV")
-        div.classList.add("p")
+            let div = document.createElement("DIV")
+            div.classList.add("p")
 
-        let h2 = document.createElement("H2")
-        h2.innerHTML = "$"
+            let h2 = document.createElement("H2")
+            h2.innerHTML = "$"
 
-        let h4 = document.createElement("H4")
-        h4.classList.add("precio")
-        h4.innerHTML = precio
+            let h4 = document.createElement("H4")
+            h4.classList.add("precio")
+            h4.innerHTML = precio
 
-        let svg = document.createElement("SVG")
-        svg.setAttribute("id", as)
-        svg.addEventListener("mousedown", function(){eliminarPlato(s)})
-        svg.setAttribute("viewBox", "0 0 16 16")
-        svg.classList.add("bi", "bi-x-circle-fill")
-        svg.setAttribute("fill", "currentColor")
-        svg.setAttribute("xlmns", "http://www.w3.org/2000/svg")
+            let svg = document.createElement("SVG")
+            svg.setAttribute("id", as)
+            svg.addEventListener("mousedown", function(){eliminarPlato(s)})
+            svg.setAttribute("viewBox", "0 0 16 16")
+            svg.classList.add("bi", "bi-x-circle-fill")
+            svg.setAttribute("fill", "currentColor")
+            svg.setAttribute("xlmns", "http://www.w3.org/2000/svg")
 
-        let path = document.createElement("PATH")
-        path.setAttribute("fill-rule", "evenodd")
-        path.setAttribute("d", "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z")
+            let path = document.createElement("PATH")
+            path.setAttribute("fill-rule", "evenodd")
+            path.setAttribute("d", "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z")
 
-        svg.appendChild(path)
+            svg.appendChild(path)
 
-        div.appendChild(h2)
-        div.appendChild(h4)
-        div.appendChild(svg)
+            div.appendChild(h2)
+            div.appendChild(h4)
+            div.appendChild(svg)
 
-        let node = document.createElement("LI")
-        node.classList.add("pedido")
-        node.addEventListener("mouseover", function(){botonEliminar(as, true)})
-        node.addEventListener("mouseout", function(){botonEliminar(as, false)})
-        node.setAttribute("id", "plato"+(carrito.getElementsByTagName("LI").length+1))
+            let node = document.createElement("LI")
+            node.classList.add("pedido")
+            node.addEventListener("mouseover", function(){botonEliminar(as, true)})
+            node.addEventListener("mouseout", function(){botonEliminar(as, false)})
+            node.setAttribute("id", "plato"+(carrito.getElementsByTagName("LI").length+1))
 
-        node.appendChild(image)
-        node.appendChild(h3)
-        node.appendChild(div)
+            node.appendChild(image)
+            node.appendChild(h3)
+            node.appendChild(div)
 
-        carrito.appendChild(node)
+            carrito.appendChild(node)
 
-        actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
-        cerrarAgregados()
+            actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
+            for (let i = 0; i < document.getElementsByClassName('obligatorio').length; i++) {
+                document.getElementsByClassName('obligatorio')[i].style.display="none"
+            }
+            cerrarAgregados()
+        }else{
+            for (let i = 0; i < document.getElementsByClassName('obligatorio').length; i++) {
+                document.getElementsByClassName('obligatorio')[i].style.display="block"
+            }
+        }
     }
 
     /*modal agregados*/
