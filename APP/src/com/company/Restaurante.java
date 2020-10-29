@@ -2502,7 +2502,7 @@ public class Restaurante {
     }
 
     public void cargarDatos(){
-        seccionesPlatos.addAll(this.mongo.obtenerSecciones());
+        //seccionesPlatos.addAll(this.mongo.obtenerSecciones());
         //platos.addAll(this.mongo.obtenerPlatos());
         pedidos.addAll(this.mongo.obtenerPedidos());
         mesas.addAll(this.mongo.obtenerMesas());
