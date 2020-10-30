@@ -133,14 +133,16 @@ html{
 }
 .tiposBoxContainer .tiposBox{
     display: flex;
-    justify-content: center;
     width: 50%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 150px;
     align-items: center;
     height: 60px;
+    overflow-x: scroll;
     background-color: white;
+    padding-left: 5px;
+    padding-right: 10px;
 }
 .tiposBoxContainer .tiposBox.h1{
     margin-left: 5px;
@@ -152,7 +154,7 @@ html{
     margin-right: 10px;
     border-radius: 100px;
     background-color: white;
-    width: auto;
+    min-width: fit-content;
     height: 35px;
     box-shadow: 0 0px 8px 5px rgba(128,98,96,.16);
     overflow: hidden;
@@ -168,7 +170,7 @@ html{
 .tiposBoxContainer .tipos h3{
     color: #282828;
     font-size: 15px;
-    margin-right: 5px;
+    margin-right: 10px;
     margin-bottom: auto;
     margin-top: auto;
 }
