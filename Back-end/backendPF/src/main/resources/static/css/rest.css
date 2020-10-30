@@ -307,6 +307,7 @@ html{
     margin: auto;
     width: 500px;
     height: 100%;
+    float: right;
 }
 
 .headerNombrePagina{
