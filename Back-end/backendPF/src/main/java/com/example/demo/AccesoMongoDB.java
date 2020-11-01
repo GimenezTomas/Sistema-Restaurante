@@ -8,7 +8,9 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.UpdateResult;
 import com.mongodb.connection.Connection;
 import org.bson.Document;
@@ -90,27 +92,6 @@ public class AccesoMongoDB {
             platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
         }
         return platos;
-    }
-
-    public ArrayList<Pedido> obtenerPedidos(Bson requisitosLogin) {//resolver la fecha de los platos
-        MongoCollection collection = this.base.getCollection("restaurante");
-        ArrayList<Pedido> pedidos = new ArrayList<>();
-
-        String json = "{_id:0, pedidos:1}";
-        Bson bson = BasicDBObject.parse(json);
-        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
-
-        MongoCursor iterator = resultado.iterator();
-
-        while (iterator.hasNext()) {
-            Document document = (Document) iterator.next();
-            ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
-
-            for (Document dataPlato : documents) {
-                pedidos.add(new Pedido(dataPlato.getInteger("nMesa"), serializarPlatoPedido(dataPlato), dataPlato.getString("fecha"), dataPlato.getInteger("nPedido")));
-            }
-        }
-        return pedidos;
     }
 
     public ArrayList<Plato> obtenerPlatosArr(Bson requisitosLogin){
@@ -256,8 +237,6 @@ public class AccesoMongoDB {
     }
 
     public void agregarPedido(Pedido pedido, Bson requisitosLogin){
-        ArrayList<Pedido> pedidos = obtenerPedidos(requisitosLogin);
-
         HashMap<String, Object> pedidoAtributos = new HashMap<>();
         pedidoAtributos.put("nPedido", pedido.getnPedido());
         pedidoAtributos.put("nMesa", pedido.getnMesa());
@@ -296,4 +275,111 @@ public class AccesoMongoDB {
             this.base.getCollection("restaurante").updateOne(requisitosLogin, operacion);
         }
     }//pregunatarle a piñeyro si esta forma puede llegar a treaer problemas(se puede llegar a perder un pedido o que se cambie el orden)
+
+    public int obtenerPedidosSize(Bson requisitosLogin){
+        int size = 0;
+
+        Bson $if = BasicDBObject.parse("{ $cond: { if: { $isArray: \"$pedidos\" }, then: { $size: \"$pedidos\" }, else: 0} }");
+        Collection sizeInCollection = this.base.getCollection("restaurante").aggregate(Arrays.asList(Aggregates.match(requisitosLogin),Aggregates.project( Projections.fields( Projections.excludeId(), Projections.include("pedidos"), Projections.computed("pedidos", $if))))).into(new ArrayList());
+        Iterator sizeInIterator = sizeInCollection.iterator();
+        while (sizeInIterator.hasNext()){
+            Document sizeInDocument = (Document) sizeInIterator.next();
+            System.out.println(sizeInDocument.get("pedidos"));
+            size = sizeInDocument.getInteger("pedidos");
+        }
+//db.restaurante.aggregate([{$match:{id:1}},{$project: {_id:0, pedidos: { $cond: { if: { $isArray: "$pedidos" }, then: { $size: "$pedidos" }, else: 0} } } }] )
+
+        return size;
+    }
+
+    public ArrayList<HashMap<String, String>> obtenerTiposPlatos(){
+        MongoCollection collection = this.base.getCollection("tiposDeComida");
+
+        ArrayList<HashMap<String, String>> tiposList = new ArrayList<>();
+
+        String json = "{_id:0, nombre:1, logo:1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find().projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()){
+            HashMap<String, String> tipos = new HashMap<>();
+            Document document = (Document) iterator.next();
+            tipos.put("nombre", document.getString("nombre"));
+            tipos.put("logo", document.getString("logo"));
+            tiposList.add(tipos);
+        }
+
+        return tiposList;
+    }
+    public ArrayList<SeccionesPlatos> obtenerSecciones(Bson requisitosLogin){
+        ArrayList<SeccionesPlatos> seccionesPlatos = new ArrayList<>();
+
+        MongoCollection collection = this.base.getCollection("restaurante");
+
+        String json = "{_id:0, seccionesPlatos:1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while(iterator.hasNext()){
+            Document document = (Document) iterator.next();
+
+            ArrayList<Document> documentss = (ArrayList<Document>) document.get("seccionesPlatos");
+            for (Document doca :documentss){
+                SeccionesPlatos seccionesPlatos1 = new SeccionesPlatos(doca.get("nombre").toString());
+                ArrayList<Plato>platos = new ArrayList<>();
+
+                ArrayList<Document> doc = (ArrayList<Document>) doca.get("platos");
+
+                for (Document docAUX: doc){
+
+                    HashSet<TipoAgregados> tiposAgregados = new HashSet<>();
+                    ArrayList<Document> agregadosDoc = (ArrayList<Document>) docAUX.get("agregados");
+
+                    for (Document agregadosDocAux : agregadosDoc){
+
+                        ArrayList<Document> agregadoDoc = (ArrayList<Document>) agregadosDocAux.get("agregado");
+                        HashMap<String, Float> agregados = new HashMap<>();
+
+                        for (Document agregadoDocAux : agregadoDoc){
+
+                            agregados.put(agregadoDocAux.getString("nombre"), Float.parseFloat(agregadoDocAux.get("precio").toString()));
+
+                        }
+
+                        tiposAgregados.add(new TipoAgregados(agregadosDocAux.getString("tipo"), agregadosDocAux.getBoolean("indispensable"), agregados));
+
+                    }
+                    platos.add(new Plato(docAUX.getString("nombre"), Float.parseFloat(docAUX.get("precio").toString()), new File(docAUX.get("imagen").toString()), docAUX.getString("descripcion"), docAUX.getString("demora"), tiposAgregados));
+                }
+                seccionesPlatos1.getPlatos().addAll(platos);
+                seccionesPlatos.add(seccionesPlatos1);
+            }
+        }
+        return  seccionesPlatos;
+    }
+    public HashMap<String, String> obtenerDataUser(Bson requisitosLogin){
+        MongoCollection collection = this.base.getCollection("restaurante");
+
+        FindIterable resultado = collection.find(requisitosLogin);
+
+        MongoCursor iterator = resultado.iterator();
+
+        HashMap<String,String> userData = new HashMap<>();
+
+        while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
+            userData.put("nombre", document.getString("nombre"));
+            userData.put("logo", document.getString("logo"));
+            userData.put("direccion",document.getString("direccion"));
+        }
+        return userData;
+    }
+
 }
+
+//db.restaurante.aggregate([{$match:{id:1}},{$project: {_id:0, pedidos: { $cond: { if: { $isArray: "$pedidos" }, then: { $size: "$pedidos" }, else: 0} } } }] )
+// db.restaurante.aggregate([{$match:{id:1}},{ $project: { pedidos: { $filter: { input: "$pedidos", as: "pedido", cond: { $eq: [ "$$pedido.abierto", true ] } } }, _id:0 } } ]) -> obtener platos abiertos

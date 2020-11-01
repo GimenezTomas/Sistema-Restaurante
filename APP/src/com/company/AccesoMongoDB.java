@@ -10,7 +10,9 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.result.UpdateResult;
 import com.sun.jdi.connect.spi.Connection;
 import org.bson.BsonDocument;
@@ -27,7 +29,10 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
+import static com.mongodb.client.model.Aggregates.match;
+import static com.mongodb.client.model.Aggregates.project;
 import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Projections.*;
 
 public class AccesoMongoDB {
     private Connection connection;
@@ -106,14 +111,16 @@ public class AccesoMongoDB {
     public ArrayList<Pedido> obtenerPedidos() {//resolver la fecha de los platos
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Pedido> pedidos = new ArrayList<>();
-
+//db.restaurante.aggregate([{$match:{id:1}},{ $project: { pedidos: { $filter: { input: "$pedidos", as: "pedido", cond: { $eq: [ "$$pedido.abierto", true ] } } }, _id:0 } } ])
         String json = "{_id:0, pedidos:1}";
-        //Bson bsonREQ = requisitosLogin;
-        //bsonREQ = and(BasicDBObject.parse("{pedidos:{$elemMatch:{abierto:true}}}"));
         Bson bson = BasicDBObject.parse(json);
-        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
 
-        MongoCursor iterator = resultado.iterator();
+        Bson $if = BasicDBObject.parse("{ $filter: { input: \"$pedidos\", as: \"pedido\", cond: { $eq: [ \"$$pedido.abierto\", true ] } } }");
+        Collection as = collection.aggregate(Arrays.asList(Aggregates.match(requisitosLogin),Aggregates.project( Projections.fields( Projections.excludeId(), Projections.include("pedidos"), Projections.computed("pedidos", $if))))).into(new ArrayList());
+
+        Iterator ad = as.iterator();
+
+        Iterator iterator = as.iterator();
 
         while (iterator.hasNext()) {
             Document document = (Document) iterator.next();
