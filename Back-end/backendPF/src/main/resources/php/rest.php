@@ -26,8 +26,11 @@
         <svg onmousedown="llamarCarrito('car')" viewBox="0 0 16 16" class="bi bi-cart4 car carrito" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
         </svg>
+        <span id="spanContador">
+            <h6 id="contador">0</h6>
+        </span>
     </div>
-    <!--<div class="cr"><img class="carrito" src="../static/images/user.png" alt="Homepage"></div>-->
+    <div class="cr"><img class="carrito" src="../static/images/user.png" alt="Homepage"></div>
 </header>
 
 <div class="padre">
@@ -58,6 +61,14 @@
         <a class = "tipos" href = "#seccionEmpanadas" onmouseout="mouseoverWHITE('entradasTBOX', false)" onmouseover="mouseoverWHITE('entradasTBOX', true)">
             <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
             <h3 id="entradasTBOX" class = "tipos_font">Entradas</h3>
+        </a>
+        <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('postres2TBOX', false)" onmouseover="mouseoverWHITE('postres2TBOX', true)">
+            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
+            <h3 id = "postres2TBOX" class = "tipos_font">Postres</h3>
+        </a>
+        <a class = "tipos" href = "#22" onmouseout="mouseoverWHITE('tragos2TBOX', false)" onmouseover="mouseoverWHITE('tragos2TBOX', true)">
+            <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
+            <h3 id="tragos2TBOX" class = "tipos_font">Tragos</h3>
         </a>
     </nav>
 </div>
@@ -739,6 +750,8 @@
     </div>
 </div>
 <script>
+    //contarPlatos()
+
     function clearArray(array) {
         while (array.length) {
             array.pop();
@@ -779,7 +792,6 @@
                 }
             }
         }
-        console.log(enviarOK)
         return enviarOK
     }
     function addPlatoAlCarrito(idnombre, idprecio, idimg, agregados){
@@ -847,6 +859,7 @@
             for (let i = 0; i < document.getElementsByClassName('obligatorio').length; i++) {
                 document.getElementsByClassName('obligatorio')[i].style.display="none"
             }
+            contarPlatos()
             cerrarAgregados()
         }else{
             for (let i = 0; i < document.getElementsByClassName('obligatorio').length; i++) {
@@ -948,19 +961,28 @@
     function eliminarPlato(idEliminar){
         let plato = document.getElementById(idEliminar)
         plato.parentNode.removeChild(plato)
-        platos.pop(plato)
+        for (let i = 0; i < platos.length; i++) {
+            if ((i+1).toString() == idEliminar.substr(idEliminar.length-1)){
+                platos.splice(i)
+                break
+            }
+        }
+        contarPlatos()
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
+        llamarCarrito('car')
     }
 
     function vaciarCanasta(id){
-        let platos = document.getElementById(id)
-        for(let plato = 0;  plato<platos.childNodes.length; plato++){
-            platos.removeChild(platos.childNodes[plato])
+        let platosHTML = document.getElementById(id)
+        for(let plato = 0;  plato<platosHTML.childNodes.length; plato++){
+            platosHTML.removeChild(platosHTML.childNodes[plato])
             plato--
         }
         clearArray(platos)
         document.getElementById("myModal").style.display="none"
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
+        contarPlatos()
+        llamarCarrito('car')
     }
 
     function actualizarPrecioTotal(idPlatos, classNamePrecio, clasePedir){
@@ -1010,7 +1032,7 @@
     }
 
     function canastaVacia(ok){
-        if(ok){
+        if(ok && platosYaPedidos.length>0){
             document.getElementById("pedidos").style.display="none"
             document.getElementById("carritoVacio").style.display="flex"
         }else{
@@ -1023,6 +1045,8 @@
         if(ok){
             document.getElementById("pedidos").style.display="block"
             document.getElementById("carritoVacio2").style.display="block"
+            document.getElementById("botonPedir").innerHTML = "Pedir ($"+0+")"
+            contarPlatos()
         }else{
             document.getElementById("proximaOrdenBody").style.display="block"
             document.getElementById("carritoVacio2").style.display="none"
@@ -1083,7 +1107,7 @@
 
         let node = document.createElement("LI")
         node.classList.add("pedido")
-        node.setAttribute("id", "plato"+(carrito.getElementsByTagName("LI").length+1))
+        node.setAttribute("id", "platoYaPedidos"+(carrito.getElementsByTagName("LI").length+1))
 
         node.appendChild(image)
         node.appendChild(h3)
@@ -1096,18 +1120,13 @@
 
     function pedir(){
         platos.forEach(plato => addPlatoYaPedidos(plato.nombre, plato.precio, plato.img, plato.agregados))
-
-        //clearArray(document.getElementById("proximaOrdenBody"))
+        clearArray(document.getElementById("proximaOrdenBody"))
         for (let i = 0; i < document.getElementById("proximaOrdenBody").childNodes.length; i++) {
             if (document.getElementById("proximaOrdenBody").childNodes[i] != undefined){
                 document.getElementById("proximaOrdenBody").childNodes[i].remove()
-                console.log("se borro")
-            }else{
-                console.log("no se borro, undefined")
+                i--
             }
-            i--
         }
-
         platosYaPedidos.push(platos)
         clearArray(platos)
         llamarCarrito('car')
@@ -1118,13 +1137,10 @@
         actualizarPrecioPlatosPedidos()
         if(platos.length==0 && platosYaPedidos.length==0){
             canastaVacia(true)
-            console.log("entre al if")
         }else if (platos.length==0 && platosYaPedidos.length>0){
             canastaVacia(false)
             canastaVacia2(true)
-            console.log("entre al else if")
         } else{
-            console.log("entre al else py"+platosYaPedidos.length+" p"+platos.length)
             canastaVacia(false)
             canastaVacia2(false)
         }
@@ -1155,6 +1171,15 @@
             document.getElementById(id).style.color="white"
         }else{
             document.getElementById(id).style.color="#282828"
+        }
+    }
+    /*contador*/
+    function contarPlatos(){
+        document.getElementById("contador").innerHTML = platos.length.toString()
+        if (platos.length==0){
+            document.getElementById("spanContador").style.display = 'none'
+        }else{
+            document.getElementById("spanContador").style.display = 'block'
         }
     }
 </script>

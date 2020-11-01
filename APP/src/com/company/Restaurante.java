@@ -325,7 +325,7 @@ public class Restaurante {
         labelExplicacion.setName("labelExplicacion");
         labelExplicacion.setVisible(true);
         labelExplicacion.setFont(fuentes.get("Times New Roman"));
-        labelExplicacion.setBounds(panel.getWidth()/2-225, 50, 300, 100);
+        labelExplicacion.setBounds(panel.getWidth()/2-225, 50, 500, 100);
         panel.add(labelExplicacion);
 
         JButton botonOut = new JButton("SALIR");
