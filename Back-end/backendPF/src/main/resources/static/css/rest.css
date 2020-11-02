@@ -468,6 +468,15 @@ html{
     padding: 10px 5px;
 }
 
+.platoCarritoDiv{
+    margin-left: 8px;
+}
+
+.platoCarritoDiv h5{
+    font-size: 12px;
+    color: #7d7d7d;
+}
+
 .pedidos .pedido img{
     border-style: solid;
     border-color: silver;
@@ -478,7 +487,6 @@ html{
 }
 
 .pedidos .pedido h3{
-    margin-left: 8px;
     font-size: 15px;
     font-weight: 400;
     text-align: center;
@@ -488,6 +496,7 @@ html{
     max-width: 220px;
     white-space: nowrap;
     color: white;
+    margin-left: 8px;
 }
 
 .pedidos .pedido .p h2, h4{
