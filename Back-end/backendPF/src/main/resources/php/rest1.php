@@ -7,6 +7,67 @@
         echo "<img class='zz' src='$ft'>";
         echo "<div class='nn'><h1 style='color: white'>$name</h1></div>";   
     }
+
+    function Secciones(){
+        $json = file_get_contents('collectionRestaurante.json');
+        $datos = json_decode($json,true);
+        $secc = $datos["seccionesPlatos"];
+        for ($i=0; $i < count($secc) ; $i++) {
+            $name = $datos["seccionesPlatos"][$i]["nombre"];
+            echo"<div class='platoContainer'>
+                    <div class='nombreSeccion'>
+                        <h1>$name</h1>
+                    </div>";
+                    $platos = $datos["seccionesPlatos"][$i]["platos"];
+            for ($j=0; $j < count($platos) ; $j++) { 
+                $nam = $platos[$j]["nombre"];
+                $img = $platos[$j]["imagen"];
+                $precio = $platos[$j]["precio"];
+                $demora = $platos[$j]["demora"];
+                $estrella = $platos[$j]["calificacion"];
+                echo"    <div class='body'>
+                            <div class='containerCard' id='11'>
+                                <div class='card'>
+                                    <div class='face face1'>
+                                        <div class='content'>
+                                            <div class='icon'>
+                                                <img src='$img' style='height: 200px; width: 300px;'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='face face2'>
+                                        <div style='background-color: white; width:100%; '>
+                                            <div style='margin-left: auto; margin-right: auto;'>
+                                                <h3 style='text-align: center;'>
+                                                    <a>$nam</a>
+                                                </h3>
+                                                <p style='text-align: center; font-weight: 500'>$$precio</p>
+                                                <div style='text-align: center;'>
+                                                    <span>
+                                                        <svg style='vertical-align: center' width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-star-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+                                                            <path d='M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z'/>
+                                                        </svg>                                        <h1 style='margin-right: 3%; font-size: 15px; display: inline-flex;'>$estrella</h1>
+                                                    </span>
+                                                    <h1 style='font-size: 15px; display: inline-flex;'>Demora: $demora</h1>
+                                                </div>
+                                                <div class='boton' onclick='llamarAgregados('boton')'>
+                                                    <div class='backgroundSVG'>
+                                                        <svg width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-plus-circle plus' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+                                                            <path fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                                            <path fill-rule='evenodd' d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>";
+            }
+            echo"</div>";
+        }
+    }
 ?>
 <html>
 <head>
@@ -22,7 +83,6 @@
 <body>
 <header>
     <div class="cr">
-        <!--<img onmousedown="llamarCarrito('car')" class="car carrito" src="../static/images/carrito.png" alt="Homepage">-->
         <svg onmousedown="llamarCarrito('car')" viewBox="0 0 16 16" class="bi bi-cart4 car carrito" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
         </svg>
@@ -30,11 +90,10 @@
             <h6 id="contador">0</h6>
         </span>
     </div>
-    <div class="cr"><img class="carrito" src="../static/images/user.png" alt="Homepage"></div>
 </header>
 
 <div class="padre">
-    <div class="nombre"><img class="zz" src="../static/images/9z.png"></div>
+    <div class="nombre"><img class="zz" src="images/9z.png"></div>
 </div>
 
 <div class="res">
@@ -43,389 +102,37 @@
 <div class="tiposBoxContainer">
     <nav class = tiposBox>
         <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('postresTBOX', false)" onmouseover="mouseoverWHITE('postresTBOX', true)">
-            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
+            <img src="images/helado.png" alt="not found" width = "25" height = "25">
             <h3 id = "postresTBOX" class = "tipos_font">Postres</h3>
         </a>
         <a class = "tipos" href = "#22" onmouseout="mouseoverWHITE('tragosTBOX', false)" onmouseover="mouseoverWHITE('tragosTBOX', true)">
-            <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
+            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
             <h3 id="tragosTBOX" class = "tipos_font">Tragos</h3>
         </a>
         <a class = "tipos" href = "#seccionBebidas" onmouseout="mouseoverWHITE('bebidasTBOX', false)" onmouseover="mouseoverWHITE('bebidasTBOX', true)">
-            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
+            <img src="images/helado.png" alt="not found" width = "25" height = "25">
             <h3 id = "bebidasTBOX" class = "tipos_font">Bebidas</h3>
         </a>
         <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('minutasTBOX', false)" onmouseover="mouseoverWHITE('minutasTBOX', true)">
-            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
+            <img src="images/helado.png" alt="not found" width = "25" height = "25">
             <h3 id = "minutasTBOX" class = "tipos_font">Minutas</h3>
         </a>
         <a class = "tipos" href = "#seccionEmpanadas" onmouseout="mouseoverWHITE('entradasTBOX', false)" onmouseover="mouseoverWHITE('entradasTBOX', true)">
-            <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
+            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
             <h3 id="entradasTBOX" class = "tipos_font">Entradas</h3>
         </a>
         <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('postres2TBOX', false)" onmouseover="mouseoverWHITE('postres2TBOX', true)">
-            <img src="../static/images/helado.png" alt="not found" width = "25" height = "25">
+            <img src="images/helado.png" alt="not found" width = "25" height = "25">
             <h3 id = "postres2TBOX" class = "tipos_font">Postres</h3>
         </a>
         <a class = "tipos" href = "#22" onmouseout="mouseoverWHITE('tragos2TBOX', false)" onmouseover="mouseoverWHITE('tragos2TBOX', true)">
-            <img src="../static/images/empanada.png" alt="not found" width = "25" height = "25">
+            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
             <h3 id="tragos2TBOX" class = "tipos_font">Tragos</h3>
         </a>
     </nav>
 </div>
 <div id="seccionesContainer">
-    <div id="seccionMinutas" class="platoContainer">
-        <div class="nombreSeccion">
-            <h1>Minutas</h1>
-        </div>
-        <div class="body">
-            <div class="containerCard" id="11">
-                <div class="card">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagenCoca1" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Fanta</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados('boton')">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div><!--agrandar, centrar y cambiar de color-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="containerCard" id="11'">
-                <div class="card">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagenCoca1'" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Manaos</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados('boton')">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="containerCard" id="11''">
-                <div class="card">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagenCoca1''" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Mirinda</a>
-                                </h3>
-                                <p style="text-align: center;">$ 100</p>
-                                <div style="text-align: center;">
-                                    <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados('boton')">
-                                    <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="seccionEmpanadas" class="platoContainer">
-        <div class="nombreSeccion">
-            <h1>Entradas</h1>
-        </div>
-        <div class="body">
-
-            <div class="containerCard" id="33">
-                <div class="card" id="perro3">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagenCoca3" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Coca cola</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados()">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="containerCard" id="44">
-                <div class="card" id="perro4">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagenCoca4" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Coca cola</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados()">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="containerCard" id="55">
-                <div class="card" id="perro5">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagenCoca5" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Coca cola</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados()">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="seccionBebidas" class="platoContainer">
-        <div class="nombreSeccion">
-            <h1>Bebidas</h1>
-        </div>
-        <div class="body">
-
-            <div class="containerCard" id="aa1">
-                <div class="card" id="aa2">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="sax3" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Coca cola</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados()">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="containerCard" id="4sa4">
-                <div class="card" id="perro4sa">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagesanCoca4" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Coca cola</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados()">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="containerCard" id="55sa">
-                <div class="card" id="perro5sa">
-                    <div class="face face1">
-                        <div class="content">
-                            <div class="icon">
-                                <img id="imagesanCoca5" src="../static/images/reyes.jpg" style="height: 200px; width: 300px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="face face2">
-                        <div style="background-color: white; width:100%; ">
-                            <div style="margin-left: auto; margin-right: auto;">
-                                <h3 style="text-align: center;">
-                                    <a>Coca cola</a>
-                                </h3>
-                                <p style="text-align: center; font-weight: 500">$ 100</p>
-                                <div style="text-align: center;">
-                                    <span>
-                                        <svg style="vertical-align: center" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>                                        <h1 style="margin-right: 3%; font-size: 15px; display: inline-flex;">5.0</h1>
-                                    </span>
-                                    <h1 style="font-size: 15px; display: inline-flex;">Demora: 20 min</h1>
-                                </div>
-                                <div class="boton" onclick="llamarAgregados()">
-                                    <div class="backgroundSVG">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php Secciones();?>
 </div>
 
 <div id="factura" class="containerFactura" >
@@ -434,15 +141,15 @@
             <svg onmousedown="activarDisplayFactura('factura', false)" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/>
             </svg>
-            <img src="../static/images/appleLogo.png" alt="">
+            <img src="images/appleLogo.png" alt="">
         </div>
         <div class="headerUsuario">
-            <img src="../static/images/usuarioLogo.png" alt="">
+            <img src="images/usuarioLogo.png" alt="">
             <h1>Tomás Giménez</h1>
             <!--<h2>PUNTOS: 0</h1> SI O NO?-->
         </div>
         <div class="headerRestaurante">
-            <img src="../static/images/logoRestaurante.jpg" alt="">
+            <img src="images/logoRestaurante.jpg" alt="">
             <h1>Cantina Los Lopez</h1>
         </div>
         <div id = "pedidos" class="pedidos">
@@ -469,7 +176,7 @@
                         <div class="body">
                             <div id="platosYaPedidos" class="platoss">
                                 <li id = "plato2" class="pedido">
-                                    <img src="../static/images/ñoquis.jpg" alt="">
+                                    <img src="images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -477,7 +184,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato3" class="pedido">
-                                    <img src="../static/images/reyes.jpg" alt="">
+                                    <img src="images/reyes.jpg" alt="">
                                     <h3>Milanesa con papas fritas</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -485,7 +192,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato4" class="pedido">
-                                    <img src="../static/images/ñoquis.jpg" alt="">
+                                    <img src="images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -493,7 +200,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato5" class="pedido">
-                                    <img src="../static/images/reyes.jpg" alt="">
+                                    <img src="images/reyes.jpg" alt="">
                                     <h3>Milanesa con papas fritas</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -501,7 +208,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato6" class="pedido">
-                                    <img src="../static/images/ñoquis.jpg" alt="">
+                                    <img src="images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -510,7 +217,7 @@
                                 </li>
 
                                 <li id = "plato7" class="pedido">
-                                    <img src="../static/images/ñoquis.jpg" alt="">
+                                    <img src="images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -518,7 +225,7 @@
                                     </div>
                                 </li>
                                 <li id = "plato8" class="pedido">
-                                    <img src="../static/images/ñoquis.jpg" alt="">
+                                    <img src="images/ñoquis.jpg" alt="">
                                     <h3>Ñoquis con salsa</h3>
                                     <div class="p">
                                         <h2>$</h2>
@@ -540,7 +247,7 @@
                         </div>
                         <div id="proximaOrdenBody" class="body">
                             <li id = "plato1" class="pedido" onmouseover="botonEliminar('botonDelete1', true)" onmouseout="botonEliminar('botonDelete1', false)">
-                                <img src="../static/images/reyes.jpg" alt="">
+                                <img src="images/reyes.jpg" alt="">
                                 <h3>Milanesa con papas fritas</h3>
                                 <div class="p">
                                     <h2>$</h2>
@@ -582,7 +289,7 @@
     <div class="mContent">
         <div class="cardAgregados">
             <div class="left">
-                <img id="imagenAG" src="../static/images/ñoquis.jpg" alt="Card image cap">
+                <img id="imagenAG" src="images/ñoquis.jpg" alt="Card image cap">
             </div>
             <div class="right">
                 <div class="borrar">

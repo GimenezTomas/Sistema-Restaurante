@@ -3,7 +3,7 @@
     "$oid": "5f83e3308a90e237302621ac"
   },
   "id": 1,
-  "nombre": "Full Picado",
+  "nombre": "Mc' Donalds",
   "direccion": "Triunvirato 4600",
   "logo": "images\\mc.png",
   "login": [
@@ -57,6 +57,7 @@
           "descripcion": "muy ricos",
           "precio": 50.2,
           "demora": "25min",
+          "calificacion": 4.2,
           "agregados": [
             {
               "tipo": "porcion",
@@ -94,6 +95,7 @@
           "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
           "precio": 400,
           "demora": "15min",
+          "calificacion": 5.0,
           "agregados": [],
           "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
           "nombre": "Pizza napolitana"
@@ -107,6 +109,7 @@
           "descripcion": "500g de Bife de chorizo acompañado con una guarnición de papas fritas",
           "precio": 860,
           "demora": "30min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Punto",
@@ -144,6 +147,7 @@
           "descripcion": "Tira de asado, vacio, entraña y un matrimonio acompañado con dos porciones de papas fritas. Comen 2 o 3.",
           "precio": 1700,
           "demora": "25MIN",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Guarnición",
@@ -171,6 +175,7 @@
           "descripcion": "sanguche de chorizo a la parrilla con chimichurri",
           "precio": 260,
           "demora": "6min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Guarnición",
@@ -190,6 +195,7 @@
           "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
           "precio": 699.5,
           "demora": "30min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Postres",
@@ -217,6 +223,7 @@
           "descripcion": "Tira de asado cortada fina a la parrilla",
           "precio": 500.1,
           "demora": "20min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Punto de la carne",
