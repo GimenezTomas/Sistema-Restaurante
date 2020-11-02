@@ -14,19 +14,19 @@
         $secc = $datos["seccionesPlatos"];
         for ($i=0; $i < count($secc) ; $i++) {
             $name = $datos["seccionesPlatos"][$i]["nombre"];
-            echo"<div class='platoContainer'>
+            ?><div class='platoContainer'>
                     <div class='nombreSeccion'>
-                        <h1>$name</h1>
-                    </div>";
-                    $platos = $datos["seccionesPlatos"][$i]["platos"];
+                        <h1><?php echo $name ?> </h1>
+                    </div>
+                    <div class='body'><?php
+            $platos = $datos["seccionesPlatos"][$i]["platos"];
             for ($j=0; $j < count($platos) ; $j++) { 
                 $nam = $platos[$j]["nombre"];
                 $img = $platos[$j]["imagen"];
                 $precio = $platos[$j]["precio"];
                 $demora = $platos[$j]["demora"];
                 $estrella = $platos[$j]["calificacion"];
-                echo"    <div class='body'>
-                            <div class='containerCard' id='11'>
+                ?>      <div class='containerCard'>
                                 <div class='card'>
                                     <div class='face face1'>
                                         <div class='content'>
@@ -39,18 +39,18 @@
                                         <div style='background-color: white; width:100%; '>
                                             <div style='margin-left: auto; margin-right: auto;'>
                                                 <h3 style='text-align: center;'>
-                                                    <a>$nam</a>
+                                                    <a><?php echo ($nam); ?></a>
                                                 </h3>
-                                                <p style='text-align: center; font-weight: 500'>$$precio</p>
+                                                <p style='text-align: center; font-weight: 500'>$<?php echo $precio; ?></p>
                                                 <div style='text-align: center;'>
                                                     <span>
                                                         <svg style='vertical-align: center' width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-star-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
                                                             <path d='M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z'/>
-                                                        </svg>                                        <h1 style='margin-right: 3%; font-size: 15px; display: inline-flex;'>$estrella</h1>
+                                                        </svg>                                        <h1 style='margin-right: 3%; font-size: 15px; display: inline-flex;'><?php echo $estrella ?></h1>
                                                     </span>
-                                                    <h1 style='font-size: 15px; display: inline-flex;'>Demora: $demora</h1>
+                                                    <h1 style='font-size: 15px; display: inline-flex;'>Demora: <?php echo $demora?></h1>
                                                 </div>
-                                                <div class='boton' onclick='llamarAgregados('boton')'>
+                                                <div class='boton' onclick="llamarAgregados('boton')">
                                                     <div class='backgroundSVG'>
                                                         <svg width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-plus-circle plus' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
                                                             <path fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
@@ -63,10 +63,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>";
+                        <?php
+                }   ?>
+            </div>
+            </div><?php
             }
-            echo"</div>";
-        }
     }
 ?>
 <html>
@@ -246,7 +247,7 @@
                             <h1>Proxima orden</h1>
                         </div>
                         <div id="proximaOrdenBody" class="body">
-                            <li id = "plato1" class="pedido" onmouseover="botonEliminar('botonDelete1', true)" onmouseout="botonEliminar('botonDelete1', false)">
+                            <!--<li id = "plato1" class="pedido" onmouseover="botonEliminar('botonDelete1', true)" onmouseout="botonEliminar('botonDelete1', false)">
                                 <img src="images/reyes.jpg" alt="">
                                 <h3>Milanesa con papas fritas</h3>
                                 <div class="p">
@@ -256,7 +257,7 @@
                                         <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
                                     </svg>
                                 </div>
-                            </li>
+                            </li>-->
                         </div>
                         <div id="carritoVacio2" style="display: block;">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

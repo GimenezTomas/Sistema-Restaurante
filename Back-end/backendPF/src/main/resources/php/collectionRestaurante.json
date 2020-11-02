@@ -146,7 +146,7 @@
         {
           "descripcion": "Tira de asado, vacio, entraña y un matrimonio acompañado con dos porciones de papas fritas. Comen 2 o 3.",
           "precio": 1700,
-          "demora": "25MIN",
+          "demora": "25min",
           "calificacion": 5.0,
           "agregados": [
             {

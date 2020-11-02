@@ -69,7 +69,81 @@
             </div><?php
             }
     }
+
+
+
+    function aagregados(){
+        $json = file_get_contents('collectionRestaurante.json');
+        $datos = json_decode($json,true);
+        $secc = $datos["seccionesPlatos"];
+        for ($i=0; $i < count($secc) ; $i++) {
+            $platos = $datos["seccionesPlatos"][$i]["platos"];
+            for ($j=0; $j < count($platos) ; $j++) { 
+                $nam = $platos[$j]["nombre"];
+                $descripcion = $platos[$j]["descripcion"];   
+                $img = $platos[$j]["imagen"];?>
+                <div id = "containerAgregados" class="containerAgregados">
+                    <div class="mContent">
+                        <div class="cardAgregados">
+                            <div class="left">
+                                <img id="imagenAG" src="<?php echo $img ?>" alt="Card image cap">
+                            </div>
+                            <div class="right">
+                            <div class="borrar">
+                                 <svg onclick = cerrarAgregados()  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
+                                    </svg>
+                            </div>
+                        <div id="nombreAG"class="nombre">
+                            <h3><?php echo $nam ?></h3>
+                            <p><?php echo $descripcion ?></p>
+                        </div><?php
+                $adds = $datos["seccionesPlatos"][$i]["platos"][$j]["agregados"];
+                for ($z=0; $z < count($adds) ; $z++) { 
+                    $tipo = $adds[$z]["tipo"];
+                    $indispensable = $adds[$z]["indispensable"];?>
+                    <div id="opciones">
+                        <div class = "tiposSeccion">
+                            <div class="header">
+                                <h1><?php echo $tipo ?></h1>
+                            </div><?php
+                    $agg = $datos["seccionesPlatos"][$i]["platos"][$j]["agregados"][$z]["agregado"];
+                    for ($k=0; $k < count($agg) ; $k++) { 
+                        $nomb = $agg[$k]["nombre"];
+                        $price = $agg[$k]["precio"];?>
+                        <ul id="salsas">
+                            <li id="botonSalsa" class="botonMasAgregado" onclick=calcularPrecio()>
+                                <input type="checkbox"></input>
+                                <div>
+                                    <h3><?php echo $nomb ?></h3>
+                                    <h2 class = "precioAgregado">(+$<?php echo $price ?>)</h2>
+                                </div>
+                            </li>
+                        </ul>
+                    </div><?php
+                    }
+                }?>
+                <div class="precioTotal">
+                <h1>Total: $</h1>
+                <span>
+                        <h2 id="precioActualizado">500</h2>
+                        <h3 id="precioBase">$400</h3>
+                    </span>
+            </div>
+        </div>
+        <section class="padre">
+            <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
+            <button onmousedown="addPlatoAlCarrito('nombreAG', 'precioActualizado','imagenAG', 'sxaxax')" class="botonAgregar">Agregar</button>
+        </section>
+    </div>
+</div>
+</div>
+</div><?php
+            }
+        }
+    }
 ?>
+
 <html>
 <head>
     <title>Menu</title>
@@ -286,7 +360,9 @@
         </div>
     </div>
 </div>
-<div id = "containerAgregados" class="containerAgregados">
+
+<?php aagregados(); ?>
+<!--<div id = "containerAgregados" class="containerAgregados">
     <div class="mContent">
         <div class="cardAgregados">
             <div class="left">
@@ -456,7 +532,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <script>
     //contarPlatos()
 
