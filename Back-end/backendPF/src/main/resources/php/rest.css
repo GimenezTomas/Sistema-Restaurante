@@ -763,7 +763,7 @@ html{
 }
 
 .containerAgregados .cardAgregados .right .nombre{
-    height: 125px;
+    max-height: 125px;
     border-bottom-width: 1px;
     border-bottom-color: gainsboro;
     border-bottom-style: solid;
@@ -773,14 +773,14 @@ html{
     font-size: 25px;
     font-size: 25px;
     overflow-y: scroll;
-    height: 60px;
+    max-height: 60px;
 }
 
 .containerAgregados .cardAgregados .right .nombre p{
     font-size: 14px;
     color: silver;
     overflow-y: scroll;
-    height: 45px;
+    max-height: 45px;
 }
 
 .containerAgregados .cardAgregados .right #opciones{

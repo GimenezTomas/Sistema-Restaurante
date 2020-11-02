@@ -63,9 +63,9 @@ public class AccesoMongoDB {
     }
 
     //public static Bson requisitosLogin;
-    public AccesoMongoDB(String base/*, String host, int puerto*/) {
+    public AccesoMongoDB(/*String base*//*, String host, int puerto*/) {
         MongoClient mongoClient = new MongoClient();
-        this.base = mongoClient.getDatabase(base);
+        this.base = mongoClient.getDatabase(/*base*/"proyectoFinal");
         /*this.host = host;
         this.puerto = puerto;*/
     }

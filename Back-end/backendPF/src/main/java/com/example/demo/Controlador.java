@@ -1,4 +1,4 @@
-package com.example.demo;
+/*package com.example.demo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,10 +29,9 @@ public class Controlador {
 
     private File json;
 
-    public Controlador(AccesoMongoDB accesoMongoDB) {
+    public Controlador() {
         this.json = new File(".src/main/resources/files/archivoJSON");
-        this.accesoMongoDB = accesoMongoDB;
-        this.acces = new AccesoMongoDB("proyectoFInal");
+        this.accesoMongoDB = new AccesoMongoDB();
         this.servicioParaSubirArchivos = new Servicio();
     }
 
@@ -59,7 +58,7 @@ public class Controlador {
         this.guardarDatosALaBase();
     }
 
-    public void mandarPedidosAPI(int nPedido){
+    public void obtenerPlatos(int nPedido){
         Pedido pedido =  accesoMongoDB.obtenerPedido(nPedido);
 
         if (pedido.getnPedido()>0) {
@@ -283,5 +282,5 @@ public class Controlador {
         return informacion;
     }
 
-}
+}*/
 

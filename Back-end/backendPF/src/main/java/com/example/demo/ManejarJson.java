@@ -91,7 +91,11 @@ public class ManejarJson {
     }
     public static void main(String [] args) throws IOException {
         ManejarJson m = new ManejarJson();
-        m.insertarPlatoPedido();
+        //m.insertarPlatoPedido();
+        m.dataUserAlaAPI();
+        m.seccionesPlatosAlaAPI();
+        m.platosYApedidosAlaAPI(1, 1);
+        m.tiposPlatosAlaAPI();
     }
 }
 // db.restaurante.aggregate([{$match:{id:2}},{ $project: { pedidos: { $filter: { input: "$pedidos", as: "pedido", cond: { $eq: [ "$$pedido.abierto", true ] } } }, _id:0 } } ]) -> devuelve los pedidos del id : 1 que esten abiertos

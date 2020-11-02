@@ -1,3 +1,21 @@
+<script>
+        /*clases*/
+        class Plato {
+            constructor(nombre, precio, descripcion, img, agregados){
+                this.nombre = nombre
+                this.precio = precio
+                this.descripcion = descripcion
+                this.img = img
+                this.agregados = agregados
+            }
+        }
+
+        platosCarta=[]
+        platos=[]
+        platosYaPedidos=[]
+
+        let afa = null
+    </script>
 <?php
     function Perfil(){
         $json = file_get_contents('collectionRestaurante.json');
@@ -26,6 +44,34 @@
                 $precio = $platos[$j]["precio"];
                 $demora = $platos[$j]["demora"];
                 $estrella = $platos[$j]["calificacion"];
+                $agregadosLimpio = array();
+                $agregadoArrayTipos = array();
+                for($z = 0; $z < count($platos[$j]["agregados"]); $z++){
+                    $agregados = $platos[$j]["agregados"][$z];
+                    $agregadoArrayTipos["tipo"] = $agregados["tipo"];
+                    $agregadoArray = array();
+
+                    for($k = 0; $k<count($agregados["agregado"]); $k++){
+                        $agregadoMap = array("nombre" => $agregados["agregado"][$k]["nombre"], "precio" => $agregados["agregado"][$k]["precio"]);
+                        array_push($agregadoArray, $agregadoMap);
+                    }
+                    $agregadoArrayTipos["agregado"] = $agregadoArray;
+                    array_push($agregadosLimpio, $agregadoArrayTipos);
+                }
+                ?>
+                    <script> 
+                        afa = function (){
+                            let nombre12 = "<?php echo $nam; ?>";
+                            let precio12 = "<?php echo $precio; ?>";
+                            let descripcion12 = "<?php echo $platos[$j]["descripcion"]; ?>";
+                            let imagen12 = "<?php echo $img; ?>";
+                            let agregados = <?php echo json_encode($agregadosLimpio); ?>;
+                            let plato12 = new Plato(nombre12, precio12, descripcion12, imagen12, agregados); 
+                            platosCarta.push(plato12)
+                        }
+                        afa();
+                    </script>
+                    <?php
                 ?>      <div class='containerCard'>
                                 <div class='card'>
                                     <div class='face face1'>
@@ -50,7 +96,7 @@
                                                     </span>
                                                     <h1 style='font-size: 15px; display: inline-flex;'>Demora: <?php echo $demora?></h1>
                                                 </div>
-                                                <div class='boton' onclick="llamarAgregados('boton')">
+                                                <div class='boton' onclick="rellenarModalAgregados('<?php echo $nam; ?>')">
                                                     <div class='backgroundSVG'>
                                                         <svg width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-plus-circle plus' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
                                                             <path fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
@@ -68,81 +114,7 @@
             </div>
             </div><?php
             }
-    }
-
-
-
-    function aagregados(){
-        $json = file_get_contents('collectionRestaurante.json');
-        $datos = json_decode($json,true);
-        $secc = $datos["seccionesPlatos"];
-        for ($i=0; $i < count($secc) ; $i++) {
-            $platos = $datos["seccionesPlatos"][$i]["platos"];
-            for ($j=0; $j < count($platos) ; $j++) { 
-                $nam = $platos[$j]["nombre"];
-                $descripcion = $platos[$j]["descripcion"];   
-                $img = $platos[$j]["imagen"];?>
-                <div id = "containerAgregados" class="containerAgregados">
-                    <div class="mContent">
-                        <div class="cardAgregados">
-                            <div class="left">
-                                <img id="imagenAG" src="<?php echo $img ?>" alt="Card image cap">
-                            </div>
-                            <div class="right">
-                            <div class="borrar">
-                                 <svg onclick = cerrarAgregados()  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
-                                    </svg>
-                            </div>
-                        <div id="nombreAG"class="nombre">
-                            <h3><?php echo $nam ?></h3>
-                            <p><?php echo $descripcion ?></p>
-                        </div><?php
-                $adds = $datos["seccionesPlatos"][$i]["platos"][$j]["agregados"];
-                for ($z=0; $z < count($adds) ; $z++) { 
-                    $tipo = $adds[$z]["tipo"];
-                    $indispensable = $adds[$z]["indispensable"];?>
-                    <div id="opciones">
-                        <div class = "tiposSeccion">
-                            <div class="header">
-                                <h1><?php echo $tipo ?></h1>
-                            </div><?php
-                    $agg = $datos["seccionesPlatos"][$i]["platos"][$j]["agregados"][$z]["agregado"];
-                    for ($k=0; $k < count($agg) ; $k++) { 
-                        $nomb = $agg[$k]["nombre"];
-                        $price = $agg[$k]["precio"];?>
-                        <ul id="salsas">
-                            <li id="botonSalsa" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3><?php echo $nomb ?></h3>
-                                    <h2 class = "precioAgregado">(+$<?php echo $price ?>)</h2>
-                                </div>
-                            </li>
-                        </ul>
-                    </div><?php
-                    }
-                }?>
-                <div class="precioTotal">
-                <h1>Total: $</h1>
-                <span>
-                        <h2 id="precioActualizado">500</h2>
-                        <h3 id="precioBase">$400</h3>
-                    </span>
-            </div>
-        </div>
-        <section class="padre">
-            <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
-            <button onmousedown="addPlatoAlCarrito('nombreAG', 'precioActualizado','imagenAG', 'sxaxax')" class="botonAgregar">Agregar</button>
-        </section>
-    </div>
-</div>
-</div>
-</div><?php
-            }
-        }
-    }
-?>
+    }?>
 
 <html>
 <head>
@@ -361,8 +333,8 @@
     </div>
 </div>
 
-<?php aagregados(); ?>
-<!--<div id = "containerAgregados" class="containerAgregados">
+
+<div id = "containerAgregados" class="containerAgregados">
     <div class="mContent">
         <div class="cardAgregados">
             <div class="left">
@@ -375,11 +347,11 @@
                     </svg>
                 </div>
                 <div id="nombreAG"class="nombre">
-                    <h3>Ñoquis con crema y cebolla de verdeo</h3>
-                    <p>Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
+                    <h3 id="nombreAgregados">Ñoquis con crema y cebolla de verdeo</h3>
+                    <p id = "descripcionAgregados">Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
                 </div>
                 <div id="opciones">
-                    <div class = "tiposSeccion">
+                    <!--<div class = "tiposSeccion">
                         <div class="header">
                             <h1>Salsas</h1>
                             <div class="obligatorio">
@@ -516,7 +488,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                     <div class="precioTotal">
                         <h1>Total: $</h1>
                         <span>
@@ -532,7 +504,7 @@
             </div>
         </div>
     </div>
-</div>-->
+</div>
 <script>
     //contarPlatos()
 
@@ -541,19 +513,7 @@
             array.pop();
         }
     }
-    /*clases*/
-    class Plato {
-        constructor(nombre, precio, descripcion, img, agregados){
-            this.nombre = nombre
-            this.precio = precio
-            this.descripcion = descripcion
-            this.img = img
-            this.agregados = agregados
-        }
-    }
 
-    platos=[]
-    platosYaPedidos=[]
     function confirmarSeccionesIndispensables(id){
         let opciones = document.getElementById(id)
         let enviarOK = false
@@ -964,6 +924,48 @@
             document.getElementById("spanContador").style.display = 'none'
         }else{
             document.getElementById("spanContador").style.display = 'block'
+        }
+        console.log("platos carta: "+platosCarta.length)
+        platosCarta.forEach(plato => console.log(plato))
+    }
+
+    function rellenarModalAgregados(nombrePlato){
+        for (let i = 0; i < platosCarta.length; i++) {
+           if(platosCarta[i].nombre == nombrePlato){
+               plato = platosCarta[i]
+               document.getElementById("nombreAgregados").innerHTML = nombrePlato
+               document.getElementById("descripcionAgregados").innerHTML = plato.descripcion 
+               document.getElementById("imagenAG").src = plato.imagen//no se si va src 
+               document.getElementById("precioBase").innerHTML = plato.precio//no se si va src 
+               document.getElementById("precioActualizado").src = plato.precio//no se si va src 
+
+                //de aca para abajo va en un for    
+                divTiposSeccion = document.createElement("DIV")
+                divTiposSeccion.classList.add("tiposSeccion")
+
+                divHeader = document.createElement("DIV")
+                divHeader.classList.add("header")
+                
+                if(/*agregado.indispensable (vas a tener que hacer un for)*/){
+                    divObligatorio = document.createElement("DIV")
+                    divObligatorio.classList.add("obligatorio")
+                    divHeader.appendChild(divObligatorio)
+                }
+
+                ulInputs = document.createElement("UL")
+                ulInputs.classList.add("body")
+                ulInputs.classList.add("indispensable")//solo si es indispensable
+
+                //rellenarlo con inputs
+
+                divTiposSeccion.appendChild(divHeader)
+                divTiposSeccion.appendChild(ulInputs)
+//aca termina el for
+                document.getElementById('opciones').appendChild(divTiposSeccion)//
+
+                llamarAgregados('boton')
+               break
+           }           
         }
     }
 </script>
