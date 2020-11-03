@@ -49,6 +49,7 @@
                 for($z = 0; $z < count($platos[$j]["agregados"]); $z++){
                     $agregados = $platos[$j]["agregados"][$z];
                     $agregadoArrayTipos["tipo"] = $agregados["tipo"];
+                    $agregadoArrayTipos["indispensable"] = $agregados["indispensable"];
                     $agregadoArray = array();
 
                     for($k = 0; $k<count($agregados["agregado"]); $k++){
