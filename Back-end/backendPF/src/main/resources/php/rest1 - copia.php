@@ -370,10 +370,12 @@
     function confirmarSeccionesIndispensables(id){
         let opciones = document.getElementById(id)
         let enviarOK = false
+        let noInd = true
         for(let i=0; i<opciones.childNodes.length; i++) {
             if (opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].classList.contains("tiposSeccion")){
                 for (let j = 0; j < opciones.childNodes[i].childNodes.length; j++) {
                     if (opciones.childNodes[i].childNodes[j].tagName === 'UL' && opciones.childNodes[i].childNodes[j].classList.contains("indispensable")){
+                        noInd = false
                         let seccion = opciones.childNodes[i].childNodes[j]
                         for (k = 0; k <seccion.childNodes.length ; k++) {
                             if (seccion.childNodes[k].tagName === 'LI'){
@@ -389,7 +391,50 @@
                 }
             }
         }
-        return enviarOK
+        if(noInd){
+            return true
+        }else{
+            return enviarOK
+        }
+    }
+
+    function agregadosApedido(id){
+        let arrayAG = []
+        let opciones = document.getElementById(id)
+        for(let i=0; i<opciones.childNodes.length; i++) {
+            if (opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].classList.contains("tiposSeccion")){
+                for (let j = 0; j < opciones.childNodes[i].childNodes.length; j++) {
+                    if (opciones.childNodes[i].childNodes[j].tagName === 'UL'){
+                        let seccion = opciones.childNodes[i].childNodes[j]
+                        for (k = 0; k <seccion.childNodes.length ; k++) {
+                            if (seccion.childNodes[k].tagName === 'LI'){
+                                let ok=false
+                                let arrayAso = []
+                                for (let l = 0; l < seccion.childNodes[k].childNodes.length ; l++) {
+                                    if (seccion.childNodes[k].childNodes[l].tagName === 'INPUT' && seccion.childNodes[k].childNodes[l].checked){
+                                        ok=true
+                                    }
+                                    if(seccion.childNodes[k].childNodes[l].tagName === 'DIV' && ok){
+                                        for(let m = 0; m < seccion.childNodes[k].childNodes[l].childNodes.length ; m++){
+                                            if(seccion.childNodes[k].childNodes[l].childNodes[m].tagName === 'H3'){
+                                                arrayAso["nombre"] = seccion.childNodes[k].childNodes[l].childNodes[m].innerHTML
+                                            }else if(seccion.childNodes[k].childNodes[l].childNodes[m].tagName === 'H2'){
+                                                let a = seccion.childNodes[k].childNodes[l].childNodes[m].innerHTML
+                                                arrayAso["precio"] = seccion.childNodes[k].childNodes[l].childNodes[m].innerHTML.substring(3, a.length-1)
+                                            }
+                                        }
+                                    }
+                                }
+                                if(ok){
+                                    arrayAG.push(arrayAso)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return arrayAG
     }
 
     function addPlatoAlCarrito(idnombre, idprecio, idimg, agregados){
@@ -399,7 +444,7 @@
             let img = document.getElementById(idimg).src
             let precio = document.getElementById(idprecio).innerHTML
 
-            let plato = new Plato(nombre, precio, descripcion, img, agregados)
+            let plato = new Plato(nombre, precio, descripcion, img, agregadosApedido('containerSeccionesAG'))
 
             platos.push(plato)
             let carrito = document.getElementById('proximaOrdenBody')
@@ -779,8 +824,6 @@
         }else{
             document.getElementById("spanContador").style.display = 'block'
         }
-        console.log("platos carta: "+platosCarta.length)
-        platosCarta.forEach(plato => console.log(plato))
     }
 
     function rellenarModalAgregados(nombrePlato){
