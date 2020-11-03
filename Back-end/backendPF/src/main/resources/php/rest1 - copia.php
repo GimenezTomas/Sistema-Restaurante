@@ -77,17 +77,17 @@
                                     <div class='face face1'>
                                         <div class='content'>
                                             <div class='icon'>
-                                                <img src='$img' style='height: 200px; width: 300px;'>
+                                                <img src='<?php echo $img; ?>' style='height: 200px; width: 300px;'>
                                             </div>
                                         </div>
                                     </div>
                                     <div class='face face2'>
                                         <div style='background-color: white; width:100%; '>
                                             <div style='margin-left: auto; margin-right: auto;'>
-                                                <h3 style='text-align: center;'>
-                                                    <a><?php echo ($nam); ?></a>
+                                                <h3 style='text-align: center; font-size:22px; max-height:50px; overflow-y:scroll;'>
+                                                    <?php echo ($nam); ?>
                                                 </h3>
-                                                <p style='text-align: center; font-weight: 500'>$<?php echo $precio; ?></p>
+                                                <p style='text-align: center; font-weight: 600; font-size:20px;'>$<?php echo $precio; ?></p>
                                                 <div style='text-align: center;'>
                                                     <span>
                                                         <svg style='vertical-align: center' width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-star-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
@@ -351,144 +351,7 @@
                     <p id = "descripcionAgregados">Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
                 </div>
                 <div id="opciones">
-                    <!--<div class = "tiposSeccion">
-                        <div class="header">
-                            <h1>Salsas</h1>
-                            <div class="obligatorio">
-                                <h1>Obligatorio!</h1>
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <ul id="salsas" class="body indispensable">
-                            <li id="botonSalsa1" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Fileto</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa2" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Crema</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa3" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Boloñesa</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa4" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Salsa Rosa</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa5" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Salsa Blanca</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa6" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Fileto</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa7" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Fileto</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa8" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Fileto</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="botonSalsa9" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Fileto</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class = "tiposSeccion">
-                        <h1 class="header">Postres</h1>
-                        <ul id="postres" class="body">
-                            <li id="btnS1" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Mousse de chocolate</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="btnS2" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Mousse de limón</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="btnS3" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Flan con dulce de leche</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="btnS4" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Budin</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="btnS5" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Chocotorta</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="btnS6" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Ensalada de frutas</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="btnS7" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Helado de chocolate</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                            <li id="btnS8" class="botonMasAgregado" onclick=calcularPrecio()>
-                                <input type="checkbox"></input>
-                                <div>
-                                    <h3>Helado de crema</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>-->
+
                     <div class="precioTotal">
                         <h1>Total: $</h1>
                         <span>
@@ -506,7 +369,6 @@
     </div>
 </div>
 <script>
-    //contarPlatos()
 
     function clearArray(array) {
         while (array.length) {
@@ -538,6 +400,7 @@
         }
         return enviarOK
     }
+
     function addPlatoAlCarrito(idnombre, idprecio, idimg, agregados){
         if (confirmarSeccionesIndispensables('opciones')){
             let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
@@ -935,36 +798,62 @@
                plato = platosCarta[i]
                document.getElementById("nombreAgregados").innerHTML = nombrePlato
                document.getElementById("descripcionAgregados").innerHTML = plato.descripcion 
-               document.getElementById("imagenAG").src = plato.imagen//no se si va src 
-               document.getElementById("precioBase").innerHTML = plato.precio//no se si va src 
-               document.getElementById("precioActualizado").src = plato.precio//no se si va src 
+               document.getElementById("imagenAG").src = plato.imagen
+               document.getElementById("precioBase").innerHTML = plato.precio
+               document.getElementById("precioActualizado").innerHTML = plato.precio
+               
+                for(let j=0; j < platos.agregados.length; j++){
+                    divTiposSeccion = document.createElement("div")
+                    divTiposSeccion.classList.add("tiposSeccion")
 
-                //de aca para abajo va en un for    
-                divTiposSeccion = document.createElement("DIV")
-                divTiposSeccion.classList.add("tiposSeccion")
+                    divHeader = document.createElement("div")
+                    divHeader.classList.add("header")
 
-                divHeader = document.createElement("DIV")
-                divHeader.classList.add("header")
-                
-                if(/*agregado.indispensable (vas a tener que hacer un for)*/){
-                    divObligatorio = document.createElement("DIV")
-                    divObligatorio.classList.add("obligatorio")
-                    divHeader.appendChild(divObligatorio)
-                }
+                    ulInputs = document.createElement("ul")
+                    ulInputs.classList.add("body")
+                    
+                    if(platos.agregados[j]["indispensable"]){
+                        divObligatorio = document.createElement("div")
+                        divObligatorio.classList.add("obligatorio")
+                        divHeader.appendChild(divObligatorio)
 
-                ulInputs = document.createElement("UL")
-                ulInputs.classList.add("body")
-                ulInputs.classList.add("indispensable")//solo si es indispensable
+                        ulInputs.classList.add("indispensable")
+                    }
 
-                //rellenarlo con inputs
+                    for (let k = 0; k < platos.agregados[j]["agregado"].length; k++) {
+                        name = platos.agregados[j]["agregado"][k]["nombre"]
+                        price = platos.agregados[j]["agregado"][k]["precio"]
 
-                divTiposSeccion.appendChild(divHeader)
-                divTiposSeccion.appendChild(ulInputs)
-//aca termina el for
-                document.getElementById('opciones').appendChild(divTiposSeccion)//
+                        liAgg = document.createElement("li")
+                        liAgg.classList.add("botonMasAgregado")
+                        liAgg.addEventListener("onclick", function(){calcularPrecio()})
+
+                        inputCheck = document.createElement("input");
+                        inputCheck.setAtributte("type", "checkBox")
+
+                        liAgg.appendChild(inputCheck)
+
+                        divH = document.createElement("div")
+                        inputCheck.appendChild(divH)
+
+                        divH3= document.createElement("h3")
+                        divH2 = document.createElement("h2")
+                        divH2.classList.add("precioAgregado")
+
+                        divH3.innerHTML = name
+                        divH2.innerHTML = price
+
+                        divH.appendChild(divH3)
+                        divH.appendChild(divH2)
+                    }
+
+                    divTiposSeccion.appendChild(divHeader)
+                    divTiposSeccion.appendChild(ulInputs)
+                }*/
+
+                document.getElementById('opciones').appendChild(divTiposSeccion)
 
                 llamarAgregados('boton')
-               break
            }           
         }
     }
