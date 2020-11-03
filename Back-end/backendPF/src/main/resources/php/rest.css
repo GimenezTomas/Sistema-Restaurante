@@ -149,7 +149,8 @@ html{
 }
 .tiposBoxContainer .tiposBox{
     display: flex;
-    width: 50%;
+    max-width: 50%;
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     border-radius: 150px;
@@ -160,6 +161,7 @@ html{
     padding-left: 5px;
     padding-right: 10px;
 }
+
 .tiposBoxContainer .tiposBox.h1{
     margin-left: 5px;
 }
