@@ -32,7 +32,7 @@
         $secc = $datos["seccionesPlatos"];
         for ($i=0; $i < count($secc) ; $i++) {
             $name = $datos["seccionesPlatos"][$i]["nombre"];
-            ?><div class='platoContainer'>
+            ?><div id='<?php echo $name ?>' class='platoContainer'>
                     <div class='nombreSeccion'>
                         <h1><?php echo $name ?> </h1>
                     </div>
@@ -115,7 +115,23 @@
             </div>
             </div><?php
             }
-    }?>
+    }
+
+    function botones(){
+        $json = file_get_contents('collectionRestaurante.json');
+        $datos = json_decode($json,true);
+        $secc = $datos["seccionesPlatos"];
+        for ($i=0; $i < count($secc) ; $i++) {
+            $name = $datos["seccionesPlatos"][$i]["nombre"];
+            ?>
+            <a class = "tipos" href = "#<?php echo $name; ?>" onmouseout="mouseoverWHITE('tragosTBOX', false)" onmouseover="mouseoverWHITE('tragosTBOX', true)">
+                <img src="images/helado.png" alt="not found" width = "25" height = "25">
+                <h3 id="tragosTBOX" class = "tipos_font"><?php echo $name; ?></h3>
+            </a>
+            <?php
+        }
+    }
+?>
 
 <html>
 <head>
@@ -149,34 +165,7 @@
 </div>
 <div class="tiposBoxContainer">
     <nav class = tiposBox>
-        <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('postresTBOX', false)" onmouseover="mouseoverWHITE('postresTBOX', true)">
-            <img src="images/helado.png" alt="not found" width = "25" height = "25">
-            <h3 id = "postresTBOX" class = "tipos_font">Postres</h3>
-        </a>
-        <a class = "tipos" href = "#22" onmouseout="mouseoverWHITE('tragosTBOX', false)" onmouseover="mouseoverWHITE('tragosTBOX', true)">
-            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
-            <h3 id="tragosTBOX" class = "tipos_font">Tragos</h3>
-        </a>
-        <a class = "tipos" href = "#seccionBebidas" onmouseout="mouseoverWHITE('bebidasTBOX', false)" onmouseover="mouseoverWHITE('bebidasTBOX', true)">
-            <img src="images/helado.png" alt="not found" width = "25" height = "25">
-            <h3 id = "bebidasTBOX" class = "tipos_font">Bebidas</h3>
-        </a>
-        <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('minutasTBOX', false)" onmouseover="mouseoverWHITE('minutasTBOX', true)">
-            <img src="images/helado.png" alt="not found" width = "25" height = "25">
-            <h3 id = "minutasTBOX" class = "tipos_font">Minutas</h3>
-        </a>
-        <a class = "tipos" href = "#seccionEmpanadas" onmouseout="mouseoverWHITE('entradasTBOX', false)" onmouseover="mouseoverWHITE('entradasTBOX', true)">
-            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
-            <h3 id="entradasTBOX" class = "tipos_font">Entradas</h3>
-        </a>
-        <a class = "tipos" href = "#seccionMinutas" onmouseout="mouseoverWHITE('postres2TBOX', false)" onmouseover="mouseoverWHITE('postres2TBOX', true)">
-            <img src="images/helado.png" alt="not found" width = "25" height = "25">
-            <h3 id = "postres2TBOX" class = "tipos_font">Postres</h3>
-        </a>
-        <a class = "tipos" href = "#22" onmouseout="mouseoverWHITE('tragos2TBOX', false)" onmouseover="mouseoverWHITE('tragos2TBOX', true)">
-            <img src="images/empanada.png" alt="not found" width = "25" height = "25">
-            <h3 id="tragos2TBOX" class = "tipos_font">Tragos</h3>
-        </a>
+        <?php botones(); ?>
     </nav>
 </div>
 <div id="seccionesContainer">
@@ -193,8 +182,7 @@
         </div>
         <div class="headerUsuario">
             <img src="images/usuarioLogo.png" alt="">
-            <h1>Tomás Giménez</h1>
-            <!--<h2>PUNTOS: 0</h1> SI O NO?-->
+            <h1>Mesa X</h1>
         </div>
         <div class="headerRestaurante">
             <img src="images/logoRestaurante.jpg" alt="">
