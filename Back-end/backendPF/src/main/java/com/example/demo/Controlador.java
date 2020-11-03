@@ -1,4 +1,4 @@
-/*package com.example.demo;
+package com.example.demo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -282,5 +282,5 @@ public class Controlador {
         return informacion;
     }
 
-}*/
+}
 

@@ -352,7 +352,9 @@
                     <p id = "descripcionAgregados">Los ñoquis son un tipo de pasta italiana. Se elaboran con patatas, harina y queso de ricota. Una variedad muy conocida en las regiones de Friuli-Venecia Julia y Trentino-Alto Adigio y denominada gnocchi di pane se hace con pan rallado</p>
                 </div>
                 <div id="opciones">
+                    <div id="containerSeccionesAG">
 
+                    </div>
                     <div class="precioTotal">
                         <h1>Total: $</h1>
                         <span>
@@ -803,58 +805,94 @@
                document.getElementById("precioBase").innerHTML = plato.precio
                document.getElementById("precioActualizado").innerHTML = plato.precio
                
-                for(let j=0; j < platos.agregados.length; j++){
-                    divTiposSeccion = document.createElement("div")
+               let divCON = document.createElement("DIV")
+               divCON.setAttribute('id', containerSeccionesAG)
+                for(let j=0; j < plato.agregados.length; j++){
+                    let divTiposSeccion = document.createElement("div")
                     divTiposSeccion.classList.add("tiposSeccion")
 
-                    divHeader = document.createElement("div")
+                    let divHeader = document.createElement("div")
                     divHeader.classList.add("header")
 
-                    ulInputs = document.createElement("ul")
+                    let h1Tipo = document.createElement("H1")
+                    h1Tipo.innerHTML = plato.agregados[j]["tipo"]
+                    divHeader.appendChild(h1Tipo)
+
+                    let ulInputs = document.createElement("ul")
                     ulInputs.classList.add("body")
+                    ulInputs.setAttribute("id", plato.agregados[j]["tipo"])
+
                     
-                    if(platos.agregados[j]["indispensable"]){
-                        divObligatorio = document.createElement("div")
+                    if(plato.agregados[j]["indispensable"]){
+                        let divObligatorio = document.createElement("div")
                         divObligatorio.classList.add("obligatorio")
+                        
+                        let h1Obligatorio = document.createElement("H1")
+                        h1Obligatorio.innerHTML = "Obligatorio!"
+
+                        let svg = document.createElement("SVG")
+                        svg.setAttribute("width", "1em")
+                        svg.setAttribute("height", "1em")
+                        svg.setAttribute("viewBox", "0 0 16 16")
+                        svg.classList.add("bi", "bi-exclamation-circle")
+                        svg.setAttribute("fill", "currentColor")
+                        svg.setAttribute("xlmns", "http://www.w3.org/2000/svg")
+
+                        let path = document.createElement("PATH")
+                        path.setAttribute("fill-rule", "evenodd")
+                        path.setAttribute("d", "M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z")
+
+                        let path1 = document.createElement("PATH")
+                        path1.setAttribute("d", "M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z")
+
+                        svg.appendChild(path)
+                        svg.appendChild(path1)
+                        divObligatorio.appendChild(h1Obligatorio)
+                        divObligatorio.appendChild(svg)
                         divHeader.appendChild(divObligatorio)
 
                         ulInputs.classList.add("indispensable")
                     }
 
-                    for (let k = 0; k < platos.agregados[j]["agregado"].length; k++) {
-                        name = platos.agregados[j]["agregado"][k]["nombre"]
-                        price = platos.agregados[j]["agregado"][k]["precio"]
+                    for (let k = 0; k < plato.agregados[j]["agregado"].length; k++) {
+                        let name = plato.agregados[j]["agregado"][k]["nombre"]
+                        let price = plato.agregados[j]["agregado"][k]["precio"]
 
-                        liAgg = document.createElement("li")
+                        let liAgg = document.createElement("li")
                         liAgg.classList.add("botonMasAgregado")
+                        liAgg.setAttribute("id", "AGli"+k)
                         liAgg.addEventListener("onclick", function(){calcularPrecio()})
 
-                        inputCheck = document.createElement("input");
-                        inputCheck.setAtributte("type", "checkBox")
+                        let inputCheck = document.createElement("INPUT");
+                        inputCheck.setAttribute("type", "checkBox")
 
                         liAgg.appendChild(inputCheck)
 
-                        divH = document.createElement("div")
+                        let divH = document.createElement("div")
                         inputCheck.appendChild(divH)
 
-                        divH3= document.createElement("h3")
-                        divH2 = document.createElement("h2")
+                        let divH3= document.createElement("h3")
+                        let divH2 = document.createElement("h2")
                         divH2.classList.add("precioAgregado")
 
                         divH3.innerHTML = name
-                        divH2.innerHTML = price
+                        divH2.innerHTML = "(+$"+price+")"
 
                         divH.appendChild(divH3)
                         divH.appendChild(divH2)
+                        liAgg.appendChild(divH)
+                        ulInputs.appendChild(liAgg)
                     }
 
                     divTiposSeccion.appendChild(divHeader)
                     divTiposSeccion.appendChild(ulInputs)
-                }*/
+    
 
-                document.getElementById('opciones').appendChild(divTiposSeccion)
-
+                    divCON.appendChild(divTiposSeccion)
+                }
+                document.getElementById('containerSeccionesAG').innerHTML = divCON.innerHTML
                 llamarAgregados('boton')
+                break
            }           
         }
     }

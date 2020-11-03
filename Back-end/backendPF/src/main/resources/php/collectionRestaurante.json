@@ -60,36 +60,36 @@
           "calificacion": 4.2,
           "agregados": [
             {
-              "tipo": "porcion",
+              "tipo": "Porcion",
               "agregado": [
                 {
                   "precio": 50,
-                  "nombre": "entera"
+                  "nombre": "Entera"
                 },
                 {
                   "precio": 0,
-                  "nombre": "media"
+                  "nombre": "Media"
                 }
               ],
               "indispensable": true
             },
             {
-              "tipo": "salsas",
+              "tipo": "Salsas",
               "agregado": [
                 {
                   "precio": 100,
-                  "nombre": "bolognesa"
+                  "nombre": "Bolognesa"
                 },
                 {
                   "precio": 120,
-                  "nombre": "tuco"
+                  "nombre": "Tuco"
                 }
               ],
               "indispensable": false
             }
           ],
           "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
-          "nombre": "ñoquis"
+          "nombre": "Ñoquis"
         },
         {
           "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
@@ -146,7 +146,7 @@
         {
           "descripcion": "Tira de asado, vacio, entraña y un matrimonio acompañado con dos porciones de papas fritas. Comen 2 o 3.",
           "precio": 1700,
-          "demora": "25min",
+          "demora": "25MIN",
           "calificacion": 5.0,
           "agregados": [
             {
