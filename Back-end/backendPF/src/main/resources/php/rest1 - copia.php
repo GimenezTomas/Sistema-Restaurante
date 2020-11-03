@@ -405,7 +405,7 @@
     }
 
     function addPlatoAlCarrito(idnombre, idprecio, idimg, agregados){
-        if (confirmarSeccionesIndispensables('opciones')){
+        if (confirmarSeccionesIndispensables('containerSeccionesAG')){
             let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
             let descripcion = document.getElementById(idnombre).getElementsByTagName("P")[0].innerHTML
             let img = document.getElementById(idimg).src
@@ -504,8 +504,8 @@
     calcularPrecio()
 
     function calcularPrecio(){
-        let precio = Number((document.getElementById("precioBase").innerHTML).substr(1))
-        let opciones = document.getElementById('opciones')
+        let precio = Number((document.getElementById("precioBase").innerHTML).substr(0))
+        let opciones = document.getElementById('containerSeccionesAG')
         for(let i=0; i<opciones.childNodes.length; i++){
             if( opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].className!="precioTotal"){
                 let tipoAgregado = opciones.childNodes[i]
@@ -531,7 +531,7 @@
                                                         precioADD = precioADD + extra.childNodes[q].childNodes[z].innerHTML[y]
                                                     }
                                                 }
-                                                precio = precio + Number(precioADD)
+                                                precio = precio + parseFloat(precioADD)
                                             }
                                         }
                                     }
@@ -861,8 +861,7 @@
                         let liAgg = document.createElement("li")
                         liAgg.classList.add("botonMasAgregado")
                         liAgg.setAttribute("id", "AGli"+k)
-                        liAgg.addEventListener("onclick", function(){calcularPrecio()})
-
+                        liAgg.setAttribute("onclick", "calcularPrecio()")
                         let inputCheck = document.createElement("INPUT");
                         inputCheck.setAttribute("type", "checkBox")
 
