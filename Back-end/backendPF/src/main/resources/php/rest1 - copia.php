@@ -535,6 +535,28 @@
 
     calcularPrecio()
 
+    function unInputChecked(idInput, idUl){
+        console.log("entre i: "+idInput+" u: "+idUl)
+        let ul = document.getElementById(idUl)
+        let input = document.getElementById(idInput)
+        console.log("ul: "+ul)
+        console.log("input: "+input)
+        for(let i=0; i<ul.childNodes.length; i++){
+            if(ul.childNodes[i].tagName === "LI"){
+                for(let x = 0; x < ul.childNodes[i].childNodes.length; x++){
+                    console.log("linea 547")
+                    if(ul.childNodes[i].childNodes[x].tagName ==="INPUT"){
+                    console.log("linea 549")
+                        if(ul.childNodes[i].childNodes[x].id != idInput){
+                            ul.childNodes[i].childNodes[x].checked = false
+                            console.log("false "+ul.childNodes[i].childNodes[x].id)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     function calcularPrecio(){
         let precio = Number((document.getElementById("precioBase").innerHTML).substr(0))
         let opciones = document.getElementById('containerSeccionesAG')
@@ -850,7 +872,7 @@
 
                     let ulInputs = document.createElement("ul")
                     ulInputs.classList.add("body")
-                    ulInputs.setAttribute("id", plato.agregados[j]["tipo"])
+                    ulInputs.setAttribute("id", "ul"+plato.agregados[j]["tipo"])
 
                     
                     if(plato.agregados[j]["indispensable"]){
@@ -899,6 +921,8 @@
 
                         let divH = document.createElement("div")
                         inputCheck.appendChild(divH)
+                        inputCheck.setAttribute("id", "input"+k+""+plato.agregados[j]["tipo"])
+                        inputCheck.setAttribute("onclick", "unInputChecked("+"\""+"input"+k+""+plato.agregados[j]["tipo"]+"\""+","+"\""+"ul"+plato.agregados[j]["tipo"]+""+"\""+")")
 
                         let divH3= document.createElement("h3")
                         let divH2 = document.createElement("h2")
