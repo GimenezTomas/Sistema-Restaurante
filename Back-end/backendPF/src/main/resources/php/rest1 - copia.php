@@ -124,9 +124,9 @@
         for ($i=0; $i < count($secc) ; $i++) {
             $name = $datos["seccionesPlatos"][$i]["nombre"];
             ?>
-            <a class = "tipos" href = "#<?php echo $name; ?>" onmouseout="mouseoverWHITE('tragosTBOX', false)" onmouseover="mouseoverWHITE('tragosTBOX', true)">
+            <a class = "tipos" href = "#<?php echo $name; ?>" onmouseout="mouseoverWHITE('<?php echo $name ?>TBOX', false)" onmouseover="mouseoverWHITE('<?php echo $name ?>TBOX', true)">
                 <img src="images/helado.png" alt="not found" width = "25" height = "25">
-                <h3 id="tragosTBOX" class = "tipos_font"><?php echo $name; ?></h3>
+                <h3 id="<?php echo $name ?>TBOX" class = "tipos_font"><?php echo $name; ?></h3>
             </a>
             <?php
         }
