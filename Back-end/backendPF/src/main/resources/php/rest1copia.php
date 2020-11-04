@@ -199,7 +199,7 @@
                             let precio2 = "<?php echo $prec; ?>";
                             let descripcion2 = "<?php echo ""; ?>";
                             let imagen2 = "<?php echo $img; ?>";
-                            let agregados2 = <?php echo json_encode($agg); ?>;
+                            let agregados2 = <?php echo json_encode($agg ); ?>;
                             let plato2 = new Plato(nombre2,precio2,descripcion2,imagen2,agregados2) ;
                             platosYaPedidos.push(plato2)
                         }
