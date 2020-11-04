@@ -546,6 +546,7 @@ public class Restaurante {
                                 @Override
                                 public void mouseClicked(MouseEvent e) {
                                     int coincidencias=0;
+                                    textFieldSeccion.setText(textFieldSeccion.getText().substring(0,1).toUpperCase()+textFieldSeccion.getText().substring(1));
 
                                     for (TipoAgregados ag:platoActual.getAgregados()){
                                         if (ag.getNombre().equals(textFieldSeccion.getText())){
@@ -702,6 +703,7 @@ public class Restaurante {
                                                         if (textFieldNombre.getText().equals("") || textFieldPrecio.equals("")) {
                                                             JOptionPane.showMessageDialog(null, "formulario incompleto");
                                                         } else {
+                                                            textFieldNombre.setText(textFieldNombre.getText().substring(0,1).toUpperCase()+textFieldNombre.getText().substring(1));
                                                             try {
                                                                 float precio = Float.parseFloat(textFieldPrecio.getText());
                                                                 if (precio<0){
@@ -876,6 +878,7 @@ public class Restaurante {
                         }
                         else{
                             boolean ok=true, check=true;
+                            textFieldNuevaSeccion.setText(textFieldNuevaSeccion.getText().substring(0,1).toUpperCase()+textFieldNuevaSeccion.getText().substring(1));
 
                             for(TipoAgregados agregados: plato.getAgregados()){
                                 if (agregados.getNombre().equals(textFieldNuevaSeccion.getText())){
@@ -971,6 +974,7 @@ public class Restaurante {
                                     if (precio < 0) {
                                         JOptionPane.showMessageDialog(null, "El precio debe ser mayor a 0");
                                     } else {
+                                        textFieldNuevoAgregado.setText(textFieldNuevoAgregado.getText().substring(0,1).toUpperCase()+textFieldNuevoAgregado.getText().substring(1));
                                         for (TipoAgregados agregados : plato.getAgregados()) {
                                             for (String agregado : agregados.getAgregados().keySet()) {
                                                 if (agregado.equals(textFieldNuevoAgregado.getText())) {
@@ -1166,6 +1170,7 @@ public class Restaurante {
                                                     if (coicidencias>=2){
                                                         JOptionPane.showMessageDialog(null, "El nombre del plato ya esta usado");
                                                     }else{
+                                                        jtxtNombre.setText(jtxtNombre.getText().substring(0,1).toUpperCase()+jtxtNombre.getText().substring(1));
                                                         String nombreViejo = platosAux.getNombre();
                                                         platosAux.setNombre(jtxtNombre.getText());
                                                         platosAux.setDescripcion(jtxtDescripcion.getText());
@@ -1651,6 +1656,7 @@ public class Restaurante {
                             }
 
                             if (ok) {
+                                textFieldName.setText(textFieldName.getText().substring(0,1).toUpperCase()+textFieldName.getText().substring(1));
                                 datosNewPlato.put("Nombre", textFieldName.getText());
                                 datosNewPlato.put("Descripcion", textFieldDescripcion.getText());
                                 datosNewPlato.put("TiempoDemora", textFieldTiempoDemora.getText());
