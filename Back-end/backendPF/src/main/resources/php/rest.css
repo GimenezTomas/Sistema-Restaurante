@@ -341,8 +341,8 @@ html{
 }
 
 .headerNombrePagina img{
-    width: 120px;
-    height: 72px;
+    width: 100px;
+    height: auto;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -405,9 +405,6 @@ html{
 }
 
 .headerRestaurante img{
-    border-style: solid;
-    border-color: silver;
-    border-width: 1px;
     width: 50px;
     height: 50px;
     border-radius: 10%;

@@ -2,7 +2,7 @@
   "_id": {
     "$oid": "5f83e3308a90e237302621ac"
   },
-  "id": 1,
+  "idRest": 1,
   "nombre": "Mc' Donalds",
   "direccion": "Triunvirato 4600",
   "logo": "images\\mc.png",
@@ -88,7 +88,7 @@
               "indispensable": false
             }
           ],
-          "imagen": "images\\ñoquis.png",
+          "imagen": "images\\\\ñoquis.png",
           "nombre": "Ñoquis"
         },
         {
@@ -255,6 +255,7 @@
       "platos": [
         {
           "nombrePlato": "ñoquis",
+          "imagen": "images\\ñoquis.png",
           "precio": 70.2,
           "fecha": "18-05-2020 10:01:00",
           "entregado": false,
@@ -276,6 +277,7 @@
         {
           "nombrePlato": "fideos",
           "precio": 70.2,
+          "imagen": "images\\fideo.png",
           "fecha": "18-05-2020 10:01:00",
           "entregado": false,
           "agregados": [
@@ -292,6 +294,7 @@
         {
           "nombrePlato": "ravioles",
           "precio": 70.2,
+          "imagen": "images\\raviol.png",
           "fecha": "18-05-2020 10:01:00",
           "entregado": false
         }
