@@ -88,7 +88,7 @@
               "indispensable": false
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
+          "imagen": "images\\ñoquis.png",
           "nombre": "Ñoquis"
         },
         {
@@ -97,7 +97,7 @@
           "demora": "15min",
           "calificacion": 5.0,
           "agregados": [],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
+          "imagen": "images\\pizza.png",
           "nombre": "Pizza napolitana"
         }
       ]
@@ -140,7 +140,7 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Back-end\\backendPF\\src\\main\\resources\\static\\images\\empanada.png",
+          "imagen": "images\\bife.png",
           "nombre": "Bife de chorizo con papas fritas"
         },
         {
@@ -168,7 +168,7 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\factura.png",
+          "imagen": "images\\parrilla2.png",
           "nombre": "Parrillada para 2"
         },
         {
@@ -188,7 +188,7 @@
               "indispensable": false
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "imagen": "images\\chori.png",
           "nombre": "Choripan"
         },
         {
@@ -216,7 +216,7 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "imagen": "images\\pollopapa.png",
           "nombre": "Pollo con papas fritas"
         },
         {
@@ -240,7 +240,7 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "imagen": "images\\asadoB.png",
           "nombre": "Asado banderita"
         }
       ]

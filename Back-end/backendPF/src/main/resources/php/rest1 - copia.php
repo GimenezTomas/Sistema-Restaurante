@@ -327,7 +327,7 @@
     <div class="mContent">
         <div class="cardAgregados">
             <div class="left">
-                <img id="imagenAG" src="images/ñoquis.jpg" alt="Card image cap">
+                <img id="imagenAG" src="images/9z.png" alt="Card image cap">
             </div>
             <div class="right">
                 <div class="borrar">
@@ -341,7 +341,6 @@
                 </div>
                 <div id="opciones">
                     <div id="containerSeccionesAG">
-
                     </div>
                     <div class="precioTotal">
                         <h1>Total: $</h1>
