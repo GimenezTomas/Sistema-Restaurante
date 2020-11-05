@@ -275,9 +275,10 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="rest.css">
+    <link rel="stylesheet" href="rest.css" type="text/css">
     <script src="jquery-3.4.1.min.js"></script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <header>
@@ -290,7 +291,6 @@
         </span>
     </div>
 </header>
-
 <div class="padre">
     <div class="nombre"><img class="zz" src="images/9z.png"></div>
 </div>
@@ -673,7 +673,7 @@
                 }
             }
         }
-        document.getElementById('precioActualizadoYP').innerHTML = precio.toString()
+        document.getElementById('precioActualizadoYP').innerHTML = precio.toFixed(2).toString()
         if(precio==0){
             canastaVacia(true)
         }
