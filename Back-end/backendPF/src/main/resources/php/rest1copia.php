@@ -25,8 +25,12 @@
         $name = $datos["nombre"];
         $id = $datos["id"];
         if ($restID == $id) {
-            echo "<img class='zz' src='$ft'>";
-            echo "<div class='nn'><h1 style='color: white'>$name</h1></div>";
+            ?>
+            <div class="res">
+                <img class="zz" src="<?php echo $ft; ?>">
+                <div class="nn"><h1 style="color: white"><?php echo $name;?></h1></div>
+            </div>
+            <?php 
         }
    
     }
