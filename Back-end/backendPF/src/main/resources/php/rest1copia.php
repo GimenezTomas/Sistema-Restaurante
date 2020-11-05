@@ -528,17 +528,12 @@
         console.log("entre i: "+idInput+" u: "+idUl)
         let ul = document.getElementById(idUl)
         let input = document.getElementById(idInput)
-        console.log("ul: "+ul)
-        console.log("input: "+input)
         for(let i=0; i<ul.childNodes.length; i++){
             if(ul.childNodes[i].tagName === "LI"){
                 for(let x = 0; x < ul.childNodes[i].childNodes.length; x++){
-                    console.log("linea 547")
                     if(ul.childNodes[i].childNodes[x].tagName ==="INPUT"){
-                    console.log("linea 549")
                         if(ul.childNodes[i].childNodes[x].id != idInput){
                             ul.childNodes[i].childNodes[x].checked = false
-                            console.log("false "+ul.childNodes[i].childNodes[x].id)
                         }
                     }
                 }
@@ -568,14 +563,8 @@
                                     else if(ok && extra.childNodes[q].tagName=="DIV"){
                                         for(let z = 0; z < extra.childNodes[q].childNodes.length; z++){
                                             if(extra.childNodes[q].childNodes[z].tagName=="H2"){
-                                                let precioADD = 0
-                                                for(let y=0; y<extra.childNodes[q].childNodes[z].innerHTML.length; y++){
-                                                    if(extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)<58 && extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)>47){
-                                                        precioADD = precioADD + extra.childNodes[q].childNodes[z].innerHTML[y]
-                                                    }
-                                                }
-                                                precio += parseFloat(precioADD)
-                                                
+                                                let precioADD = extra.childNodes[q].childNodes[z].innerHTML.substring(3, extra.childNodes[q].childNodes[z].innerHTML.length-1)
+                                                precio += parseFloat(precioADD)   
                                             }
                                         }
                                     }
@@ -587,6 +576,11 @@
             }
         }
         document.getElementById("precioActualizado").innerHTML = precio
+        if(document.getElementById('precioBase').innerHTML == document.getElementById("precioActualizado").innerHTML){
+            document.getElementById('precioBase').style.display = "none"
+        }else{
+            document.getElementById('precioBase').style.display = "block"
+        }
     }
     function cerrarAgregados(){
         document.getElementById("containerAgregados").style.display = "none"
