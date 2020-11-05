@@ -23,7 +23,7 @@
         $restID =  $_GET["restaurante"];
         $ft = $datos["logo"];
         $name = $datos["nombre"];
-        $id = $datos["idRest"];
+        $id = $datos["id"];
         if ($restID == $id) {
             echo "<img class='zz' src='$ft'>";
             echo "<div class='nn'><h1 style='color: white'>$name</h1></div>";
@@ -184,7 +184,7 @@
                             <div id="platosYaPedidos" class="platoss"><?php
         for ($i=0; $i < count($pedido); $i++){ 
             $mesix = $pedido[$i]["nMesa"];
-            $id = $datos["idRest"];
+            $id = $datos["id"];
             if ($mesix == $table && $pedido[$i]["abierto"] == true && $id == $restID) {
                 $platosPedido = $pedido[$i]["platos"];
                 for ($j=0; $j < count($platosPedido) ; $j++) { 
@@ -227,7 +227,7 @@
                     <div id="precioPlatosYAPEDIDOS" class="precio" style="margin-bottom: 15px; margin-top: 15px">
                         <h1 style="display: contents; font-size: 20px; color:white">Total: $</h1>
                         <span>
-                            <h2 style="font-size: 20px; color:white" id="precioActualizadoYP">500</h2>
+                            <h2 style="font-size: 20px; color:white" id="precioActualizadoYP">500.0</h2>
                         </span>
                     </div>
                 </div>
@@ -335,7 +335,7 @@
                         <h1>Total: $</h1>
                         <span>
                                 <h2 id="precioActualizado">500</h2>
-                                <h3 id="precioBase">$400</h3>
+                                <h3 id="precioBase">0</h3>
                             </span>
                     </div>
                 </div>
@@ -568,13 +568,14 @@
                                     else if(ok && extra.childNodes[q].tagName=="DIV"){
                                         for(let z = 0; z < extra.childNodes[q].childNodes.length; z++){
                                             if(extra.childNodes[q].childNodes[z].tagName=="H2"){
-                                                let precioADD = ""
+                                                let precioADD = 0
                                                 for(let y=0; y<extra.childNodes[q].childNodes[z].innerHTML.length; y++){
                                                     if(extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)<58 && extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)>47){
                                                         precioADD = precioADD + extra.childNodes[q].childNodes[z].innerHTML[y]
                                                     }
                                                 }
-                                                precio = precio + parseFloat(precioADD)
+                                                precio += parseFloat(precioADD)
+                                                
                                             }
                                         }
                                     }

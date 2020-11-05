@@ -2,7 +2,7 @@
   "_id": {
     "$oid": "5f83e3308a90e237302621ac"
   },
-  "idRest": 1,
+  "id": 1,
   "nombre": "Mc' Donalds",
   "direccion": "Triunvirato 4600",
   "logo": "images\\mc.png",

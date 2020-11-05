@@ -436,7 +436,7 @@
                                 <input type="checkbox"></input>
                                 <div>
                                     <h3>Helado de crema</h3>
-                                    <h2 class = "precioAgregado">(+$45)</h2>
+                                    <h2 class = "precioAgregado">(+$120.75)</h2>
                                 </div>
                             </li>
                         </ul>
@@ -602,7 +602,7 @@
     calcularPrecio()
 
     function calcularPrecio(){
-        let precio = Number((document.getElementById("precioBase").innerHTML).substr(1))
+        let precio = parseFloat((document.getElementById("precioBase").innerHTML).substr(1))
         let opciones = document.getElementById('opciones')
         for(let i=0; i<opciones.childNodes.length; i++){
             if( opciones.childNodes[i].tagName=="DIV" && opciones.childNodes[i].className!="precioTotal"){
@@ -624,12 +624,13 @@
                                         for(let z = 0; z < extra.childNodes[q].childNodes.length; z++){
                                             if(extra.childNodes[q].childNodes[z].tagName=="H2"){
                                                 let precioADD = ""
+                                                parseFloat(precioADD)
                                                 for(let y=0; y<extra.childNodes[q].childNodes[z].innerHTML.length; y++){
                                                     if(extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)<58 && extra.childNodes[q].childNodes[z].innerHTML.charCodeAt(y)>47){
                                                         precioADD = precioADD + extra.childNodes[q].childNodes[z].innerHTML[y]
                                                     }
                                                 }
-                                                precio = precio + Number(precioADD)
+                                                precio += Number(precioADD)
                                             }
                                         }
                                     }
