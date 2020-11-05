@@ -22,34 +22,24 @@ div.padre{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5%;
 }
 
 div.res{
-    margin-left: 5%;
-    margin-top: 6%;
     border-bottom-style: solid;
     border-bottom-width: thin;
     border-color: #ff2426;
-    width: 50%;
     display: inline-flex;
     align-items: center;
-    padding-bottom: 10px;
+    overflow-y: scroll;
 }
 
 .padre div{
-    height: 130px;
-    width: 120px;
-    display: flex;
-    align-items: center;
     position: fixed;
-    text-align:center;
     z-index: 3;
 }
 
 div.nn{
     height: 100px;
-    width: 250px;
     align-items: center;
     display: inline-flex;
     margin-left: 15px;
@@ -57,7 +47,6 @@ div.nn{
 
 header {
     position: fixed;
-    top: 0;
     left: 0;
     height: 50px;
     width: 100%;
@@ -893,6 +882,23 @@ html{
 
 /*Responsive*/
 @media (min-width: 950px){
+    header{
+        top: 0;
+    }
+    div.res{
+        margin-left: 5%;
+        margin-top: 6%;
+        width: 50%;
+        padding-bottom: 10px;
+    }
+    
+    div.padre{
+        margin-top: 5%;
+    }
+    
+    div.nn{
+        width: 250px;
+    }
     /*tiposBox*/
     .tiposBoxContainer .tiposBox{
     max-width: 50%;
@@ -989,6 +995,22 @@ html{
     }
 }
 @media (max-width: 500px){
+    header{
+        top: 0;
+    }
+    div.res{
+        margin-left: 5%;
+        margin-top: 15%;
+        padding-bottom: 10px;
+    }
+    div.padre{
+        margin-top: 10%;
+    }
+    
+    div.nn{
+        width: fit-content;
+        max-width: 250px;
+    }
     /*tiposBox*/
     .tiposBoxContainer .tiposBox{
         width: 100%;

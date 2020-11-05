@@ -28,7 +28,7 @@
             ?>
             <div class="res">
                 <img class="zz" src="<?php echo $ft; ?>">
-                <div class="nn"><h1 style="color: white"><?php echo $name;?></h1></div>
+                <div class="nn"><h1 style="color: white; overflow-y:scroll;"><?php echo $name;?></h1></div>
             </div>
             <?php 
         }
