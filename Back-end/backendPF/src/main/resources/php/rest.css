@@ -149,8 +149,6 @@ html{
 }
 .tiposBoxContainer .tiposBox{
     display: flex;
-    max-width: 50%;
-    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     border-radius: 150px;
@@ -159,7 +157,7 @@ html{
     overflow-x: scroll;
     background-color: white;
     padding-left: 5px;
-    padding-right: 10px;
+    padding-right: 5px;
 }
 
 .tiposBoxContainer .tiposBox.h1{
@@ -302,17 +300,9 @@ html{
 /*CARRITO*/
 .containerFactura{
     display: none;
-    position: absolute;
-    /* right: 0px; */
-    /* width: 500px; */
-    /* height: auto; */
-    /* min-height: 100%; */
     position: fixed;
     z-index: 3;
-    /* padding-top: 323px; */
-    left: 0;
     top: 0;
-    padding-left: 860px;
     width: 100%;
     height: 100%;
     overflow: auto;
@@ -489,7 +479,6 @@ html{
     text-overflow: ellipsis;
     overflow: hidden;
     margin-bottom: 0px;
-    max-width: 220px;
     white-space: nowrap;
     color: white;
     margin-left: 8px;
@@ -535,12 +524,9 @@ html{
 }
 
 .pedir button{
-    background-image: linear-gradient(130deg,#ff451a,#ff1517 70%);
     border-radius: 6px;
     color: white;
     border: #f7732d;
-    height:40px;
-    width: 250px;
 }
 
 .pedir button:active{
@@ -556,9 +542,6 @@ html{
 }
 
 .pedir svg{
-    width: 25px;
-    height: 25px;
-    /*float: right;*/
     margin-top:8px;
     fill: white;
     /*lo centre a mano fijarse de cambiarlo*/
@@ -574,10 +557,8 @@ html{
     display: none;
     /* position: fixed; */
     z-index: 1;
-    padding-top: 323px;
     /* left: 0; */
     /* top: 0; */
-    padding-left: 870px;
     /* width: 100%; */
     /* height: 100%; */
     /* overflow: auto; */
@@ -590,8 +571,6 @@ html{
     background-color: #fefefe;
     margin: auto;
     border: 1px solid #888;
-    width: 300px;
-    height: 200px;
 }
 
 /* The Close Button */
@@ -690,56 +669,28 @@ html{
 
 .containerAgregados .mContent {
     background-color: #fefefe;
-    margin: auto;
     display: block;
-    width: 880px;
 }
 
 .containerAgregados .cardAgregados{
     margin-left: auto;
     margin-right: auto;
-    height: 570px;
-    width: 880px;
-    max-height: 820px;/*
-    border-style: solid;
-    border-radius: 15px;
-    border-color: grey;*/
-    margin-top: 40px;
-    display: flex;
     background-color:rgba(245, 245, 242, 0.4);
 }
 
 .containerAgregados .cardAgregados .left{
-    width: 50%;
-    height: 100%;
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    display: flex;
-    padding: 30px;
     background-color: currentColor;
 }
 
-.containerAgregados .cardAgregados .left img{
-    height: 300px;
-    margin: 0;
-    border-radius: 30px;
-    border-style: solid;
-    border-color: bisque;
-    border-width: 2px;
-    /*width: 100%;*/
-}
-
 .containerAgregados .cardAgregados .right{
-    width: 50%;
-    height: 100%;
+    
     overflow: hidden;
     overflow-y: scroll;
     padding: 20px;
     padding-bottom: 5px;
-    border-left-style: solid;
-    border-left-color: gainsboro;
-    border-left-width: 1px;
 }
 
 .containerAgregados .cardAgregados .right .borrar{
@@ -780,7 +731,7 @@ html{
 }
 
 .containerAgregados .cardAgregados .right #opciones{
-    min-height: 220px;
+    min-height: 150px;
     max-height: 260px;
     overflow-y: scroll;
 }
@@ -845,6 +796,8 @@ html{
     padding: 0;
     line-height: normal;
     margin: 0;
+    width: 13px;
+    height: 13px;
     /*text-align: start;*/
 }
 
@@ -873,7 +826,7 @@ html{
     font-size: 15px;
     color: silver;
     text-decoration-line: line-through;
-    font-weight: 400;
+    font-weight: 300;
     margin-left: -10px;
 
 }
@@ -904,7 +857,7 @@ html{
 .containerAgregados .padre{
     position: relative;
     background-color: #fefefe;
-    box-shadow: 0px -15px 12px -11px rgba(0,0,0,0.75);
+    /*box-shadow: 0px -15px 12px -11px rgba(0,0,0,0.75);*/
 }
 
 .containerAgregados .padre textarea{
@@ -936,4 +889,176 @@ html{
 
 ::-webkit-scrollbar{
     display: none;
+}
+
+/*Responsive*/
+@media (min-width: 950px){
+    /*tiposBox*/
+    .tiposBoxContainer .tiposBox{
+    max-width: 50%;
+    width: fit-content;
+}
+    /*agregados*/
+    .containerAgregados .mContent {
+        margin: auto;
+        width: 880px;
+    }
+
+    .containerAgregados .cardAgregados{
+        height: 570px;
+        width: 880px;
+        max-height: 820px;/*
+        border-style: solid;
+        border-radius: 15px;
+        border-color: grey;*/
+        margin-top: 40px;
+        display: flex;
+    }
+
+    .containerAgregados .cardAgregados .left{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        padding: 30px;
+    }
+    
+    .containerAgregados .cardAgregados .left img{
+        height: 300px;
+        margin: 0;
+        border-radius: 30px;
+        border-style: solid;
+        border-color: bisque;
+        border-width: 2px;
+        /*width: 100%;*/
+    }
+    
+    .containerAgregados .cardAgregados .right{
+        width: 50%;
+        height: 100%;
+        border-left-style: solid;
+        border-left-color: gainsboro;
+        border-left-width: 1px;
+    }
+
+    /*carrito*/
+    .containerFactura{
+        display: none;
+        position: fixed;
+        z-index: 3;
+        top: 0;
+        padding-left: 860px;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.6);
+    }
+    
+    .modalContent {
+        background-color: #282828;
+        margin: auto;
+        width: 500px;
+        height: 100%;
+        float: right;
+    }
+
+    .pedidos .pedido h3{
+        max-width: 220px;
+    }
+
+    .pedir button{
+        height:40px;
+        width: 250px;
+        background-image: linear-gradient(130deg,#ff451a,#ff1517 70%);
+    }
+
+    .pedir svg{
+        width: 25px;
+        height: 25px;
+    }
+
+    .modal {
+        padding-top: 323px;
+        padding-left: 870px;
+    }
+    
+    /* Modal Content */
+    .modal-content {
+        width: 300px;
+        height: 200px;
+    }
+}
+@media (max-width: 500px){
+    /*tiposBox*/
+    .tiposBoxContainer .tiposBox{
+        width: 100%;
+        justify-content: center;
+    }
+    /*agregados*/
+    .containerAgregados .mContent {
+        width: 100%;
+        height: 100%;
+    }
+
+    .containerAgregados .cardAgregados .left{
+        width: 100%;
+        height: 20%;
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+        background-color: currentColor;
+    }
+
+    .containerAgregados .cardAgregados .left img{
+        width: 100%;
+        resize: none;
+    }
+
+    .containerAgregados .cardAgregados .left:hover{
+        height: fit-content;
+    }
+    
+    .containerAgregados .cardAgregados .right{
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        overflow-y: scroll;
+        padding: 20px;
+        padding-bottom: 5px;
+    }
+    /*carrito*/
+    
+    .modalContent {
+        background-color: #282828;
+        margin: auto;
+        width: 100%;
+        height: 100%;
+        float: right;
+    }
+
+    .pedidos .pedido h3{
+        max-width: 60%;
+    }
+
+    .pedir button{
+        background-image: linear-gradient(140deg,#da5306,#ff2b2e 70%);
+        height:40px;
+        width: 60%;
+    }
+
+    .pedir svg{
+        width: 25px;
+        height: 25px;
+        /*lo centre a mano fijarse de cambiarlo*/
+    }
+
+    .modal {
+        padding-top: 50%;
+    }
+    
+    /* Modal Content */
+    .modal-content {
+        width: 300px;
+        height: 200px;
+    }
 }

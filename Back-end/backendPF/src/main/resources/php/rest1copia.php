@@ -295,7 +295,7 @@
     <div class="nombre"><img class="zz" src="images/9z.png"></div>
 </div>
 
-<div class="res">
+<div>
     <?php Perfil(); ?>
 </div>
 <div class="tiposBoxContainer">
@@ -838,7 +838,7 @@
                console.log(plato.imagen)
                document.getElementById("nombreAgregados").innerHTML = nombrePlato
                document.getElementById("descripcionAgregados").innerHTML = plato.descripcion 
-               document.getElementById("imagenAG").src = plato.imagen
+               document.getElementById("imagenAG").src = 'images/ñoquis.png'//plato.imagen
                document.getElementById("precioBase").innerHTML = plato.precio
                document.getElementById("precioActualizado").innerHTML = plato.precio
                
