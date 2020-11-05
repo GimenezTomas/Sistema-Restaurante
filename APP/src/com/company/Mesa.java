@@ -5,10 +5,13 @@ import net.glxn.qrgen.image.ImageType;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Mesa implements Comparable<Mesa>{
     private int numMesa;
@@ -99,8 +102,8 @@ public class Mesa implements Comparable<Mesa>{
     public static void generarQr(HashSet<Mesa> mesas) throws IOException {
         for (Mesa mesa : mesas) {
             if (mesa.QR == null){
-                String details = "/php/rest1copia.php?mesa="+mesa.getNumMesa();
-                ByteArrayOutputStream out = QRCode.from(details).to(ImageType.PNG).stream();
+                String url = "http://192.168.0.43/php/rest1copia.php?mesa=1";
+                ByteArrayOutputStream out = QRCode.from(url).to(ImageType.PNG).stream();
                 File imgQr = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
                 FileOutputStream fos = new FileOutputStream(imgQr);
                 fos.write(out.toByteArray());
