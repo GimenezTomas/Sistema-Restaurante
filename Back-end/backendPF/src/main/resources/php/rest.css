@@ -127,14 +127,8 @@ html{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 7%;
     padding-bottom: 0.7%;
     margin-top: 3%;
-    /*border-style: solid;
-    border-width: 1px;
-    border-color: rgba(170, 170, 170, 0.445);*/
 }
 .tiposBoxContainer .tiposBox{
     display: flex;
@@ -675,8 +669,6 @@ html{
 }
 
 .containerAgregados .cardAgregados .right{
-    
-    overflow: hidden;
     overflow-y: scroll;
     padding: 20px;
     padding-bottom: 5px;
@@ -900,10 +892,15 @@ html{
         width: 250px;
     }
     /*tiposBox*/
+    .tiposBoxContainer{
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-top: 7%;
+    }
     .tiposBoxContainer .tiposBox{
-    max-width: 50%;
-    width: fit-content;
-}
+        max-width: 50%;
+        width: fit-content;
+    }
     /*agregados*/
     .containerAgregados .mContent {
         margin: auto;
@@ -1012,9 +1009,15 @@ html{
         max-width: 250px;
     }
     /*tiposBox*/
+    
+    .tiposBoxContainer{
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 7%;
+    }
     .tiposBoxContainer .tiposBox{
-        width: 100%;
-        justify-content: center;
+        width: fit-content;
+        max-width: 100%;
     }
     /*agregados*/
     .containerAgregados .mContent {
@@ -1043,7 +1046,6 @@ html{
     .containerAgregados .cardAgregados .right{
         width: 100%;
         height: auto;
-        overflow: hidden;
         overflow-y: scroll;
         padding: 20px;
         padding-bottom: 5px;
