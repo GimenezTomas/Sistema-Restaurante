@@ -344,7 +344,7 @@
                     </div>
                 </div>
                 <section class="padre">
-                    <textarea placeholder = "Aclaraciones..."name="" id="" class="aclaraciones"></textarea>
+                    <textarea placeholder = "Aclaraciones..."name="" id="textArea" class="aclaraciones"></textarea>
                     <button onmousedown="addPlatoAlCarrito('nombreAG', 'precioActualizado','imagenAG', 'sxaxax')" class="botonAgregar">Agregar</button>
                 </section>
             </div>
@@ -425,6 +425,14 @@
                     }
                 }
             }
+        }
+        console.log()
+        if(document.getElementById('textArea').value != ""){
+            arrayAso = []
+            arrayAso["nombre"] = document.getElementById('textArea').value
+            arrayAso["precio"] = 0 
+            arrayAG.push(arrayAso)
+            document.getElementById('textArea').value = ""
         }
         return arrayAG
     }
@@ -529,7 +537,6 @@
     calcularPrecio()
 
     function unInputChecked(idInput, idUl){
-        console.log("entre i: "+idInput+" u: "+idUl)
         let ul = document.getElementById(idUl)
         let input = document.getElementById(idInput)
         for(let i=0; i<ul.childNodes.length; i++){
@@ -839,7 +846,6 @@
         for (let i = 0; i < platosCarta.length; i++) {
            if(platosCarta[i].nombre == nombrePlato){
                plato = platosCarta[i]
-               console.log(plato.imagen)
                document.getElementById("nombreAgregados").innerHTML = nombrePlato
                document.getElementById("descripcionAgregados").innerHTML = plato.descripcion 
                document.getElementById("imagenAG").src = 'images/ñoquis.png'//plato.imagen
