@@ -244,6 +244,147 @@
           "nombre": "Asado banderita"
         }
       ]
+    },
+    {
+      "nombre": "Empanadas",
+      "platos": [
+        {
+          "descripcion": "Empanada de carne salteña frita en grasa de cerdo",
+          "precio": 100,
+          "demora": "30min",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Salsas",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Limon"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\empanadaSalteña.jpg",
+          "nombre": "Empanada salteña"
+        },
+        {
+          "descripcion": "Empanada rellena de jamon y queso.",
+          "precio": 111.5,
+          "demora": "25MIN",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Salsas",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Limon"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\jqemp.jpg",
+          "nombre": "Empanada de jamon y queso"
+        },
+        {
+          "descripcion": "Docena surtida de empanadas fritas",
+          "precio": 860,
+          "demora": "6min",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Salsas",
+              "agregado": [
+                {
+                  "precio": 120,
+                  "nombre": "Limon"
+                }
+              ],
+              "indispensable": false
+            }
+          ],
+          "imagen": "images\\empanadaSalteña.jpg",
+          "nombre": "Surtido de empanadas"
+        }
+      ]
+    },
+    {
+      "nombre": "Postres",
+      "platos": [
+        {
+          "descripcion": "Cono con 2 bochas de helado de crema",
+          "precio": 860,
+          "demora": "30min",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Sabores",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Chocolate y Dulce de leche"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Banana Split y Dulce de leche"
+                }
+              ],
+              "indispensable": true
+            },
+            {
+              "tipo": "Toppings",
+              "agregado": [
+                {
+                  "precio": 20,
+                  "nombre": "Baño de chocolate"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Lluvia de rocklets"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\helado.jpg",
+          "nombre": "Cono de helados"
+        },
+        {
+          "descripcion": "Mousse de chocolate casero",
+          "precio": 1700,
+          "demora": "25MIN",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Sabor",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Limon"
+                },
+                {
+                  "precio": 100,
+                  "nombre": "Chocolate"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\mousse.jpg",
+          "nombre": "Mousse"
+        },
+        {
+          "descripcion": "Torta de chocolina, dulce de leche y queso crema",
+          "precio": 260,
+          "demora": "6min",
+          "calificacion": 5.0,
+          "agregados": [],
+          "imagen": "images\\chocotorta.jpg",
+          "nombre": "Chocotorta"
+        }
+      ]
     }
   ],
   "pedidos": [
