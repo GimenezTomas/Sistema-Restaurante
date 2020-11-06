@@ -1230,7 +1230,7 @@ html{
     }
 }
 
-@media (max-height: 649px){
+@media (min-height:569px) and (max-height: 649px){
     .containerAgregados .cardAgregados .right #opciones{
         min-height: 150px;
         max-height: 200px;
