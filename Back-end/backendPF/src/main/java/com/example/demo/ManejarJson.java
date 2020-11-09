@@ -17,6 +17,10 @@ import java.util.HashMap;
 public class ManejarJson {
     private AccesoMongoDB mongo;
 
+    public ManejarJson(){
+        mongo = new AccesoMongoDB();
+    }
+
     public void insertarPlatoPedido(int mesa, int idRest, HashMap platoPedido) throws IOException {
 //        File json = new File(".\\src\\main\\resources\\files\\jsonPedidos.json");
         File json = new File(".\\src\\main\\resources\\files\\collectionRestaurante.json");
