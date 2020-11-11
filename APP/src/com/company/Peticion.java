@@ -6,7 +6,7 @@ public interface Peticion {
     static HashSet<Mesa> obtenerMesa(){
         HashSet<Mesa> mesas = new HashSet<>();
 
-        CloseableHttpResponse response = null;
+        //CloseableHttpResponse response = null;
 
         return mesas;
     }
