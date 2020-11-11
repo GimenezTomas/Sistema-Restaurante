@@ -11,7 +11,7 @@ import javax.swing.*;
 public class Login {
     private JFrame ventana;
     private JPanel panelIngresar;
-    private AccesoMongoDB acceso;
+    //private AccesoMongoDB acceso;
     private boolean sesion = false;
     public static String message;
 
@@ -23,13 +23,13 @@ public class Login {
         this.sesion = sesion;
     }
 
-    public AccesoMongoDB getAcceso() {
+    /*public AccesoMongoDB getAcceso() {
         return acceso;
     }
 
     public void setAcceso(AccesoMongoDB acceso) {
         this.acceso = acceso;
-    }
+    }*/
 
     public JFrame getVentana() {
         return ventana;
@@ -53,7 +53,7 @@ public class Login {
         this.ventana.setVisible(true);
         this.ventana.setLayout(null);
 
-        this.acceso = new AccesoMongoDB("proyectoFinal");
+        //this.acceso = new AccesoMongoDB("proyectoFinal");
 
         /*try{
             acceso.connect("root", "Alumno:TomasGimenez2002");
@@ -105,12 +105,12 @@ public class Login {
         botonSubmit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(acceso.login(campoUsuario.getText(),campoContraseña.getText())){
+                /*if(acceso.login(campoUsuario.getText(),campoContraseña.getText())){
                     sesion = true;
                     ventana.dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos");
-                }
+                }*/
             }
         });
 

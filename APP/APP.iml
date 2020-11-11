@@ -34,15 +34,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../dependecies/mongo-java-driver-3.9.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="qrgen-1.02" level="application" />
     <orderEntry type="module-library" exported="">
       <library>
