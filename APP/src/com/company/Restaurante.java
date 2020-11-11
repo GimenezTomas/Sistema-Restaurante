@@ -2554,6 +2554,8 @@ public class Restaurante {
         }
         Restaurante restaurante = new Restaurante();
 
+        Peticion.obtenerMesa();
+
         Login login = new Login(600, 600, "Iniciar sesión");
         login.getVentana().addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
