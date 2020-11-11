@@ -22,10 +22,19 @@ public class Restaurante {
     private String nombre;
     private File logo;
     private String direccion;
+    private int id;
     private AccesoMongoDB mongo;
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ArrayList<SeccionesPlatos> getSeccionesPlatos() {
         return seccionesPlatos;

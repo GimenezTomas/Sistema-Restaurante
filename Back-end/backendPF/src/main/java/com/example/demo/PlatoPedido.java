@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlatoPedido extends PlatoAbs implements Comparable<PlatoPedido>{
@@ -41,7 +40,6 @@ public class PlatoPedido extends PlatoAbs implements Comparable<PlatoPedido>{
         super(nombre, precio);
         this.agregados = agregados;
         this.fecha = fecha;
-        //this.id = count++;
         this.entregado = entregado;
     }
 
