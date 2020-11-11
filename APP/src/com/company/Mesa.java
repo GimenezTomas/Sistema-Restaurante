@@ -1,7 +1,15 @@
 package com.company;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import javax.swing.*;
 import java.io.*;
@@ -102,7 +110,36 @@ public class Mesa implements Comparable<Mesa>{
     public static void generarQr(HashSet<Mesa> mesas) throws IOException {
         for (Mesa mesa : mesas) {
             if (mesa.QR == null){
-                URL url = new URL("http://192.168.0.43/php/rest1copia.php?mesa=2&restaurante=1");
+                String url = "http://192.168.0.43/php/rest1copia.php?";
+                HashMap<String,Object> data = new HashMap<String,Object>();
+                data.put("mesa",mesa.getNumMesa());
+                //data.put("restaurante",);
+
+                String json = "";
+                try {
+                    json = new ObjectMapper().writeValueAsString(data);
+                } catch (IOException e) {
+                }
+
+                HttpPost post = new HttpPost(url);
+
+                try{
+                    CloseableHttpClient httpClient = HttpClients.createDefault();
+                    post.setHeader("Content-Type","");
+                    post.setEntity(new StringEntity(json));
+                    CloseableHttpResponse response = httpClient.execute(post);
+                    String resultado = EntityUtils.toString(response.getEntity());
+                    System.out.println("json: "+resultado);
+                    response.close();
+
+                }catch(UnsupportedEncodingException e){
+                    e.printStackTrace();
+                }catch(ClientProtocolException e){
+                    e.printStackTrace();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+
                 ByteArrayOutputStream out = QRCode.from(String.valueOf(url)).to(ImageType.PNG).stream();
                 File imgQr = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
                 FileOutputStream fos = new FileOutputStream(imgQr);
