@@ -13,6 +13,16 @@ public class Login {
     private JPanel panelIngresar;
     //private AccesoMongoDB acceso;
     private boolean sesion = false;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public static String message;
 
     public boolean isSesion() {
@@ -105,12 +115,14 @@ public class Login {
         botonSubmit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                /*if(acceso.login(campoUsuario.getText(),campoContraseña.getText())){
+                id = Peticion.login(campoUsuario.getText(),campoContraseña.getText());
+                if( id != 0){
                     sesion = true;
                     ventana.dispose();
+
                 }else{
                     JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos");
-                }*/
+                }
             }
         });
 

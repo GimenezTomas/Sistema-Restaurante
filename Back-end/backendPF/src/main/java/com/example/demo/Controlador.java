@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 @RequestMapping("/api")
 @RestController
@@ -56,7 +57,7 @@ public class Controlador {
     //APP
 
     @RequestMapping(value = "/javaAPP/login/{username}/{password}", method = RequestMethod.GET)
-    public ResponseEntity<Object> loginAppGestion(@PathVariable String username, @PathVariable String password){
+    public ResponseEntity<Integer> loginAppGestion(@PathVariable String username, @PathVariable String password){
         return new ResponseEntity<>(accesoMongoDB.login(username, password), HttpStatus.OK);
     }
 

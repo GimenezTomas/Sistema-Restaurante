@@ -93,7 +93,7 @@ public class AccesoMongoDB {
         this.puerto = puerto;*/
     }
 
-    public ArrayList<PlatoPedido> serializarPlatoPedido(Document dataPlato){
+    /*public ArrayList<PlatoPedido> serializarPlatoPedido(Document dataPlato){
 
         ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
         ArrayList<PlatoPedido> platos = new ArrayList<>();
@@ -116,9 +116,9 @@ public class AccesoMongoDB {
             platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
         }
         return platos;
-    }
+    }*/
 
-    public ArrayList<Plato> obtenerPlatosArr(Bson requisitosLogin){
+    /*public ArrayList<Plato> obtenerPlatosArr(Bson requisitosLogin){
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Plato> platos = new ArrayList<>();
 
@@ -156,9 +156,9 @@ public class AccesoMongoDB {
             }
         }
         return platos;
-    }
+    }*/
 
-    public ArrayList<HashMap<String, Object>> platosMONGO(HashSet<Plato>platos){
+    /*public ArrayList<HashMap<String, Object>> platosMONGO(HashSet<Plato>platos){
         ArrayList<HashMap<String, Object>> platosMon = new ArrayList<>();
         for (Plato plato : platos) {
             HashMap<String, Object> platoAtributos = new HashMap<>();
@@ -192,7 +192,7 @@ public class AccesoMongoDB {
             platosMon.add(platoAtributos);
         }
         return platosMon;
-    }
+    }*/
 
     /*public ArrayList<HashMap<String, Object>> platosPedidoMONGO(ArrayList<PlatoPedido>platos){
         ArrayList<HashMap<String, Object>> platosMon = new ArrayList<>();
@@ -251,7 +251,7 @@ public class AccesoMongoDB {
                             e.getCause();
                             e.getMessage();
                         }
-                        platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
+                        platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, dataPLATO.getString("fecha"), dataPLATO.getBoolean("entregado")));
                     }
                     return new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido"));
                 }
@@ -414,8 +414,6 @@ public class AccesoMongoDB {
         Bson $if = BasicDBObject.parse("{ $filter: { input: \"$pedidos\", as: \"pedido\", cond: { $eq: [ \"$$pedido.abierto\", true ] } } }");
         Collection as = collection.aggregate(Arrays.asList(Aggregates.match(requisitosLogin),Aggregates.project( Projections.fields( Projections.excludeId(), Projections.include("pedidos"), Projections.computed("pedidos", $if))))).into(new ArrayList());
 
-        Iterator ad = as.iterator();
-
         Iterator iterator = as.iterator();
 
         while (iterator.hasNext()) {
@@ -443,7 +441,7 @@ public class AccesoMongoDB {
                     }catch (DateTimeParseException e){
                         e.printStackTrace();
                     }
-                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, date, dataPLATO.getBoolean("entregado")));
+                    platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, dataPLATO.getString("fecha"), dataPLATO.getBoolean("entregado")));
                 }
                 pedidos.add(new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido")));
             }
@@ -554,7 +552,7 @@ public class AccesoMongoDB {
         return mesas;
     }
 
-    public HashSet<Plato> obtenerPlatos(){
+    /*public HashSet<Plato> obtenerPlatos(){
         MongoCollection collection = this.base.getCollection("restaurante");
         HashSet<Plato> platos = new HashSet<>();
 
@@ -592,9 +590,9 @@ public class AccesoMongoDB {
             }
         }
         return platos;
-    }
+    }*/
 
-    public ArrayList<Plato> obtenerPlatosArr(){
+    /*public ArrayList<Plato> obtenerPlatosArr(){
         MongoCollection collection = this.base.getCollection("restaurante");
         ArrayList<Plato> platos = new ArrayList<>();
 
@@ -632,9 +630,9 @@ public class AccesoMongoDB {
             }
         }
         return platos;
-    }
+    }*/
 
-    public void actualizarSeccionesPlatos(ArrayList<SeccionesPlatos> seccionesPlatos){
+    /*public void actualizarSeccionesPlatos(ArrayList<SeccionesPlatos> seccionesPlatos){
         try {
             ArrayList<HashMap<String, Object>> secAtributos = new ArrayList<>();
 
@@ -667,7 +665,7 @@ public class AccesoMongoDB {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /*public ArrayList<SeccionesPlatos> obtenerSecciones(){
         ArrayList<SeccionesPlatos> seccionesPlatos = new ArrayList<>();
@@ -755,7 +753,7 @@ public class AccesoMongoDB {
 //db.restaurante.update({id:1},{$set:{"mesas.1":{"numMesa":2,"qr":"C:\Users\Familia Gimenez\Documents\GitHub\ProyectoFinal\APP\qr1.png", "ocupada":false}}})
     }*/
 
-    public void actualizarMesas(HashSet<Mesa>mesas){
+    /*public void actualizarMesas(HashSet<Mesa>mesas){
         try {
             ObjectMapper mapper = new ObjectMapper();
             File json = new File(".\\src\\com\\company\\mesas.json");
@@ -779,7 +777,7 @@ public class AccesoMongoDB {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
     /*public void actualizarPlatos(HashSet<Plato>platos){
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -1024,8 +1022,11 @@ public class AccesoMongoDB {
         }
     }
 
-    public boolean login(String username, String password){
+    public int login(String username, String password){
         MongoCollection collection = this.base.getCollection("restaurante");
+
+        String json = "{_id:0, id:1}";
+        Bson bson =  BasicDBObject.parse( json );
         ArrayList<Bson> filtros = new ArrayList<>();
 
         Bson filtro1= Filters.eq("user", username);
@@ -1036,20 +1037,18 @@ public class AccesoMongoDB {
         filtros.add(filtroA);
         filtros.add(filtroB);
 
-        requisitosLogin = and(filtros);
-
-        FindIterable resultado = collection.find(requisitosLogin);
+        Bson requisitosLogin = and(filtros);
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
 
         MongoCursor iterator = resultado.iterator();
 
         while (iterator.hasNext()){
+            Document document = (Document) iterator.next();
 
-            this.usuario = username;
-            this.password = password;
-
-            return true;
+            return Integer.parseInt(document.get("id").toString());
         }
-        return false;
+
+        return 0;
     }
 }
 

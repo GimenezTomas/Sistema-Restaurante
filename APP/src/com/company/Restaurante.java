@@ -23,7 +23,6 @@ public class Restaurante {
     private File logo;
     private String direccion;
     private int id;
-    //private AccesoMongoDB mongo;
     public static HashMap<String, Font> fuentes = new HashMap<>();
 
     //GETTERS && SETTERS
@@ -43,14 +42,6 @@ public class Restaurante {
     public void setSeccionesPlatos(ArrayList<SeccionesPlatos> seccionesPlatos) {
         this.seccionesPlatos = seccionesPlatos;
     }
-
-    /*public AccesoMongoDB getMongo() {
-        return mongo;
-    }*/
-
-    /*public void setMongo(AccesoMongoDB mongo) {
-        this.mongo = mongo;
-    }*/
 
     public String getNombre() {
         return nombre;
@@ -84,10 +75,6 @@ public class Restaurante {
     }
 
     //CONSTRUCTOR
-
-    public Restaurante() {
-        //this.mongo = new AccesoMongoDB("proyectoFinal");
-    }
 
     public static boolean esNumero(String cadena) {
 
@@ -144,7 +131,7 @@ public class Restaurante {
         }
     }
     public void entregarPedido(JFrame ventana) {
-        //this.pedidos = mongo.obtenerPedidos();
+        this.pedidos = Peticion.obtenerPedidos(this.id);
 
         final HashSet<PlatoPedido> platosChecked = new HashSet<>();
 
@@ -322,7 +309,7 @@ public class Restaurante {
     }
 
     public void proximoPedido(JFrame ventana) {
-        //this.pedidos = mongo.obtenerPedidos();
+        this.pedidos = Peticion.obtenerPedidos(this.id);
 
         JPanel panel = new JPanel();
         panel.setSize(1350, 700);
@@ -2534,10 +2521,10 @@ public class Restaurante {
     }
 
     public void cargarDatos(){
-        /*seccionesPlatos.addAll(this.mongo.obtenerSecciones());
-        pedidos.addAll(this.mongo.obtenerPedidos());
-        mesas.addAll(this.mongo.obtenerMesas());
-        this.mongo.obtenerDataUser(this);*/
+        this.mesas = Peticion.obtenerMesas();
+        Peticion.dataUser(this);
+        this.pedidos = Peticion.obtenerPedidos(this.id);
+        this.seccionesPlatos = Peticion.obtenerSeccionesPlatos(this.id);
     }
 
     public static void main(String[] args) {
@@ -2554,14 +2541,13 @@ public class Restaurante {
         }
         Restaurante restaurante = new Restaurante();
 
-        Peticion.obtenerMesa();
-
         Login login = new Login(600, 600, "Iniciar sesión");
         login.getVentana().addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
                 if (login.isSesion()) {
 
+                    restaurante.setId(login.getId());
                     restaurante.cargarDatos();
                     fuentes.put("Times New Roman", new Font("Times New Roman", Font.BOLD, 40));
                     fuentes.put("Garamond", new Font("Garamond", Font.BOLD, 15));

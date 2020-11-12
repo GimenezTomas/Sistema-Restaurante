@@ -50,7 +50,7 @@ public class ManejarJson {
                 agregados.put(agregadosMap.get("nombre").toString(), Float.parseFloat(agregadosMap.get("precio").toString()));
             }
 
-            platoPedidos.add(new PlatoPedido(plato.get("nombre").toString(), Float.parseFloat(plato.get("precio").toString()), agregados, new Date(), false));
+            platoPedidos.add(new PlatoPedido(plato.get("nombre").toString(), Float.parseFloat(plato.get("precio").toString()), agregados, new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()), false));
             archivo1.delete();
         }
         if ((mongo.obtenerPedido(idRest,mesa, filtro1)) == null){
@@ -98,7 +98,7 @@ public class ManejarJson {
 
     //APP
 
-    public Boolean login(String user, String pass){
+    public int login(String user, String pass){
         return mongo.login(user, pass);
     }
 
