@@ -1,9 +1,10 @@
 package com.company;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.*;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.HttpEntity;
@@ -14,6 +15,7 @@ import org.bson.Document;
 import java.io.DataInput;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,7 +44,11 @@ public interface Peticion {
             for (int i = 0; i < documents.size() ; i++) {
                 String mesaJson = new ObjectMapper().writeValueAsString(documents.get(i));
                 HashMap mesaMap = objectMapper.readValue(mesaJson, HashMap.class);
-                mesas.add(new Mesa(Integer.parseInt(mesaMap.get("numMesa").toString()), new File(mesaMap.get("qr").toString()), Boolean.parseBoolean(mesaMap.get("ocupada").toString())));
+                if(mesaMap.get("qr")==null){
+                    mesas.add(new Mesa(Integer.parseInt(mesaMap.get("numMesa").toString()), Boolean.parseBoolean(mesaMap.get("ocupada").toString())));
+                }else{
+                    mesas.add(new Mesa(Integer.parseInt(mesaMap.get("numMesa").toString()), new File(mesaMap.get("qr").toString()), Boolean.parseBoolean(mesaMap.get("ocupada").toString())));
+                }
             }
 
             response.close();
@@ -156,7 +162,6 @@ public interface Peticion {
 
             ObjectMapper objectMapper = new ObjectMapper();
             HashMap seccionesMap = objectMapper.readValue(resultado, HashMap.class);
-            //seccionesMap = objectMapper.readValue(new ObjectMapper().writeValueAsString(seccionesMap.get("seccionesPlatos")), HashMap.class);
 
             Document document = new Document(seccionesMap);
             ArrayList<Document> documents = (ArrayList<Document>) document.get("seccionesPlatos");
@@ -192,4 +197,88 @@ public interface Peticion {
         }
         return seccionesPlatos;
     }
+
+    static void actualizarImagenRest(int id, String imagen){
+        HttpPut put = new HttpPut("http://localhost:8080/api/javaAPP/actualizarPerfil/img/"+imagen+"/"+id);
+
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(put);
+            response.close();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void actualizarPedido(Pedido pedido, int id, int idPedido){
+
+        HttpPut put = new HttpPut("http://localhost:8080/api/javaAPP/gestionarPedidos/cobrar/"+idPedido+"/"+id);
+
+        try {
+            String pedidoJson = new ObjectMapper().writeValueAsString(pedido);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            put.setHeader("Content-Type", "application/json");
+            put.setEntity(new StringEntity(pedidoJson));
+            CloseableHttpResponse response = httpClient.execute(put);
+            String resultado = EntityUtils.toString(response.getEntity());
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void putConJson(Object object, String url){
+        HttpPut put = new HttpPut(url);
+
+        try {
+            String json = new ObjectMapper().writeValueAsString(object);
+            System.out.println("json: "+json);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            put.setHeader("Content-Type", "application/json");
+            put.setEntity(new StringEntity(json));
+            CloseableHttpResponse response = httpClient.execute(put);
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void putSinJson(String url){
+        HttpPut put = new HttpPut(url);
+
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(put);
+            response.close();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void deleteSinJson(String url){
+        HttpDelete delete = new HttpDelete(url);
+
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(delete);
+            response.close();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

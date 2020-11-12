@@ -67,7 +67,7 @@ public class Controlador {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/javaAPP/actualizarPerfil/nombre/{img}/{idRestaurante}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/javaAPP/actualizarPerfil/img/{img}/{idRestaurante}", method = RequestMethod.PUT)
     public ResponseEntity<Object> actualizarImgRest(@PathVariable String img, @PathVariable int idRestaurante){
         accesoMongoDB.actualizarIMGRest(img, idRestaurante);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -140,7 +140,7 @@ public class Controlador {
     }
 
     @RequestMapping(value = "/javaAPP/obtenerMesas/{idRestaurante}", method = RequestMethod.GET)
-    public ResponseEntity<Object> actualizarPlatos(@PathVariable int idRestaurante){
+    public ResponseEntity<Object> obtenerMesas(@PathVariable int idRestaurante){
         return new ResponseEntity<>(accesoMongoDB.obtenerMesas(idRestaurante), HttpStatus.OK);
     }
 

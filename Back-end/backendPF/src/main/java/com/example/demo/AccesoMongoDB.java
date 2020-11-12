@@ -923,10 +923,8 @@ public class AccesoMongoDB {
         }
     }*/
     public void actualizarPedido(int posPedido, HashMap pedido,Bson requisitosLogin){
-
         Document pedidosDoc = new Document("pedidos."+posPedido, pedido);
         Document operacion = new Document("$set", pedidosDoc);
-
         UpdateResult result = this.getBase().getCollection("restaurante").updateOne(requisitosLogin, operacion);
     }
 

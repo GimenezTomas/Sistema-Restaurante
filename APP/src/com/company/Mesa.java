@@ -78,10 +78,11 @@ public class Mesa implements Comparable<Mesa>{
         return false;
     }
 
-    public static void agregarMesas(HashSet<Mesa> mesas,int textfield) {
+    public static void agregarMesas(HashSet<Mesa> mesas,int textfield, int idR) {
         for (int i = 1; i <= textfield; i++) {
             Mesa mesa = new Mesa();
             mesas.add(mesa);
+            Peticion.putConJson(mesa, "http://localhost:8080/api/javaAPP/gestionarMesas/agregarMesa/"+idR);
         }
     }
 
@@ -107,7 +108,7 @@ public class Mesa implements Comparable<Mesa>{
         JOptionPane.showMessageDialog(null, "La mesa ya esta desocupada");
     }
 
-    public static void generarQr(HashSet<Mesa> mesas) throws IOException {
+    public static void generarQr(HashSet<Mesa> mesas, int idR) throws IOException {
         for (Mesa mesa : mesas) {
             if (mesa.QR == null){
                 String url = "http://192.168.0.43/php/rest1copia.php?";
@@ -146,6 +147,7 @@ public class Mesa implements Comparable<Mesa>{
                 fos.write(out.toByteArray());
                 fos.flush();
                 mesa.QR = imgQr;
+                Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarMesas/qr/"+imgQr.getPath()+"/"+idR);
             }
         }
 
