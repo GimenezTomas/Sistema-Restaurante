@@ -114,16 +114,9 @@ public class Mesa implements Comparable<Mesa>{
                 String url = "http://192.168.0.43/php/rest1copia.php?";
                 HashMap<String,Object> data = new HashMap<String,Object>();
                 data.put("mesa",mesa.getNumMesa());
-                //data.put("restaurante",);
-
-                String json = "";
-                try {
-                    json = new ObjectMapper().writeValueAsString(data);
-                } catch (IOException e) {
-                }
-
+                data.put("restaurante",idR);
+                String json = new ObjectMapper().writeValueAsString(data);
                 HttpPost post = new HttpPost(url);
-
                 try{
                     CloseableHttpClient httpClient = HttpClients.createDefault();
                     post.setHeader("Content-Type","");
@@ -147,7 +140,7 @@ public class Mesa implements Comparable<Mesa>{
                 fos.write(out.toByteArray());
                 fos.flush();
                 mesa.QR = imgQr;
-                Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarMesas/qr/"+imgQr.getPath()+"/"+idR);
+                Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarMesas/qr/"+imgQr.getPath()+"/"+idR);
             }
         }
 
