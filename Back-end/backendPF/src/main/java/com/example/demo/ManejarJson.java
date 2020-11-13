@@ -88,7 +88,7 @@ public class ManejarJson {
         Bson filtro1= Filters.eq("id", 1);
 
         try {
-            jsonASER.put("platosYaPedidos", mongo.obtenerPedido(idRest,mesa, filtro1).getPlatos());
+            jsonASER.put("platosYaPedidos", mongo.obtenerPedidoJ(idRest,mesa, filtro1));
         }catch (NullPointerException e){
             jsonASER.put("platosYaPedidos", new ArrayList<>());
             e.printStackTrace();
@@ -119,6 +119,7 @@ public class ManejarJson {
 
     public void actualizarPedido(int idPed, int id, HashMap pedido){
         Bson filtro1= Filters.eq("id", id);
+        System.out.println(pedido);
         mongo.actualizarPedido(idPed-1, pedido, filtro1);
     }
 
@@ -164,9 +165,6 @@ public class ManejarJson {
 
     public void actualizarPlatos(String nombre, HashMap platos, int id){
         Bson filtro1= Filters.eq("id", id);
-
-        System.out.println(platos);
-
         mongo.actualizarPlatos(platos, nombre, filtro1);
     }
 

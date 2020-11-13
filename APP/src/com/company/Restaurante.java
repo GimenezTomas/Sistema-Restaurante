@@ -304,8 +304,7 @@ public class Restaurante {
                             for (PlatoPedido platoFromPedido : pedidosAux.getPlatos()){
                                 System.out.println(platoFromPedido.isEntregado()+" plato is entregado");
                             }
-                            Peticion.putConJson(pedidosAux, "http://localhost:8080/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedidosAux.getnPedido()+"/"+id);
-                            break;
+                            Peticion.putConJson(parseDatePedido(pedidosAux), "http://localhost:8080/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedidosAux.getnPedido()+"/"+id);
                         }
                     }
                 }

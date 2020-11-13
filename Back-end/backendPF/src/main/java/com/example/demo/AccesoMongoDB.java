@@ -217,7 +217,6 @@ public class AccesoMongoDB {
         }
         return platosMon;
     }*///Metodo app
-
     public Pedido obtenerPedido(int idRestaurante, int nMesa, Bson requisitosLogin){
         MongoCollection  collection = this.base.getCollection("restaurante");
 
@@ -258,6 +257,27 @@ public class AccesoMongoDB {
             }
         }
         return null;
+    }
+    public Object obtenerPedidoJ(int idRestaurante, int nMesa, Bson requisitosLogin){
+        MongoCollection  collection = this.base.getCollection("restaurante");
+
+        Bson filtro1= Filters.eq("id", idRestaurante);
+        String json = "{_id:0, pedidos:{$elemMatch:{nMesa:"+nMesa+", abierto:true}}}";
+        Bson bson = BasicDBObject.parse(json);
+        FindIterable resultado = collection.find(filtro1/*o requisitosLogin*/).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while (iterator.hasNext()) {
+            Document document = (Document) iterator.next();
+            ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
+            if (documents!=null) {
+                for (Document dataPlato : documents) {
+                    return dataPlato.get("platos");
+                }
+            }
+        }
+        return new Object();
     }
 
     public void agregarPedido(Pedido pedido, Bson requisitosLogin){
