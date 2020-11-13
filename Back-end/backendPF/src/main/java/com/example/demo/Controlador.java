@@ -56,6 +56,11 @@ public class Controlador {
 
     //APP
 
+    @RequestMapping(value = "/javaAPP/seccionesPlatos/{idRestaurante}", method = RequestMethod.GET)
+    public ResponseEntity<Object> enviarSeccionesPlatosAlaAPIjava(@PathVariable int idRestaurante){
+        return new ResponseEntity<>(accesoMongoDB.seccionesPlatosAlaAPIjava(idRestaurante), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/javaAPP/login/{username}/{password}", method = RequestMethod.GET)
     public ResponseEntity<Integer> loginAppGestion(@PathVariable String username, @PathVariable String password){
         return new ResponseEntity<>(accesoMongoDB.login(username, password), HttpStatus.OK);

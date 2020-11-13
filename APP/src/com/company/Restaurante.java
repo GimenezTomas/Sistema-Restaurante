@@ -312,7 +312,7 @@ public class Restaurante {
                         }
                     }
                 }
-                Peticion.putConJson(parseDatePedido(pedido), "http://localhost:8080/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedido.getnPedido()+"/"+id);
+                Peticion.putConJson(parseDatePedido(pedido), "http://localhost:8888/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedido.getnPedido()+"/"+id);
 
                 JOptionPane.showMessageDialog(null, "Se entregaron los pedidos correctamente!!!");
                 ventana.getContentPane().removeAll();
@@ -484,7 +484,7 @@ public class Restaurante {
                 if (seccionPlato.getNombre().equals(opcionesSec)) {
                     Plato plato = new Plato(nombre, Float.parseFloat(precio), new File(imagen), descripcion, tiempoDemora);
                     seccionPlato.getPlatos().add(plato);
-                    Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
+                    Peticion.putConJson(seccionPlato, "http://localhost:8888/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
                 }
             }
             //mongo.actualizarSeccionesPlatos(seccionesPlatos);
@@ -516,7 +516,7 @@ public class Restaurante {
             for (SeccionesPlatos seccionPlato : seccionesPlatos){
                 if (seccionPlato.getNombre().equals(opcionesSec)) {
                     seccionPlato.getPlatos().add(newPlato);
-                    Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
+                    Peticion.putConJson(seccionPlato, "http://localhost:8888/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
                 }
             }
             //mongo.actualizarSeccionesPlatos(seccionesPlatos);
@@ -1237,8 +1237,8 @@ public class Restaurante {
                                                         JOptionPane.showMessageDialog(null, "Se cambio correctamente");
                                                         //mongo.actualizarPlato(platosAux, nombreViejo);
                                                         //mongo.actualizarSeccionesPlatos(seccionesPlatos);
-                                                        Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
-                                                        //Peticion.putConJson(platosAux, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+opcionesSec.getSelectedItem().toString()+"/"+id);
+                                                        Peticion.putConJson(seccionPlato, "http://localhost:8888/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
+                                                        //Peticion.putConJson(platosAux, "http://localhost:8888/api/javaAPP/gestionarMenu/editarNombreSeccion/"+opcionesSec.getSelectedItem().toString()+"/"+id);
                                                     }
                                                 }
                                             } catch (NumberFormatException ex) {
@@ -1259,8 +1259,8 @@ public class Restaurante {
                                                     seccionName = seccionPlato.getNombre();
                                                 }
                                             }
-                                            Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
-                                            //Peticion.putConJson(platosAux, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionName+"/"+id);
+                                            Peticion.putConJson(seccionPlato, "http://localhost:8888/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
+                                            //Peticion.putConJson(platosAux, "http://localhost:8888/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionName+"/"+id);
                                             //mongo.actualizarSeccionesPlatos(seccionesPlatos);
                                             //mongo.actualizarPlatos(platos);
                                             jtxtDemora.setVisible(false);
@@ -1386,7 +1386,7 @@ public class Restaurante {
                         }
                         if (ok) {
                             JOptionPane.showMessageDialog(null, "se cambio correctamente");
-                            Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionActual.getNombre()+"/"+nombre+"/"+id);
+                            Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionActual.getNombre()+"/"+nombre+"/"+id);
                             seccionActual.setNombre(nombre);
                         } else {
                             JOptionPane.showMessageDialog(null, "El nombre ya esta usado");
@@ -1399,7 +1399,7 @@ public class Restaurante {
                 public void mouseClicked(MouseEvent e) {
                     int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los platos que le correspondan");
                     if(confirmD == JOptionPane.YES_OPTION){
-                        Peticion.deleteSinJson("http://localhost:8080/api/javaAPP/gestionarMenu/borrarSeccion/"+seccionActual.getNombre()+"/"+id);
+                        Peticion.deleteSinJson("http://localhost:8888/api/javaAPP/gestionarMenu/borrarSeccion/"+seccionActual.getNombre()+"/"+id);
                         seccionesPlatos.remove(seccionActual);
                         //mongo.actualizarSeccionesPlatos(seccionesPlatos);
                         textFieldSeccion.setVisible(false);
@@ -1489,7 +1489,7 @@ public class Restaurante {
                     }
                     if (ok){
                         seccionesPlatos.add(new SeccionesPlatos(nombre));
-                        Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarMenu/agregarSeccion/"+nombre+"/"+id);
+                        Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarMenu/agregarSeccion/"+nombre+"/"+id);
                         //mongo.actualizarSeccionesPlatos(seccionesPlatos);
                         JOptionPane.showMessageDialog(null,"Se agrego correctamente!");
                     }
@@ -1782,7 +1782,7 @@ public class Restaurante {
                 int confirmD = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres borrarlo? se borraran todos los platos del menu");
                 if (confirmD== JOptionPane.YES_NO_OPTION){
                     seccionesPlatos.clear();
-                    Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarMenu/borrarMenu/"+id);
+                    Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarMenu/borrarMenu/"+id);
                     //mongo.actualizarSeccionesPlatos(seccionesPlatos);
                     JOptionPane.showMessageDialog(null, "Se borraron todos los platos y sus secciones");
                 }
@@ -1976,7 +1976,7 @@ public class Restaurante {
                                 Mesa.ocuparMesas(mesas,n);
                                 for (Mesa mesa : mesas){
                                     if (mesa.getNumMesa() == n){
-                                        Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarMesas/estado/"+mesa.isOcupada()+"/"+mesa.getNumMesa()+"/"+id);
+                                        Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarMesas/estado/"+mesa.isOcupada()+"/"+mesa.getNumMesa()+"/"+id);
                                         break;
                                     }
                                 }
@@ -2013,7 +2013,7 @@ public class Restaurante {
                                 Mesa.desocuparMesas(mesas,n);
                                 for (Mesa mesa : mesas){
                                     if (mesa.getNumMesa() == n){
-                                        Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarMesas/estado/"+mesa.isOcupada()+"/"+mesa.getNumMesa()+"/"+id);
+                                        Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarMesas/estado/"+mesa.isOcupada()+"/"+mesa.getNumMesa()+"/"+id);
                                         // mongo.actualizarMesa(mesa);
                                         break;
                                     }
@@ -2021,7 +2021,7 @@ public class Restaurante {
                                 for (int i = pedidos.size()-1; i > 0 ; i--) {
                                     if (pedidos.get(i).isAbierto() && pedidos.get(i).getnMesa() == n){
                                         pedidos.get(i).setAbierto(false);
-                                        Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarPedidos/cobrar/"+pedidos.get(i).getnPedido()+"/"+id);
+                                        Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarPedidos/cobrar/"+pedidos.get(i).getnPedido()+"/"+id);
                                         //Peticion.cobrar(id, pedidos.get(i).getnPedido());
                                     }
                                 }
@@ -2063,7 +2063,7 @@ public class Restaurante {
                             int BM = JOptionPane.showConfirmDialog(null,"Estas seguro que quiere borrar esta mesa?");
                             if (BM == JOptionPane.YES_OPTION){
                                 mesas.remove(mesa);
-                                Peticion.deleteSinJson("http://localhost:8080/api/javaAPP/gestionarMesas/borrarMesa/"+mesa.getNumMesa()+"/"+id);
+                                Peticion.deleteSinJson("http://localhost:8888/api/javaAPP/gestionarMesas/borrarMesa/"+mesa.getNumMesa()+"/"+id);
                                 panelMesas.remove(nMesa);
                                // mongo.actualizarMesas(mesas);
                                 File imagen = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
@@ -2191,7 +2191,7 @@ public class Restaurante {
             public void mouseClicked(MouseEvent e) {
                 if (nombre != texto1.getText()){
                     nombre= texto1.getText();
-                    Peticion.putSinJson("http://localhost:8080/api/javaAPP/actualizarPerfil/nombre/"+nombre+"/"+id);
+                    Peticion.putSinJson("http://localhost:8888/api/javaAPP/actualizarPerfil/nombre/"+nombre+"/"+id);
                     //Peticion.actualizarNombreRest(id, nombre);
                 }
                 if (logo != file[0]){
@@ -2582,7 +2582,7 @@ public class Restaurante {
                         for (Pedido pedido: pedidos){
                             if (npedido == pedido.getnPedido()){
                                 pedido.setAbierto(false);
-                                Peticion.putSinJson("http://localhost:8080/api/javaAPP/gestionarPedidos/cobrar/"+pedido.getnPedido()+"/"+id);
+                                Peticion.putSinJson("http://localhost:8888/api/javaAPP/gestionarPedidos/cobrar/"+pedido.getnPedido()+"/"+id);
                                 //Peticion.cobrar(id, pedido.getnPedido());
                                 ventana.getContentPane().removeAll();
                                 panelMenu(ventana);

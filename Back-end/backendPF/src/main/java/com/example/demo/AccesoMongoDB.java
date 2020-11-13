@@ -405,6 +405,24 @@ public class AccesoMongoDB {
         }
         return  seccionesPlatos;
     }
+
+    public Object obtenerSeccionesAPI(Bson requisitosLogin){
+        MongoCollection collection = this.base.getCollection("restaurante");
+
+        String json = "{_id:0, seccionesPlatos:1}";
+        Bson bson =  BasicDBObject.parse( json );
+        FindIterable resultado = collection.find(requisitosLogin).projection(bson);
+
+        MongoCursor iterator = resultado.iterator();
+
+        while(iterator.hasNext()) {
+            Document document = (Document) iterator.next();
+
+            return document.get("seccionesPlatos");
+        }
+        return null;
+    }
+
     public HashMap<String, Object> obtenerDataUser(Bson requisitosLogin){
         MongoCollection collection = this.base.getCollection("restaurante");
 

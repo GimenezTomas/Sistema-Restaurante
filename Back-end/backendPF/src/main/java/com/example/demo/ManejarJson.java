@@ -64,6 +64,14 @@ public class ManejarJson {
         Bson filtro1= Filters.eq("id", id);
 
         HashMap<String, Object> jsonASER = new HashMap<>();
+        jsonASER.put("seccionesPlatos", mongo.obtenerSeccionesAPI(filtro1));
+        return jsonASER;
+    }
+
+    public HashMap<String, Object> seccionesPlatosAlaAPIjava(int id){
+        Bson filtro1= Filters.eq("id", id);
+
+        HashMap<String, Object> jsonASER = new HashMap<>();
         jsonASER.put("seccionesPlatos", mongo.obtenerSecciones(filtro1));
         return jsonASER;
     }

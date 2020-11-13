@@ -30,7 +30,7 @@ public interface Peticion {
 
         try{
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet request = new HttpGet("http://localhost:8080/api/javaAPP/obtenerMesas/1");
+            HttpGet request = new HttpGet("http://localhost:8888/api/javaAPP/obtenerMesas/1");
             response = httpClient.execute(request);
             HttpEntity entity = response.getEntity();
             String resultado = EntityUtils.toString(entity);
@@ -67,7 +67,7 @@ public interface Peticion {
         int resultado = 0;
         try{
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet request = new HttpGet("http://localhost:8080/api/javaAPP/login/"+user+"/"+password);
+            HttpGet request = new HttpGet("http://localhost:8888/api/javaAPP/login/"+user+"/"+password);
             response = httpClient.execute(request);
             HttpEntity entity = response.getEntity();
             resultado = Integer.parseInt(EntityUtils.toString(entity));
@@ -86,7 +86,7 @@ public interface Peticion {
 
         try{
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet request = new HttpGet("http://localhost:8080/api/dataRest/dataUser/"+restaurante.getId());
+            HttpGet request = new HttpGet("http://localhost:8888/api/dataRest/dataUser/"+restaurante.getId());
             response = httpClient.execute(request);
             HttpEntity entity = response.getEntity();
             String resultado = EntityUtils.toString(entity);
@@ -111,7 +111,7 @@ public interface Peticion {
         ArrayList<Pedido> pedidos = new ArrayList<>();
         try{
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet request = new HttpGet("http://localhost:8080/api/javaAPP/obtenerPedidos/"+id);
+            HttpGet request = new HttpGet("http://localhost:8888/api/javaAPP/obtenerPedidos/"+id);
             response = httpClient.execute(request);
             HttpEntity entity = response.getEntity();
             String resultado = EntityUtils.toString(entity);
@@ -155,7 +155,7 @@ public interface Peticion {
         ArrayList<SeccionesPlatos>seccionesPlatos = new ArrayList<>();
         try{
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpGet request = new HttpGet("http://localhost:8080/api/dataRest/seccionesPlatos/"+id);
+            HttpGet request = new HttpGet("http://localhost:8888/api/javaAPP/seccionesPlatos/"+id);
             response = httpClient.execute(request);
             HttpEntity entity = response.getEntity();
             String resultado = EntityUtils.toString(entity);
@@ -199,7 +199,7 @@ public interface Peticion {
     }
 
     static void actualizarImagenRest(int id, String imagen){
-        HttpPut put = new HttpPut("http://localhost:8080/api/javaAPP/actualizarPerfil/img/"+imagen+"/"+id);
+        HttpPut put = new HttpPut("http://localhost:8888/api/javaAPP/actualizarPerfil/img/"+imagen+"/"+id);
 
         try{
             CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -214,7 +214,7 @@ public interface Peticion {
 
     static void actualizarPedido(Pedido pedido, int id, int idPedido){
 
-        HttpPut put = new HttpPut("http://localhost:8080/api/javaAPP/gestionarPedidos/cobrar/"+idPedido+"/"+id);
+        HttpPut put = new HttpPut("http://localhost:8888/api/javaAPP/gestionarPedidos/cobrar/"+idPedido+"/"+id);
 
         try {
             String pedidoJson = new ObjectMapper().writeValueAsString(pedido);
