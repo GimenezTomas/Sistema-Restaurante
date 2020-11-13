@@ -57,45 +57,47 @@
           "descripcion": "muy ricos",
           "precio": 50.2,
           "demora": "25min",
+          "calificacion": 4.2,
           "agregados": [
             {
-              "tipo": "porcion",
+              "tipo": "Porcion",
               "agregado": [
                 {
                   "precio": 50,
-                  "nombre": "entera"
+                  "nombre": "Entera"
                 },
                 {
                   "precio": 0,
-                  "nombre": "media"
+                  "nombre": "Media"
                 }
               ],
               "indispensable": true
             },
             {
-              "tipo": "salsas",
+              "tipo": "Salsas",
               "agregado": [
                 {
                   "precio": 100,
-                  "nombre": "bolognesa"
+                  "nombre": "Bolognesa"
                 },
                 {
                   "precio": 120,
-                  "nombre": "tuco"
+                  "nombre": "Tuco"
                 }
               ],
               "indispensable": false
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\ñoquis.png",
-          "nombre": "ñoquis"
+          "imagen": "images\\ñoquis.png",
+          "nombre": "Ñoquis"
         },
         {
           "descripcion": "Pizza estilo napolitana compuesta por tomate, muzzarella y albahaca",
           "precio": 400,
           "demora": "15min",
+          "calificacion": 5.0,
           "agregados": [],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Front-end\\Images\\empanada.png",
+          "imagen": "images\\pizza.png",
           "nombre": "Pizza napolitana"
         }
       ]
@@ -107,6 +109,7 @@
           "descripcion": "500g de Bife de chorizo acompañado con una guarnición de papas fritas",
           "precio": 860,
           "demora": "30min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Punto",
@@ -137,13 +140,14 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\Back-end\\backendPF\\src\\main\\resources\\static\\images\\empanada.png",
+          "imagen": "images\\bife.png",
           "nombre": "Bife de chorizo con papas fritas"
         },
         {
           "descripcion": "Tira de asado, vacio, entraña y un matrimonio acompañado con dos porciones de papas fritas. Comen 2 o 3.",
           "precio": 1700,
           "demora": "25MIN",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Guarnición",
@@ -164,13 +168,14 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\factura.png",
+          "imagen": "images\\parrilla2.png",
           "nombre": "Parrillada para 2"
         },
         {
           "descripcion": "sanguche de chorizo a la parrilla con chimichurri",
           "precio": 260,
           "demora": "6min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Guarnición",
@@ -183,13 +188,14 @@
               "indispensable": false
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "imagen": "images\\chori.png",
           "nombre": "Choripan"
         },
         {
           "descripcion": "Pollo a la parrilla adobado acompañado con una porción de papas baston fritas",
           "precio": 699.5,
           "demora": "30min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Postres",
@@ -210,13 +216,14 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "imagen": "images\\pollopapa.png",
           "nombre": "Pollo con papas fritas"
         },
         {
           "descripcion": "Tira de asado cortada fina a la parrilla",
           "precio": 500.1,
           "demora": "20min",
+          "calificacion": 5.0,
           "agregados": [
             {
               "tipo": "Punto de la carne",
@@ -233,8 +240,149 @@
               "indispensable": true
             }
           ],
-          "imagen": "C:\\Users\\Familia Gimenez\\Documents\\GitHub\\ProyectoFinal\\APP\\src\\com\\company\\images\\check.png",
+          "imagen": "images\\asadoB.png",
           "nombre": "Asado banderita"
+        }
+      ]
+    },
+    {
+      "nombre": "Empanadas",
+      "platos": [
+        {
+          "descripcion": "Empanada de carne salteña frita en grasa de cerdo",
+          "precio": 100,
+          "demora": "30min",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Salsas",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Limon"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\empanadaSalteña.jpg",
+          "nombre": "Empanada salteña"
+        },
+        {
+          "descripcion": "Empanada rellena de jamon y queso.",
+          "precio": 111.5,
+          "demora": "25MIN",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Salsas",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Limon"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\jqemp.jpg",
+          "nombre": "Empanada de jamon y queso"
+        },
+        {
+          "descripcion": "Docena surtida de empanadas fritas",
+          "precio": 860,
+          "demora": "6min",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Salsas",
+              "agregado": [
+                {
+                  "precio": 120,
+                  "nombre": "Limon"
+                }
+              ],
+              "indispensable": false
+            }
+          ],
+          "imagen": "images\\empanadaSalteña.jpg",
+          "nombre": "Surtido de empanadas"
+        }
+      ]
+    },
+    {
+      "nombre": "Postres",
+      "platos": [
+        {
+          "descripcion": "Cono con 2 bochas de helado de crema",
+          "precio": 860,
+          "demora": "30min",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Sabores",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Chocolate y Dulce de leche"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Banana Split y Dulce de leche"
+                }
+              ],
+              "indispensable": true
+            },
+            {
+              "tipo": "Toppings",
+              "agregado": [
+                {
+                  "precio": 20,
+                  "nombre": "Baño de chocolate"
+                },
+                {
+                  "precio": 0,
+                  "nombre": "Lluvia de rocklets"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\helado.jpg",
+          "nombre": "Cono de helados"
+        },
+        {
+          "descripcion": "Mousse de chocolate casero",
+          "precio": 1700,
+          "demora": "25MIN",
+          "calificacion": 5.0,
+          "agregados": [
+            {
+              "tipo": "Sabor",
+              "agregado": [
+                {
+                  "precio": 0,
+                  "nombre": "Limon"
+                },
+                {
+                  "precio": 100,
+                  "nombre": "Chocolate"
+                }
+              ],
+              "indispensable": true
+            }
+          ],
+          "imagen": "images\\mousse.jpg",
+          "nombre": "Mousse"
+        },
+        {
+          "descripcion": "Torta de chocolina, dulce de leche y queso crema",
+          "precio": 260,
+          "demora": "6min",
+          "calificacion": 5.0,
+          "agregados": [],
+          "imagen": "images\\chocotorta.jpg",
+          "nombre": "Chocotorta"
         }
       ]
     }
@@ -248,6 +396,7 @@
       "platos": [
         {
           "nombrePlato": "ñoquis",
+          "imagen": "images\\ñoquis.png",
           "precio": 70.2,
           "fecha": "18-05-2020 10:01:00",
           "entregado": false,
@@ -269,6 +418,7 @@
         {
           "nombrePlato": "fideos",
           "precio": 70.2,
+          "imagen": "images\\fideo.png",
           "fecha": "18-05-2020 10:01:00",
           "entregado": false,
           "agregados": [
@@ -285,10 +435,11 @@
         {
           "nombrePlato": "ravioles",
           "precio": 70.2,
+          "imagen": "images\\raviol.png",
           "fecha": "18-05-2020 10:01:00",
           "entregado": false
         }
       ]
     }
   ]
-}]
+}

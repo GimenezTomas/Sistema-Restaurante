@@ -18,16 +18,34 @@
     </script>
 <?php
     function Perfil(){
-        $json = file_get_contents('collectionRestaurante.json');
-        $datos = json_decode($json,true);
+
         $restID =  $_GET["restaurante"];
-        $ft = $datos["logo"];
-        $name = $datos["nombre"];
-        $id = $datos["id"];
+        $url = "localhost:8080/api/dataRest/dataUser/". $restID;
+        $urlSinEspacio = str_replace(' ', '', $url);
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL =>  $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $datos = json_decode($response,true);
+
+        $ft = $datos["dataUser"]["logo"];
+        $name = $datos["dataUser"]["nombre"];
+        $id = $datos["dataUser"]["id"];
         if ($restID == $id) {
             ?>
             <div class="res">
-                <img class="zz" src="<?php echo $ft; ?>">
+                <img class="zz" src="images\\<?php echo  $ft; ?>">
                 <div class="nn"><h1 style="color: white; overflow-y:scroll;"><?php echo $name;?></h1></div>
             </div>
             <?php 
@@ -36,8 +54,28 @@
     }
     
     function Secciones(){
-        $json = file_get_contents('collectionRestaurante.json');
-        $datos = json_decode($json,true);
+
+        $restID =  $_GET["restaurante"];
+        $url =  "localhost:8080/api/dataRest/seccionesPlatos/". $restID;
+        $urlSinEspacio = str_replace(' ', '', $url);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $datos = json_decode($response,true);
+
         $secc = $datos["seccionesPlatos"];
         for ($i=0; $i < count($secc) ; $i++) {
             $name = $datos["seccionesPlatos"][$i]["nombre"];
@@ -49,9 +87,9 @@
             $platos = $datos["seccionesPlatos"][$i]["platos"];
             for ($j=0; $j < count($platos) ; $j++) { 
                 $nam = $platos[$j]["nombre"];
-                $img = $platos[$j]["imagen"];
+                $img = $platos[$j]["img"];
                 $precio = $platos[$j]["precio"];
-                $demora = $platos[$j]["demora"];
+                $demora = $platos[$j]["tiempoDemora"];
                 $estrella = $platos[$j]["calificacion"];
                 $agregadosLimpio = array();
                 $agregadoArrayTipos = array();
@@ -127,8 +165,27 @@
     }
 
     function botones(){
-        $json = file_get_contents('collectionRestaurante.json');
-        $datos = json_decode($json,true);
+        $restID =  $_GET["restaurante"];
+        $url =  "localhost:8080/api/dataRest/seccionesPlatos/". $restID;
+        $urlSinEspacio = str_replace(' ', '', $url);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $datos = json_decode($response,true);
+        
         $secc = $datos["seccionesPlatos"];
         for ($i=0; $i < count($secc) ; $i++) {
             $name = $datos["seccionesPlatos"][$i]["nombre"];
@@ -193,9 +250,16 @@
                 $platosPedido = $pedido[$i]["platos"];
                 for ($j=0; $j < count($platosPedido) ; $j++) { 
                     $nom = $pedido[$i]["platos"][$j]["nombrePlato"];
-                    $agg = $pedido[$i]["platos"][$j]["agregados"];
                     $img = $pedido[$i]["platos"][$j]["imagen"];
                     $prec = $pedido[$i]["platos"][$j]["precio"];
+                    $agregadoss = array();
+                    if (isset($pedido[$i]["platos"][$j]["agregados"])) {
+                        for ($z=0; $z < count($pedido[$i]["platos"][$j]["agregados"]); $z++) { 
+                            $arrayNuevo = array("nombre" => $pedido[$i]["platos"][$j]["agregados"][$z]["nombre"], "precio" => $pedido[$i]["platos"][$j]["agregados"][$z]["precio"]);
+                            $prec += $pedido[$i]["platos"][$j]["agregados"][$z]["precio"];
+                            array_push($agregadoss, $arrayNuevo);
+                        }
+                    }                
                     ?>                    
                     <script>
                         afa = function() {
@@ -203,24 +267,16 @@
                             let precio2 = "<?php echo $prec; ?>";
                             let descripcion2 = "<?php echo ""; ?>";
                             let imagen2 = "<?php echo $img; ?>";
-                            let agregados2 = <?php echo json_encode($agg ); ?>;
+                            let agregados2 = <?php echo json_encode($agregadoss); ?>;
+                            console.log(agregados2);
                             let plato2 = new Plato(nombre2,precio2,descripcion2,imagen2,agregados2) ;
                             platosYaPedidos.push(plato2)
                         }
                         afa();
                     </script>         
-                    <?php
-                    for ($z=0; $z < count($agg); $z++) { 
-                        $prec += $agg[$z]["precio"];
-                    }
-                    ?>
                     <li id = "plato" class="pedido">
                         <img src="<?php echo $img; ?>" alt="">
                         <h3><?php echo $nom; ?></h3>
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M3.204 5L8 10.481 12.796 5H3.204zm-.753.659l4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
-                        </svg>
-                        <h6>aa</h6>
                         <div class="p">
                             <h2>$</h2>
                             <h4 class="precio"><?php echo $prec; ?></h4>
