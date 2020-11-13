@@ -2533,6 +2533,7 @@ public class Restaurante {
 
                                             v++;
                                         }
+                                        frameAgregados.getContentPane().removeAll();
                                         panelDetalle.setPreferredSize(new Dimension(1350, panelDetalle.getComponent(panelDetalle.getComponents().length-1).getY()+200));
                                             JScrollPane scroll = new JScrollPane(panelDetalle, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                                             frameAgregados.remove(panelDetalle);
