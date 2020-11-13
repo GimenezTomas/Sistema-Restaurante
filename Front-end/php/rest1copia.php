@@ -164,6 +164,22 @@
             }
     }
 
+    /*function pedirPHP(){
+        $restID =  $_GET["restaurante"];
+        $url =  "localhost:8888/api/pedidoALaBase/". $restID + "/".$_GET["mesa"];
+        $urlSinEspacio = str_replace(' ', '', $url);
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);      
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, ?> <script> JSON.stringify(platos) </script><?php);
+        
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $datos = json_decode($response,true);
+    }*/
+
     function botones(){
         $restID =  $_GET["restaurante"];
         $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $restID;
@@ -876,6 +892,16 @@
             }
         }
         platosYaPedidos.push(platos)
+
+        $.ajax({
+            url:"localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>",
+            method:'PUT',
+            dataType:'jsonp',
+            data: {
+                platos: JSON.stringify(platos)
+            }
+        })
+
         clearArray(platos)
         llamarCarrito('car')
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
