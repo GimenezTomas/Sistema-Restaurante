@@ -254,8 +254,10 @@ public class Restaurante {
                                         public void mouseClicked(MouseEvent e) {
                                             if (checkBox.isSelected()){
                                                 platosChecked.add(plato);
+                                                System.out.println("se agrego");
                                             }else{
                                                 platosChecked.remove(plato);
+                                                System.out.println("se borro");
                                             }
                                         }
                                     });
@@ -293,9 +295,12 @@ public class Restaurante {
         boton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                Pedido pedido = null;
+                platosChecked.forEach(platoPedido -> System.out.println(platoPedido.getNombre()));
                 for (PlatoPedido platoPedido : platosChecked){
                     for (Pedido pedidosAux : pedidos) {
                         if (pedidosAux.getnPedido() == Integer.parseInt(menuPedidos.getSelectedItem().toString().substring(9))) {
+                            pedido = pedidosAux;
                             for (PlatoPedido platoFromPedido : pedidosAux.getPlatos()){
                                 if (platoFromPedido==platoPedido){
                                     platoFromPedido.setEntregado(true);
@@ -304,10 +309,11 @@ public class Restaurante {
                             for (PlatoPedido platoFromPedido : pedidosAux.getPlatos()){
                                 System.out.println(platoFromPedido.isEntregado()+" plato is entregado");
                             }
-                            Peticion.putConJson(parseDatePedido(pedidosAux), "http://localhost:8080/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedidosAux.getnPedido()+"/"+id);
                         }
                     }
                 }
+                Peticion.putConJson(parseDatePedido(pedido), "http://localhost:8080/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedido.getnPedido()+"/"+id);
+
                 JOptionPane.showMessageDialog(null, "Se entregaron los pedidos correctamente!!!");
                 ventana.getContentPane().removeAll();
                 panelMenu(ventana);
