@@ -237,11 +237,15 @@ public interface Peticion {
         HttpPut put = new HttpPut(url);
 
         try {
+            //updateRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
+            //StringEntity entity= new StringEntity(json, "UTF-8");
+            //updateRequest.setEntity(entity);
+            //
             String json = new ObjectMapper().writeValueAsString(object);
             System.out.println("json: "+json);
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            put.setHeader("Content-Type", "application/json");
-            put.setEntity(new StringEntity(json));
+            put.setHeader("Content-Type", "application/json;charset=UTF-8");
+            put.setEntity(new StringEntity(json, "UTF-8"));
             CloseableHttpResponse response = httpClient.execute(put);
 
         } catch (ClientProtocolException e) {

@@ -164,6 +164,9 @@ public class ManejarJson {
 
     public void actualizarPlatos(String nombre, HashMap platos, int id){
         Bson filtro1= Filters.eq("id", id);
+
+        System.out.println(platos);
+
         mongo.actualizarPlatos(platos, nombre, filtro1);
     }
 

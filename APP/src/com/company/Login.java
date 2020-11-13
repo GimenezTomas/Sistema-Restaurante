@@ -62,6 +62,7 @@ public class Login {
         this.ventana.setSize(width, height);
         this.ventana.setVisible(true);
         this.ventana.setLayout(null);
+        this.ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //this.acceso = new AccesoMongoDB("proyectoFinal");
 
