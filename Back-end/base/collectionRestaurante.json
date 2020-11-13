@@ -5,7 +5,7 @@
   "id": 1,
   "nombre": "Mc Donald's",
   "direccion": "Triunvirato 4600",
-  "logo": "mc.png",
+  "logo": "images\\mc.png",
   "login": [
     {
       "user": "iñako",

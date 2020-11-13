@@ -20,7 +20,7 @@
     function Perfil(){
 
         $restID =  $_GET["restaurante"];
-        $url = "localhost:8080/api/dataRest/dataUser/". $restID;
+        $url = "localhost:8888/api/dataRest/dataUser/". $restID;
         $urlSinEspacio = str_replace(' ', '', $url);
 
         $curl = curl_init();
@@ -45,7 +45,7 @@
         if ($restID == $id) {
             ?>
             <div class="res">
-                <img class="zz" src="images\\<?php echo  $ft; ?>">
+                <img class="zz" src="<?php echo  $ft; ?>">
                 <div class="nn"><h1 style="color: white; overflow-y:scroll;"><?php echo $name;?></h1></div>
             </div>
             <?php 
@@ -56,7 +56,7 @@
     function Secciones(){
 
         $restID =  $_GET["restaurante"];
-        $url =  "localhost:8080/api/dataRest/seccionesPlatos/". $restID;
+        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $restID;
         $urlSinEspacio = str_replace(' ', '', $url);
         $curl = curl_init();
 
@@ -87,9 +87,9 @@
             $platos = $datos["seccionesPlatos"][$i]["platos"];
             for ($j=0; $j < count($platos) ; $j++) { 
                 $nam = $platos[$j]["nombre"];
-                $img = $platos[$j]["img"];
+                $img = $platos[$j]["imagen"];
                 $precio = $platos[$j]["precio"];
-                $demora = $platos[$j]["tiempoDemora"];
+                $demora = $platos[$j]["demora"];
                 $estrella = $platos[$j]["calificacion"];
                 $agregadosLimpio = array();
                 $agregadoArrayTipos = array();
@@ -166,7 +166,7 @@
 
     function botones(){
         $restID =  $_GET["restaurante"];
-        $url =  "localhost:8080/api/dataRest/seccionesPlatos/". $restID;
+        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $restID;
         $urlSinEspacio = str_replace(' ', '', $url);
         $curl = curl_init();
 
@@ -182,7 +182,6 @@
         ));
 
         $response = curl_exec($curl);
-
         curl_close($curl);
         $datos = json_decode($response,true);
         
@@ -199,13 +198,50 @@
     }
 
     function Pedido(){
-        $json = file_get_contents('collectionRestaurante.json');
-        $datos = json_decode($json,true);
-        $ft = $datos["logo"];
-        $rest = $datos["nombre"];
-        $table =  $_GET["mesa"];
         $restID =  $_GET["restaurante"];
-        $pedido = $datos["pedidos"];?>
+        $mmmesa = $_GET["mesa"];
+
+        $url = "localhost:8888/api/dataRest/platosYaPedidos/". $restID. "/". $mmmesa;
+        $urlSinEspacio = str_replace(' ', '', $url);
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $datos = json_decode($response,true);
+
+        $url2 = "localhost:8888/api/dataRest/dataUser/". $restID;
+        $urlSinEspacio2 = str_replace(' ', '', $url2);
+
+        $curl2 = curl_init();
+        curl_setopt_array($curl2, array(
+        CURLOPT_URL =>  $url2,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response2 = curl_exec($curl2);
+        curl_close($curl2);
+        $datos2 = json_decode($response2,true);
+
+        $ft = $datos2["dataUser"]["logo"];
+        $rest = $datos2["dataUser"]["nombre"];
+
+        $pedido = $datos["platosYaPedidos"];?>
         <div class="modalContent">
         <div class="headerNombrePagina">
             <svg onmousedown="activarDisplayFactura('factura', false)" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -214,7 +250,7 @@
             <img src="images/9z.png" alt="">
         </div>
         <div class="headerUsuario">
-            <h1>Mesa <?php echo $table; ?></h1>
+            <h1>Mesa <?php echo $mmmesa; ?></h1>
         </div>
         <div class="headerRestaurante">
             <img src="<?php echo $ft; ?>" alt="">
@@ -244,47 +280,40 @@
                         <div class="body">
                             <div id="platosYaPedidos" class="platoss"><?php
         for ($i=0; $i < count($pedido); $i++){ 
-            $mesix = $pedido[$i]["nMesa"];
-            $id = $datos["id"];
-            if ($mesix == $table && $pedido[$i]["abierto"] == true && $id == $restID) {
-                $platosPedido = $pedido[$i]["platos"];
-                for ($j=0; $j < count($platosPedido) ; $j++) { 
-                    $nom = $pedido[$i]["platos"][$j]["nombrePlato"];
-                    $img = $pedido[$i]["platos"][$j]["imagen"];
-                    $prec = $pedido[$i]["platos"][$j]["precio"];
-                    $agregadoss = array();
-                    if (isset($pedido[$i]["platos"][$j]["agregados"])) {
-                        for ($z=0; $z < count($pedido[$i]["platos"][$j]["agregados"]); $z++) { 
-                            $arrayNuevo = array("nombre" => $pedido[$i]["platos"][$j]["agregados"][$z]["nombre"], "precio" => $pedido[$i]["platos"][$j]["agregados"][$z]["precio"]);
-                            $prec += $pedido[$i]["platos"][$j]["agregados"][$z]["precio"];
-                            array_push($agregadoss, $arrayNuevo);
-                        }
-                    }                
-                    ?>                    
-                    <script>
-                        afa = function() {
-                            let nombre2 = "<?php echo $nom; ?>";
-                            let precio2 = "<?php echo $prec; ?>";
-                            let descripcion2 = "<?php echo ""; ?>";
-                            let imagen2 = "<?php echo $img; ?>";
-                            let agregados2 = <?php echo json_encode($agregadoss); ?>;
-                            console.log(agregados2);
-                            let plato2 = new Plato(nombre2,precio2,descripcion2,imagen2,agregados2) ;
-                            platosYaPedidos.push(plato2)
-                        }
-                        afa();
-                    </script>         
-                    <li id = "plato" class="pedido">
-                        <img src="<?php echo $img; ?>" alt="">
-                        <h3><?php echo $nom; ?></h3>
-                        <div class="p">
-                            <h2>$</h2>
-                            <h4 class="precio"><?php echo $prec; ?></h4>
-                        </div>
-                    </li>                        
-                <?php
+            $nom = $pedido[$i]["nombrePlato"];
+            $img = $pedido[$i]["imagen"];
+            $prec = $pedido[$i]["precio"];
+            $agregadoss = array();
+            if (isset($pedido[$i]["agregados"])) {
+                for ($z=0; $z < count($pedido[$i]["agregados"]); $z++) { 
+                    $arrayNuevo = array("nombre" => $pedido[$i]["agregados"][$z]["nombre"], "precio" => $pedido[$i]["agregados"][$z]["precio"]);
+                    $prec += $pedido[$i]["agregados"][$z]["precio"];
+                    array_push($agregadoss, $arrayNuevo);
                 }
-            }
+            }                
+            ?>                    
+            <script>
+                afa = function() {
+                    let nombre2 = "<?php echo $nom; ?>";
+                    let precio2 = "<?php echo $prec; ?>";
+                    let descripcion2 = "<?php echo ""; ?>";
+                    let imagen2 = "<?php echo $img; ?>";
+                    let agregados2 = <?php echo json_encode($agregadoss); ?>;
+                    console.log(agregados2);
+                    let plato2 = new Plato(nombre2,precio2,descripcion2,imagen2,agregados2) ;
+                    platosYaPedidos.push(plato2)
+                }
+                afa();
+            </script>         
+            <li id = "plato" class="pedido">
+                <img src="<?php echo $img; ?>" alt="">
+                <h3><?php echo $nom; ?></h3>
+                <div class="p">
+                    <h2>$</h2>
+                    <h4 class="precio"><?php echo $prec; ?></h4>
+                </div>
+            </li>                        
+        <?php
         }
         ?>
                 </div>
