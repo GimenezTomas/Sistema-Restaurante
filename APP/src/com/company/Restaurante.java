@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bson.Document;
 
-import javax.management.MalformedObjectNameException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -12,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
@@ -306,7 +304,7 @@ public class Restaurante {
                             for (PlatoPedido platoFromPedido : pedidosAux.getPlatos()){
                                 System.out.println(platoFromPedido.isEntregado()+" plato is entregado");
                             }
-                            Peticion.putConJson(parseDatePedido(pedidosAux), "http://localhost:8080/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedidosAux.getnPedido()+"/"+id);
+                            Peticion.putConJson(pedidosAux, "http://localhost:8080/api/javaAPP/gestionarPedidos/actualizarPedido/"+pedidosAux.getnPedido()+"/"+id);
                             break;
                         }
                     }
@@ -481,7 +479,7 @@ public class Restaurante {
                 if (seccionPlato.getNombre().equals(opcionesSec)) {
                     Plato plato = new Plato(nombre, Float.parseFloat(precio), new File(imagen), descripcion, tiempoDemora);
                     seccionPlato.getPlatos().add(plato);
-                    Peticion.putConJson(plato, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionPlato.getNombre()+"/"+id);
+                    Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
                 }
             }
             //mongo.actualizarSeccionesPlatos(seccionesPlatos);
@@ -513,7 +511,7 @@ public class Restaurante {
             for (SeccionesPlatos seccionPlato : seccionesPlatos){
                 if (seccionPlato.getNombre().equals(opcionesSec)) {
                     seccionPlato.getPlatos().add(newPlato);
-                    Peticion.putConJson(newPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionPlato.getNombre()+"/"+id);
+                    Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
                 }
             }
             //mongo.actualizarSeccionesPlatos(seccionesPlatos);
@@ -1170,14 +1168,14 @@ public class Restaurante {
                                 JTextField jtxtDemora= new JTextField();
                                 jtxtDemora.setSize(80, 50);
                                 jtxtDemora.setLocation(jtxtDescripcion.getX()+jtxtDescripcion.getWidth(), jtxtDescripcion.getY());
-                                jtxtDemora.setText(platosAux.getTiempoDemora());
+                                jtxtDemora.setText(platosAux.getDemora());
                                 jtxtDemora.setVisible(true);
                                 panel.add(jtxtDemora);
 
                                 JTextField jtxtImg = new JTextField();
                                 jtxtImg.setSize(120, 50);
                                 jtxtImg.setLocation(jtxtDemora.getX()+jtxtDemora.getWidth(), jtxtDemora.getY());
-                                jtxtImg.setText(platosAux.getImg().getPath());
+                                jtxtImg.setText(platosAux.getImagen().getPath());
                                 jtxtImg.setVisible(true);
                                 panel.add(jtxtImg);
 
@@ -1228,13 +1226,14 @@ public class Restaurante {
                                                         String nombreViejo = platosAux.getNombre();
                                                         platosAux.setNombre(jtxtNombre.getText());
                                                         platosAux.setDescripcion(jtxtDescripcion.getText());
-                                                        platosAux.setTiempoDemora(jtxtDemora.getText());
+                                                        platosAux.setDemora(jtxtDemora.getText());
                                                         platosAux.setPrecio(Float.parseFloat(jtxtPrecio.getText()));
-                                                        platosAux.setImg(new File(jtxtImg.getText()));
+                                                        platosAux.setImagen(new File(jtxtImg.getText()));
                                                         JOptionPane.showMessageDialog(null, "Se cambio correctamente");
                                                         //mongo.actualizarPlato(platosAux, nombreViejo);
                                                         //mongo.actualizarSeccionesPlatos(seccionesPlatos);
-                                                        Peticion.putConJson(platosAux, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+opcionesSec.getSelectedItem().toString()+"/"+id);
+                                                        Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
+                                                        //Peticion.putConJson(platosAux, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+opcionesSec.getSelectedItem().toString()+"/"+id);
                                                     }
                                                 }
                                             } catch (NumberFormatException ex) {
@@ -1255,7 +1254,8 @@ public class Restaurante {
                                                     seccionName = seccionPlato.getNombre();
                                                 }
                                             }
-                                            Peticion.putConJson(platosAux, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionName+"/"+id);
+                                            Peticion.putConJson(seccionPlato, "http://localhost:8080/api/javaAPP/gestionarMenu/actualizarPlatos/"+seccionPlato.getNombre()+"/"+id);
+                                            //Peticion.putConJson(platosAux, "http://localhost:8080/api/javaAPP/gestionarMenu/editarNombreSeccion/"+seccionName+"/"+id);
                                             //mongo.actualizarSeccionesPlatos(seccionesPlatos);
                                             //mongo.actualizarPlatos(platos);
                                             jtxtDemora.setVisible(false);

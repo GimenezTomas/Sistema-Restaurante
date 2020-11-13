@@ -135,6 +135,7 @@ public class Controlador {
 
     @RequestMapping(value = "/javaAPP/gestionarMenu/actualizarPlatos/{nombre}/{idRestaurante}", method = RequestMethod.PUT)
     public ResponseEntity<Object> actualizarPlatos(@RequestBody HashMap platos, @PathVariable String nombre,@PathVariable int idRestaurante){
+        System.out.println("entro");
         accesoMongoDB.actualizarPlatos(nombre,platos,idRestaurante);
         return new ResponseEntity<>(HttpStatus.OK);
     }

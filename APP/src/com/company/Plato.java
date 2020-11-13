@@ -4,18 +4,18 @@ import java.io.File;
 import java.util.HashSet;
 
 public class Plato extends PlatoAbs{
-    private File img;
+    private File imagen;
     private String descripcion;
-    private String tiempoDemora;
+    private String demora;
     private HashSet<TipoAgregados> agregados = new HashSet<>();
 
     //GETTERS && SETTERS
-    public File getImg() {
-        return img;
+    public File getImagen() {
+        return imagen;
     }
 
-    public void setImg(File img) {
-        this.img = img;
+    public void setImagen(File img) {
+        this.imagen = img;
     }
 
     public String getDescripcion() {
@@ -26,12 +26,12 @@ public class Plato extends PlatoAbs{
         this.descripcion = descripcion;
     }
 
-    public String getTiempoDemora() {
-        return tiempoDemora;
+    public String getDemora() {
+        return demora;
     }
 
-    public void setTiempoDemora(String tiempoDemora) {
-        this.tiempoDemora = tiempoDemora;
+    public void setDemora(String tiempoDemora) {
+        this.demora = tiempoDemora;
     }
 
     public HashSet<TipoAgregados> getAgregados() {
@@ -46,16 +46,16 @@ public class Plato extends PlatoAbs{
 
     public Plato(String nombre, float precio, File img, String descripcion, String tiempoDemora) {
         super(nombre, precio);
-        this.img = img;
+        this.imagen = img;
         this.descripcion = descripcion;
-        this.tiempoDemora = tiempoDemora;
+        this.demora = tiempoDemora;
     }
 
     public Plato(String nombre, float precio, File img, String descripcion, String tiempoDemora, HashSet<TipoAgregados> agregados) {
         super(nombre, precio);
-        this.img = img;
+        this.imagen = img;
         this.descripcion = descripcion;
-        this.tiempoDemora = tiempoDemora;
+        this.demora = tiempoDemora;
         this.agregados = agregados;
     }
 }
