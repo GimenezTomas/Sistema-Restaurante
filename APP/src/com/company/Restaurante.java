@@ -329,6 +329,7 @@ public class Restaurante {
             fechas.add(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(platoPedido.getFecha()));
             //System.out.println(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(platoPedido.getFecha()));
             //System.out.println(fechas.size());
+            System.out.println(platoPedido.getFecha());
         }
         ObjectMapper objectMapper = new ObjectMapper();
         Document pedido = null;
