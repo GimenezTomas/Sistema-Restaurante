@@ -232,6 +232,7 @@ public class AccesoMongoDB {
             ArrayList<Document> documents = (ArrayList<Document>) document.get("pedidos");
             if (documents!=null) {
                 for (Document dataPlato : documents) {
+
                     ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
                     ArrayList<PlatoPedido> platos = new ArrayList<>();
 
@@ -243,14 +244,8 @@ public class AccesoMongoDB {
                                 agregados.put(dataAgregado.getString("nombre"), Float.parseFloat(dataAgregado.get("precio").toString()));
                             }
                         }
-                        Date date = new Date();
-                        try {
-                            date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dataPLATO.getString("fecha"));
-                        } catch (ParseException e) {
-                            e.getCause();
-                            e.getMessage();
-                        }
-                        platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, dataPLATO.getString("fecha"), dataPLATO.getBoolean("entregado")));
+
+                        platos.add(new PlatoPedido(dataPLATO.getString("nombrePlato"), Float.parseFloat(dataPLATO.get("precio").toString()), agregados, dataPLATO.getString("fecha"), true));
                     }
                     return new Pedido(dataPlato.getInteger("nMesa"), platos, dataPlato.getString("fecha"), dataPlato.getInteger("nPedido"));
                 }
@@ -280,17 +275,11 @@ public class AccesoMongoDB {
         return new Object();
     }
 
-    public void agregarPedido(Pedido pedido, Bson requisitosLogin){
-        HashMap<String, Object> pedidoAtributos = new HashMap<>();
-        pedidoAtributos.put("nPedido", pedido.getnPedido());
-        pedidoAtributos.put("nMesa", pedido.getnMesa());
-        pedidoAtributos.put("abierto", pedido.isAbierto());
-        pedidoAtributos.put("fecha", pedido.getFecha());
-        pedidoAtributos.put("platos", platosPedidoMONGO(pedido.getPlatos()));
-
+    public void agregarPedido(HashMap<String, Object> pedidoAtributos, Bson requisitosLogin){
+        System.out.println("entre");
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File json = new File(".\\src\\com\\company\\pedidos.json");
+            File json = new File(".\\src\\main\\resources\\pedidos.json");
 
             mapper.writeValue(json, pedidoAtributos);
 
@@ -309,10 +298,14 @@ public class AccesoMongoDB {
         }
     }
 
-    public void insertarPlatosPedido(ArrayList<PlatoPedido> platoPedidoList, int nPedido, Bson requisitosLogin) {
-        for (int i = 0; i < platoPedidoList.size(); i++) {
+    public void insertarPlatosPedido(HashMap platoPedidoList, int nPedido, Bson requisitosLogin) {
+        ArrayList<Document> documents = (ArrayList<Document>) platoPedidoList.get("platos");
+        System.out.println(documents);
+        for (int i = 0; i < documents.size(); i++) {
+            System.out.println("ds.get: "+documents.get(i));
+            System.out.println("nPedido: "+nPedido);
             String ruta = "pedidos." + (nPedido - 1) + ".platos";
-            Document rutaDoc = new Document(ruta, platosPedidoMONGO(platoPedidoList).get(i));
+            Document rutaDoc = new Document(ruta, documents.get(i));
 
             Document operacion = new Document("$push", rutaDoc);
 
@@ -328,7 +321,6 @@ public class AccesoMongoDB {
         Iterator sizeInIterator = sizeInCollection.iterator();
         while (sizeInIterator.hasNext()){
             Document sizeInDocument = (Document) sizeInIterator.next();
-            System.out.println(sizeInDocument.get("pedidos"));
             size = sizeInDocument.getInteger("pedidos");
         }
 //db.restaurante.aggregate([{$match:{id:1}},{$project: {_id:0, pedidos: { $cond: { if: { $isArray: "$pedidos" }, then: { $size: "$pedidos" }, else: 0} } } }] )

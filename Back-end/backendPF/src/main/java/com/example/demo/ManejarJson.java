@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
@@ -25,7 +26,7 @@ public class ManejarJson {
         Bson filtro1= Filters.eq("id", 1);
 
         ArrayList<PlatoPedido> platoPedidos = new ArrayList<>();
-
+        System.out.println("platoPedido: "+platoPedido );
         Document document = new Document("platos",platoPedido.get("platos"));
         ArrayList<Document> documents = (ArrayList<Document>) document.get("platos");
 
@@ -49,14 +50,27 @@ public class ManejarJson {
                 HashMap agregadosMap = objectMapper.readValue(archivo1, HashMap.class);
                 agregados.put(agregadosMap.get("nombre").toString(), Float.parseFloat(agregadosMap.get("precio").toString()));
             }
-
             platoPedidos.add(new PlatoPedido(plato.get("nombre").toString(), Float.parseFloat(plato.get("precio").toString()), agregados, new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()), false));
             archivo1.delete();
         }
+        //HashMap hashMap = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(platoPedidos), HashMap.class);
+        platoPedidos.forEach(platoPedido1 -> {
+            try {
+                System.out.println(new ObjectMapper().writeValueAsString(platoPedido1));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        });
         if ((mongo.obtenerPedido(idRest,mesa, filtro1)) == null){
-            mongo.agregarPedido(new Pedido(mesa, platoPedidos, new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()), mongo.obtenerPedidosSize(filtro1)), filtro1);
+            HashMap<String, Object> pedidoAtributos = new HashMap<>();
+            pedidoAtributos.put("nPedido", mongo.obtenerPedidosSize(filtro1)+1);
+            pedidoAtributos.put("nMesa", mesa);
+            pedidoAtributos.put("abierto", true);
+            pedidoAtributos.put("fecha", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            pedidoAtributos.put("platos", platoPedido.get("platos"));
+            mongo.agregarPedido(pedidoAtributos, filtro1);
         }else{
-            mongo.insertarPlatosPedido(platoPedidos, mongo.obtenerPedido(idRest,mesa, filtro1).getnPedido(), filtro1);
+            mongo.insertarPlatosPedido(platoPedido, mongo.obtenerPedido(idRest,mesa, filtro1).getnPedido(), filtro1);
         }
     }
 
