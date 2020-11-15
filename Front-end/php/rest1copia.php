@@ -295,41 +295,43 @@
                         </div>
                         <div class="body">
                             <div id="platosYaPedidos" class="platoss"><?php
-        for ($i=0; $i < count($pedido); $i++){ 
-            $nom = $pedido[$i]["nombrePlato"];
-            $img = $pedido[$i]["imagen"];
-            $prec = $pedido[$i]["precio"];
-            $agregadoss = array();
-            if (isset($pedido[$i]["agregados"])) {
-                for ($z=0; $z < count($pedido[$i]["agregados"]); $z++) { 
-                    $arrayNuevo = array("nombre" => $pedido[$i]["agregados"][$z]["nombre"], "precio" => $pedido[$i]["agregados"][$z]["precio"]);
-                    $prec += $pedido[$i]["agregados"][$z]["precio"];
-                    array_push($agregadoss, $arrayNuevo);
-                }
-            }                
-            ?>                    
-            <script>
-                afa = function() {
-                    let nombre2 = "<?php echo $nom; ?>";
-                    let precio2 = "<?php echo $prec; ?>";
-                    let descripcion2 = "<?php echo ""; ?>";
-                    let imagen2 = "<?php echo $img; ?>";
-                    let agregados2 = <?php echo json_encode($agregadoss); ?>;
-                    console.log(agregados2);
-                    let plato2 = new Plato(nombre2,precio2,descripcion2,imagen2,agregados2) ;
-                    platosYaPedidos.push(plato2)
-                }
-                afa();
-            </script>         
-            <li id = "plato" class="pedido">
-                <img src="<?php echo $img; ?>" alt="">
-                <h3><?php echo $nom; ?></h3>
-                <div class="p">
-                    <h2>$</h2>
-                    <h4 class="precio"><?php echo $prec; ?></h4>
-                </div>
-            </li>                        
-        <?php
+        if(is_array($pedido)){
+            for ($i=0; $i < count($pedido); $i++){ 
+                $nom = $pedido[$i]["nombrePlato"];
+                $img = $pedido[$i]["imagen"];
+                $prec = $pedido[$i]["precio"];
+                $agregadoss = array();
+                if (isset($pedido[$i]["agregados"])) {
+                    for ($z=0; $z < count($pedido[$i]["agregados"]); $z++) { 
+                        $arrayNuevo = array("nombre" => $pedido[$i]["agregados"][$z]["nombre"], "precio" => $pedido[$i]["agregados"][$z]["precio"]);
+                        $prec += $pedido[$i]["agregados"][$z]["precio"];
+                        array_push($agregadoss, $arrayNuevo);
+                    }
+                }                
+                ?>                    
+                <script>
+                    afa = function() {
+                        let nombre2 = "<?php echo $nom; ?>";
+                        let precio2 = "<?php echo $prec; ?>";
+                        let descripcion2 = "<?php echo ""; ?>";
+                        let imagen2 = "<?php echo $img; ?>";
+                        let agregados2 = <?php echo json_encode($agregadoss); ?>;
+                        console.log(agregados2);
+                        let plato2 = new Plato(nombre2,precio2,descripcion2,imagen2,agregados2) ;
+                        platosYaPedidos.push(plato2)
+                    }
+                    afa();
+                </script>         
+                <li id = "plato" class="pedido">
+                    <img src="<?php echo $img; ?>" alt="">
+                    <h3><?php echo $nom; ?></h3>
+                    <div class="p">
+                        <h2>$</h2>
+                        <h4 class="precio"><?php echo $prec; ?></h4>
+                    </div>
+                </li>                        
+            <?php
+            }
         }
         ?>
                 </div>
@@ -473,16 +475,22 @@
                 for (let j = 0; j < opciones.childNodes[i].childNodes.length; j++) {
                     if (opciones.childNodes[i].childNodes[j].tagName === 'UL' && opciones.childNodes[i].childNodes[j].classList.contains("indispensable")){
                         noInd = false
+                        let seccionOK = false
                         let seccion = opciones.childNodes[i].childNodes[j]
                         for (k = 0; k <seccion.childNodes.length ; k++) {
                             if (seccion.childNodes[k].tagName === 'LI'){
                                 for (let l = 0; l < seccion.childNodes[k].childNodes.length ; l++) {
                                     if (seccion.childNodes[k].childNodes[l].tagName === 'INPUT' && seccion.childNodes[k].childNodes[l].checked){
-                                        enviarOK = true
+                                        seccionOK = true
                                         break
                                     }
                                 }
                             }
+                        }
+                        if(seccionOK){
+                            enviarOK = true
+                        }else{
+                            return false
                         }
                     }
                 }
@@ -881,6 +889,25 @@
 
         actualizarPrecioPlatosPedidos()
     }
+    
+    function send() {
+        var person = {
+            name: $("#id-name").val(),
+            address:$("#id-address").val(),
+            phone:$("#id-phone").val()
+        }
+        $('#target').html('sending..');
+        $.ajax({
+            url: '/test/PersonSubmit',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                $('#target').html(data.msg);
+            },
+            data: JSON.stringify(person)
+        });
+    }
 
     function pedir(){
         platos.forEach(plato => addPlatoYaPedidos(plato.nombre, plato.precio, plato.img, plato.agregados))
@@ -892,15 +919,63 @@
             }
         }
         platosYaPedidos.push(platos)
+        console.log(JSON.stringify(platos))
 
+        /* function send() {
+        var person = {
+            name: $("#id-name").val(),
+            address:$("#id-address").val(),
+            phone:$("#id-phone").val()
+        }
+        $('#target').html('sending..');
         $.ajax({
-            url:"localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>",
-            method:'PUT',
-            dataType:'jsonp',
-            data: {
-                platos: JSON.stringify(platos)
+            url: '/test/PersonSubmit',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                $('#target').html(data.msg);
+            },
+            data: JSON.stringify(person)
+        });
+    }*/
+        let platosJSON = 
+            {
+                "platos": [
+                    {
+                        "nombre":"Noquis",
+                        "precio":140.5,
+                        "agregados":[
+                            {
+                                "nombre":"Bolognesa",
+                                "precio": 100
+                            },{
+                                "nombre":"Entera",
+                                "precio":50
+                            }
+                        ]
+                    },{
+                        "nombre":"Fideos",
+                        "precio":140.5,
+                        "agregados":[
+                            {
+                                "nombre":"Crema",
+                                "precio": 150
+                            },{
+                                "nombre":"Media",
+                                "precio":0
+                            }
+                        ]
+                    }
+                ]
             }
-        })
+        $.ajax({
+            url: 'localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>',
+            type: 'put',
+            dataType: 'jsonp',
+            contentType: 'application/json',
+            data: JSON.stringify(platosJSON)
+        });
 
         clearArray(platos)
         llamarCarrito('car')

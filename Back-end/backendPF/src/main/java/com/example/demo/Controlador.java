@@ -26,6 +26,7 @@ public class Controlador {
 
     @RequestMapping(value = "/pedidoALaBase/{idRestaurante}/{idMesa}", method = RequestMethod.PUT)
     public ResponseEntity<Object> obtenerPedidoDeLaApi(@RequestBody HashMap platosPedido, @PathVariable int idMesa, @PathVariable int idRestaurante){
+        System.out.println("entre");
         try {
             this.accesoMongoDB.insertarPlatoPedido(idMesa, idRestaurante, platosPedido);
         } catch (IOException e) {

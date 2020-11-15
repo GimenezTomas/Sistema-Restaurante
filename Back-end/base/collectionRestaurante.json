@@ -396,7 +396,6 @@
       "platos": [
         {
           "nombrePlato": "ñoquis",
-          "imagen": "images\\ñoquis.png",
           "precio": 70.2,
           "fecha": "18-05-2020 10:01:00",
           "entregado": false,
@@ -406,19 +405,79 @@
               "precio": 100
             }
           ]
+        },
+        {
+          "fecha": "18-05-2020 10:01:00",
+          "precio": 70.19999694824219,
+          "agregados": [
+            {
+              "precio": 100,
+              "nombre": "bolognesa"
+            },
+            {
+              "precio": 50,
+              "nombre": "entera"
+            }
+          ],
+          "entregado": false,
+          "nombrePlato": "fideos"
+        },
+        {
+          "fecha": "18-05-2020 10:01:00",
+          "precio": 70.19999694824219,
+          "agregados": [
+            {
+              "precio": 100,
+              "nombre": "bolognesa"
+            },
+            {
+              "precio": 50,
+              "nombre": "entera"
+            }
+          ],
+          "entregado": false,
+          "nombrePlato": "fideos"
+        },
+        {
+          "fecha": "18-05-2020 10:01:00",
+          "precio": 70.19999694824219,
+          "agregados": [],
+          "entregado": false,
+          "nombrePlato": "ravioles"
+        },
+        {
+          "fecha": "18-05-2020 10:01:00",
+          "precio": 70.19999694824219,
+          "agregados": [
+            {
+              "precio": 100,
+              "nombre": "bolognesa"
+            },
+            {
+              "precio": 50,
+              "nombre": "entera"
+            }
+          ],
+          "entregado": false,
+          "nombrePlato": "fideos"
+        },
+        {
+          "fecha": "18-05-2020 10:01:00",
+          "precio": 70.19999694824219,
+          "agregados": [],
+          "entregado": false,
+          "nombrePlato": "ravioles"
         }
       ]
     },
     {
-      "nPedido": 2,
-      "nMesa": 2,
-      "abierto": true,
       "fecha": "18-05-2020 10:01:00",
+      "nMesa": 2,
+      "nPedido": 2,
       "platos": [
         {
           "nombrePlato": "fideos",
           "precio": 70.2,
-          "imagen": "images\\fideo.png",
           "fecha": "18-05-2020 10:01:00",
           "entregado": false,
           "agregados": [
@@ -435,11 +494,11 @@
         {
           "nombrePlato": "ravioles",
           "precio": 70.2,
-          "imagen": "images\\raviol.png",
           "fecha": "18-05-2020 10:01:00",
           "entregado": false
         }
-      ]
+      ],
+      "abierto": true
     }
   ]
-}
+}]

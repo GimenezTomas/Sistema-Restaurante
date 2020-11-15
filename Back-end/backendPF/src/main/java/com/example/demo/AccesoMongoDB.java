@@ -272,7 +272,7 @@ public class AccesoMongoDB {
                 }
             }
         }
-        return new Object();
+        return null;
     }
 
     public void agregarPedido(HashMap<String, Object> pedidoAtributos, Bson requisitosLogin){

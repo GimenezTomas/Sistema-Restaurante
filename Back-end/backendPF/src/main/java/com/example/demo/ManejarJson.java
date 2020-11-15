@@ -110,9 +110,14 @@ public class ManejarJson {
         Bson filtro1= Filters.eq("id", 1);
 
         try {
-            jsonASER.put("platosYaPedidos", mongo.obtenerPedidoJ(idRest,mesa, filtro1));
+            Object object = mongo.obtenerPedidoJ(idRest,mesa, filtro1);
+            if (object != null) {
+                jsonASER.put("platosYaPedidos", /*mongo.obtenerPedidoJ(idRest,mesa, filtro1)*/object);
+            }else{
+                jsonASER.put("platosYaPedidos", /*mongo.obtenerPedidoJ(idRest,mesa, filtro1)*/new ArrayList<>());
+            }
         }catch (NullPointerException e){
-            jsonASER.put("platosYaPedidos", new ArrayList<>());
+            //jsonASER.put("platosYaPedidos", new Object());
             e.printStackTrace();
         }
         return jsonASER;
