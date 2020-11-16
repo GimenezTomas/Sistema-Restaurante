@@ -134,6 +134,7 @@ public interface Peticion {
                     for (Map.Entry agregado : agregadosDoc.entrySet()){
                         agregados.put(agregado.getKey().toString(), Float.parseFloat(agregado.getValue().toString()));
                     }
+                    System.out.println(plato.get("fecha")+" fecha: "+new SimpleDateFormat("dd-mmmm-yyyy HH:mm:ss").parse(plato.getString("fecha")));
                     platoPedidoList.add(new PlatoPedido(plato.getString("nombre"), Float.parseFloat(plato.get("precio").toString()), agregados, new SimpleDateFormat("dd-mmmm-yyyy HH:mm:ss").parse(plato.getString("fecha")), plato.getBoolean("entregado")));
                 }
                 pedidos.add(new Pedido(pedido.getInteger("nMesa"), platoPedidoList, pedido.getString("fecha"), pedido.getInteger("nPedido")));

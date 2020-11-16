@@ -82,7 +82,7 @@ public class Mesa implements Comparable<Mesa>{
         for (int i = 1; i <= textfield; i++) {
             Mesa mesa = new Mesa();
             mesas.add(mesa);
-            Peticion.putConJson(mesa, "http://localhost:8080/api/javaAPP/gestionarMesas/agregarMesa/"+idR);
+            Peticion.putConJson(mesa, "http://localhost:8888/api/javaAPP/gestionarMesas/agregarMesa/"+idR);
         }
     }
 
