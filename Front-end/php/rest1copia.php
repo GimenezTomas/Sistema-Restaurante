@@ -298,7 +298,6 @@
         if(is_array($pedido)){
             for ($i=0; $i < count($pedido); $i++){ 
                 $nom = $pedido[$i]["nombrePlato"];
-                $img = $pedido[$i]["imagen"];
                 $prec = $pedido[$i]["precio"];
                 $agregadoss = array();
                 if (isset($pedido[$i]["agregados"])) {
@@ -313,23 +312,22 @@
                     afa = function() {
                         let nombre2 = "<?php echo $nom; ?>";
                         let precio2 = "<?php echo $prec; ?>";
-                        let descripcion2 = "<?php echo ""; ?>";
-                        let imagen2 = "<?php echo $img; ?>";
+                        let descripcion2 = "";
+                        let imagen2 = "";
                         let agregados2 = <?php echo json_encode($agregadoss); ?>;
-                        console.log(agregados2);
                         let plato2 = new Plato(nombre2,precio2,descripcion2,imagen2,agregados2) ;
                         platosYaPedidos.push(plato2)
                     }
                     afa();
                 </script>         
                 <li id = "plato" class="pedido">
-                    <img src="<?php echo $img; ?>" alt="">
+                    <img id="imgYP<?php echo $i ?>" src="" alt="">
                     <h3><?php echo $nom; ?></h3>
                     <div class="p">
                         <h2>$</h2>
                         <h4 class="precio"><?php echo $prec; ?></h4>
                     </div>
-                </li>                        
+                </li>                    
             <?php
             }
         }
@@ -459,6 +457,28 @@
     </div>
 </div>
 <script>
+    
+    for(let i = 0; i<document.getElementById("platosYaPedidos").childNodes.length; i++){
+        let py = document.getElementById("platosYaPedidos")
+        if(py.childNodes[i].tagName == "LI"){
+            let indexIMG = -1
+            let nombre = ""
+            for(let j=0; j<py.childNodes[i].childNodes.length; j++){
+                if(py.childNodes[i].childNodes[j].tagName == "IMG"){
+                    indexIMG = j
+                }else if(py.childNodes[i].childNodes[j].tagName == "H3"){
+                    nombre = py.childNodes[i].childNodes[j].innerHTML
+                }
+                if(indexIMG != -1 && nombre != ""){
+                    for(let k = 0; k < platosCarta.length; k++){
+                        if(platosCarta[k].nombre == nombre){
+                            py.childNodes[i].childNodes[indexIMG].setAttribute("src", platosCarta[k].img) 
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     function clearArray(array) {
         while (array.length) {
@@ -583,6 +603,8 @@
 
             let svg = document.createElement("SVG")
             svg.setAttribute("id", as)
+            svg.setAttribute("width", "1em")
+            svg.setAttribute("height", "1em")
             svg.addEventListener("mousedown", function(){eliminarPlato(s)})
             svg.setAttribute("viewBox", "0 0 16 16")
             svg.classList.add("bi", "bi-x-circle-fill")
@@ -635,9 +657,9 @@
         modal.style.display = "block";
 
         // When the user clicks on <span> (x), close the modal
-        span[0].onclick = function() {
+        /*span[0].onclick = function() {
             modal.style.display = "none";
-        }
+        }*/
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
@@ -954,29 +976,39 @@
                                 "precio":50
                             }
                         ]
-                    },{
-                        "nombre":"Fideos",
-                        "precio":140.5,
-                        "agregados":[
-                            {
-                                "nombre":"Crema",
-                                "precio": 150
-                            },{
-                                "nombre":"Media",
-                                "precio":0
-                            }
-                        ]
                     }
                 ]
             }
-        $.ajax({
-            url: 'localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>',
+        let url1 = 'http://localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>'
+        /*$.ajax({
+            url: url1,
             type: 'put',
             dataType: 'jsonp',
-            contentType: 'application/json',
-            data: JSON.stringify(platosJSON)
-        });
+            data: platosJSON,
+            success: function (url1) {
+                console.log(url1)
+                console.log(url)
+            }
+        });*/
+        $.ajax({
+            url: url1,
+            type: 'PUT',
+            dataType: 'jsonp',
+            data: platosJSON
+        })
+    .done(function (data) {
 
+ 
+
+
+    })
+    .fail(function (qXHR, textStatus, errorThrown) {
+        console.log(qXHR)        
+        console.log(errorThrown)        
+        console.log(textStatus)        
+        console.log(url1)
+    });
+//        console.log('localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>')
         clearArray(platos)
         llamarCarrito('car')
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
@@ -1003,9 +1035,9 @@
         modal.style.display = "block";
 
         // When the user clicks on <span> (x), close the modal
-        span[0].onclick = function() {
+        /*span[0].onclick = function() {
             modal.style.display = "none";
-        }
+        }*/
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
