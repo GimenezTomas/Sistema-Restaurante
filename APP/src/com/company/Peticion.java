@@ -234,7 +234,7 @@ public interface Peticion {
         }
     }
 
-    static void putConJson(Object object, String url){
+    static void putConJson(Object object,String url){
         HttpPut put = new HttpPut(url);
 
         try {

@@ -111,28 +111,12 @@ public class Mesa implements Comparable<Mesa>{
     public static void generarQr(HashSet<Mesa> mesas, int idR) throws IOException {
         for (Mesa mesa : mesas) {
             if (mesa.QR == null){
-                String url = "http://192.168.0.43/php/rest1copia.php?";
+                String url = "http://192.168.0.43/php/rest1copia.php";
                 HashMap<String,Object> data = new HashMap<String,Object>();
                 data.put("mesa",mesa.getNumMesa());
                 data.put("restaurante",idR);
                 String json = new ObjectMapper().writeValueAsString(data);
-                HttpPost post = new HttpPost(url);
-                try{
-                    CloseableHttpClient httpClient = HttpClients.createDefault();
-                    post.setHeader("Content-Type","");
-                    post.setEntity(new StringEntity(json));
-                    CloseableHttpResponse response = httpClient.execute(post);
-                    String resultado = EntityUtils.toString(response.getEntity());
-                    System.out.println("json: "+resultado);
-                    response.close();
-
-                }catch(UnsupportedEncodingException e){
-                    e.printStackTrace();
-                }catch(ClientProtocolException e){
-                    e.printStackTrace();
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
+                Peticion.putConJson(data,"http://localhost:8888/api/dataRest/mesas");
 
                 ByteArrayOutputStream out = QRCode.from(String.valueOf(url)).to(ImageType.PNG).stream();
                 File imgQr = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");

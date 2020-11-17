@@ -11,12 +11,14 @@ import java.util.HashMap;
 @RequestMapping("/api")
 @RestController
 public class Controlador {
+    HashMap datos;
 
     @Autowired
     private ManejarJson accesoMongoDB;
 
     public Controlador() {
         this.accesoMongoDB = new ManejarJson();
+        this.datos = new HashMap();
     }
 
     @GetMapping("/")
@@ -38,6 +40,17 @@ public class Controlador {
     @RequestMapping(value = "/dataRest/seccionesPlatos/{idRestaurante}", method = RequestMethod.GET)
     public ResponseEntity<Object> enviarSeccionesPlatosAlaAPI(@PathVariable int idRestaurante){
         return new ResponseEntity<>(accesoMongoDB.seccionesPlatosAlaAPI(idRestaurante), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/dataRest/mesas",method = RequestMethod.PUT)
+    public ResponseEntity<Object> crearMesas(@RequestBody HashMap data){
+        this.datos = data;
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/dataRest/mesa",method = RequestMethod.GET)
+    public ResponseEntity<Object> obtenerInfoMesas() {
+        return new ResponseEntity<>(this.datos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dataRest/tipos", method = RequestMethod.POST)
