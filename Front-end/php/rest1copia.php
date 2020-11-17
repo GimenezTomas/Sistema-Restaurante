@@ -17,10 +17,34 @@
         let afa = null
     </script>
 <?php
-    function Perfil(){
 
-        $restID =  $_GET["restaurante"];
-        $url = "localhost:8888/api/dataRest/dataUser/". $restID;
+    $url0 = "localhost:8888/api/dataRest/mesa";
+    $urlSinEspacio0 = str_replace(' ', '', $url0);
+    $curl0 = curl_init();
+
+    curl_setopt_array($curl0, array(
+      CURLOPT_URL => $url0,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+    ));
+    
+    $response0 = curl_exec($curl0);
+    
+    curl_close($curl0);
+    $vars = json_decode($response0,true);
+
+    $IDresto = $vars["restaurante"];
+    $IDmesa = $vars["mesa"];
+
+    function Perfil(){
+    
+        global $IDmesa,$IDresto;
+        $url = "localhost:8888/api/dataRest/dataUser/". $IDresto;
         $urlSinEspacio = str_replace(' ', '', $url);
 
         $curl = curl_init();
@@ -42,7 +66,7 @@
         $ft = $datos["dataUser"]["logo"];
         $name = $datos["dataUser"]["nombre"];
         $id = $datos["dataUser"]["id"];
-        if ($restID == $id) {
+        if ($IDresto == $id) {
             ?>
             <div class="res">
                 <img class="zz" src="<?php echo  $ft; ?>">
@@ -55,8 +79,8 @@
     
     function Secciones(){
 
-        $restID =  $_GET["restaurante"];
-        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $restID;
+        global $IDmesa,$IDresto;
+        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $IDresto;
         $urlSinEspacio = str_replace(' ', '', $url);
         $curl = curl_init();
 
@@ -165,8 +189,8 @@
     }
 
     /*function pedirPHP(){
-        $restID =  $_GET["restaurante"];
-        $url =  "localhost:8888/api/pedidoALaBase/". $restID + "/".$_GET["mesa"];
+        global $IDmesa,$IDresto;
+        $url =  "localhost:8888/api/pedidoALaBase/". $IDresto + "/".$IDmesa;
         $urlSinEspacio = str_replace(' ', '', $url);
         $ch = curl_init();
 
@@ -181,8 +205,8 @@
     }*/
 
     function botones(){
-        $restID =  $_GET["restaurante"];
-        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $restID;
+        global $IDmesa,$IDresto;
+        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $IDresto;
         $urlSinEspacio = str_replace(' ', '', $url);
         $curl = curl_init();
 
@@ -214,10 +238,9 @@
     }
 
     function Pedido(){
-        $restID =  $_GET["restaurante"];
-        $mmmesa = $_GET["mesa"];
+        global $IDmesa,$IDresto;
 
-        $url = "localhost:8888/api/dataRest/platosYaPedidos/". $restID. "/". $mmmesa;
+        $url = "localhost:8888/api/dataRest/platosYaPedidos/". $IDresto. "/". $IDmesa;
         $urlSinEspacio = str_replace(' ', '', $url);
 
         $curl = curl_init();
@@ -235,7 +258,7 @@
         curl_close($curl);
         $datos = json_decode($response,true);
 
-        $url2 = "localhost:8888/api/dataRest/dataUser/". $restID;
+        $url2 = "localhost:8888/api/dataRest/dataUser/". $IDresto;
         $urlSinEspacio2 = str_replace(' ', '', $url2);
 
         $curl2 = curl_init();
@@ -266,7 +289,7 @@
             <img src="images/9z.png" alt="">
         </div>
         <div class="headerUsuario">
-            <h1>Mesa <?php echo $mmmesa; ?></h1>
+            <h1>Mesa <?php echo $IDmesa; ?></h1>
         </div>
         <div class="headerRestaurante">
             <img src="<?php echo $ft; ?>" alt="">
@@ -979,7 +1002,7 @@
                     }
                 ]
             }
-        let url1 = 'http://localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>'
+        let url1 = 'http://localhost:8888/api/pedidoALaBase/<?php echo $IDresto?>/<?php echo $IDmesa?>'
         /*$.ajax({
             url: url1,
             type: 'put',
@@ -1008,7 +1031,7 @@
         console.log(textStatus)        
         console.log(url1)
     });
-//        console.log('localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>')
+//        console.log('localhost:8888/api/pedidoALaBase/<?php echo $IDresto?>/<?php echo $IDmesa?>')
         clearArray(platos)
         llamarCarrito('car')
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
