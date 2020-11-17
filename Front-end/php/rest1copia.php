@@ -444,7 +444,7 @@
                         <h1>Total: $</h1>
                         <span>
                                 <h2 id="precioActualizado">500</h2>
-                                <h3 id="precioBase">0</h3>
+                                <h3 style="display: none"id="precioBase">0</h3>
                             </span>
                     </div>
                 </div>
