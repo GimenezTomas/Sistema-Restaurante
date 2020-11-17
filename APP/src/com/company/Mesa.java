@@ -116,7 +116,7 @@ public class Mesa implements Comparable<Mesa>{
                 data.put("mesa",mesa.getNumMesa());
                 data.put("restaurante",idR);
                 String json = new ObjectMapper().writeValueAsString(data);
-                Peticion.putConJson(data,url);
+                Peticion.putConJson(data,"http://localhost:8888/api/dataRest/mesas");
 
                 ByteArrayOutputStream out = QRCode.from(String.valueOf(url)).to(ImageType.PNG).stream();
                 File imgQr = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
