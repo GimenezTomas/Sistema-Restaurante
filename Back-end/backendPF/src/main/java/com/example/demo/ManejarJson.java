@@ -22,55 +22,35 @@ public class ManejarJson {
         mongo = new AccesoMongoDB();
     }
 
-    public void insertarPlatoPedido(int mesa, int idRest, HashMap platoPedido) throws IOException {
+    public void insertarPlatosPedido(int mesa, int idRest, HashMap platoPedido){
         Bson filtro1= Filters.eq("id", 1);
 
-        ArrayList<PlatoPedido> platoPedidos = new ArrayList<>();
-        System.out.println("platoPedido: "+platoPedido );
         Document document = new Document("platos",platoPedido.get("platos"));
         ArrayList<Document> documents = (ArrayList<Document>) document.get("platos");
 
-        for (int i = 0; i < documents.size() ; i++) {
-            File archivo = new File(".\\src\\main\\resources\\arch.json");
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(archivo, documents.get(i));
-
-            HashMap plato = objectMapper.readValue(archivo, HashMap.class);
-
-            archivo.delete();
-            File archivo1 = new File(".\\src\\main\\resources\\arch.json");
-
-            HashMap<String, Float> agregados = new HashMap<>();
-
-            Document document1 = new Document("agregados",plato.get("agregados"));
-            ArrayList<Document> documents1 = (ArrayList<Document>) document1.get("agregados");
-
-            for (int j = 0; j <documents1.size() ; j++) {
-                objectMapper.writeValue(archivo1, documents1.get(j));
-                HashMap agregadosMap = objectMapper.readValue(archivo1, HashMap.class);
-                agregados.put(agregadosMap.get("nombre").toString(), Float.parseFloat(agregadosMap.get("precio").toString()));
-            }
-            platoPedidos.add(new PlatoPedido(plato.get("nombre").toString(), Float.parseFloat(plato.get("precio").toString()), agregados, new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()), false));
-            archivo1.delete();
-        }
-        //HashMap hashMap = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(platoPedidos), HashMap.class);
-        platoPedidos.forEach(platoPedido1 -> {
+        ArrayList<HashMap> platos = new ArrayList<>();
+        for (int i = 0; i <documents.size() ; i++) {
             try {
-                System.out.println(new ObjectMapper().writeValueAsString(platoPedido1));
+                HashMap plato = new ObjectMapper().readValue(new ObjectMapper().writeValueAsString(documents.get(i)), HashMap.class);
+                plato.put("fecha", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+                plato.put("entregado", false);
+                platos.add(plato);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-        });
+        }
+        HashMap hashMap = new HashMap<>();
+        hashMap.put("platos", platos);
         if ((mongo.obtenerPedido(idRest,mesa, filtro1)) == null){
             HashMap<String, Object> pedidoAtributos = new HashMap<>();
             pedidoAtributos.put("nPedido", mongo.obtenerPedidosSize(filtro1)+1);
             pedidoAtributos.put("nMesa", mesa);
             pedidoAtributos.put("abierto", true);
             pedidoAtributos.put("fecha", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
-            pedidoAtributos.put("platos", platoPedido.get("platos"));
+            pedidoAtributos.put("platos", hashMap.get("platos"));
             mongo.agregarPedido(pedidoAtributos, filtro1);
         }else{
-            mongo.insertarPlatosPedido(platoPedido, mongo.obtenerPedido(idRest,mesa, filtro1).getnPedido(), filtro1);
+            mongo.insertarPlatosPedido(hashMap, mongo.obtenerPedido(idRest,mesa, filtro1).getnPedido(), filtro1);
         }
     }
 
@@ -146,7 +126,6 @@ public class ManejarJson {
 
     public void actualizarPedido(int idPed, int id, HashMap pedido){
         Bson filtro1= Filters.eq("id", id);
-        System.out.println(pedido);
         mongo.actualizarPedido(idPed-1, pedido, filtro1);
     }
 

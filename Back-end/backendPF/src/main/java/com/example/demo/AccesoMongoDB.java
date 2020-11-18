@@ -235,7 +235,6 @@ public class AccesoMongoDB {
 
                     ArrayList<Document> platosDoc = (ArrayList<Document>) dataPlato.get("platos");
                     ArrayList<PlatoPedido> platos = new ArrayList<>();
-
                     for (Document dataPLATO : platosDoc) {
                         ArrayList<Document> agregadosDoc = (ArrayList<Document>) dataPLATO.get("agregados");
                         HashMap<String, Float> agregados = new HashMap<>();
@@ -276,7 +275,6 @@ public class AccesoMongoDB {
     }
 
     public void agregarPedido(HashMap<String, Object> pedidoAtributos, Bson requisitosLogin){
-        System.out.println("entre");
         try {
             ObjectMapper mapper = new ObjectMapper();
             File json = new File(".\\src\\main\\resources\\pedidos.json");
@@ -300,10 +298,7 @@ public class AccesoMongoDB {
 
     public void insertarPlatosPedido(HashMap platoPedidoList, int nPedido, Bson requisitosLogin) {
         ArrayList<Document> documents = (ArrayList<Document>) platoPedidoList.get("platos");
-        System.out.println(documents);
         for (int i = 0; i < documents.size(); i++) {
-            System.out.println("ds.get: "+documents.get(i));
-            System.out.println("nPedido: "+nPedido);
             String ruta = "pedidos." + (nPedido - 1) + ".platos";
             Document rutaDoc = new Document(ruta, documents.get(i));
 

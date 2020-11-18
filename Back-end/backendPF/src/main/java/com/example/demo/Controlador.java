@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 @RequestMapping("/api")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class Controlador {
     HashMap datos;
 
@@ -28,12 +29,7 @@ public class Controlador {
 
     @RequestMapping(value = "/pedidoALaBase/{idRestaurante}/{idMesa}", method = RequestMethod.PUT)
     public ResponseEntity<Object> obtenerPedidoDeLaApi(@RequestBody HashMap platosPedido, @PathVariable int idMesa, @PathVariable int idRestaurante){
-        System.out.println("entre");
-        try {
-            this.accesoMongoDB.insertarPlatoPedido(idMesa, idRestaurante, platosPedido);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.accesoMongoDB.insertarPlatosPedido(idMesa, idRestaurante, platosPedido);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -154,7 +150,6 @@ public class Controlador {
 
     @RequestMapping(value = "/javaAPP/gestionarMenu/actualizarPlatos/{nombre}/{idRestaurante}", method = RequestMethod.PUT)
     public ResponseEntity<Object> actualizarPlatos(@RequestBody HashMap platos, @PathVariable String nombre,@PathVariable int idRestaurante){
-        System.out.println("entro");
         accesoMongoDB.actualizarPlatos(nombre,platos,idRestaurante);
         return new ResponseEntity<>(HttpStatus.OK);
     }
