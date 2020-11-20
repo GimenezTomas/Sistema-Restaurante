@@ -277,13 +277,8 @@ public class AccesoMongoDB {
     public void agregarPedido(HashMap<String, Object> pedidoAtributos, Bson requisitosLogin){
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File json = new File(".\\src\\main\\resources\\pedidos.json");
-
-            mapper.writeValue(json, pedidoAtributos);
-
             ObjectMapper mapper1 = new ObjectMapper();
-            HashMap pedidoMap = mapper1.readValue(json, HashMap.class);
-            json.delete();
+            HashMap pedidoMap = mapper1.readValue(mapper1.writeValueAsString(pedidoAtributos), HashMap.class);
 
             Document pedidosDoc = new Document("pedidos", pedidoMap);
             Document operacion = new Document("$push", pedidosDoc);

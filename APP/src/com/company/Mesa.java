@@ -111,7 +111,7 @@ public class Mesa implements Comparable<Mesa>{
     public static void generarQr(HashSet<Mesa> mesas, int idR) throws IOException {
         for (Mesa mesa : mesas) {
             if (mesa.QR == null){
-                String url = "http://192.168.0.43/php/rest1copia.php";
+                String url = "http://192.168.0.43/php/rest1copia.php?mesa="+mesa.getNumMesa()+"&restaurante="+idR;
                 ByteArrayOutputStream out = QRCode.from(String.valueOf(url)).to(ImageType.PNG).stream();
                 File imgQr = new File(".\\src\\com\\company\\images\\qr\\"+"Mesa"+mesa.getNumMesa()+".png");
                 FileOutputStream fos = new FileOutputStream(imgQr);
