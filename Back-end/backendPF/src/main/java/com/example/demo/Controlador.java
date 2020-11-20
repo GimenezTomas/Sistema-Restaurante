@@ -38,17 +38,6 @@ public class Controlador {
         return new ResponseEntity<>(accesoMongoDB.seccionesPlatosAlaAPI(idRestaurante), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/dataRest/mesas",method = RequestMethod.PUT)
-    public ResponseEntity<Object> crearMesas(@RequestBody HashMap data){
-        this.datos = data;
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/dataRest/mesa",method = RequestMethod.GET)
-    public ResponseEntity<Object> obtenerInfoMesas() {
-        return new ResponseEntity<>(this.datos, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/dataRest/tipos", method = RequestMethod.POST)
     public ResponseEntity<Object> enviarTiposAlaAPI(){
         return new ResponseEntity<>(accesoMongoDB.tiposPlatosAlaAPI(), HttpStatus.OK);
