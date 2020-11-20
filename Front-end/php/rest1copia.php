@@ -2,7 +2,7 @@
         /*clases*/
         class Plato {
             constructor(nombre, precio, descripcion, img, agregados){
-                this.nombre = nombre
+                this.nombrePlato = nombre
                 this.precio = precio
                 this.descripcion = descripcion
                 this.img = img
@@ -17,12 +17,10 @@
         let afa = null
     </script>
 <?php
-    $IDresto = $_GET["restaurante"];
-    $IDmesa = $_GET["mesa"];
-
     function Perfil(){
-        global $IDmesa,$IDresto;
-        $url = "localhost:8888/api/dataRest/dataUser/". $IDresto;
+
+        $restID =  $_GET["restaurante"];
+        $url = "localhost:8888/api/dataRest/dataUser/". $restID;
         $urlSinEspacio = str_replace(' ', '', $url);
 
         $curl = curl_init();
@@ -44,7 +42,7 @@
         $ft = $datos["dataUser"]["logo"];
         $name = $datos["dataUser"]["nombre"];
         $id = $datos["dataUser"]["id"];
-        if ($IDresto == $id) {
+        if ($restID == $id) {
             ?>
             <div class="res">
                 <img class="zz" src="<?php echo  $ft; ?>">
@@ -57,8 +55,8 @@
     
     function Secciones(){
 
-        global $IDmesa,$IDresto;
-        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $IDresto;
+        $restID =  $_GET["restaurante"];
+        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $restID;
         $urlSinEspacio = str_replace(' ', '', $url);
         $curl = curl_init();
 
@@ -167,8 +165,8 @@
     }
 
     /*function pedirPHP(){
-        global $IDmesa,$IDresto;
-        $url =  "localhost:8888/api/pedidoALaBase/". $IDresto + "/".$IDmesa;
+        $restID =  $_GET["restaurante"];
+        $url =  "localhost:8888/api/pedidoALaBase/". $restID + "/".$_GET["mesa"];
         $urlSinEspacio = str_replace(' ', '', $url);
         $ch = curl_init();
 
@@ -183,8 +181,8 @@
     }*/
 
     function botones(){
-        global $IDmesa,$IDresto;
-        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $IDresto;
+        $restID =  $_GET["restaurante"];
+        $url =  "localhost:8888/api/dataRest/seccionesPlatos/". $restID;
         $urlSinEspacio = str_replace(' ', '', $url);
         $curl = curl_init();
 
@@ -216,9 +214,10 @@
     }
 
     function Pedido(){
-        global $IDmesa,$IDresto;
+        $restID =  $_GET["restaurante"];
+        $mmmesa = $_GET["mesa"];
 
-        $url = "localhost:8888/api/dataRest/platosYaPedidos/". $IDresto. "/". $IDmesa;
+        $url = "localhost:8888/api/dataRest/platosYaPedidos/". $restID. "/". $mmmesa;
         $urlSinEspacio = str_replace(' ', '', $url);
 
         $curl = curl_init();
@@ -236,7 +235,7 @@
         curl_close($curl);
         $datos = json_decode($response,true);
 
-        $url2 = "localhost:8888/api/dataRest/dataUser/". $IDresto;
+        $url2 = "localhost:8888/api/dataRest/dataUser/". $restID;
         $urlSinEspacio2 = str_replace(' ', '', $url2);
 
         $curl2 = curl_init();
@@ -267,7 +266,7 @@
             <img src="images/9z.png" alt="">
         </div>
         <div class="headerUsuario">
-            <h1>Mesa <?php echo $IDmesa; ?></h1>
+            <h1>Mesa <?php echo $mmmesa; ?></h1>
         </div>
         <div class="headerRestaurante">
             <img src="<?php echo $ft; ?>" alt="">
@@ -301,10 +300,12 @@
                 $nom = $pedido[$i]["nombrePlato"];
                 $prec = $pedido[$i]["precio"];
                 $agregadoss = array();
-                if (isset($pedido[$i]["agregados"])) {
+                if (isset($pedido[$i]["agregados"])) {                    
                     for ($z=0; $z < count($pedido[$i]["agregados"]); $z++) { 
                         $arrayNuevo = array("nombre" => $pedido[$i]["agregados"][$z]["nombre"], "precio" => $pedido[$i]["agregados"][$z]["precio"]);
+                        //echo "precio "+$prec;
                         $prec += $pedido[$i]["agregados"][$z]["precio"];
+                        //echo "precio "+$prec;
                         array_push($agregadoss, $arrayNuevo);
                     }
                 }                
@@ -445,13 +446,13 @@
                         <h1>Total: $</h1>
                         <span>
                                 <h2 id="precioActualizado">500</h2>
-                                <h3 style="display: none"id="precioBase">0</h3>
+                                <h3 style="display: none" id="precioBase">0</h3>
                             </span>
                     </div>
                 </div>
                 <section class="padre">
                     <textarea placeholder = "Aclaraciones..."name="" id="textArea" class="aclaraciones"></textarea>
-                    <button onmousedown="addPlatoAlCarrito('nombreAG', 'precioActualizado','imagenAG', 'sxaxax')" class="botonAgregar">Agregar</button>
+                    <button onmousedown="addPlatoAlCarrito('nombreAG', 'precioBase','imagenAG', 'sxaxax')" class="botonAgregar">Agregar</button>
                 </section>
             </div>
         </div>
@@ -472,7 +473,7 @@
                 }
                 if(indexIMG != -1 && nombre != ""){
                     for(let k = 0; k < platosCarta.length; k++){
-                        if(platosCarta[k].nombre == nombre){
+                        if(platosCarta[k].nombrePlato == nombre){
                             py.childNodes[i].childNodes[indexIMG].setAttribute("src", platosCarta[k].img) 
                         }
                     }
@@ -576,9 +577,14 @@
             let nombre = document.getElementById(idnombre).getElementsByTagName("H3")[0].innerHTML
             let descripcion = document.getElementById(idnombre).getElementsByTagName("P")[0].innerHTML
             let img = document.getElementById(idimg).src
-            let precio = document.getElementById(idprecio).innerHTML
+            let precio = parseFloat(document.getElementById(idprecio).innerHTML)
 
             let plato = new Plato(nombre, precio, descripcion, img, agregadosApedido('containerSeccionesAG'))
+
+            let agreg = agregadosApedido('containerSeccionesAG')
+            for(let i=0; i<agreg.length; i++){
+                precio+=parseFloat(agreg[i]['precio'])
+            }
 
             platos.push(plato)
             let carrito = document.getElementById('proximaOrdenBody')
@@ -797,7 +803,7 @@
                 }
             }
         }
-        document.getElementById(clasePedir).innerHTML = "Pedir ($"+precio+")"
+        document.getElementById(clasePedir).innerHTML = "Pedir ($"+precio.toFixed(2)+")"
         if(precio==0){
             canastaVacia(true)
         }
@@ -913,38 +919,7 @@
         actualizarPrecioPlatosPedidos()
     }
     
-    function send() {
-        var person = {
-            name: $("#id-name").val(),
-            address:$("#id-address").val(),
-            phone:$("#id-phone").val()
-        }
-        $('#target').html('sending..');
-        $.ajax({
-            url: '/test/PersonSubmit',
-            type: 'post',
-            dataType: 'json',
-            contentType: 'application/json',
-            success: function (data) {
-                $('#target').html(data.msg);
-            },
-            data: JSON.stringify(person)
-        });
-    }
-
-    function pedir(){
-        platos.forEach(plato => addPlatoYaPedidos(plato.nombre, plato.precio, plato.img, plato.agregados))
-        clearArray(document.getElementById("proximaOrdenBody"))
-        for (let i = 0; i < document.getElementById("proximaOrdenBody").childNodes.length; i++) {
-            if (document.getElementById("proximaOrdenBody").childNodes[i] != undefined){
-                document.getElementById("proximaOrdenBody").childNodes[i].remove()
-                i--
-            }
-        }
-        platosYaPedidos.push(platos)
-        console.log(JSON.stringify(platos))
-
-        /* function send() {
+    /*function send() {
         var person = {
             name: $("#id-name").val(),
             address:$("#id-address").val(),
@@ -962,61 +937,76 @@
             data: JSON.stringify(person)
         });
     }*/
-        let platosJSON = 
+
+    function pedir(){
+                
+        let url1 = 'http://localhost:8888/api/pedidoALaBase/<?php echo $_GET["restaurante"]?>/<?php echo $_GET["mesa"]?>'
+    
+    let arr = []
+    for(let i= platos.length; i>0; i--){
+        let agre = []
+        for(let j = 0; j<platos[i-1].agregados.length; j++){
+            let map = {}
+            map["precio"] = platos[i-1].agregados[j]["precio"]
+            map["nombre"] = platos[i-1].agregados[j]["nombre"]
+            agre.push(map)
+        }
+        console.log(agre)
+        let asas = {
+        "platos": 
             {
-                "platos": [
-                    {
-                        "nombre":"Noquis",
-                        "precio":140.5,
-                        "agregados":[
-                            {
-                                "nombre":"Bolognesa",
-                                "precio": 100
-                            },{
-                                "nombre":"Entera",
-                                "precio":50
-                            }
-                        ]
-                    }
-                ]
-            }
-        let url1 = 'http://localhost:8888/api/pedidoALaBase/<?php echo $IDresto?>/<?php echo $IDmesa?>'
-        /*$.ajax({
-            url: url1,
-            type: 'put',
-            dataType: 'jsonp',
-            data: platosJSON,
-            success: function (url1) {
-                console.log(url1)
-                console.log(url)
-            }
-        });*/
+                "precio": platos[i-1].precio,
+                "agregados": agre,
+                "nombrePlato": platos[i-1].nombrePlato
+             }
+            
+        }
+        arr.push(asas["platos"])
+        }
+
+        let json = {
+            "platos": arr
+        }
         $.ajax({
-            url: url1,
-            type: 'PUT',
-            dataType: 'jsonp',
-            data: platosJSON
-        })
-    .done(function (data) {
+                    url: url1,
+                    type: 'PUT',
+                    Accept:'application/json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(json)
+                })
+            .done(function (data) {
+            })
+            .fail(function (qXHR, textStatus, errorThrown) {
+                    console.log(qXHR)        
+                    console.log(errorThrown)        
+                    console.log(textStatus)        
+                    console.log(url1)
+                });
 
- 
+        for(let j= 0; j<platos.length; j++){
+            for(let i=0; i<platos[j].agregados.length; i++){
+                platos[j].precio += parseFloat(platos[j].agregados[i]["precio"])
+            }
+        }
+        platos.forEach(plato => addPlatoYaPedidos(plato.nombrePlato, plato.precio, plato.img, plato.agregados))
+        clearArray(document.getElementById("proximaOrdenBody"))
+        for (let i = 0; i < document.getElementById("proximaOrdenBody").childNodes.length; i++) {
+            if (document.getElementById("proximaOrdenBody").childNodes[i] != undefined){
+                document.getElementById("proximaOrdenBody").childNodes[i].remove()
+                i--
+            }
+        }
+        platosYaPedidos.push(platos)
 
-
-    })
-    .fail(function (qXHR, textStatus, errorThrown) {
-        console.log(qXHR)        
-        console.log(errorThrown)        
-        console.log(textStatus)        
-        console.log(url1)
-    });
-//        console.log('localhost:8888/api/pedidoALaBase/<?php echo $IDresto?>/<?php echo $IDmesa?>')
         clearArray(platos)
-        llamarCarrito('car')
+        contarPlatos()
+        document.getElementById('factura').style.display='none'
         actualizarPrecioTotal('proximaOrdenBody', 'precio', 'botonPedir')
     }
 
     function llamarCarrito(claseIcono){
         actualizarPrecioPlatosPedidos()
+        console.log("len: "+platosYaPedidos.length)
         if(platos.length==0 && platosYaPedidos.length==0){
             canastaVacia(true)
         }else if (platos.length==0 && platosYaPedidos.length>0){
@@ -1067,7 +1057,7 @@
 
     function rellenarModalAgregados(nombrePlato){
         for (let i = 0; i < platosCarta.length; i++) {
-           if(platosCarta[i].nombre == nombrePlato){
+           if(platosCarta[i].nombrePlato == nombrePlato){
                plato = platosCarta[i]
                document.getElementById("nombreAgregados").innerHTML = nombrePlato
                document.getElementById("descripcionAgregados").innerHTML = plato.descripcion 
